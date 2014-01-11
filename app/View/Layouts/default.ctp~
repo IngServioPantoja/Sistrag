@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>
+            Software con CakePHP
+        </title>
+    </head>
+    <body>
+        <table border="1" width="100%" height="100%">
+            <tr>
+                <th colspan="2" height="5%">
+                    Encabezado
+                </th>
+            </tr>
+            <tr>
+                <td width="10%" valign="top">
+                    Menu<br>
+                    <?php 
+                    	if($this->Session->check("Menu") == true){
+		                	foreach($this->Session->read("Menu") as $i => $v){
+		                		echo $this->html->link($i,$v)."<br>";
+		                		//echo $i." ".$v."<br />";
+		                	}	
+		                }else{
+		                	$this->Html->link("Acceder","/menus/mnuMain");
+		                }	
+		                
+                    ?>
+                </td>
+                <td width="90%" valign="top">
+                    <?php echo $content_for_layout;		//llamada a las vistas ?>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
