@@ -1,14 +1,16 @@
-<META HTTP-EQUIV="REFRESH" CONTENT="2">
+<META HTTP-EQUIV="REFRESH" CONTENT="12">
 <html>
     <head>
         <title>
-            Software con CakePHP
+            Sistrág: Sistema de información para el control de trabajos de grado I.U.CESMAG.
         </title>
         <?php 
 			echo $this->Html->css(array ('layout','normalize','style','extjs')); 
             echo $this->Html->script(array('jquery',));
             echo $this->Js->writeBuffer(array('cache'=>true));
-        ?> 
+        ?>
+        <meta name="viewport" 
+          content="width=device-width, initial-scale=1, maximum-scale=1" />
     </head>
     <body id="body_layout">
         <header class="layout_header">
