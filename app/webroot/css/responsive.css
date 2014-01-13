@@ -1,0 +1,105 @@
+@media screen and (min-width: 769px)
+{
+	body
+	{
+		border: 2px solid red;
+	}
+	.layout_contenido
+	{
+		top: 80px;
+	}
+}
+@media screen and (max-width: 768px) and (min-width: 481px)
+{
+	body
+	{
+		border: 2px solid orange;
+	}
+	.layout_contenido
+	{
+		top: 140px;
+	}
+}
+@media screen and (max-width: 480px) and (min-width: 321px)
+{
+	body
+	{
+		border: 2px solid green;
+	}
+	.layout_header div
+	{
+	display: block;
+	width: 100%;
+	text-align: center !important;
+	}
+	.layout_contenido
+	{
+		top: 160px;
+	}
+}
+@media screen and (max-width: 320px) and (min-width: 0px)
+{
+	body
+	{
+		border: 2px solid blue;
+	}
+	.layout_contenido
+	{
+		top: 240px;
+		left: 0px;
+	}
+	.layout_contenido_inicial
+	{
+		top: 140px;
+	}
+	.layout_header div
+	{
+		display: block;
+		width: 100%;
+		text-align: center !important;
+	}
+	.layout_nav
+	{
+		width: 100%;
+		display: block;
+		position: relative;
+		left: 0px;
+		right: 0px;
+		top: 140px;
+	}
+	.layout_nav ul:hover li
+	{
+		display: inline-block!important;
+	}
+	.layout_nav ul li
+	{	text-align: center;
+		width: 50%;
+		display: none!important;
+	}
+
+	.layout_nav ul li a
+	{	
+	color: #226;
+	cursor: pointer;
+	display: block;
+	padding: 5px 10px;
+	z-index: 2;
+	}
+	.layout_nav ul li
+	{
+		display: inline-block;
+	}
+	#login
+	{
+		max-height: 300px;
+	}
+	#login #formulario div
+	{
+		display: block;
+	}
+	.panel_menu ul li
+	{
+		display: block !important;
+		text-align: center !important; 
+	}
+}
