@@ -65,7 +65,8 @@ function lista_estudiantes() {
 				            array('table'=>'personas_proyectos',
 				                  'alias'=>'PersonasProyectos',
 				                  'type'=>'left',
-				                  'conditions'=>array('Persona.id=PersonasProyectos.persona_id')
+				                  'conditions'=>array('Persona.id=PersonasProyectos.persona_id'
+				                  )
 				            )
 				        ),
 		    		)

@@ -27,9 +27,7 @@
 			?>
 		</div>
 	</div>
-	<div id='submit'>
 		<?php
 			echo $this->Form->end('• Ingresar •');
 		?>			
-	</div>
 </fieldset>

@@ -1,3 +1,13 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('fonts/icomoon.eot');
+	src:url('fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('fonts/icomoon.woff') format('woff'),
+		url('fonts/icomoon.ttf') format('truetype'),
+		url('fonts/icomoon.svg#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
 /* CSS Document */
 /* CSS Para el body aqui tratamos de quitar margenes */
 
@@ -109,20 +119,18 @@ margin :0 auto;
 }
 .layout_header
 {	
-width: 100%;
-margin   :0px auto; 
-background   : #fff; 
-background: #324664; /* Old browsers */
-background: -moz-linear-gradient(top,  #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000000 86%, #000000 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#324664), color-stop(11%,#3f587d), color-stop(21%,#47648e), color-stop(32%,#3e587d), color-stop(39%,#374d6c), color-stop(68%,#101721), color-stop(79%,#05070b), color-stop(86%,#000000), color-stop(100%,#000000)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%); /* IE10+ */
-background: linear-gradient(to bottom,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#324664', endColorstr='#000000',GradientType=0 );
-position: absolute;
-text-align: center;
-z-index: 2;
+	width: 100%;
+	margin   :0px auto; 
+	background: rgb(44,63,89); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(44,63,89,1) 0%, rgba(67,95,132,1) 22%, rgba(76,108,153,1) 27%, rgba(76,108,153,1) 46%, rgba(72,102,140,1) 65%, rgba(16,23,33,1) 85%, rgba(0,0,0,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(44,63,89,1)), color-stop(22%,rgba(67,95,132,1)), color-stop(27%,rgba(76,108,153,1)), color-stop(46%,rgba(76,108,153,1)), color-stop(65%,rgba(72,102,140,1)), color-stop(85%,rgba(16,23,33,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(44,63,89,1) 0%,rgba(67,95,132,1) 22%,rgba(76,108,153,1) 27%,rgba(76,108,153,1) 46%,rgba(72,102,140,1) 65%,rgba(16,23,33,1) 85%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(44,63,89,1) 0%,rgba(67,95,132,1) 22%,rgba(76,108,153,1) 27%,rgba(76,108,153,1) 46%,rgba(72,102,140,1) 65%,rgba(16,23,33,1) 85%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(44,63,89,1) 0%,rgba(67,95,132,1) 22%,rgba(76,108,153,1) 27%,rgba(76,108,153,1) 46%,rgba(72,102,140,1) 65%,rgba(16,23,33,1) 85%,rgba(0,0,0,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(44,63,89,1) 0%,rgba(67,95,132,1) 22%,rgba(76,108,153,1) 27%,rgba(76,108,153,1) 46%,rgba(72,102,140,1) 65%,rgba(16,23,33,1) 85%,rgba(0,0,0,1) 100%); /* W3C */
+	position: absolute;
+	text-align: center;
+	z-index: 2;
 }
 .layout_header div
 {
@@ -166,7 +174,7 @@ z-index: 2;
 }
 .layout_header #layout_menu_inicio #logo_skew_left:hover
 {
-	background: #bcbcbc; /* Old browsers */
+	background: #bcbcbc;
 	background: -moz-linear-gradient(top,  #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)!important; /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#bcbcbc), color-stop(50%,#efefef), color-stop(100%,#bcbcbc))!important; /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)!important; /* Chrome10+,Safari5.1+ */
@@ -333,46 +341,58 @@ top        :13px;
 /* CSS para la tabla que subre el layout completo */
 /* CSS para el banner */
 .layout_nav
-{
-	vertical-align: top;
-	position: absolute;
-	top: 40px;
-	left: 0px;
+{	
+	background: #fff;
+	border-right: 3px solid #337;
 	bottom: 29px;
-	width         :150px;
-	border-right: 3px solid #fff;
-	padding       :10px;
 	height        :auto;
-	background: #000000; /* Old browsers */
-	background: -moz-linear-gradient(top,  #000000 0%, #000000 14%, #05070b 21%, #101721 32%, #374d6c 61%, #3e587d 68%, #47648e 79%, #3f587d 89%, #324664 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000000), color-stop(14%,#000000), color-stop(21%,#05070b), color-stop(32%,#101721), color-stop(61%,#374d6c), color-stop(68%,#3e587d), color-stop(79%,#47648e), color-stop(89%,#3f587d), color-stop(100%,#324664)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #000000 0%,#000000 14%,#05070b 21%,#101721 32%,#374d6c 61%,#3e587d 68%,#47648e 79%,#3f587d 89%,#324664 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #000000 0%,#000000 14%,#05070b 21%,#101721 32%,#374d6c 61%,#3e587d 68%,#47648e 79%,#3f587d 89%,#324664 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #000000 0%,#000000 14%,#05070b 21%,#101721 32%,#374d6c 61%,#3e587d 68%,#47648e 79%,#3f587d 89%,#324664 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #000000 0%,#000000 14%,#05070b 21%,#101721 32%,#374d6c 61%,#3e587d 68%,#47648e 79%,#3f587d 89%,#324664 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#324664',GradientType=0 ); /* IE6-9 */
-	z-index: 1;
+	left: 0px;
 	opacity: 1;
 	overflow: hidden;
+	position: absolute;
+	top: 40px;
+	vertical-align: top;
+	width         :100px;
+	z-index: 1;
 	transition:all 0.3s linear;
 	-webkit-transition:all 0.3s linear;
 	-moz-transition:all 0.3s linear;
 }
-.layout_nav ul li
+.layout_nav #menuTitle
 {
-	
+	background: rgb(44,63,89); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(44,63,89,1) 0%, rgba(67,95,132,1) 22%, rgba(76,108,153,1) 27%, rgba(76,108,153,1) 46%, rgba(72,102,140,1) 65%, rgba(16,23,33,1) 85%, rgba(0,0,0,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(44,63,89,1)), color-stop(22%,rgba(67,95,132,1)), color-stop(27%,rgba(76,108,153,1)), color-stop(46%,rgba(76,108,153,1)), color-stop(65%,rgba(72,102,140,1)), color-stop(85%,rgba(16,23,33,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(44,63,89,1) 0%,rgba(67,95,132,1) 22%,rgba(76,108,153,1) 27%,rgba(76,108,153,1) 46%,rgba(72,102,140,1) 65%,rgba(16,23,33,1) 85%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(44,63,89,1) 0%,rgba(67,95,132,1) 22%,rgba(76,108,153,1) 27%,rgba(76,108,153,1) 46%,rgba(72,102,140,1) 65%,rgba(16,23,33,1) 85%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(44,63,89,1) 0%,rgba(67,95,132,1) 22%,rgba(76,108,153,1) 27%,rgba(76,108,153,1) 46%,rgba(72,102,140,1) 65%,rgba(16,23,33,1) 85%,rgba(0,0,0,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(44,63,89,1) 0%,rgba(67,95,132,1) 22%,rgba(76,108,153,1) 27%,rgba(76,108,153,1) 46%,rgba(72,102,140,1) 65%,rgba(16,23,33,1) 85%,rgba(0,0,0,1) 100%); /* W3C */
+	color: #ddd;
+	font-size: 15px;
+	font-weight: 900;
+	padding: 6px;
+	text-align: center;
+}
+.layout_nav ul li
+{	text-align: center;
+	padding: 5px;
 }
 .layout_nav a
-{
-	color: rgba(255,255,255,1);
-	color: #ddd;
+{	font-size: 60px;
+	color: #666;
+	text-decoration: none !important;
+}
+.layout_nav a:before
+{	font-family: icomoon;
+	text-decoration: none !important;
+
 }
 .layout_nav a:hover
 {
 	color: #337;
 }
 .layout_contenido
-{
+{	
 	vertical-align: top;
 	border-left: 0px;
 	border-right: 0px;
@@ -380,7 +400,7 @@ top        :13px;
 	overflow     : auto;
 	margin: 0 auto;
 	background: rgba(255,255,255,0.9);
-	padding: 25px 3%;
+	padding: 25px 4%;
 	position: absolute;
 	width: auto;
 	top: 43px;
@@ -437,4 +457,79 @@ z-index: 2;
 {
 	margin: auto;
 }
-
+div[class='input select']
+{
+	padding: 5px;
+	background: #324664;
+}
+select
+{
+	background: transparent;
+	color: #000;
+	border: 1px solid #324664;
+	font-size: 14px !important;
+}
+select option
+{	
+	color: #000;
+}
+select option:hover
+{	
+	background-color: #324664!important;
+	color: #ddd!important;
+}
+/* codigos iconos */
+.icon-group:before {
+	content: "\e600";
+}
+.icon-user-md:before {
+	content: "\e604";
+}
+.icon-youtube:before {
+	content: "\e60a";
+}
+.icon-file-settings:before {
+	content: "\e601";
+}
+.icon-library:before {
+	content: "\e602";
+}
+.icon-calendar:before {
+	content: "\e603";
+}
+.icon-minus:before {
+	content: "\e606";
+}
+.icon-cancel:before {
+	content: "\e607";
+}
+.icon-checkmark:before {
+	content: "\e608";
+}
+.icon-suitcase:before {
+	content: "\e609";
+}
+.icon-cloudy:before {
+	content: "\e60b";
+}
+.icon-auction:before {
+	content: "\e60d";
+}
+.icon-stats:before {
+	content: "\e60c";
+}
+.icon-facebook2:before {
+	content: "\e610";
+}
+.icon-github:before {
+	content: "\e611";
+}
+.icon-twitter:before {
+	content: "\e612";
+}
+.icon-batman:before {
+	content: "\e60f";
+}
+.icon-earth:before {
+	content: "\e613";
+}

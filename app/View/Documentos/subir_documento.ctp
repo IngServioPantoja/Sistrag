@@ -21,7 +21,7 @@
 				<?php
 				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
-				<?php echo $this->Html->link(__('Subir documento'), array('action' => 'add', $proyecto['Proyecto']['id'])); ?>
+				<?php echo $this->Html->link(__('Subir documento'), array('action' => 'subir_documento', $proyecto['Proyecto']['id'])); ?>
 			</li>
 		</ul>
 	</nav>
@@ -58,8 +58,7 @@
 								</div>
 							</fieldset>
 					</div>
-								<?php echo $this->Form->end(__('Subir')); ?>
-
+					<?php echo $this->Form->end(__('Subir')); ?>
 				</td>
 			</tr>
 		</table>

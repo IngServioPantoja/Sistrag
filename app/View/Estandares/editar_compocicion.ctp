@@ -99,6 +99,9 @@
 </fieldset>
 
 </div>
+<?php
+print_r($itemsestandar);
+?>
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>

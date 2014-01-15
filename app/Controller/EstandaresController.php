@@ -237,7 +237,9 @@ class EstandaresController extends AppController {
 			}
 		}
 
-		$items = $this->Item->find('list');
+		$items = $this->Item->find('list',array(
+			'order' => 'Item.nombre asc'
+			));
 		$this->set("items", $items);
 
 

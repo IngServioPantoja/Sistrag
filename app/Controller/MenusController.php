@@ -107,11 +107,11 @@ class MenusController extends AppController {
 	    $Usuario=$this->Session->read("Usuario");
         echo ($Usuario['nivel_id']);
         print_r($Usuario);
-        $r = $this->MenusNivel->find('all',array('conditions' => array('nivel_id'=> $Usuario['nivel_id']),"fields" => array('Menu.texto','Menu.vinculo'),'order' => array('MenusNivel.orden' => 'asc')));
+        $r = $this->MenusNivel->find('all',array('conditions' => array('nivel_id'=> $Usuario['nivel_id']),"fields" => array('Menu.icono','Menu.vinculo'),'order' => array('MenusNivel.orden' => 'asc')));
         $menu = array(); 
 		foreach ($r as $r2):
 		foreach ($r2 as $r3):
-		$menu [$r3['texto']]=$r3['vinculo'];
+		$menu [$r3['icono']]=$r3['vinculo'];
 		endforeach; 
 		endforeach; 
         $this->Session->write("Menu",$menu);

@@ -43,7 +43,12 @@
 	{
 		border: 2px solid blue;
 	}
-	.layout_contenido
+	input[type="file"]
+	{
+		width: 180px !important;
+	}
+    
+    .layout_contenido
 	{
 		top: 240px;
 		left: 0px;
@@ -101,5 +106,13 @@
 	{
 		display: block !important;
 		text-align: center !important; 
+	}
+	select
+	{
+		background: transparent;
+		color: #000;
+		border: 1px solid #324664;
+		font-size: 12px !important;
+		width: 180px;
 	}
 }

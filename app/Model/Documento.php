@@ -31,9 +31,15 @@ class Documento extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'Proyecto' => array(
+			'className' => 'Proyecto',
+			'foreignKey' => 'proyecto_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
-
 /**
  * hasMany associations
  *

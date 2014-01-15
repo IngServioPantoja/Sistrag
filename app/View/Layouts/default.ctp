@@ -1,4 +1,10 @@
-<META HTTP-EQUIV="REFRESH" CONTENT="2">
+<?php
+echo $this->Html->meta(
+    'favicon.ico',
+    'app/webroot/img/iconos/favicon.ico',
+    array('type' => 'icon')
+);
+?>
 <html lang='es_Es'>
     <head>
         <title>
@@ -79,19 +85,21 @@
                 ?>
                     <nav class="layout_nav">
                         <ul>
-                            <?php
-                            echo "Menu<br />";
-                            foreach($this->Session->read("Menu") as $i => $v)
-                            {
-                            ?>
-                            <li>
-                            <?php
-                                echo $this->html->link($i, $v);
-                            ?>
-                            </li>
-                            <?php
-                            }
-                            ?>
+                            <div id="menuTitle">
+                                MENU
+                            </div>
+                                <?php
+                                foreach($this->Session->read("Menu") as $i => $v)
+                                {
+                                ?>
+                                <li>
+                                <?php
+                                    echo $this->html->link("", $v,array('class' => $i));
+                                ?>
+                                </li>
+                                <?php
+                                }
+                                ?>
                         </ul>
                     </nav>
                 <?php

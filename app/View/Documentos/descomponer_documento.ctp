@@ -21,7 +21,7 @@
 				<?php
 				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
-				<?php echo $this->Html->link(__('Subir documento'), array('action' => 'add', $proyecto['Proyecto']['id'])); ?>
+				<?php echo $this->Html->link(__('Subir documento'), array('action' => 'subir_documento', $proyecto['Proyecto']['id'])); ?>
 			</li>
 		</ul>
 	</nav>
@@ -37,31 +37,48 @@
 						?>
 					</div>
 					<div class="crud_fila_secundaria">
-							<fieldset class='ficha_add'>
-								<div>
-									<fieldset>
-										<legend>
-											Subir documento
-										</legend>
-									<?php
-									echo $this->Form->input('documentoxml',array('type' => 'file',"label" => false));
-									?>
-									</fieldset>
+						<!--<div id="circular3dG">
+								<div id="circular3d_1G" class="circular3dG">
 								</div>
-								<div>
-									<fieldset>
-										<legend>
-											Tipo de documento
-										</legend>
-										<?php echo $this->Form->input('estandar_id',array('label' =>false)); ?>	
-									</fieldset>
+								<div id="circular3d_2G" class="circular3dG">
 								</div>
-							</fieldset>
+								<div id="circular3d_3G" class="circular3dG">
+								</div>
+								<div id="circular3d_4G" class="circular3dG">
+								</div>
+								<div id="circular3d_5G" class="circular3dG">
+								</div>
+								<div id="circular3d_6G" class="circular3dG">
+								</div>
+								<div id="circular3d_7G" class="circular3dG">
+								</div>
+								<div id="circular3d_8G" class="circular3dG">
+								</div>
+							</div>
+							<p class="cargando">Cargando</p>
+						-->
+						
 					</div>
-								<?php echo $this->Form->end(__('Subir')); ?>
-
+					<?php echo $this->Form->end(__('Subir')); ?>
 				</td>
 			</tr>
 		</table>
 	</section>
 </section>
+<?php
+
+foreach ($descomposiciones as $descomposicion) 
+		    {
+		        echo $descomposicion['titulo']."</br>";
+		        foreach ($descomposicion['contenido'] as $item) 
+		        {	
+		        	if($item['tipo']=="Imagen")
+		        	{	
+		        		echo "<---->";
+echo $this->Html->image('/app/webroot/files/documentos/'.$item['elementos'], array('alt' => 'Login','height' => '', 'width' => '300px'));		        	}
+		            echo $item['tipo']."</br>";
+		            echo $item['elementos']."</br>";
+		        }
+		    }
+
+?>

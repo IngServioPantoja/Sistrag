@@ -1,22 +1,24 @@
-<head>
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-
-</head>
-<?php $user=NUll;
+<?php 
+$user=NUll;
 ?> 	
 <section class="panel_frame">
 	<nav class="panel_menu">
 		<ul>
 			
-				<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'): {?>
+				<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') {?>
 			<li>
-				<img src="img/iconos/agregar16.png">
-				<?php echo $this->Html->link(__('Agregar Facultad'), array('action' => 'add')); }?></li><li class="panel_menu_actual">
-				<?php endif; ?>
-				<img src="img/iconos/listar16.png">
-				<?php echo $this->Html->link(__('Listar facultades'), array('action' => 'index')); ?>
+				<?php
+				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+				?>
+				<?php 
+				echo $this->Html->link(__('Listar facultades'), array('action' => 'index')); 
+				?></li><li class="panel_menu_actual">
+				<?php
+				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+				?>
+				<?php 
+				echo $this->Html->link(__('Agregar Facultad'), array('action' => 'add')); }
+				?>
 			</li>
 		</ul>
 	</nav>
@@ -27,7 +29,7 @@
 					<div class="crud_fila_principal">
 						Facultades
 					</div>
-					<div class="crud_fila_secundaria">
+					<div class="crud_fila_secundaria white">
 						<?php foreach ($facultades as $facultad): ?>
 						<a href="facultades/view/<?php  echo $facultad['Facultad']['id'];?>">
 							<article class='ficha_index'>
@@ -35,14 +37,14 @@
 									<?php
 									echo $this->Html->image('img_subida/usuarios/1/1_400.jpg', array('alt' => 'Login','height' => '', 'width' => '200px'));
 									?>
-									<div class="ficha_acciones">
-										<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'): ?>
-										<?php echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'edit', $facultad['Facultad']['id']),
-										array('escape' => false)); 
-										?>
-										<?php echo $this->Form->postLink($this->Html->image("iconos/eliminar50.png", array('height' => '', 'width' => '25px')), array('action' => 'delete', $facultad['Facultad']['id']), array('escape' => false), __('¿Esta seguro que desea borrar la facultad de %s?', $facultad['Facultad']['nombre'])); ?>
-										<?php endif; ?>
-									</div>	
+									<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'): ?>
+										<div class="ficha_acciones">
+									<?php echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'edit', $facultad['Facultad']['id']),
+									array('escape' => false)); 
+									?>
+									<?php echo $this->Form->postLink($this->Html->image("iconos/eliminar50.png", array('height' => '', 'width' => '25px')), array('action' => 'delete', $facultad['Facultad']['id']), array('escape' => false), __('¿Esta seguro que desea borrar la facultad de %s?', $facultad['Facultad']['nombre'])); ?>
+										</div>
+									<?php endif; ?>
 								</figure>
 						</a>
 						<a href="facultades/view/<?php  echo $facultad['Facultad']['id'];?>">
