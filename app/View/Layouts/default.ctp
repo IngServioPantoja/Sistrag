@@ -1,3 +1,4 @@
+<?php $usuario=$this->Session->read("Usuario"); ?>
 <?php
 echo $this->Html->meta(
     'favicon.ico',
@@ -17,7 +18,7 @@ echo $this->Html->meta(
             echo $this->Js->writeBuffer(array('cache'=>true));
         ?>
         <meta name="viewport" 
-          content="width=device-width, initial-scale=1, maximum-scale=5" />
+          content="width=device-width, initial-scale=1, maximum-scale=1" />
     </head>
     <body id="body_layout">
         <header class="layout_header">
@@ -35,16 +36,21 @@ echo $this->Html->meta(
                 </div>
             </div>
             <div class="layout_title">
-                <h1>
+                <h1 class="titulo">
                    Sistema de información para el control de trabajos de grado
                 </h1>
             </div>  
                 <?php echo $this->Session->flash(); ?> 
                 <?php  if($logged_in){ ?> 
             <div id="layout_usuario">
-                <span><?php echo $current_user['username']; ?>
-                <?php echo $this->Html->link('Salir',array('controller'=>'users','action'=>'logout'));}?>
-                </span>
+                <?php 
+                echo $this->Html->link($this->Html->image("img_subida/usuarios/1/1_128.jpg", array('height' => '', 'width' => '25px')), array('controller'=>'personas', 'action' => 'edit', $usuario['Persona']['id']),
+                array('escape' => false)); 
+                ?>
+                <?php echo $this->Html->link('',array(
+                    'controller'=>'users','action'=>'logout'),array(
+                        'class' =>'icon-off','id'=>'salir'));}?>
+            </div>
             <?php
             if(!$logged_in)
             {
@@ -72,7 +78,6 @@ echo $this->Html->meta(
                         </li>
                     </ul>
                 </nav>
-                    
             </div>
             <?php
             }
@@ -84,23 +89,31 @@ echo $this->Html->meta(
                 {
                 ?>
                     <nav class="layout_nav">
-                        <ul>
-                            <div id="menuTitle">
-                                MENU
-                            </div>
+                        <div>
+                            <ul>
+                                <div id="lista">
+                                    Menu
+                                </div>
                                 <?php
-                                foreach($this->Session->read("Menu") as $i => $v)
+                                foreach($this->Session->read("Menu") as $i)
                                 {
                                 ?>
-                                <li>
-                                <?php
-                                    echo $this->html->link("", $v,array('class' => $i));
-                                ?>
-                                </li>
+                                    <li>
+                                        <?php 
+                                        echo $this->Html->link(
+                                        $this->Html->tag('span', "", array('class' => $i['icono'])).
+                                        $this->Html->tag('span', $i['titulo'],array('class' => 'titulo')). "",
+                                                $i['vinculo'],
+                                                array('escape' => false)
+                                             );
+                                        ?> 
+
+                                    </li>
                                 <?php
                                 }
                                 ?>
-                        </ul>
+                            </ul>
+                        </div>
                     </nav>
                 <?php
                 } 

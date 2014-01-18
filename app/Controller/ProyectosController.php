@@ -59,7 +59,7 @@ function lista_estudiantes() {
 	    $this->paginate(
 		    'Persona',
 			    array(
-			        'PersonasProtecto.proyecto_id'!=$this->request->data['Integrante']['proyecto_id']),
+			        'PersonasProyecto.proyecto_id'!=$this->request->data['Integrante']['proyecto_id']),
 			        array(
 				        'joins'=>array(
 				            array('table'=>'personas_proyectos',

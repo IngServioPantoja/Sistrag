@@ -37,6 +37,7 @@ var $components = array("RequestHandler");
 	}
 
 function lista_programas() {
+	print_r($this->request->data);
 	$select_entrada=$this->Programa->find('list', 
 		array('conditions' => 
 			array('facultad_id'=> $this->request->data['Item']['facultad']

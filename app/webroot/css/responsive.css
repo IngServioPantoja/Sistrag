@@ -1,98 +1,70 @@
 @media screen and (min-width: 769px)
 {
-	body
-	{
-		border: 2px solid red;
-	}
+
 	.layout_contenido
 	{
-		top: 80px;
+		top: 30px;
 	}
 }
-@media screen and (max-width: 768px) and (min-width: 481px)
+@media screen and (max-width: 768px) and (min-width: 591px)
 {
-	body
-	{
-		border: 2px solid orange;
-	}
+
 	.layout_contenido
 	{
-		top: 140px;
+		top: 30px;
 	}
 }
-@media screen and (max-width: 480px) and (min-width: 321px)
+@media screen and (max-width: 590px) and (min-width: 501px)
 {
-	body
-	{
-		border: 2px solid green;
-	}
-	.layout_header div
-	{
-	display: block;
-	width: 100%;
-	text-align: center !important;
-	}
-	.layout_contenido
-	{
-		top: 160px;
-	}
-}
-@media screen and (max-width: 320px) and (min-width: 0px)
-{
-	body
-	{
-		border: 2px solid blue;
-	}
+
 	input[type="file"]
+	{
+		width: 180px !important;
+	}
+	input[type="text"]
 	{
 		width: 180px !important;
 	}
     
     .layout_contenido
 	{
-		top: 240px;
-		left: 0px;
+		top: 70px;
 	}
 	.layout_contenido_inicial
 	{
 		top: 140px;
 	}
-	.layout_header div
+	
+	.layout_header
 	{
-		display: block;
-		width: 100%;
-		text-align: center !important;
-	}
-	.layout_nav
-	{
-		width: 100%;
-		display: block;
 		position: relative;
-		left: 0px;
+	}
+	.layout_header #logo h2
+	{
+	}
+	.layout_header #layout_usuario
+	{
+		position: absolute;
+		top: 0px;
 		right: 0px;
-		top: 140px;
+		padding-left: 30px;
+		padding-right: 12px;
+		margin: 0px;
 	}
-	.layout_nav ul:hover li
+	.layout_header .layout_title
 	{
-		display: inline-block!important;
-	}
-	.layout_nav ul li
-	{	text-align: center;
-		width: 50%;
-		display: none!important;
-	}
-
-	.layout_nav ul li a
-	{	
-	color: #226;
-	cursor: pointer;
+	position: static;
 	display: block;
-	padding: 5px 10px;
-	z-index: 2;
+	margin: 0px;
+	padding: 0px;
+	min-width: 0px;
+	height: 45px;
 	}
-	.layout_nav ul li
-	{
+	.layout_header .layout_title h1
+	{	
 		display: inline-block;
+		padding: 5px 30px;
+		margin:0px;
 	}
 	#login
 	{
@@ -102,6 +74,254 @@
 	{
 		display: block;
 	}
+	#logo_skew_left
+	{
+		display: none;
+	}
+	.panel_menu ul li
+	{
+		text-align: center !important; 
+	}
+	select
+	{
+		color: #000;
+		border: 1px solid #324664;
+		font-size: 12px !important;
+		width: 180px;
+	}
+}
+@media screen and (max-width: 500px) and (min-width: 381px)
+{
+
+	input[type="text"]
+	{
+		width: 180px !important;
+	}
+    
+    .layout_contenido
+	{
+		top: 110px;
+		left: 0px;
+	}
+	.layout_contenido_inicial
+	{
+		top: 140px;
+	}
+	
+	.layout_header
+	{
+		position: relative;
+	}
+	.layout_header #logo h2
+	{
+		font-size:23px; 
+	}
+	.layout_header #layout_usuario
+	{
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		padding-left: 80px;
+		padding-right: 12px;
+		margin: 0px;
+	}
+	.layout_header .layout_title
+	{
+	position: static;
+	display: block;
+	margin: 0px;
+	padding: 0px;
+	min-width: 0px;
+	height: 45px;
+	}
+	.layout_header .layout_title h1
+	{	
+		display: inline-block;
+		padding: 5px 30px;
+		margin:0px;
+	}
+
+	.layout_nav
+	{
+		display: block;
+		overflow: hidden;
+		position: relative;
+		top: 0px;
+		width: 100%;
+	}
+	.layout_nav div 
+	{
+		display: block;
+		height: auto;
+	}
+	.layout_nav ul
+	{
+		display: block;
+		border-bottom: 1px solid #225;
+
+	}
+	.layout_nav ul #lista
+	{	
+		font-size: 16px;
+		display: block!important;
+		color: #ddd;
+		vertical-align: top;
+		padding: 10px 0px;
+
+	}
+	.layout_nav ul:hover li
+	{
+		display: inline-block!important;
+	}
+	.layout_nav ul li
+	{	text-align: center;
+		display: none;
+
+	}
+
+	.layout_nav ul li a
+	{	
+	color: #226;
+	cursor: pointer;
+	display: inline-block;
+	padding: 5px 10px;
+	z-index: 2;
+	}
+
+	#login
+	{
+		max-height: 300px;
+	}
+	#login #formulario div
+	{
+		display: block;
+	}
+	#logo_skew_left
+	{
+		display: none;
+	}
+
+	.panel_menu ul li
+	{
+		display: inline-block !important;
+		text-align: center !important; 
+	}
+}
+@media screen and (max-width: 380px) and (min-width: 321px)
+{
+
+	input[type="file"]
+	{
+		width: 180px !important;
+	}
+	input[type="text"]
+	{
+		width: 180px !important;
+	}
+    
+    .layout_contenido
+	{
+		top: 110px;
+		left: 0px;
+	}
+	.layout_contenido_inicial
+	{
+		top: 140px;
+	}
+	
+	.layout_header
+	{
+		position: relative;
+	}
+	.layout_header #logo h2
+	{
+		font-size:23px; 
+	}
+	.layout_header #layout_usuario
+	{
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		padding-left: 150px;
+		padding-right: 12px;
+		margin: 0px;
+	}
+	.layout_header .layout_title
+	{
+	position: static;
+	display: block;
+	margin: 0px;
+	padding: 0px;
+	min-width: 0px;
+	height: auto;
+	}
+	.layout_header .layout_title h1
+	{	
+		display: inline-block;
+		font-size: 16px;
+		padding: 3px;
+		margin:0px;
+	}
+
+	.layout_nav
+	{
+		display: block;
+		overflow: hidden;
+		position: relative;
+		top: 0px;
+		width: 100%;
+	}
+	.layout_nav div 
+	{
+		display: block;
+		height: auto;
+	}
+	.layout_nav ul
+	{
+		display: block;
+		border-bottom: 1px solid #225;
+
+	}
+	.layout_nav ul #lista
+	{	
+		font-size: 16px;
+		display: block!important;
+		color: #ddd;
+		vertical-align: top;
+		padding: 10px 0px;
+
+	}
+	.layout_nav ul:hover li
+	{
+		display: inline-block!important;
+	}
+	.layout_nav ul li
+	{	text-align: center;
+		display: none;
+
+	}
+
+	.layout_nav ul li a
+	{	
+	color: #226;
+	cursor: pointer;
+	display: inline-block;
+	padding: 5px 10px;
+	z-index: 2;
+	}
+
+	#login
+	{
+		max-height: 300px;
+	}
+	#login #formulario div
+	{
+		display: block;
+	}
+	#logo_skew_left
+	{
+		display: none;
+	}
 	.panel_menu ul li
 	{
 		display: block !important;
@@ -109,7 +329,134 @@
 	}
 	select
 	{
-		background: transparent;
+		color: #000;
+		border: 1px solid #324664;
+		font-size: 12px !important;
+		width: 180px;
+	}
+}
+@media screen and (max-width: 320px) and (min-width: 0px)
+{
+
+	input[type="file"]
+	{
+		width: 180px !important;
+	}
+	input[type="text"]
+	{
+		width: 180px !important;
+	}
+    
+    .layout_contenido
+	{
+		top: 110px;
+		left: 0px;
+	}
+	.layout_contenido_inicial
+	{
+		top: 140px;
+	}
+	
+	.layout_header
+	{
+		position: relative;
+	}
+	.layout_header #logo h2
+	{
+		font-size:23px; 
+	}
+	.layout_header #layout_usuario
+	{
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		padding-left: 80px;
+		padding-right: 12px;
+		margin: 0px;
+	}
+	.layout_header .layout_title
+	{
+	position: static;
+	display: block;
+	margin: 0px;
+	padding: 0px;
+	min-width: 0px;
+	height: auto;
+	}
+	.layout_header .layout_title h1
+	{	
+		display: inline-block;
+		font-size: 16px;
+		padding: 3px;
+		margin:0px;
+	}
+
+	.layout_nav
+	{
+		display: block;
+		overflow: hidden;
+		position: relative;
+		top: 0px;
+		width: 100%;
+	}
+	.layout_nav div 
+	{
+		display: block;
+		height: auto;
+	}
+	.layout_nav ul
+	{
+		display: block;
+		border-bottom: 1px solid #225;
+
+	}
+	.layout_nav ul #lista
+	{	
+		font-size: 16px;
+		display: block!important;
+		color: #ddd;
+		vertical-align: top;
+		padding: 10px 0px;
+
+	}
+	.layout_nav ul:hover li
+	{
+		display: inline-block!important;
+	}
+	.layout_nav ul li
+	{	text-align: center;
+		display: none;
+
+	}
+
+	.layout_nav ul li a
+	{	
+	color: #226;
+	cursor: pointer;
+	display: inline-block;
+	padding: 5px 10px;
+	z-index: 2;
+	}
+
+	#login
+	{
+		max-height: 300px;
+	}
+	#login #formulario div
+	{
+		display: block;
+	}
+	#logo_skew_left
+	{
+		display: none;
+	}
+	.panel_menu ul li
+	{
+		display: block !important;
+		text-align: center !important; 
+	}
+	select
+	{
 		color: #000;
 		border: 1px solid #324664;
 		font-size: 12px !important;
