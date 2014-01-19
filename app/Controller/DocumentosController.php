@@ -114,7 +114,7 @@ class DocumentosController extends AppController {
 		$this->ItemsEstandar->recursive = -1;
 		global $documento_id;
 		$documento_id=$id;
-		$direccion = WWW_ROOT.'files\documentos\\'.$documento_id.'\documentoxml.xml';
+		$direccion = 'files/documentos/'.$documento_id.'/documentoxml.xml';
 		$opciones = array('conditions' => array('Documento.' . $this->Documento->primaryKey => $documento_id));
 		$documento = $this->Documento->find('first', $opciones);
 		$estandar_id = $documento['Estandar']['id'];
@@ -189,16 +189,10 @@ class DocumentosController extends AppController {
 	                    $banderaC=0;
 	                }
 	            }else if($banderaA==1 && $banderaB==0){
-					if(isset($Etiqueta['value']))
-					{
-					$Etiqueta['value']=strtolower(quitar_tildes($Etiqueta['value']));
-	                $Etiqueta['value']=str_replace('.', '',$Etiqueta['value']);
-					$items[$itemkey]['titulo']=quitar_tildes(strtolower($items[$itemkey]['titulo']));
-					}
 	                //entramos aqui para buscar el texto dentro del tagg que se ha abierto
 	                if($Etiqueta['tag'] == "W:T" && $Etiqueta['type'] == "complete" && strtolower(quitar_tildes($Etiqueta['value'])) == strtolower(quitar_tildes($items[$itemkey]['titulo'])))
 	                {
-  						$items[$itemkey]['titulo']=quitar_tildes(strtolower($items[$itemkey]['titulo']));	
+  						$items[$itemkey]['titulo']=strtolower($items[$itemkey]['titulo']);	
 	                   //Acabamos de encontrar el texto dentro del tag 
 	                    $item =$Etiqueta['value'];
 	                    $banderaA=1;
@@ -285,7 +279,7 @@ class DocumentosController extends AppController {
 	                    $codigoImg=getImagenCode($nameImagen);
 	                    $imagen=convertirImagen($codigoImg);
 	                    ++$contadorImg;
-	                    $fileName=WWW_ROOT.'files\documentos\\'.$documento_id.'\\'.$contadorImg.".png";
+	                    $fileName=WWW_ROOT.'files/documentos//'.$documento_id.'//'.$contadorImg.".png";
 	                    $file=fopen($fileName,"a") or die("Problemas");
 	                    fputs($file,$imagen);
 	                    fclose($file);
@@ -365,7 +359,7 @@ class DocumentosController extends AppController {
 			{
 				if ($this->Documento->save($this->request->data)) 
 				{
-					$destino = WWW_ROOT."files\documentos\\".$this->Documento->id."".DS;
+					$destino = WWW_ROOT."files/documentos//".$this->Documento->id."".DS;
 					mkdir($destino);
 					if(move_uploaded_file($this->data['Documento']['documentoxml']['tmp_name'], $destino."documentoxml.xml"))
 					{               

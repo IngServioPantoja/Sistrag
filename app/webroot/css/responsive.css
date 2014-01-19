@@ -1,22 +1,56 @@
-@media screen and (min-width: 769px)
+@media screen and (min-width: 690px)
 {
-
+	body 
+	{
+		border:0px; solid red;
+	}
 	.layout_contenido
 	{
 		top: 30px;
 	}
 }
-@media screen and (max-width: 768px) and (min-width: 591px)
+@media screen and (max-width: 690px) and (min-width: 608px)
 {
-
+	body 
+	{
+		border:0px; solid green;
+	}
 	.layout_contenido
 	{
 		top: 30px;
 	}
+	.layout_contenido_inicial
+	{
+		top: 100px;
+	}
+	.layout_header #layout_menu_inicio
+	{	
+		display: inline-block;
+		text-align: center;
+		top: 0px;
+		right: 0px;
+		position: absolute;
+	}
+	.layout_header .layout_titleLogout
+	{
+		display: inline-block;
+		position: relative;
+		margin: 0px;
+		padding: 0px;
+	}
+	.layout_header .layout_titleLogout h1
+	{	
+		margin: 0px;
+		padding: 10px 0px 0px 0px;
+		display: block;
+	}
 }
-@media screen and (max-width: 590px) and (min-width: 501px)
+@media screen and (max-width: 607px) and (min-width: 501px)
 {
-
+	body 
+	{
+		border:0px; solid blue;
+	}
 	input[type="file"]
 	{
 		width: 180px !important;
@@ -32,7 +66,7 @@
 	}
 	.layout_contenido_inicial
 	{
-		top: 140px;
+		top: 100px;
 	}
 	
 	.layout_header
@@ -41,6 +75,14 @@
 	}
 	.layout_header #logo h2
 	{
+	}
+	.layout_header #layout_menu_inicio
+	{	
+		display: inline-block;
+		text-align: center;
+		top: 0px;
+		right: 0px;
+		position: absolute;
 	}
 	.layout_header #layout_usuario
 	{
@@ -66,6 +108,24 @@
 		padding: 5px 30px;
 		margin:0px;
 	}
+	.layout_header .layout_titleLogout
+	{
+		display: inline-block;
+		position: relative;
+		margin: 0px;
+		padding: 0px;
+	}
+	.layout_header .layout_titleLogout h1
+	{	
+		margin: 0px;
+		padding: 10px 0px 0px 0px;
+		display: block;
+		font-size: 17px
+	}
+	.layout_nav
+	{
+		top: 90px;
+	}
 	#login
 	{
 		max-height: 300px;
@@ -89,10 +149,14 @@
 		font-size: 12px !important;
 		width: 180px;
 	}
+
 }
 @media screen and (max-width: 500px) and (min-width: 381px)
 {
-
+	body 
+	{
+		border:0px; solid yellow;
+	}
 	input[type="text"]
 	{
 		width: 180px !important;
@@ -105,16 +169,20 @@
 	}
 	.layout_contenido_inicial
 	{
-		top: 140px;
+		top: 100px;
 	}
 	
 	.layout_header
 	{
 		position: relative;
 	}
-	.layout_header #logo h2
-	{
-		font-size:23px; 
+	.layout_header #layout_menu_inicio
+	{	
+		display: inline-block;
+		text-align: center;
+		top: 0px;
+		right: 0px;
+		position: absolute;
 	}
 	.layout_header #layout_usuario
 	{
@@ -140,7 +208,19 @@
 		padding: 5px 30px;
 		margin:0px;
 	}
-
+	.layout_header .layout_titleLogout
+	{
+		display: inline-block;
+		position: relative;
+		margin: 0px;
+		padding: 0px;
+	}
+	.layout_header .layout_titleLogout h1
+	{	
+		margin: 0px;
+		padding: 3px 20px 0px 20px;
+		display: block;
+	}
 	.layout_nav
 	{
 		display: block;
@@ -157,7 +237,7 @@
 	.layout_nav ul
 	{
 		display: block;
-		border-bottom: 1px solid #225;
+		border:bottom: 1px solid #225;
 
 	}
 	.layout_nav ul #lista
@@ -209,7 +289,10 @@
 }
 @media screen and (max-width: 380px) and (min-width: 321px)
 {
-
+	body 
+	{
+		border:0px; solid black;
+	}
 	input[type="file"]
 	{
 		width: 180px !important;
@@ -232,19 +315,12 @@
 	.layout_header
 	{
 		position: relative;
+
 	}
-	.layout_header #logo h2
+	.layout_header .headerLogin
 	{
-		font-size:23px; 
-	}
-	.layout_header #layout_usuario
-	{
-		position: absolute;
-		top: 0px;
-		right: 0px;
-		padding-left: 150px;
-		padding-right: 12px;
-		margin: 0px;
+		text-align: left !important;
+		display: inline-block !important;
 	}
 	.layout_header .layout_title
 	{
@@ -253,16 +329,52 @@
 	margin: 0px;
 	padding: 0px;
 	min-width: 0px;
-	height: auto;
+	height: 45px;
 	}
 	.layout_header .layout_title h1
 	{	
 		display: inline-block;
-		font-size: 16px;
-		padding: 3px;
+		padding: 5px 20px;
 		margin:0px;
 	}
+	.layout_header #logo
+	{
+		display: block;
+		text-align:  center;
+	}
 
+	.layout_header #layout_usuario
+	{
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		padding: 7px 12px 7px 80px;
+		margin: 0px;
+	}
+	.layout_header #layout_menu_inicio
+	{
+		display: block;
+		width: 100%;
+		text-align: center;
+	}
+
+	.layout_header #layout_menu_inicio #logo_skew_left
+	{
+		display: none;
+	}
+	.layout_header .layout_titleLogout
+	{
+		display: inline-block;
+		position: relative;
+		margin: 0px;
+		padding: 0px;
+	}
+	.layout_header .layout_titleLogout h1
+	{	
+		margin: 0px;
+		padding: 3px 0px 0px 0px;
+		display: block;
+	}
 	.layout_nav
 	{
 		display: block;
@@ -279,7 +391,7 @@
 	.layout_nav ul
 	{
 		display: block;
-		border-bottom: 1px solid #225;
+		border:bottom: 1px solid #225;
 
 	}
 	.layout_nav ul #lista
@@ -337,7 +449,10 @@
 }
 @media screen and (max-width: 320px) and (min-width: 0px)
 {
-
+	body 
+	{
+		border:0px; solid white;
+	}
 	input[type="file"]
 	{
 		width: 180px !important;
@@ -349,46 +464,95 @@
     
     .layout_contenido
 	{
-		top: 110px;
+		top: 60px;
 		left: 0px;
 	}
 	.layout_contenido_inicial
 	{
-		top: 140px;
+		top: 80px;
 	}
-	
 	.layout_header
 	{
 		position: relative;
+		background: #bcbcbc; /* Old browsers */
+		background: -moz-linear-gradient(top,  #bcbcbc 0%, #efefef 50%, #bcbcbc 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#bcbcbc), color-stop(50%,#efefef), color-stop(100%,#bcbcbc)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%); /* IE10+ */
+		background: linear-gradient(to bottom,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%); /* W3C */
+	}
+	.layout_header .headerLogin
+	{
+		text-align: left !important;
+		display: inline-block !important;
+	}
+	.layout_header #logo
+	{
+		display: block;
+		text-align:  center;
+		background: rgba(255,255,255,0);
 	}
 	.layout_header #logo h2
 	{
-		font-size:23px; 
+		font-size:20px; 
+	}
+	.layout_header #logo figure img
+	{
+		width: 27px;
+	}
+	.layout_header #logo #logo_skew_right
+	{
+		display: none;
+	}
+	.layout_header #layout_menu_inicio
+	{	
+		float: none;
+		display: block;
+		width: 100%;
+		text-align: center;
+		position: static;
+		background: rgba(255,255,255,0);
+	}
+	.layout_header #layout_menu_inicio nav ul
+	{
+		background: rgba(255,255,255,0);
+		position: static;
+	}
+	.layout_header #layout_menu_inicio nav ul li a
+	{
+		font-size: 14px;
+		background: rgba(255,255,255,0);
+	}
+	.layout_header #layout_menu_inicio #logo_skew_left
+	{
+		display: none;
 	}
 	.layout_header #layout_usuario
 	{
 		position: absolute;
 		top: 0px;
 		right: 0px;
-		padding-left: 80px;
-		padding-right: 12px;
+		padding: 5px 12px 4px 80px;
 		margin: 0px;
 	}
 	.layout_header .layout_title
 	{
-	position: static;
-	display: block;
-	margin: 0px;
-	padding: 0px;
-	min-width: 0px;
-	height: auto;
+		display: none;
 	}
 	.layout_header .layout_title h1
 	{	
 		display: inline-block;
-		font-size: 16px;
+		font-size: 14px;
 		padding: 3px;
 		margin:0px;
+	}
+	.layout_header .layout_titleLogout
+	{
+	display: none;
+	}
+	.layout_header .layout_titleLogout h1
+	{	
 	}
 
 	.layout_nav
@@ -399,6 +563,10 @@
 		top: 0px;
 		width: 100%;
 	}
+	.layout_nav a span
+	{
+		font-size: 40px;	
+	}
 	.layout_nav div 
 	{
 		display: block;
@@ -407,7 +575,7 @@
 	.layout_nav ul
 	{
 		display: block;
-		border-bottom: 1px solid #225;
+		border:bottom: 1px solid #225;
 
 	}
 	.layout_nav ul #lista
@@ -440,11 +608,15 @@
 
 	#login
 	{
-		max-height: 300px;
+		max-height: 230px;
 	}
 	#login #formulario div
 	{
 		display: block;
+	}
+	#login #formulario div figure img
+	{
+		width: 50px;
 	}
 	#logo_skew_left
 	{

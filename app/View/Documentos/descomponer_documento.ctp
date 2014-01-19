@@ -1,3 +1,6 @@
+<?php
+print_r($descomposiciones);
+?>
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>

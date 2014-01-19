@@ -106,21 +106,18 @@ class UsersController extends AppController {
 public function login() {
     if ($this->request->is('post')) {
         if ($this->Auth->login()) {
-
+            $this->Session->setFlash(__('Bienvenido'));
 		   if ($this->Auth->user('nivel_id') == '1') {
-            $this->Session->setFlash(__('Eres administrador'));
             $this->redirect("/menus/mnuMain/");
 
 
 }else if ($this->Auth->user('nivel_id') == '2'){
 
-            $this->Session->setFlash(__('eres profesor'));
 						$this->redirect("/menus/mnuMain/");
 
 }
 else if ($this->Auth->user('nivel_id') == '3'){
 
-            $this->Session->setFlash(__('eres Estudiante'));
 						$this->redirect("/menus/mnuMain/");
 
 }

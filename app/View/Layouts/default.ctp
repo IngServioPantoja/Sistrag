@@ -11,7 +11,7 @@ echo $this->Html->meta(
         <title>
             Sistrág: Sistema de información para el control de trabajos de grado I.U.CESMAG.
         </title>
-        <meta charset="utf-8" />
+        <meta charset="utf-8"/>
         <?php 
 			echo $this->Html->css(array ('layout','normalize','style','extjs','responsive')); 
             echo $this->Html->script(array('jquery',));
@@ -22,7 +22,8 @@ echo $this->Html->meta(
     </head>
     <body id="body_layout">
         <header class="layout_header">
-            <div id="logo">
+            <div id="logo" <?php if($logged_in)
+            { ?> class="headerLogin" <?php } ?>>
                 <figure>
                     <?php
                         echo $this->Html->image('iconos/logo64.png', array('alt' => 'Login','height' => '', 'width' => '32px'));
@@ -35,13 +36,32 @@ echo $this->Html->meta(
                     &nbsp;
                 </div>
             </div>
+            <?php
+            if(!$logged_in)
+            {
+            ?>
+            <div class="layout_titleLogout">
+                <h1 class="titulo">
+                   Sistema de información para el control de trabajos de grado
+                </h1>
+            </div>
+            <?php
+            }
+            else
+            {
+            ?>
             <div class="layout_title">
                 <h1 class="titulo">
                    Sistema de información para el control de trabajos de grado
                 </h1>
             </div>  
-                <?php echo $this->Session->flash(); ?> 
-                <?php  if($logged_in){ ?> 
+            <?php
+            }
+            ?>
+            <?php 
+                echo $this->Session->Flash(); 
+            ?>
+            <?php  if($logged_in){ ?> 
             <div id="layout_usuario">
                 <?php 
                 echo $this->Html->link($this->Html->image("img_subida/usuarios/1/1_128.jpg", array('height' => '', 'width' => '25px')), array('controller'=>'personas', 'action' => 'edit', $usuario['Persona']['id']),
@@ -64,11 +84,6 @@ echo $this->Html->meta(
                             </div>
                             <?php
                                 echo $this->Html->link('Inicio',array('controller'=>'users','action'=>'login'));                         
-                            ?>
-                        </li>
-                        <li>
-                            <?php
-                                echo $this->Html->link('Iniciar Sesión',array('controller'=>'users','action'=>'login'));                         
                             ?>
                         </li>
                         <li>

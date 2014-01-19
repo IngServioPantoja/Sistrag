@@ -29,7 +29,7 @@ $user=NUll;
 					<div class="crud_fila_principal">
 						<?php echo $this->Form->create('Busqueda'); ?>
 						<span>
-							Facultad
+							Agregar facultad
 						</span>
 					</div>
 					<?php echo $this->Form->create('Facultad'); ?>

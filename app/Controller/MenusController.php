@@ -115,8 +115,6 @@ class MenusController extends AppController {
 		$menu [$p]['icono']=$key['Menu']['icono'];
 		++$p;
 		endforeach;
-		echo "</br>";
-		print_r($menu); 
         $this->Session->write("Menu",$menu);
         $this->redirect("/menus");
     }

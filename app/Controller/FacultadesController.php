@@ -88,7 +88,7 @@ var $paginate =array(
 		$facultad=$this->Facultad->find('first', $options);
 		$options = array('conditions' => array('Programa.facultad_id' => $facultad['Facultad']['id']));
 		$facultad['Facultad']['programas']=$this->Programa->find('count', $options);
-		print_r($facultad);
+		$this->set('facultad',$facultad);
 	}
 
 	public function add() {

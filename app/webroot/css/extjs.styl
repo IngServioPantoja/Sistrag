@@ -222,14 +222,21 @@
         div
           display block
           vertical-align  top
-          text-align left
+          text-align center
           margin-bottom 3px
-
+          
           div
             position relative
             vertical-align  top
             display inline-block
-
+          
+          .divTextarea
+            display block
+            width 100%
+            position relative
+            text-align left
+            height 100%
+            
           div:first-child
             min-width 121px
             background-color rgba(255,255,255,0.7);
@@ -239,15 +246,16 @@
 
           div:last-child
             
-
+    
             textarea
-              display inline-block
-              vertical-align  top
-              width: 178px !important;
-              height 140px
-              max-height 300px
-
-      
+              box-sizing border-box
+              -moz-box-sizing border-box
+              -webkit-box-sizing border-box
+              font-size 14px
+              width 100%
+              max-width: 100%
+              height auto
+              overflow visible
 
     .ficha_index
       background-color rgba(255,255,255,0.6)
@@ -321,6 +329,95 @@
     .ficha_index:hover .ficha_acciones
      display block
     
+
+
+
+    .ficha_view
+      background-color rgba(255,255,255,0.6)
+      border-image linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+      -moz-border-image -moz-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+      -o-border-image -o-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+      -webkit-border-image -webkit-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+      border-left-width 2px
+      border-radius 5px
+      border-right-width 2px
+      box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
+      -moz-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
+      -webkit-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
+      display inline-block
+      margin 5px
+      max-width 600px
+
+      .ficha_acciones
+        background  #fff 
+        background -moz-linear-gradient(top,  rgba(50,70,100,0.7) 0%, rgba(63,88,125,0.66) 11%, rgba(71,100,142,0.62) 21%, rgba(62,88,125,0.57) 32%, rgba(55,77,108,0.54) 39%, rgba(40,57,80,0.5) 50%, rgba(16,23,33,0.57) 68%, rgba(5,7,11,0.61) 79%, rgba(0,0,0,0.64) 86%, rgba(0,0,0,0.7) 100%)
+        background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(50,70,100,0.7)), color-stop(11%,rgba(63,88,125,0.66)), color-stop(21%,rgba(71,100,142,0.62)), color-stop(32%,rgba(62,88,125,0.57)), color-stop(39%,rgba(55,77,108,0.54)), color-stop(50%,rgba(40,57,80,0.5)), color-stop(68%,rgba(16,23,33,0.57)), color-stop(79%,rgba(5,7,11,0.61)), color-stop(86%,rgba(0,0,0,0.64)), color-stop(100%,rgba(0,0,0,0.7)))
+        background -webkit-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
+        background -o-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
+        background -ms-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
+        background linear-gradient(to bottom,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
+        border-radius 0px 0px 0px 10px
+        display none
+        padding 5px
+        position absolute
+        right 0px
+        top 0px
+        
+        a
+          display inline-block
+
+      .ficha_datos
+        background #bcbcbc
+        background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+        background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcbcbc), color-stop(50%, #efefef), color-stop(100%, #bcbcbc))
+        background -webkit-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+        background -o-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+        background -ms-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+        background linear-gradient(to bottom, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+        border-top 1px solid #ccc
+        min-height 100px
+        padding 5px
+        text-align justify
+        
+        p
+          text-align justify
+
+        span
+          color #222
+          font-size 14px
+        
+        table
+          text-align center !important
+
+      figure
+        position relative
+      
+    .ficha_view:hover .ficha_datos
+      background #fff 
+      background #324664
+      background -moz-linear-gradient(top,  #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000000 86%, #000000 100%)
+      background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#324664), color-stop(11%,#3f587d), color-stop(21%,#47648e), color-stop(32%,#3e587d), color-stop(39%,#374d6c), color-stop(68%,#101721), color-stop(79%,#05070b), color-stop(86%,#000000), color-stop(100%,#000000))
+      background -webkit-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+      background -o-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+      background -ms-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+      background linear-gradient(to bottom,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+
+    .ficha_view:hover span,.ficha_view:hover p
+     color #ddd
+
+    .ficha_view:hover .ficha_acciones
+     display block
+    
+
+
+
+
+
+
+
+
+
+
     .crud_fila_secundaria_contenido
       border solid 1px #000
       background rgba(255,255,255,0.9)
