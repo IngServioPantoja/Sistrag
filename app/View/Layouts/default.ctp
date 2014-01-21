@@ -1,11 +1,4 @@
 <?php $usuario=$this->Session->read("Usuario"); ?>
-<?php
-echo $this->Html->meta(
-    'favicon.ico',
-    'app/webroot/img/iconos/favicon.ico',
-    array('type' => 'icon')
-);
-?>
 <html lang='es_Es'>
     <head>
         <title>
@@ -13,12 +6,12 @@ echo $this->Html->meta(
         </title>
         <meta charset="utf-8"/>
         <?php 
+            echo $this->Html->meta('favicon.ico','app/webroot/img/iconos/favicon.ico',array('type' => 'icon'));
 			echo $this->Html->css(array ('layout','normalize','style','extjs','responsive')); 
-            echo $this->Html->script(array('jquery',));
+            echo $this->Html->script(array('jquery','jquery.autosize'));
             echo $this->Js->writeBuffer(array('cache'=>true));
         ?>
-        <meta name="viewport" 
-          content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     </head>
     <body id="body_layout">
         <header class="layout_header">
@@ -159,7 +152,48 @@ echo $this->Html->meta(
             ?>
 
 	<footer class="layout_footer">
-  Servio Pantoja - Francisco Rojas
+    <div>
+        <?php 
+        echo $this->Html->link(
+            $this->Html->tag('span', "", array('class' => "icon-facebook2")),
+            "https://www.facebook.com/servioandres.pantojarosero",
+                array('escape' => false,'target'=>'_blank')
+        );
+        ?> 
+        <span>Servio Pantoja</span>
+        <?php 
+        echo $this->Html->link(
+            $this->Html->tag('span', "", array('class' => "icon-twitter")),
+            "https://twitter.com/ServioPantoja",
+                array('escape' => false,'target'=>'_blank')
+        );
+        ?> 
+         
+        <?php 
+        echo $this->Html->link(
+            $this->Html->tag('span', "", array('class' => "icon-github")),
+            "https://github.com/IngServioPantoja/Sistrag",
+                array('escape' => false,'target'=>'_blank')
+        );
+        ?>  
+    </div>
+    <div>
+        <?php 
+        echo $this->Html->link(
+            $this->Html->tag('span', "", array('class' => "icon-twitter")),
+            "https://twitter.com/PFranciscoRojas",
+                array('escape' => false,'target'=>'_blank')
+        );
+        ?>
+        <span>Francisco Rojas</span>
+        <?php 
+        echo $this->Html->link(
+            $this->Html->tag('span', "", array('class' => "icon-facebook2")),
+            "https://www.facebook.com/francisco.rojas.54943600",
+                array('escape' => false,'target'=>'_blank')
+        );
+        ?>
+    </div>  
 </footer>
 </body>
 </html>

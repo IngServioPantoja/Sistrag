@@ -16,13 +16,27 @@ if(!$this->request->is('ajax'))
 				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Listar programas'), array('action' => 'index')); 
+				echo $this->Html->link(__('Facultades'), array('controller'=>'facultades','action' => 'index')); 
 				?></li><li>
 				<?php
-				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Agregar Programa'), array('action' => 'add')); 
+				echo $this->Html->link(__('Programas'), array('controller'=>'programas','action' => 'index')); 
+				?></li><li>
+				<?php
+				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+				?>
+				<?php 
+				echo $this->Html->link(__('Áreas de investigación'), array('controller'=>'areas','action' => 'index')); 
+				?></li><li>
+				<?php
+				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+				?>
+				<?php 
+				echo $this->Html->link(__('Líneas de investigación'), array('controller'=>'lineas','action' => 'index')); 
+				?></li>
+				<?php 
 			}
 				?>
 			</li>
@@ -88,8 +102,8 @@ if(!$this->request->is('ajax'))
 <?php
 	}
 ?>
-							<?php foreach ($programas as $programa): ?>
-							<a href="programas/view/<?php  echo $programa['Programa']['id'];?>">
+							<?php foreach ($facultades as $facultad): ?>
+							<a href="facultades/view/<?php  echo $facultad['Facultad']['id'];?>">
 								<article class='ficha_index'>
 									<figure>
 										<?php
@@ -97,15 +111,15 @@ if(!$this->request->is('ajax'))
 										?>
 										<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'): ?>
 											<div class="ficha_acciones">
-										<?php echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'edit', $programa['Programa']['id']),
+										<?php echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'edit', $facultad['Facultad']['id']),
 										array('escape' => false)); 
 										?>
-										<?php echo $this->Form->postLink($this->Html->image("iconos/eliminar50.png", array('height' => '', 'width' => '25px')), array('action' => 'delete', $programa['Programa']['id']), array('escape' => false), __('¿Esta seguro que desea borrar el programa de %s?', $programa['Programa']['nombre'])); ?>
+										<?php echo $this->Form->postLink($this->Html->image("iconos/eliminar50.png", array('height' => '', 'width' => '25px')), array('action' => 'delete', $facultad['Facultad']['id']), array('escape' => false), __('¿Esta seguro que desea borrar la facultad de %s?', $facultad['Facultad']['nombre'])); ?>
 											</div>
 										<?php endif; ?>
 									</figure>
 							</a>
-							<a href="programas/view/<?php  echo $programa['Programa']['id'];?>">
+							<a href="facultades/view/<?php  echo $facultad['Facultad']['id'];?>">
 									<div class='ficha_datos'>
 										<table>
 											<tr>
@@ -116,7 +130,7 @@ if(!$this->request->is('ajax'))
 												</th>
 												<td>
 													<span>
-														<?php echo h($programa['Programa']['id']); ?>
+														<?php echo h($facultad['Facultad']['id']); ?>
 													</span>	
 												</td>
 											</tr>
@@ -130,16 +144,16 @@ if(!$this->request->is('ajax'))
 											<tr>
 												<td colspan="2">
 													<span>
-														<?php echo h($programa['Programa']['nombre']); ?>
+														<?php echo h($facultad['Facultad']['nombre']); ?>
 													</span>
 												</td>
 											</tr>
 											<tr>
 												<th>
-													<span>Áreas asociadas</span>
+													<span>Programas asociados</span>
 												</th>
 												<td>
-													<span><?php echo h($programa['Programa']['areas']); ?></span>
+													<span><?php echo h($facultad['Facultad']['programas']); ?></span>
 												</td>
 											</tr>
 										</table>
@@ -198,7 +212,7 @@ $this->Js->get('#atributo')->event('change',
 $this->Js->get('#valor')->event('keyup',
 	$this->Js->request(
 	    array(
-	        'controller' => 'programas','action'=>'index',
+	        'controller' => 'facultades','action'=>'index',
 	    ),
 	    array(
 	        'update'=>'#contenedor_datos',

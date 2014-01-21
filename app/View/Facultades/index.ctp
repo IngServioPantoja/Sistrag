@@ -7,19 +7,23 @@ if(!$this->request->is('ajax'))
 	<nav class="panel_menu">
 		<ul>
 			
-				<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') {?>
-			<li>
+			<?php
+			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
+			{
+			?>
+			<li class="panel_menu_actual">
 				<?php
 				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
 				echo $this->Html->link(__('Listar facultades'), array('action' => 'index')); 
-				?></li><li class="panel_menu_actual">
+				?></li><li>
 				<?php
 				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Agregar Facultad'), array('action' => 'add')); }
+				echo $this->Html->link(__('Agregar Facultad'), array('action' => 'add')); 
+			}
 				?>
 			</li>
 		</ul>
@@ -179,7 +183,6 @@ $this->Js->get('#atributo')->event('change',
 	    ),
 	    array(
 	        'update'=>'#contenedor_datos',
-	        'before' => $this->Js->alert('entre'),
 	        'async' => true,
 	        'method' => 'post',
 	        'dataExpression'=>true,

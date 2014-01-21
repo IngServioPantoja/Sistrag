@@ -10,24 +10,13 @@
 }
 /* CSS Document */
 /* CSS Para el body aqui tratamos de quitar margenes */
-
-* {
-margin: 0;
-padding: 0;
-}
 html, body {
-font-size: 16px;
-position:fixed !important;
-
-position:absolute;
-
-top:0px;
-
-right:0px;
-
 bottom:0px;
-
+font-size: 16px;
 left:0px;
+position:fixed !important;
+right:0px;
+top:0px;
 width: 100%;
 }
 ::-webkit-scrollbar {
@@ -101,14 +90,14 @@ width: 100%;
 }
 #flashMessage
 {
-  background-color: rgba(255,255,255,0.8);
-  border-radius: 10px;
-  box-shadow: 0px 0px 15px 10px rgba(16,16,40,0.7);
-  -moz-box-shadow: 0px 0px 15px 10px rgba(255,255,40,0.7);
-  -webkit-box-shadow: 0px 0px 15px 10px rgba(16,16,40,0.7);
-  padding: 20px;
-  z-index: 2;	
-  color: #225;
+background-color: rgba(255,255,255,0.8);
+border-radius: 10px;
+box-shadow: 0px 0px 15px 10px rgba(16,16,40,0.7);
+-moz-box-shadow: 0px 0px 15px 10px rgba(255,255,40,0.7);
+-webkit-box-shadow: 0px 0px 15px 10px rgba(16,16,40,0.7);
+padding: 10px;
+z-index: 2;	
+color: #225;
 position: fixed;
 top: 40%;
 left: 0%;
@@ -116,7 +105,7 @@ right: 0%;
 width: 200px;
 height: 40px;
 text-align: center;
-font-size: 1.5em;
+font-size: 20px;
 font-weight: bold;
 animation: mensaje_flash 4s 1 forwards;
 -webkit-animation: mensaje_flash 4s 1 forwards;
@@ -547,8 +536,7 @@ background: -ms-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d
 background: linear-gradient(to bottom,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#324664', endColorstr='#000000',GradientType=0 );
 color        :rgba(255,255,255,1);
-min-height       :30px;
-height       :30px;
+min-height   :30px;
 text-align   :center;
 line-height  :30px;
 clear        :both !important;
@@ -557,8 +545,28 @@ position: absolute;
 bottom:0px;
 width: 100%;
 z-index: 2;
+font-size: 14px;
 }
-
+.layout_footer a
+{
+text-decoration: none;
+}
+.layout_footer a span
+{	
+	border-radius: 100%;
+	border: 1px solid white;
+	font-family: icomoon;
+}
+.layout_footer a span:hover
+{	
+	box-shadow: 0px 0px 10px 5px rgba(255,255,255,0.7);
+	-moz-box-shadow: 0px 0px 10px 5px rgba(255,255,255,0.7);
+	-webkit-box-shadow: 0px 0px 10px 5px rgba(255,255,255,0.7);
+}
+.layout_footer div
+{
+	display: inline-block;
+}
 .documento
 {
 	margin: auto;
@@ -570,7 +578,6 @@ input[type='text']
 div[class='input select']
 {
 	padding: 5px;
-	/* background: #324664;*/
 }
 select
 {	min-width: 170px;
@@ -590,60 +597,88 @@ select option:hover
 }
 /* codigos iconos */
 .icon-group:before {
+	font-family: icomoon;
 	content: "\e600";
 }
 .icon-user-md:before {
+	font-family: icomoon;
 	content: "\e604";
 }
 .icon-youtube:before {
+	font-family: icomoon;
 	content: "\e60a";
 }
 .icon-file-settings:before {
+	font-family: icomoon;
 	content: "\e601";
 }
 .icon-library:before {
+	font-family: icomoon;
 	content: "\e602";
 }
 .icon-calendar:before {
+	font-family: icomoon;
 	content: "\e603";
 }
 .icon-off:before {
+	font-family: icomoon;
 	content: "\e605";
 }
 .icon-minus:before {
+	font-family: icomoon;
 	content: "\e606";
 }
 .icon-cancel:before {
+	font-family: icomoon;
 	content: "\e607";
 }
 .icon-checkmark:before {
+	font-family: icomoon;
 	content: "\e608";
 }
 .icon-suitcase:before {
+	font-family: icomoon;
 	content: "\e609";
 }
 .icon-cloudy:before {
+	font-family: icomoon;
 	content: "\e60b";
 }
 .icon-auction:before {
+	font-family: icomoon;
 	content: "\e60d";
 }
 .icon-stats:before {
+	font-family: icomoon;
 	content: "\e60c";
 }
 .icon-facebook2:before {
+	background-color: white;
+	border-radius: 50%;
+	color: #226;
 	content: "\e610";
+	font-family: icomoon;
 }
 .icon-github:before {
+	background-color: white;
+	border-radius: 50%;
+	color: black;
 	content: "\e611";
+	font-family: icomoon;
 }
 .icon-twitter:before {
+	background-color: white;
+	border-radius: 50%;
+	color: #55acee;
 	content: "\e612";
+	font-family: icomoon;
 }
 .icon-batman:before {
+	font-family: icomoon;
 	content: "\e60f";
 }
 .icon-earth:before {
+	font-family: icomoon;
 	content: "\e613";
 }
 form

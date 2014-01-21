@@ -1,10 +1,10 @@
 <?php
 App::uses('AppController', 'Controller');
 
-class FacultadesController extends AppController {
+class AdministracionController extends AppController {
 var $components = array("RequestHandler");
 var $helpers = array('Form', 'Html', 'Js','Paginator');
-var $uses = array('Facultad','Programa','Area','Linea');
+var $uses = array('Facultad','Programa');
 var $paginate =array(
         'limit' => 10,
         );
@@ -21,27 +21,15 @@ var $paginate =array(
 		}
 	}
 
-	public function agregar_programa($facultad_id=null) {
-		if (!$this->Facultad->exists($facultad_id)) {
-				throw new NotFoundException(__('Facultad invalida'));
-			}
+	public function agregar_programa($facultad_id) {
 		if ($this->request->is('post')) {
-			$this->Programa->create();
-			print_r($this->request->data);
-			if ($this->Programa->save($this->request->data)) {
-				$this->Session->setFlash(__('El programa ha sido registrado exitosamente'));
-				$this->redirect(array('controller'=>'facultades','action' => 'programas_asociados',$this->request->data['Programa']['facultad_id']));
+			$this->Facultad->create();
+			if ($this->Facultad->save($this->request->data)) {
+				$this->Session->setFlash(__('The facultad has been saved'));
+				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('No se ha podido guardar el programa intente de nuevo.'));
+				$this->Session->setFlash(__('The facultad could not be saved. Please, try again.'));
 			}
-		}
-		else
-		{
-			$options = array('conditions' => array('Facultad.' . $this->Facultad->primaryKey => $facultad_id));
-			$facultad = $this->Facultad->find('first', $options);
-			$facultades = $this->Programa->Facultad->find('list',$options);
-			$this->set(compact('facultades'));
-			$this->set('facultad',$facultad);
 		}
 	}
 
@@ -58,8 +46,8 @@ var $paginate =array(
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Facultad->delete()) {
-			$this->Session->setFlash(__('Facultad borrada exitosamente'));
-			$this->redirect($this->referer());
+			$this->Session->setFlash(__('Facultad deleted'));
+			$this->redirect(array('action' => 'index'));
 		}
 		$this->Session->setFlash(__('Facultad was not deleted'));
 		$this->redirect(array('action' => 'index'));
@@ -164,7 +152,6 @@ var $paginate =array(
 
 	public function programas_asociados($facultad_id=null,$atributo=null,$valor=null)
 	{
-		$this->Programa->recursive = -1;
 		if (!$this->Facultad->exists($facultad_id))
 		{
 			throw new NotFoundException(__('Facultad invalida'));
@@ -199,26 +186,6 @@ var $paginate =array(
 		{
 			$opciones=array('Programa.facultad_id'=>$facultad_id);
 			$programas = $this->paginate('Programa',$opciones);	
-		}
-		$p=0;
-		$opciones = array(
-			    	'fields' => 
-			            array(
-			                'Area.id','Area.programa_id'
-			           	)
-		   	);
-		$areas = $this->Area->find('list',$opciones);
-		$contador=0;
-		foreach ($programas as $programa) {
-			foreach ($areas as $id => $programa_id) {
-				if($programa['Programa']['id']==$programa_id)
-				{
-					++$contador;	
-				}
-			}
-			$programas[$p]['Programa']['areas'] = $contador;
-			++$p;
-			$contador=0;
 		}
 		$this->set('programas',$programas);
 		if($this->request->is('ajax'))    	

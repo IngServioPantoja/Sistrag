@@ -1,6 +1,6 @@
 <?php 
 $user=NUll;
-?> 	
+?>
 <section class="panel_frame">
 	<nav class="panel_menu">
 		<ul>
@@ -8,7 +8,7 @@ $user=NUll;
 			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
 			{
 			?>
-			<li class="panel_menu_actual">
+			<li>
 				<?php
 				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
@@ -20,7 +20,7 @@ $user=NUll;
 				?>
 				<?php 
 				echo $this->Html->link(__('Programas asociados'), array('action' => 'programas_asociados',$facultad['Facultad']['id'])); 
-				?></li><li>
+				?></li><li class="panel_menu_actual">
 				<?php
 				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
@@ -36,16 +36,16 @@ $user=NUll;
 			<tr>
 				<td>
 					<div class="crud_fila_principal">
+						<?php echo $this->Form->create('Busqueda'); ?>
 						<span>
-							Modificar facultad
+							Agregar programa
 						</span>
 					</div>
-					<?php echo $this->Form->create('Facultad'); ?>
-					<?php echo $this->Form->input('id'); ?>
+					<?php echo $this->Form->create('Programa'); ?>
 						<div class="crud_fila_secundaria">
 								<figure class="fondoAgregar">
 									<?php
-									echo $this->Html->image('recursos/escudo400.png', array('width' => '220px'));
+									echo $this->Html->image('recursos/escudo400.png', array('width' => '200px'));
 									?>
 								</figure>
 							<article class='fichaAgregar'>
@@ -53,7 +53,16 @@ $user=NUll;
 								<div class='entradas'>
 									<div>
 										<div>
-											<b>Nombre facultad:</b>
+											<b>Facultad asociada:</b>
+										</div>
+										</br>
+										<div>
+										<?php echo $this->Form->input('facultad_id',array('label'=>false,'value'=>$facultad['Facultad']['id'])); ?>
+										</div>
+									</div>
+									<div>
+										<div>
+											<b>Nombre programa:</b>
 										</div>
 										<div>
 										<?php echo $this->Form->input('nombre',array('label'=>false)); ?>
@@ -64,7 +73,7 @@ $user=NUll;
 											<b>Descripción:</b>
 										</div>
 										<div class="divTextarea">
-											<?php echo $this->Form->input('descripcion',array('type'=> 'textarea','label'=>false,'div'=>false)); ?>
+											<?php echo $this->Form->input('descripcion',array('type'=> 'textarea','label'=>false,'div'=>false,'rows'=>'8')); ?>
 										</div>
 									</div>
 								</div>

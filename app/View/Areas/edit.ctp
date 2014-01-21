@@ -13,19 +13,19 @@ $user=NUll;
 				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Facultad'), array('action' => 'view',$facultad['Facultad']['id'])); 
+				echo $this->Html->link(__('Área de investigación'), array('action' => 'view',$area['Area']['id'])); 
 				?></li><li>
 				<?php
 				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Programas asociados'), array('action' => 'programas_asociados',$facultad['Facultad']['id'])); 
+				echo $this->Html->link(__('Líneas asociadas'), array('action' => 'programas_asociados',$area['Area']['id'])); 
 				?></li><li>
 				<?php
 				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Agregar programa'), array('action' => 'agregar_programa',$facultad['Facultad']['id'])); 
+				echo $this->Html->link(__('Agregar Línea'), array('action' => 'agregar_programa',$area['Area']['id'])); 
 			}
 			?>
 			</li>
@@ -37,10 +37,10 @@ $user=NUll;
 				<td>
 					<div class="crud_fila_principal">
 						<span>
-							Modificar facultad
+							Modificar Área de investigación
 						</span>
 					</div>
-					<?php echo $this->Form->create('Facultad'); ?>
+					<?php echo $this->Form->create('Area'); ?>
 					<?php echo $this->Form->input('id'); ?>
 						<div class="crud_fila_secundaria">
 								<figure class="fondoAgregar">
@@ -53,10 +53,18 @@ $user=NUll;
 								<div class='entradas'>
 									<div>
 										<div>
-											<b>Nombre facultad:</b>
+											<b>Nombre Área:</b>
 										</div>
 										<div>
 										<?php echo $this->Form->input('nombre',array('label'=>false)); ?>
+										</div>
+									</div>
+									<div>
+										<div>
+											<b>Programa asociado:</b>
+										</div>
+										<div>
+										<?php echo $this->Form->input('programa_id',array('label'=>false)); ?>
 										</div>
 									</div>
 									<div>

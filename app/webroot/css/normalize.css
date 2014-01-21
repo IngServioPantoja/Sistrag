@@ -9,6 +9,8 @@
  */
 *
 {
+margin: 0;
+padding: 0;
 font-size: 1em;
 }
 article,
@@ -168,7 +170,11 @@ samp {
     font-family: monospace, serif;
     font-size: 1em;
 }
-
+/* Permitir ver el texto con saltos de linea y espacio */
+p
+{
+  white-space: pre-line;
+}
 /**
  * Improve readability of pre-formatted text in all browsers.
  */
@@ -257,6 +263,12 @@ fieldset {
     border: 1px solid #c0c0c0;
     margin: 0 2px;
     padding: 0.35em 0.625em 0.75em;
+}
+
+/* Define border and padding*/
+form{
+  margin: 0px;
+  padding: 0px;
 }
 
 /**
@@ -353,6 +365,9 @@ input[type="search"] {
     -moz-box-sizing: content-box;
     -webkit-box-sizing: content-box; /* 2 */
     box-sizing: content-box;
+}
+input[type="text"] {
+min-width: 150px !important;
 }
 
 /**
