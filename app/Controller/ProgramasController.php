@@ -5,7 +5,112 @@ class ProgramasController extends AppController {
 var $components = array("RequestHandler");
 var $uses = array('Programa','Facultad','Area','Linea');
 var $usuario=array();
-var $paginate =array('limit' => 10,);
+	
+	public function add() {
+		if ($this->request->is('post')) {
+			$this->Programa->create();
+			if ($this->Programa->save($this->request->data)) {
+				$this->Session->setFlash(__('El programa ha sido registrado exitosamente'));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('No se ha podido guardar el programa intente de nuevo'));
+			}
+		}
+		$facultades = $this->Programa->Facultad->find('list');
+		$this->set(compact('facultades'));
+	}
+
+	public function agregar_area($programa_id=null)
+	{
+		if (!$this->Programa->exists($programa_id)) {
+				throw new NotFoundException(__('Programa invalido'));
+			}
+		if ($this->request->is('post')) {
+			$this->Area->create();
+			print_r($this->request->data);
+			if ($this->Area->save($this->request->data)) {
+				$this->Session->setFlash(__('El Área ha sido registrada exitosamente'));
+				$this->redirect(array('controller'=>'programas','action' => 'areas_asociadas',$this->request->data['Area']['programa_id']));
+			} else {
+				$this->Session->setFlash(__('No se ha podido guardar el Área intente de nuevo'));
+			}
+		}
+		else
+		{
+			$options = array('conditions' => array('Programa.' . $this->Programa->primaryKey => $programa_id));
+			$programa = $this->Programa->find('first', $options);
+			$programas = $this->Area->Programa->find('list',$options);
+			$this->set(compact('programas'));
+			$this->set('programa',$programa);
+		}
+	}
+
+	public function areas_asociadas($programa_id=null,$atributo=null,$valor=null)
+	{	
+		$this->Area->recursive = -1;
+		if (!$this->Facultad->exists($programa_id))
+		{
+			throw new NotFoundException(__('Facultad invalida'));
+		}
+		$this->Programa->recursive = 0;
+		$options = array('conditions' => array('Programa.' . $this->Programa->primaryKey => $programa_id));
+		$programa=$this->Programa->find('first', $options);	
+		$this->set('programa',$programa);
+		if(isset($this->request->data['Busqueda']))
+		{ 			
+			if($this->request->data['Busqueda']['atributo']!=NULL and $this->request->data['Busqueda']['valor']!=NULL)
+			{
+
+				$opciones=array('Area.'.$this->request->data['Busqueda']['atributo'].' LIKE' => '%'.$this->request->data['Busqueda']['valor'].'%','Area.programa_id'=>$this->request->data['Busqueda']['programa_id']);
+				$areas = $this->paginate('Area',$opciones);
+				if (empty($areas)) 
+				{
+					$this->set('encontrado',0);
+				}
+			}
+			else
+			{	
+				$opciones=array('Area.programa_id'=>$this->request->data['Busqueda']['programa_id']);
+    			$areas = $this->paginate('Area',$opciones);		
+    		}
+    		$busqueda=array();
+    		$busqueda[0]['atributo']=$this->request->data['Busqueda']['atributo'];
+    		$busqueda[0]['valor']=$this->request->data['Busqueda']['valor'];
+    		$busqueda[0]['programa_id']=$this->request->data['Busqueda']['programa_id'];
+    		$this->set('busqueda',$busqueda);
+		}
+		else
+		{
+			$opciones=array('Area.programa_id'=>$programa_id);
+			$areas = $this->paginate('Area',$opciones);	
+		}
+		$p=0;
+		$opciones = array(
+			    	'fields' => 
+			            array(
+			                'Linea.id','Linea.area_id'
+			           	)
+		   	);
+		$lineas = $this->Linea->find('list',$opciones);
+		$contador=0;
+		foreach ($areas as $area) {
+			foreach ($lineas as $id => $area_id) {
+				if($area['Area']['id']==$area_id)
+				{
+					++$contador;	
+				}
+			}
+			$areas[$p]['Area']['lineas'] = $contador;
+			++$p;
+			$contador=0;
+		}
+		$this->set('areas',$areas);
+		if($this->request->is('ajax'))    	
+		{
+			$this->render('/programas/areas_asociadas');
+		}
+	}
+
 
 	public function index($atributo=null,$valor=null) 
 	{
@@ -84,20 +189,6 @@ function lista_programas() {
 	$this->set(compact('select_entrada'));
 	$this->render('/Programas/lista_programas');
 }
-
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->Programa->create();
-			if ($this->Programa->save($this->request->data)) {
-				$this->Session->setFlash(__('El programa ha sido registrado exitosamente'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('No se ha podido guardar el programa intente de nuevo'));
-			}
-		}
-		$facultades = $this->Programa->Facultad->find('list');
-		$this->set(compact('facultades'));
-	}
 
 	public function delete($id = null) {
 		$this->Programa->id = $id;

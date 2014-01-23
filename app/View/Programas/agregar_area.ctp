@@ -4,21 +4,30 @@ $user=NUll;
 <section class="panel_frame">
 	<nav class="panel_menu">
 		<ul>
-			
-				<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') {?>
+			<?php   
+			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
+			{
+			?>
 			<li>
 				<?php
 				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Listar Líneas'), array('action' => 'index')); 
+				echo $this->Html->link(__('Programa'), array('action' => 'view',$programa['Programa']['id'])); 
+				?></li><li>
+				<?php
+				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+				?>
+				<?php 
+				echo $this->Html->link(__('Áreas asociadas'), array('action' => 'areas_asociadas',$programa['Programa']['id'])); 
 				?></li><li class="panel_menu_actual">
 				<?php
 				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Agregar Línea'), array('action' => 'add')); }
-				?>
+				echo $this->Html->link(__('Agregar Área'), array('action' => 'agregar_area',$programa['Programa']['id'])); 
+			}
+			?>
 			</li>
 		</ul>
 	</nav>
@@ -29,10 +38,10 @@ $user=NUll;
 					<div class="crud_fila_principal">
 						<?php echo $this->Form->create('Busqueda'); ?>
 						<span>
-							Agregar Línea de investigación
+							Agregar Área
 						</span>
 					</div>
-					<?php echo $this->Form->create('Linea'); ?>
+					<?php echo $this->Form->create('Area'); ?>
 						<div class="crud_fila_secundaria">
 								<figure class="fondoAgregar">
 									<?php
@@ -42,9 +51,10 @@ $user=NUll;
 							<article class='fichaAgregar'>
 
 								<div class='entradas'>
+									
 									<div>
 										<div>
-											<b>Nombre Línea:</b>
+											<b>Nombre Área:</b>
 										</div>
 										<div>
 										<?php echo $this->Form->input('nombre',array('label'=>false)); ?>
@@ -52,10 +62,11 @@ $user=NUll;
 									</div>
 									<div>
 										<div>
-											<b>Área asociada:</b>
+											<b>Programa asociado:</b>
 										</div>
+										</br>
 										<div>
-										<?php echo $this->Form->input('area_id',array('label'=>false)); ?>
+										<?php echo $this->Form->input('programa_id',array('label'=>false,'value'=>$programa['Programa']['id'])); ?>
 										</div>
 									</div>
 									<div>

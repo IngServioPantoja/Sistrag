@@ -25,7 +25,7 @@ $user=NUll;
 				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Agregar área'), array('action' => 'agregar_area',$programa['Programa']['id'])); 
+				echo $this->Html->link(__('Agregar Área'), array('action' => 'agregar_area',$programa['Programa']['id'])); 
 			}
 			?>
 			</li>

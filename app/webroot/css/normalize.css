@@ -173,6 +173,7 @@ samp {
 /* Permitir ver el texto con saltos de linea y espacio */
 p
 {
+  margin: -20px 0px 0px 0px;
   white-space: pre-line;
 }
 /**

@@ -33,6 +33,7 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 var $helpers = array('Html', 'Form', 'Js' => array('Jquery'));
+var $paginate =array('limit' => 10,);
 
 	public $components = array(
         'Session',
@@ -41,7 +42,7 @@ var $helpers = array('Html', 'Form', 'Js' => array('Jquery'));
             'logoutRedirect' => array('controller' => 'users', 'action' => 'login'),
 			'authError'=> 'no puedes acceder a esa pagina',
 			'authorize' => array('Controller') 
-        )
+        ),"RequestHandler"
     );
 
     

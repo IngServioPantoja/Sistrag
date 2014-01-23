@@ -1,36 +1,107 @@
-<div class="lineas view">
-<h2><?php echo __('Linea'); ?></h2>
-	<dl>
-		<dt><?php echo __('Id'); ?></dt>
-		<dd>
-			<?php echo h($linea['Linea']['id']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Nombre'); ?></dt>
-		<dd>
-			<?php echo h($linea['Linea']['nombre']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Descripcion'); ?></dt>
-		<dd>
-			<?php echo h($linea['Linea']['descripcion']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Area'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($linea['Area']['nombre'], array('controller' => 'areas', 'action' => 'view', $linea['Area']['id'])); ?>
-			&nbsp;
-		</dd>
-	</dl>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('Edit Linea'), array('action' => 'edit', $linea['Linea']['id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete Linea'), array('action' => 'delete', $linea['Linea']['id']), null, __('Are you sure you want to delete # %s?', $linea['Linea']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Lineas'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Linea'), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Areas'), array('controller' => 'areas', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Area'), array('controller' => 'areas', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
+<?php 
+$user=NUll;
+?> 	
+<section class="panel_frame">
+	<nav class="panel_menu">
+		<ul>
+			
+			<?php   
+			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'|| $current_user['nivel_id'] == '2') 
+			{
+			?>
+			<li class="panel_menu_actual">
+				<?php
+				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+				?>
+				<?php 
+				echo $this->Html->link(__('Línea de investigación'), array('action' => 'view',$linea['Linea']['id'])); 
+			}
+				?>
+			</li>
+		</ul>
+	</nav>
+	<section class="panel_internal">
+		<table class="crud">
+			<tr>
+				<td>
+					<div class="crud_fila_principal">
+						<span>
+							I.U.CESMAG.
+						</span>
+					</div>
+					<div id="contenedor_datos">
+						<div class="crud_fila_secundaria">
+							<a href="lineas/view/<?php  echo $linea['Linea']['id'];?>">
+								<article class='ficha_view'>
+									<figure>
+										<?php
+										echo $this->Html->image('recursos/escudo400.png', array('alt' => 'Login','height' => '', 'width' => '200px'));
+										?>
+										<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'): ?>
+											<div class="ficha_acciones">
+										<?php echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'edit', $linea['Linea']['id']),
+										array('escape' => false)); 
+										?>
+										<?php echo $this->Form->postLink($this->Html->image("iconos/eliminar50.png", array('height' => '', 'width' => '25px')), array('action' => 'delete', $linea['Linea']['id']), array('escape' => false), __('¿Esta seguro que desea borrar la facultad de %s?', $linea['Linea']['nombre'])); ?>
+											</div>
+										<?php endif; ?>
+									</figure>
+							</a>
+							<a href="lineas/view/<?php  echo $linea['Linea']['id'];?>">
+									<div class='ficha_datos'>
+										<table>
+											<tr>
+												<th colspan="2">
+													<span>
+														Identificación:
+													</span>	
+													<span>
+														<?php echo h($linea['Linea']['id']); ?>
+													</span>	
+												</th>
+											</tr>
+											<tr>
+												<th colspan="2">
+													<span>
+														Nombre Línea:
+													</span>
+												</th>
+											</tr>
+											<tr>
+												<td colspan="2">
+													<span>
+														<?php echo h($linea['Linea']['nombre']); ?>
+													</span>
+												</td>
+											</tr>
+											<tr>
+												<th colspan="2">
+													<span>Área asociada: </span>
+													<span><?php echo " ".h($linea['Area']['nombre']); ?></span>
+												</th>
+											</tr>
+											<tr>
+												<th colspan="2">
+													<span>
+														Descripción:
+													</span>
+												</th>
+											</tr>
+											<tr>
+												<td colspan="2">
+													<p>
+														<?php echo h($linea['Linea']['descripcion']); ?>
+													</p>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</article>
+							</a>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</section>
+</section>

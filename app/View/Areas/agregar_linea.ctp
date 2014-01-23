@@ -4,21 +4,30 @@ $user=NUll;
 <section class="panel_frame">
 	<nav class="panel_menu">
 		<ul>
-			
-				<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') {?>
+			<?php   
+			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'|| $current_user['nivel_id'] == '2') 
+			{
+			?>
 			<li>
 				<?php
 				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Listar Líneas'), array('action' => 'index')); 
+				echo $this->Html->link(__('Área de investigación'), array('action' => 'view',$area['Area']['id'])); 
+				?></li><li>
+				<?php
+				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+				?>
+				<?php 
+				echo $this->Html->link(__('Líneas asociadas'), array('action' => 'lineas_asociadas',$area['Area']['id'])); 
 				?></li><li class="panel_menu_actual">
 				<?php
 				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Agregar Línea'), array('action' => 'add')); }
-				?>
+				echo $this->Html->link(__('Agregar Línea'), array('action' => 'agregar_linea',$area['Area']['id'])); 
+			}
+			?>
 			</li>
 		</ul>
 	</nav>
@@ -44,18 +53,19 @@ $user=NUll;
 								<div class='entradas'>
 									<div>
 										<div>
-											<b>Nombre Línea:</b>
+											<b>área asociada:</b>
 										</div>
+										</br>
 										<div>
-										<?php echo $this->Form->input('nombre',array('label'=>false)); ?>
+										<?php echo $this->Form->input('area_id',array('label'=>false,'value'=>$area['Area']['id'])); ?>
 										</div>
 									</div>
 									<div>
 										<div>
-											<b>Área asociada:</b>
+											<b>Nombre Línea:</b>
 										</div>
 										<div>
-										<?php echo $this->Form->input('area_id',array('label'=>false)); ?>
+										<?php echo $this->Form->input('nombre',array('label'=>false)); ?>
 										</div>
 									</div>
 									<div>

@@ -21,6 +21,30 @@ var $paginate =array('limit' => 10,);
 			$this->set(compact('programas'));
 		}
 
+	public function agregar_linea($area_id=null) 
+	{
+		if (!$this->Area->exists($area_id)) {
+				throw new NotFoundException(__('Facultad invalida'));
+			}
+		if ($this->request->is('post')) {
+			$this->Linea->create();
+			if ($this->Linea->save($this->request->data)) {
+				$this->Session->setFlash(__('La Línea ha sido registrada exitosamente'));
+				$this->redirect(array('controller'=>'areas','action' => 'lineas_asociadas',$this->request->data['Linea']['area_id']));
+			} else {
+				$this->Session->setFlash(__('No se ha podido guardar la Línea intente de nuevo'));
+			}
+		}
+		else
+		{
+			$options = array('conditions' => array('Area.' . $this->Area->primaryKey => $area_id));
+			$area = $this->Area->find('first', $options);
+			$areas = $this->Linea->Area->find('list',$options);
+			$this->set(compact('areas'));
+			$this->set('area',$area);
+		}
+	}
+
 	public function index($atributo=null,$valor=null) {
 		
 		$this->Area->recursive = 0;
@@ -86,6 +110,51 @@ var $paginate =array('limit' => 10,);
 			$this->render('/areas/index');
 		}	
 
+	}
+
+	public function lineas_asociadas($area_id=null,$atributo=null,$valor=null)
+	{
+		$this->Linea->recursive = -1;
+		if (!$this->Area->exists($area_id))
+		{
+			throw new NotFoundException(__('Facultad invalida'));
+		}
+		$this->Area->recursive = 0;
+		$options = array('conditions' => array('Area.' . $this->Area->primaryKey => $area_id));
+		$area=$this->Area->find('first', $options);	
+		$this->set('area',$area);
+		if(isset($this->request->data['Busqueda']))
+		{ 
+			if($this->request->data['Busqueda']['atributo']!=NULL and $this->request->data['Busqueda']['valor']!=NULL)
+			{	
+				$opciones=array('Linea.'.$this->request->data['Busqueda']['atributo'].' LIKE' => '%'.$this->request->data['Busqueda']['valor'].'%','Linea.area_id'=>$this->request->data['Busqueda']['area_id']);
+				$lineas = $this->paginate('Linea',$opciones);
+				if (empty($lineas)) 
+				{
+					$this->set('encontrado',0);
+				}
+			}
+			else
+			{	
+				$opciones=array('Linea.area_id'=>$this->request->data['Busqueda']['area_id']);
+    			$lineas = $this->paginate('Linea',$opciones);		
+    		}
+    		$busqueda=array();
+    		$busqueda[0]['atributo']=$this->request->data['Busqueda']['atributo'];
+    		$busqueda[0]['valor']=$this->request->data['Busqueda']['valor'];
+    		$busqueda[0]['area_id']=$this->request->data['Busqueda']['area_id'];
+    		$this->set('busqueda',$busqueda);
+		}
+		else
+		{
+			$opciones=array('Linea.area_id'=>$area_id);
+			$lineas = $this->paginate('Linea',$opciones);	
+		}
+		$this->set('lineas',$lineas);
+		if($this->request->is('ajax'))    	
+		{
+			$this->render('/areas/lineas_asociadas');
+		}
 	}
 
 	public function view($id = null) {

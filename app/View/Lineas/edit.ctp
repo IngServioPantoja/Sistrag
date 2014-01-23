@@ -1,23 +1,83 @@
-<div class="lineas form">
-<?php echo $this->Form->create('Linea'); ?>
-	<fieldset>
-		<legend><?php echo __('Edit Linea'); ?></legend>
-	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('nombre');
-		echo $this->Form->input('descripcion');
-		echo $this->Form->input('area_id');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+<?php 
+$user=NUll;
+?> 	
+<section class="panel_frame">
+	<nav class="panel_menu">
+		<ul>
+			<?php   
+			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2') 
+			{
+			?>
+			<li class="panel_menu_actual">
+				<?php
+				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+				?>
+				<?php 
+				echo $this->Html->link(__('Línea de investigación'), array('action' => 'view',$linea['Linea']['id'])); 
+			}
+			?>
+			</li>
+		</ul>
+	</nav>
+	<section class="panel_internal">
+		<table class="crud">
+			<tr>
+				<td>
+					<div class="crud_fila_principal">
+						<span>
+							Modificar Línea de investigación
+						</span>
+					</div>
+					<?php echo $this->Form->create('Linea'); ?>
+					<?php echo $this->Form->input('id'); ?>
+						<div class="crud_fila_secundaria">
+								<figure class="fondoAgregar">
+									<?php
+									echo $this->Html->image('recursos/escudo400.png', array('width' => '220px'));
+									?>
+								</figure>
+							<article class='fichaAgregar'>
 
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Linea.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('Linea.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Lineas'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Areas'), array('controller' => 'areas', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Area'), array('controller' => 'areas', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
+								<div class='entradas'>
+									<div>
+										<div>
+											<b>Nombre Línea:</b>
+										</div>
+										<div>
+										<?php echo $this->Form->input('nombre',array('label'=>false)); ?>
+										</div>
+									</div>
+									<div>
+										<div>
+											<b>Área asociada:</b>
+										</div>
+										<div>
+										<?php echo $this->Form->input('area_id',array('label'=>false)); ?>
+										</div>
+									</div>
+									<div>
+										<div>
+											<b>Descripción:</b>
+										</div>
+										<div class="divTextarea">
+											<?php echo $this->Form->input('descripcion',array('type'=> 'textarea','label'=>false,'div'=>false)); ?>
+										</div>
+									</div>
+								</div>
+							</article>
+						</div>
+					<?php echo $this->Form->end(__('Submit')); ?>
+				</td>
+			</tr>
+		</table>
+	</section>
+</section>
+<script>
+$('textarea').autosize();
+function resizeInput() {
+    $(this).attr('size', $(this).val().length+1);
+}
+$('input[type="text"]')
+    .keyup(resizeInput)
+    .each(resizeInput);
+</script>

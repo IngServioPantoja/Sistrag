@@ -2,26 +2,23 @@
 App::uses('AppController', 'Controller');
 
 class FacultadesController extends AppController {
-var $components = array("RequestHandler");
 var $helpers = array('Form', 'Html', 'Js','Paginator');
 var $uses = array('Facultad','Programa','Area','Linea');
-var $paginate =array(
-        'limit' => 10,
-        );
 
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Facultad->create();
 			if ($this->Facultad->save($this->request->data)) {
-				$this->Session->setFlash(__('The facultad has been saved'));
+				$this->Session->setFlash(__('La facultad ha sido registrada exitosamente'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The facultad could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('No se ha podido registrar la facultad intente de nuevo'));
 			}
 		}
 	}
 
-	public function agregar_programa($facultad_id=null) {
+	public function agregar_programa($facultad_id=null) 
+	{
 		if (!$this->Facultad->exists($facultad_id)) {
 				throw new NotFoundException(__('Facultad invalida'));
 			}
@@ -32,7 +29,7 @@ var $paginate =array(
 				$this->Session->setFlash(__('El programa ha sido registrado exitosamente'));
 				$this->redirect(array('controller'=>'facultades','action' => 'programas_asociados',$this->request->data['Programa']['facultad_id']));
 			} else {
-				$this->Session->setFlash(__('No se ha podido guardar el programa intente de nuevo.'));
+				$this->Session->setFlash(__('No se ha podido guardar el programa intente de nuevo'));
 			}
 		}
 		else
