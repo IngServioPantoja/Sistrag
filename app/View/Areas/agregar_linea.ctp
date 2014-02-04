@@ -2,7 +2,7 @@
 $user=NUll;
 ?>
 <section class="panel_frame">
-	<nav class="panel_menu">
+	<div class="panel_menu">
 		<ul>
 			<?php   
 			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'|| $current_user['nivel_id'] == '2') 

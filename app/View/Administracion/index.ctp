@@ -4,7 +4,7 @@ if(!$this->request->is('ajax'))
 {
 ?> 	
 <section class="panel_frame">
-	<nav class="panel_menu">
+	<div class="panel_menu">
 		<ul>
 			
 			<?php
@@ -41,7 +41,7 @@ if(!$this->request->is('ajax'))
 				?>
 			</li>
 		</ul>
-	</nav>
+	</div>
 	<section class="panel_internal">
 		<table class="crud">
 			<tr>

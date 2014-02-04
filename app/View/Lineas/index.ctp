@@ -4,7 +4,7 @@ if(!$this->request->is('ajax'))
 {
 ?> 	
 <section class="panel_frame">
-	<nav class="panel_menu">
+	<div class="panel_menu">
 		<ul>
 			
 			<?php

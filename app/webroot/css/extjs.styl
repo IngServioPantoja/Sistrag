@@ -1,477 +1,1172 @@
-.crud
-  border 1px solid #000
-  border-collapse separate
-  border-radius 6px 6px 6px 6px
-  border-spacing 0px 0px
-  box-shadow 5px 5px 11px rgba(0,0,105,0.4)
-  -moz-box-shadow 5px 5px 11px rgba(0,0,105,0.4)
-  -webkit-box-shadow 5px 5px 11px rgba(0,0,105,0.4)
-  display block
-  margin 0 auto
-  overflow visible
+@font-face {
+  font-family: 'icomoon';
+  src:url('fonts/icomoon.eot');
+  src:url('fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.woff') format('woff'),
+    url('fonts/icomoon.ttf') format('truetype'),
+    url('fonts/icomoon.svg#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Shdow DOM */
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-moz-scrollbar {
+    -moz-width: 5px;
+}
+   
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: #000000;
+}
+::-moz-scrollbar-track {
+  -moz-box-shadow: #000000;
+}
+
+::-webkit-scrollbar-button 
+{
+  padding-bottom: 10px;
+
+}
+::-moz-scrollbar-button 
+{
+  -moz-padding-bottom: 10px;
+
+}
+
+::-webkit-scrollbar-track-piece 
+{
+  background: #000000;  
+  -webkit-box-shadow: inset 0 0 5px rgba(31,87,148,0.4); 
+
+}
+::-moz-scrollbar-track-piece 
+{
+  -moz-background: #000000; 
+  -moz-box-shadow: inset 0 0 5px rgba(31,87,148,0.4); 
+
+}
+   
+::-webkit-scrollbar-thumb {
+  background: #000000;
+  -webkit-box-shadow: inset 0 0 15px rgba(31,87,148,1); 
+      transition:all 0.3s linear;
+    -webkit-transition:all 0.3s linear;
+    -moz-transition:all 0.3s linear;
+
+}
+::-moz-scrollbar-thumb {
+  -moz-background: #000000;
+  -moz--box-shadow: inset 0 0 10px rgba(31,87,148,1); 
+  -moz-transition:all 0.3s linear;
+    -moz--transition:all 0.3s linear;
+    -moz-transition:all 0.3s linear;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #000000;
+  -webkit-box-shadow: inset 0 0 10px rgba(159,255,253,1); 
+}
+::-moz-scrollbar-thumb:hover {
+  -moz-background: #000000;
+  -moz-box-shadow: inset 0 0 10px rgba(159,255,253,1); 
+}
+
+html
+  bottom 0px
+  font-size 16px
+  left 0px
+  position fixed !important
+  right 0px
+  top 0px
+  width 100%
   
-  .crud_fila_paginacion
-    background rgb(165,165,165);
-    background -moz-linear-gradient(top,  rgba(165,165,165,1) 0%, rgba(239,239,239,1) 50%, rgba(165,165,165,1) 100%)
-    background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(165,165,165,1)), color-stop(50%,rgba(239,239,239,1)), color-stop(100%,rgba(165,165,165,1)))
-    background -webkit-linear-gradient(top,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
-    background -o-linear-gradient(top,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
-    background -ms-linear-gradient(top,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
-    background linear-gradient(to bottom,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
-    border-left solid 1px rgba(255,255,255,0.3)
-    border-radius 0px 0px 4px 4px
-    border-right solid 1px rgba(255,255,255,0.3)
-    border-top solid 1px rgba(255,255,255,0.3)
-    color #447
-    font-family tahoma, arial, verdana, sans-serif
-    font-size 15px
-    font-weight bold
-    padding 3px 0px 3px 0px
-    text-align center
-    display relative
+  body
+    width 100%
+    padding 0px
     
-    .actual
-      background-color #fff
-      border-bottom 3px solid #777
-      border-radius 0px !important
-      color #b22
-      display inline-block
-      margin 1px 0px 0px 1px
-      padding 0px 25px 4px 25px
-      text-decoration none
-      transition all 0.2s linear
-    
-    span[class='prev']
-      margin 0px -5px 0px 0px
+    a
+      color #55b
 
-      a
-        background-color #fff;
-        border-bottom 3px solid #777
-        border-radius 50% 0px 0px 50%
-        color: #b22;
-        display inline-block
-        font-weight 900
-        margin 0px
-        padding 0px 20px 4px 10px
-        text-decoration none
-        transition:all 0.2s linear;
+      &:hover
+        color #227
 
-      a:hover
-        color: #fff;
-        background-color: #a22;
-        -webkit-box-shadow: 0px 0px 5px 1px #666;
-        -moz-box-shadow: 0px 0px 5px 1px #666;
-
-    span[class='next']
-      margin 0px 0px 0px -5px
-
-      a
-        background-color #fff;
-        border-bottom 3px solid #777
-        border-radius 0px 50% 50% 0px
-        color: #b22;
-        display inline-block
-        font-weight 900
-        margin 0px
-        padding 0px 10px 4px 20px
-        text-decoration none
-        transition all 0.2s linear
-
-      a:hover
-        color #fff
-        background-color #a22;
-        -webkit-box-shadow 0px 0px 5px 1px #666
-        -moz-box-shadow 0px 0px 5px 1px #666
-
-    span[class='prev disabled']
-      background-color #fff
-      border-bottom 3px solid #777
-      border-radius  50% 0px 0px 50%
-      color #fff
-      display inline-block
-      font-weight 900
-      margin 0px -5px 0px 0px
-      padding 0px 10px 4px 20px
-
-    span[class='next disabled']
-      background-color #fff
-      border-bottom 3px solid #777
-      border-radius 0px 50% 50% 0px
-      color #fff
-      display inline-block
-      font-weight 900
-      margin 0px 0px 0px -5px
-      padding 0px 10px 4px 20px
-
-  .crud_fila_principal
-    background -moz-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
-    background -ms-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
-    background -o-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
-    background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #324664), color-stop(11%, #3f587d), color-stop(21%, #47648e), color-stop(32%, #3e587d), color-stop(39%, #374d6c), color-stop(68%, #101721), color-stop(79%, #05070b), color-stop(86%, #000), color-stop(100%, #000))
-    background -webkit-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
-    background linear-gradient(to bottom, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
-    border-bottom solid 1px #000
-    border-left solid 1px rgba(255,255,255,0.3)
-    border-radius 3px 3px 0px 0px
-    border-right solid 1px rgba(255,255,255,0.3)
-    border-top solid 1px rgba(255,255,255,0.3)
-    color #fff
-    font-family tahoma, arial, verdana, sans-serif
-    font-size 15px
-    font-weight bold
-    padding 1px 10px
-    text-align center
-    
-    .div_1
-      left 10px
-      position absolute
-
-    .div_2
-      position absolute
-      right 30px
-
-    h2
-      display inline-block
-      padding-left 10px
+    header
+      background -moz-linear-gradient(top,  rgba(44,63,89,1) 0%, rgba(67,95,132,1) 22%, rgba(76,108,153,1) 27%, rgba(76,108,153,1) 46%, rgba(72,102,140,1) 65%, rgba(16,23,33,1) 85%, rgba(0,0,0,1) 100%) /* FF3.6+ */
+      background -ms-linear-gradient(top,  rgba(44,63,89,1) 0%,rgba(67,95,132,1) 22%,rgba(76,108,153,1) 27%,rgba(76,108,153,1) 46%,rgba(72,102,140,1) 65%,rgba(16,23,33,1) 85%,rgba(0,0,0,1) 100%) /* IE10+ */
+      background -o-linear-gradient(top,  rgba(44,63,89,1) 0%,rgba(67,95,132,1) 22%,rgba(76,108,153,1) 27%,rgba(76,108,153,1) 46%,rgba(72,102,140,1) 65%,rgba(16,23,33,1) 85%,rgba(0,0,0,1) 100%) /* Opera 11.10+ */
+      background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(44,63,89,1)), color-stop(22%,rgba(67,95,132,1)), color-stop(27%,rgba(76,108,153,1)), color-stop(46%,rgba(76,108,153,1)), color-stop(65%,rgba(72,102,140,1)), color-stop(85%,rgba(16,23,33,1)), color-stop(100%,rgba(0,0,0,1))) /* Chrome,Safari4+ */
+      background -webkit-linear-gradient(top,  rgba(44,63,89,1) 0%,rgba(67,95,132,1) 22%,rgba(76,108,153,1) 27%,rgba(76,108,153,1) 46%,rgba(72,102,140,1) 65%,rgba(16,23,33,1) 85%,rgba(0,0,0,1) 100%) /* Chrome10+,Safari5.1+ */
+      background linear-gradient(to bottom,  rgba(44,63,89,1) 0%,rgba(67,95,132,1) 22%,rgba(76,108,153,1) 27%,rgba(76,108,153,1) 46%,rgba(72,102,140,1) 65%,rgba(16,23,33,1) 85%,rgba(0,0,0,1) 100%) /* W3C */
+      margin 0px auto 
       position relative
-      top 5px
+      text-align left
       width 100%
-
+      z-index 2
+      
       div
+        border-bottom 1px solid rgba(200,200,200,0.7)
+
+      #flashMessage
+        background-color rgba(255,255,255,0.8)
+        border-radius 10px
+        box-shadow 0px 0px 15px 10px rgba(16,16,40,0.7)
+        -moz-box-shadow 0px 0px 15px 10px rgba(255,255,40,0.7)
+        -webkit-box-shadow 0px 0px 15px 10px rgba(16,16,40,0.7)
+        color #225
+        font-size 18px
+        font-weight bold
+        height 60px
+        left 45%
+        padding 10px
+        position fixed
+        text-align center
+        top 45%
+        width 200px
+        z-index 2 
+        animation mensaje_flash 4s 1 forwards
+        -webkit-animation mensaje_flash 4s 1 forwards
+        -moz-animation mensaje_flash 4s 1 forwards
+        -ms-animation mensaje_flash 4s 1 forwards
+        -o-animation mensaje_flash 4s 1 forwards
+      
+      #layout_menu_inicio
         display inline-block
-
-      input
-        height 20px
+        float right
+        font-size 15px
         position relative
-    
-    span
-      display inline-block
-      vertical-align middle
-      padding 0px
 
-      img,div
-        margin 0px
-        vertical-align top
+        nav
 
-  .crud_fila_secundaria
-    background -moz-linear-gradient(top,  rgba(50,70,100,0.9) 0%, rgba(63,88,125,0.9) 11%, rgba(71,100,142,0.9) 21%, rgba(62,88,125,0.9) 32%, rgba(55,77,108,0.9) 39%, rgba(38,53,75,0.9) 51%, rgba(16,23,33,0.9) 66%, rgba(50,70,100,0.9) 88%, rgba(50,70,100,1) 100%)
-    background -ms-linear-gradient(top,  rgba(50,70,100,0.9) 0%,rgba(63,88,125,0.9) 11%,rgba(71,100,142,0.9) 21%,rgba(62,88,125,0.9) 32%,rgba(55,77,108,0.9) 39%,rgba(38,53,75,0.9) 51%,rgba(16,23,33,0.9) 66%,rgba(50,70,100,0.9) 88%,rgba(50,70,100,1) 100%)
-    background -o-linear-gradient(top,  rgba(50,70,100,0.9) 0%,rgba(63,88,125,0.9) 11%,rgba(71,100,142,0.9) 21%,rgba(62,88,125,0.9) 32%,rgba(55,77,108,0.9) 39%,rgba(38,53,75,0.9) 51%,rgba(16,23,33,0.9) 66%,rgba(50,70,100,0.9) 88%,rgba(50,70,100,1) 100%)
-    background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(50,70,100,0.9)), color-stop(11%,rgba(63,88,125,0.9)), color-stop(21%,rgba(71,100,142,0.9)), color-stop(32%,rgba(62,88,125,0.9)), color-stop(39%,rgba(55,77,108,0.9)), color-stop(51%,rgba(38,53,75,0.9)), color-stop(66%,rgba(16,23,33,0.9)), color-stop(88%,rgba(50,70,100,0.9)), color-stop(100%,rgba(50,70,100,1)))
-    background -webkit-linear-gradient(top,  rgba(50,70,100,0.9) 0%,rgba(63,88,125,0.9) 11%,rgba(71,100,142,0.9) 21%,rgba(62,88,125,0.9) 32%,rgba(55,77,108,0.9) 39%,rgba(38,53,75,0.9) 51%,rgba(16,23,33,0.9) 66%,rgba(50,70,100,0.9) 88%,rgba(50,70,100,1) 100%)
-    background linear-gradient(to bottom,  rgba(50,70,100,0.9) 0%,rgba(63,88,125,0.9) 11%,rgba(71,100,142,0.9) 21%,rgba(62,88,125,0.9) 32%,rgba(55,77,108,0.9) 39%,rgba(38,53,75,0.9) 51%,rgba(16,23,33,0.9) 66%,rgba(50,70,100,0.9) 88%,rgba(50,70,100,1) 100%)
-    border-bottom solid 1px rgba(255,255,255,0.3)
-    border-left solid 1px rgba(255,255,255,0.3)
-    border-radius 0px 0px 3px 3px
-    border-right solid 1px rgba(255,255,255,0.3)
-    min-height 200px
-    padding 5px 5px 5px 5px
-    position relative
-    text-align center  
-    
-    .ficha_add
-      background-color #fff
-      display block
-    
-      .cargando
-        color #447
-        font-size 25px
-        font-weight 900
-        
+          ul
+            list-style none
+            background #bcbcbc
+            background -moz-linear-gradient(top,  #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+            background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#bcbcbc), color-stop(50%,#efefef), color-stop(100%,#bcbcbc))
+            background -webkit-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
+            background -o-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
+            background -ms-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
+            background linear-gradient(to bottom,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
 
-      div
-        display block
-        
-        input[type="file"]
-          width 358px
+            li
+              border-left 1px solid rgba(34,34,102,0.6)
+              border-right 1px solid rgba(34,34,102,0.6)
+              display inline-block
+              margin 0px -2px
+              z-index 2
 
-        select,span,input,div
+              a
+                color #226
+                cursor pointer
+                display block
+                font-size 15px
+                padding 12px 10px
+                z-index 2
+
+                &:hover 
+                  background    #fff 
+                  background #324664
+                  background -moz-linear-gradient(top,  #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000000 86%, #000000 100%)
+                  background -ms-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+                  background -o-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+                  background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#324664), color-stop(11%,#3f587d), color-stop(21%,#47648e), color-stop(32%,#3e587d), color-stop(39%,#374d6c), color-stop(68%,#101721), color-stop(79%,#05070b), color-stop(86%,#000000), color-stop(100%,#000000))
+                  background -webkit-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+                  background linear-gradient(to bottom,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+                  color #eee 
+
+        #logo_skew_left
           display inline-block
+          background #bcbcbc
+          background -moz-linear-gradient(top,  #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+          background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#bcbcbc), color-stop(50%,#efefef), color-stop(100%,#bcbcbc))
+          background -webkit-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
+          background -o-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
+          background -ms-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
+          background linear-gradient(to bottom,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
+          border-bottom #000
+          padding 12px 0px
+          margin 0px
+          position absolute
+          left -9px
+          -webkit-transform skew(200deg, 0deg)
+          top 0px
+          vertical-align top
+          width 20px
 
-    figure
-        position absolute
-        top 8%
-        bottom 8% 
-        left 0px
-        right 0px
-        opacity 1
-        width auto
+          &:hover
+            background #bcbcbc
+            background -moz-linear-gradient(top,  #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)!important
+            background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#bcbcbc), color-stop(50%,#efefef), color-stop(100%,#bcbcbc))!important
+            background -webkit-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)!important
+            background -o-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)!important
+            background -ms-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)!important
+            background linear-gradient(to bottom,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)!important
 
-    .fichaAgregar
-      background-color rgba(255,255,255,0.8)
-      border-image linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
-      -moz-border-image -moz-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
-      -o-border-image -o-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
-      -webkit-border-image -webkit-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
-      border-left-width 2px
-      border-radius 5px
-      border-right-width 2px
-      box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
-      -moz-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
-      -webkit-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
-      display block
-      margin 5px
-      min-width 200px
-      padding 5px
-      position relative
+        #primer_a_menu_inicio 
 
-      .entradas
-        background-color rgba(255,255,255,0)
-        display block
+          a
+            padding-left 15px
 
-        div
-          display block
-          vertical-align  top
-          text-align center
-          margin-bottom 3px
-          
-          div
-            position relative
-            vertical-align  top
-            display inline-block
-          
-          .divTextarea
-            display block
-            width 100%
-            position relative
-            text-align left
-            height 100%
-            
-          div:first-child
-            min-width 121px
-            background-color rgba(255,255,255,0.7);
-          
-            b
-              padding-left 5px
+          &:hover 
 
-          div:last-child
-            
-    
-            textarea
-              box-sizing border-box
-              -moz-box-sizing border-box
-              -webkit-box-sizing border-box
-              font-size 14px
-              width 100%
-              height auto
+            #logo_skew_left
+              background: #fff; 
+              background: #324664; /* Old browsers */
+              background: -moz-linear-gradient(top,  #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000000 86%, #000000 100%); /* FF3.6+ */
+              background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#324664), color-stop(11%,#3f587d), color-stop(21%,#47648e), color-stop(32%,#3e587d), color-stop(39%,#374d6c), color-stop(68%,#101721), color-stop(79%,#05070b), color-stop(86%,#000000), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+              background: -webkit-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%); /* Chrome10+,Safari5.1+ */
+              background: -o-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%); /* Opera 11.10+ */
+              background: -ms-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%); /* IE10+ */
+              background: linear-gradient(to bottom,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%); /* W3C */
+      
+      #layout_usuario
+        margin-right: 5px;        
+        color: #ddd;
+        display: inline-block;
+        float: right;
+        padding: 7px;
+        z-index: 2;
 
-    .ficha_index
-      background-color rgba(255,255,255,0.6)
-      border-image linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
-      -moz-border-image -moz-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
-      -o-border-image -o-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
-      -webkit-border-image -webkit-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
-      border-left-width 2px
-      border-radius 5px
-      border-right-width 2px
-      box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
-      -moz-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
-      -webkit-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
-      display inline-block
-      margin 5px
-      width 200px
-
-      .ficha_acciones
-        background  #fff 
-        background -moz-linear-gradient(top,  rgba(50,70,100,0.7) 0%, rgba(63,88,125,0.66) 11%, rgba(71,100,142,0.62) 21%, rgba(62,88,125,0.57) 32%, rgba(55,77,108,0.54) 39%, rgba(40,57,80,0.5) 50%, rgba(16,23,33,0.57) 68%, rgba(5,7,11,0.61) 79%, rgba(0,0,0,0.64) 86%, rgba(0,0,0,0.7) 100%)
-        background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(50,70,100,0.7)), color-stop(11%,rgba(63,88,125,0.66)), color-stop(21%,rgba(71,100,142,0.62)), color-stop(32%,rgba(62,88,125,0.57)), color-stop(39%,rgba(55,77,108,0.54)), color-stop(50%,rgba(40,57,80,0.5)), color-stop(68%,rgba(16,23,33,0.57)), color-stop(79%,rgba(5,7,11,0.61)), color-stop(86%,rgba(0,0,0,0.64)), color-stop(100%,rgba(0,0,0,0.7)))
-        background -webkit-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
-        background -o-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
-        background -ms-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
-        background linear-gradient(to bottom,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
-        border-radius 0px 0px 0px 10px
-        display none
-        padding 5px
-        position absolute
-        right 0px
-        top 0px
-        
         a
-          display inline-block
-
-      .ficha_datos
-        background #bcbcbc
-        background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
-        background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcbcbc), color-stop(50%, #efefef), color-stop(100%, #bcbcbc))
-        background -webkit-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
-        background -o-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
-        background -ms-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
-        background linear-gradient(to bottom, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
-        border-top 1px solid #ccc
-        min-height 100px
-        padding 5px
-
-        span
-          color #222
-          font-size 14px
+          display: inline-block;
+          margin: 0px;
+          vertical-align: middle;
         
-        table
-          text-align center !important
+          img
+            border: 1px solid #aaa;
+            border-radius: 50%;
 
-      figure
+            &:hover
+              -moz-box-shadow: 0px 0px 15px 1px #ddd;
+              -webkit-box-shadow: 0px 0px 15px 1px #ddd;
+        
+        #salir
+          background-color: #fff;
+          border-radius: 50%;
+          color: #b22;
+          display: inline-block;
+          font-family: icomoon;
+          font-size:24px; 
+          margin-left: 3px;
+          padding: 1px 2px;
+          text-decoration: none;
+          -moz-box-shadow: 0px 0px 1px 2px #666;
+          -webkit-box-shadow: 0px 0px 1px 2px #666;
+          transition:all 0.2s linear;
+
+          &:hover
+            color: #fff;
+            background-color: #a22;
+            -webkit-box-shadow: 0px 0px 5px 2px #666;
+            -moz-box-shadow: 0px 0px 1px 2px #666;
+
+      #logo
         position relative
-      
-    .ficha_index:hover .ficha_datos
-      background #fff 
-      background #324664
-      background -moz-linear-gradient(top,  #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000000 86%, #000000 100%)
-      background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#324664), color-stop(11%,#3f587d), color-stop(21%,#47648e), color-stop(32%,#3e587d), color-stop(39%,#374d6c), color-stop(68%,#101721), color-stop(79%,#05070b), color-stop(86%,#000000), color-stop(100%,#000000))
-      background -webkit-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
-      background -o-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
-      background -ms-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
-      background linear-gradient(to bottom,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
-
-    .ficha_index:hover span
-     color #ddd
-
-    .ficha_index:hover .ficha_acciones
-     display block
-
-    .ficha_view
-      background-color rgba(255,255,255,0.6)
-      border-image linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
-      -moz-border-image -moz-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
-      -o-border-image -o-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
-      -webkit-border-image -webkit-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
-      border-left-width 2px
-      border-radius 5px
-      border-right-width 2px
-      box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
-      -moz-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
-      -webkit-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
-      display inline-block
-      margin 5px
-      max-width 500px
-
-      .ficha_acciones
-        background  #fff 
-        background -moz-linear-gradient(top,  rgba(50,70,100,0.7) 0%, rgba(63,88,125,0.66) 11%, rgba(71,100,142,0.62) 21%, rgba(62,88,125,0.57) 32%, rgba(55,77,108,0.54) 39%, rgba(40,57,80,0.5) 50%, rgba(16,23,33,0.57) 68%, rgba(5,7,11,0.61) 79%, rgba(0,0,0,0.64) 86%, rgba(0,0,0,0.7) 100%)
-        background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(50,70,100,0.7)), color-stop(11%,rgba(63,88,125,0.66)), color-stop(21%,rgba(71,100,142,0.62)), color-stop(32%,rgba(62,88,125,0.57)), color-stop(39%,rgba(55,77,108,0.54)), color-stop(50%,rgba(40,57,80,0.5)), color-stop(68%,rgba(16,23,33,0.57)), color-stop(79%,rgba(5,7,11,0.61)), color-stop(86%,rgba(0,0,0,0.64)), color-stop(100%,rgba(0,0,0,0.7)))
-        background -webkit-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
-        background -o-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
-        background -ms-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
-        background linear-gradient(to bottom,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
-        border-radius 0px 0px 0px 10px
-        display none
-        padding 5px
-        position absolute
-        right 0px
-        top 0px
-        
-        a
-          display inline-block
-
-      .ficha_datos
-        background #bcbcbc
-        background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
-        background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcbcbc), color-stop(50%, #efefef), color-stop(100%, #bcbcbc))
-        background -webkit-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
-        background -o-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
-        background -ms-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
-        background linear-gradient(to bottom, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
-        border-top 1px solid #ccc
-        min-height 100px
-        padding 5px
-        text-align justify
-        
-        p
-          text-align justify
-
-        span
-          color #222
-          font-size 14px
-        
-        table
-          text-align center !important
-
-      figure
-        position relative
-      
-    .ficha_view:hover .ficha_datos
-      background #fff 
-      background #324664
-      background -moz-linear-gradient(top,  #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000000 86%, #000000 100%)
-      background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#324664), color-stop(11%,#3f587d), color-stop(21%,#47648e), color-stop(32%,#3e587d), color-stop(39%,#374d6c), color-stop(68%,#101721), color-stop(79%,#05070b), color-stop(86%,#000000), color-stop(100%,#000000))
-      background -webkit-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
-      background -o-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
-      background -ms-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
-      background linear-gradient(to bottom,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
-
-    .ficha_view:hover span,.ficha_view:hover p
-     color #ddd
-
-    .ficha_view:hover .ficha_acciones
-     display block
-    
-    .crud_fila_secundaria_contenido
-      border solid 1px #000
-      background rgba(255,255,255,0.9)
-      width 100%
-      border-collapse separate
-      border-spacing 0px 0px
-  
-    .crud_fila_secundaria_contenido_fila_primaria 
-      
-      th
-        border-right solid 1px #000
-        border-bottom solid 1px #000
-        padding 5px 6px
-        font normal 12px tahoma, arial, verdana, sans-serif
-        background-color rgba(11,13,47,0.9)
-        color #fff
+        display inline-block
         text-align left
-        transition all 0.3s linear
-        -webkit-transition all 0.3s linear
-        -moz-transition all 0.3s linear
-
-      th:hover
-        background-color #435775
-       
-        a
-          padding 0px 80% 0px 0px
-          color #fff
-          text-decoration none
+        vertical-align top
+        background -moz-linear-gradient(top,  #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+        background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#bcbcbc), color-stop(50%,#efefef), color-stop(100%,#bcbcbc))
+        background -webkit-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
+        background -o-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
+        background -ms-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
+        background linear-gradient(to bottom,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
         
-      .th_id
-        width 10px
+        figure
+          display: inline-block;
+          
+          figcaption
+            color: #eee;
+            display: inline-block;
+            font-family: Bodoni MT Black;
+            font-size: 28px;
+            font-style: italic;
+            font-weight: 900;
+            line-height: 17px;
+            margin: 0px 15px 0px 0px;
+            padding: 10px 0px;
+            text-shadow: 0px 0px 8px #000;
+            vertical-align: top;
 
-      .th_res
-        min-width 80px
+          img
+            display: inline-block;
+            margin: 4px 0px 1px 5px;
+            transition:all 1s linear;
+
+            &:hover
+              transform: rotate(380deg);
+              -o-transform: rotate(380deg);
+              -moz-transform: rotate(380deg);
+              -webkit-transform: rotate(380deg);
+        
+        #logo_skew_right
+          -webkit-transform:skew(340deg, 0deg);
+          background: #bcbcbc; /* Old browsers */
+          background: -moz-linear-gradient(top,  #bcbcbc 0%, #efefef 50%, #bcbcbc 100%); /* FF3.6+ */
+          background: -ms-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%); /* IE10+ */
+          background: -o-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%); /* Opera 11.10+ */
+          background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#bcbcbc), color-stop(50%,#efefef), color-stop(100%,#bcbcbc)); /* Chrome,Safari4+ */
+          background: -webkit-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%); /* Chrome10+,Safari5.1+ */
+          background: linear-gradient(to bottom,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%); /* W3C */
+          display: inline-block;
+          font-size: 28px;
+          font-style: italic;
+          font-weight: 900;
+          line-height: 17px;
+          margin: 0px;
+          padding: 12px 0px 12px 0px ;
+          position: absolute;
+          right: -10px;
+          top: 0px;
+          vertical-align: top;
+          width: 20px;
+
+      .layout_title
+        display table
+        height 42px
+        min-width 280px
+        position absolute
+        text-align center
+        top 0px
+        width 100%
+        z-index -1
+
+        h1
+          color: #fff;
+          display: table-cell;
+          font-size: 18px;
+          line-height: 17px;
+          padding-left:225px;
+          padding-right: 90px;
+          text-shadow: 0px 0px 8px #000;
+          vertical-align: middle;
+
+      .layout_titleLogout
+        display table
+        height 42px
+        min-width 280px !important
+        position absolute
+        text-align center
+        top 0px
+        width 100%
+        z-index -1
+
+        h1
+          color #fff
+          display table-cell
+          font-size 18px
+          line-height 17px
+          padding-left 225px
+          padding-right 200px
+          text-shadow 0px 0px 8px #000
+          vertical-align middle
     
-    table
-      width 100%
+    div[class='input select']
+      padding: 0px!important;
 
-  .submit
+    input[type='text']
+      border: 1px solid #324664;
+
+    nav
+      background: #fff;
+      bottom: 29px;
+      height        :auto;
+      left: 0px;
+      opacity: 1;
+      overflow: auto;
+      position: absolute;
+      text-align: center;
+      top: 40px;
+      width         :110px;
+      z-index: 1;
+      transition:all 0.3s linear;
+      -moz-transition:all 0.3s linear;
+      -webkit-transition:all 0.3s linear;
+      
+      a
+        color: #666;
+        display: block;
+        font-size: 12px;
+        text-decoration: none !important;
+
+        span
+          display: block;
+          font-family: icomoon;
+          font-size: 50px;
+          margin: 0 auto;
+          text-align: center;
+
+        .titulo
+          background: rgba(255,255,255,0.7);
+          border-radius: 50%;
+          bottom: 17px;
+          font-size: 14px;
+          left: 0px;
+          opacity: 0;
+          padding: 5px 2px;
+          position: absolute;
+          right:0px;
+
+        &:before
+          font-size: 50px;
+          position: relative;
+          text-decoration: none !important;
+
+        &:hover .titulo,.layout_nav a:hover
+          color: #337;
+          opacity: 1;
+
+      div
+        display: table;
+        height: 100%; 
+        text-align: center; 
+        width: 100%; 
+
+      ul
+        display: table-cell;
+        list-style: none;
+        vertical-align:middle;
+        
+        li
+          margin: 3px 0px;
+          text-align: center;
+          padding: 5px;
+          position: relative;
+
+          div
+            
+            a
+              color: #337;
+              font-size: 12px !important;
+      
+      #lista
+        background-color: #000;
+        color: #fff;
+        display: none;
+        font-size: 14px;
+        padding: 0px 0px 6px 0px;
+        text-align: center;
     
-    input
-      background #324664
-      background -moz-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
-      background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #324664), color-stop(11%, #3f587d), color-stop(21%, #47648e), color-stop(32%, #3e587d), color-stop(39%, #374d6c), color-stop(68%, #101721), color-stop(79%, #05070b), color-stop(86%, #000), color-stop(100%, #000))
-      background -webkit-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
-      background -o-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
-      background -ms-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
-      background linear-gradient(to bottom, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
-      border-radius 0px 0px 5px 5px
-      border-top 1px solid #fff
-      border 1px solid rgba(255,255,255,0)
-      color #ddd
-      margin -2px -1px -2px -1px
-      padding 10px
-      text-align center
-      transition all 0.3s linear
-      -webkit-transition all 0.3s linear
-      -moz-transition all 0.3s linear
-      width 100.5%
+    select
+      min-width: 170px;
+      background-color: #fff;
+      color: #000;
+      border: 1px solid #324664;
+      font-size: 14px !important;
 
-    input:hover
-      background #bcbcbc
-      background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
-      background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcbcbc), color-stop(50%, #efefef), color-stop(100%, #bcbcbc))
-      background -webkit-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
-      background -o-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
-      background -ms-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
-      background linear-gradient(to bottom, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
-      color #226
+      option
+        color: #000;
+
+        &:hover
+          background-color: #324664!important;
+          color: #ddd!important;
+
+    .layout_contenido
+      background rgba(255,255,255,0.9)
+      border-left 0px
+      border-right 0px
+      bottom 30px
+      height auto
+      left 110px
+      margin 0 auto
+      overflow auto
+      padding 25px 2%
+      position absolute
+      right 0px
+      top 43px
+      vertical-align top
+      width auto
+
+      table
+        
+        div
+          margin: 0 auto; 
+          width: auto;
+
+      .panel_frame
+        margin 0 auto
+        min-width 250px
+
+        .panel_internal
+          border 1px solid #2f486e
+          border-top 3px solid #1e71b8
+          padding 10px
+
+          .crud
+            border 1px solid #000
+            border-collapse separate
+            border-radius 0.3em
+            border-spacing 0px 0px
+            box-shadow 5px 5px 11px rgba(0,0,105,0.4)
+            -moz-box-shadow 5px 5px 11px rgba(0,0,105,0.4)
+            -webkit-box-shadow 5px 5px 11px rgba(0,0,105,0.4)
+            display block
+            margin 0 auto
+            overflow visible
+            
+            .crud_fila_paginacion
+              background rgb(165,165,165);
+              background -moz-linear-gradient(top,  rgba(165,165,165,1) 0%, rgba(239,239,239,1) 50%, rgba(165,165,165,1) 100%)
+              background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(165,165,165,1)), color-stop(50%,rgba(239,239,239,1)), color-stop(100%,rgba(165,165,165,1)))
+              background -webkit-linear-gradient(top,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
+              background -o-linear-gradient(top,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
+              background -ms-linear-gradient(top,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
+              background linear-gradient(to bottom,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
+              border-left solid 1px rgba(255,255,255,0.3)
+              border-radius 0px 0px 4px 4px
+              border-right solid 1px rgba(255,255,255,0.3)
+              border-top solid 1px rgba(255,255,255,0.3)
+              color #447
+              font-family tahoma, arial, verdana, sans-serif
+              font-size 0.9em
+              font-weight bold
+              padding 3px 0px 3px 0px
+              text-align center
+              display relative
+              
+              .actual
+                background-color #fff
+                border-bottom 3px solid #777
+                border-radius 0px !important
+                color #b22
+                display inline-block
+                margin 1px 0px 0px 1px
+                padding 0px 25px 4px 25px
+                text-decoration none
+                transition all 0.2s linear
+              
+              span[class='prev']
+                margin 0px -5px 0px 0px
+
+                a
+                  background-color #fff;
+                  border-bottom 3px solid #777
+                  border-radius 50% 0px 0px 50%
+                  color: #b22;
+                  display inline-block
+                  font-weight 900
+                  margin 0px
+                  padding 0px 20px 4px 10px
+                  text-decoration none
+                  transition:all 0.2s linear;
+
+                a:hover
+                  color: #fff;
+                  background-color: #a22;
+                  -webkit-box-shadow: 0px 0px 5px 1px #666;
+                  -moz-box-shadow: 0px 0px 5px 1px #666;
+
+              span[class='next']
+                margin 0px 0px 0px -5px
+
+                a
+                  background-color #fff;
+                  border-bottom 3px solid #777
+                  border-radius 0px 50% 50% 0px
+                  color: #b22;
+                  display inline-block
+                  font-weight 900
+                  margin 0px
+                  padding 0px 10px 4px 20px
+                  text-decoration none
+                  transition all 0.2s linear
+
+                a:hover
+                  color #fff
+                  background-color #a22;
+                  -webkit-box-shadow 0px 0px 5px 1px #666
+                  -moz-box-shadow 0px 0px 5px 1px #666
+
+              span[class='prev disabled']
+                background-color #fff
+                border-bottom 3px solid #777
+                border-radius  50% 0px 0px 50%
+                color #fff
+                display inline-block
+                font-weight 900
+                margin 0px -5px 0px 0px
+                padding 0px 10px 4px 20px
+
+              span[class='next disabled']
+                background-color #fff
+                border-bottom 3px solid #777
+                border-radius 0px 50% 50% 0px
+                color #fff
+                display inline-block
+                font-weight 900
+                margin 0px 0px 0px -5px
+                padding 0px 10px 4px 20px
+
+            .crud_fila_principal
+              background -moz-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+              background -ms-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+              background -o-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+              background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #324664), color-stop(11%, #3f587d), color-stop(21%, #47648e), color-stop(32%, #3e587d), color-stop(39%, #374d6c), color-stop(68%, #101721), color-stop(79%, #05070b), color-stop(86%, #000), color-stop(100%, #000))
+              background -webkit-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+              background linear-gradient(to bottom, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+              border-bottom solid 1px #000
+              border-left solid 1px rgba(255,255,255,0.3)
+              border-radius 3px 3px 0px 0px
+              border-right solid 1px rgba(255,255,255,0.3)
+              border-top solid 1px rgba(255,255,255,0.3)
+              color #fff
+              font-family tahoma, arial, verdana, sans-serif
+              font-size 15px
+              font-weight bold
+              padding 1px 10px
+              text-align center
+              
+              .div_1
+                left 10px
+                position absolute
+
+              .div_2
+                position absolute
+                right 30px
+
+              h2
+                display inline-block
+                padding-left 10px
+                position relative
+                top 5px
+                width 100%
+
+                div
+                  display inline-block
+
+                input
+                  height 20px
+                  position relative
+              
+              span
+                display inline-block
+                vertical-align middle
+                padding 0px
+
+                img,div
+                  margin 0px
+                  vertical-align top
+
+            .crud_fila_secundaria
+              background rgba(174, 198, 218,0.5);
+              border-bottom solid 1px rgba(255,255,255,0.3)
+              border-left solid 1px rgba(255,255,255,0.3)
+              border-radius 0px 0px 3px 3px
+              border-right solid 1px rgba(255,255,255,0.3)
+              min-height 200px
+              padding 5px 5px 5px 5px
+              position relative
+              text-align center
+
+              figure
+                position absolute
+                top 8%
+                bottom 8% 
+                left 0px
+                right 0px
+                opacity 1
+                width auto
+              
+              .ficha_add
+                background-color #fff
+                display block
+             
+                div
+                  display block
+                  
+                  input[type="file"]
+                    width 358px
+
+                  select,span,input,div
+                    display inline-block
+
+                .cargando
+                  color #447
+                  font-size 25px
+                  font-weight 900
+                
+              .fichaAgregar
+                background-color rgba(255,255,255,0.8)
+                border-image linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                -moz-border-image -moz-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                -o-border-image -o-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                -webkit-border-image -webkit-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                border-left-width 2px
+                border-radius 5px
+                border-right-width 2px
+                box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
+                -moz-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
+                -webkit-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
+                display block
+                margin 5px
+                min-width 200px
+                padding 5px
+                position relative
+                
+                .consultar_img
+                  position static
+                  margin-bottom 20px
+
+                .entradas
+                  background-color rgba(255,255,255,0)
+                  display block
+                  
+                  div
+                    display block
+                    margin-bottom 3px
+                    overflow hidden
+                    text-align center
+                    vertical-align  top
+                    
+                    div
+                      display inline-block
+                      position relative
+                      vertical-align  top
+                    
+                    div:first-child
+                      background-color rgba(255,255,255,0.7);
+                      float left
+                      min-width 121px
+                    
+                      b
+                        padding-left 5px
+
+                    div:last-child
+                      float right
+
+                      textarea
+                        box-sizing border-box
+                        -moz-box-sizing border-box
+                        -webkit-box-sizing border-box
+                        font-size 14px
+                        height auto
+                        width 100%
+                    
+                    .divTextarea
+                      display block
+                      height 100%
+                      position relative
+                      text-align left
+                      width 100%
+                        
+                    div[class="input file"]
+                      background #225
+                      border 1px solid #225
+                      cursor pointer
+                      height 20px
+                      overflow hidden
+                      position relative
+                      width 180px
+
+                      .inputFile
+                        border 0.9em solid transparent
+                        color white
+                        cursor pointer
+                        font-size 0.8em
+                        height 50px
+                        margin 0
+                        opacity 1
+                        outline 0
+                        padding 0
+                        position absolute
+                        right 2px
+                        top -12px
+
+                    .inputCorto
+                      width 180px;
+
+                    
+              .ficha_index
+                background-color rgba(255,255,255,0.6)
+                border-image linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                -moz-border-image -moz-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                -o-border-image -o-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                -webkit-border-image -webkit-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                border-left-width 2px
+                border-radius 5px
+                border-right-width 2px
+                box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
+                -moz-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
+                -webkit-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
+                display inline-block
+                margin 5px
+                width 200px
+
+                .ficha_acciones
+                  background  #fff 
+                  background -moz-linear-gradient(top,  rgba(50,70,100,0.7) 0%, rgba(63,88,125,0.66) 11%, rgba(71,100,142,0.62) 21%, rgba(62,88,125,0.57) 32%, rgba(55,77,108,0.54) 39%, rgba(40,57,80,0.5) 50%, rgba(16,23,33,0.57) 68%, rgba(5,7,11,0.61) 79%, rgba(0,0,0,0.64) 86%, rgba(0,0,0,0.7) 100%)
+                  background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(50,70,100,0.7)), color-stop(11%,rgba(63,88,125,0.66)), color-stop(21%,rgba(71,100,142,0.62)), color-stop(32%,rgba(62,88,125,0.57)), color-stop(39%,rgba(55,77,108,0.54)), color-stop(50%,rgba(40,57,80,0.5)), color-stop(68%,rgba(16,23,33,0.57)), color-stop(79%,rgba(5,7,11,0.61)), color-stop(86%,rgba(0,0,0,0.64)), color-stop(100%,rgba(0,0,0,0.7)))
+                  background -webkit-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
+                  background -o-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
+                  background -ms-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
+                  background linear-gradient(to bottom,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
+                  border-radius 0px 0px 0px 10px
+                  display none
+                  padding 5px
+                  position absolute
+                  right 0px
+                  top 0px
+                  
+                  a
+                    display inline-block
+
+                .ficha_datos
+                  background #bcbcbc
+                  background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcbcbc), color-stop(50%, #efefef), color-stop(100%, #bcbcbc))
+                  background -webkit-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background -o-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background -ms-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background linear-gradient(to bottom, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  border-top 1px solid #ccc
+                  min-height 100px
+                  padding 5px
+
+                  span
+                    color #222
+                    font-size 14px
+                  
+                  table
+                    text-align center !important
+
+                figure
+                  position relative
+                
+              .ficha_index:hover .ficha_datos
+                background #fff 
+                background #324664
+                background -moz-linear-gradient(top,  #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000000 86%, #000000 100%)
+                background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#324664), color-stop(11%,#3f587d), color-stop(21%,#47648e), color-stop(32%,#3e587d), color-stop(39%,#374d6c), color-stop(68%,#101721), color-stop(79%,#05070b), color-stop(86%,#000000), color-stop(100%,#000000))
+                background -webkit-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+                background -o-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+                background -ms-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+                background linear-gradient(to bottom,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+
+              .ficha_index:hover span
+               color #ddd
+
+              .ficha_index:hover .ficha_acciones
+               display block
+
+              .ficha_view
+                background-color rgba(255,255,255,0.6)
+                border-image linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                -moz-border-image -moz-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                -o-border-image -o-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                -webkit-border-image -webkit-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                border-left-width 2px
+                border-radius 5px
+                border-right-width 2px
+                box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
+                -moz-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
+                -webkit-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
+                display inline-block
+                margin 5px
+                max-width 500px
+
+                .ficha_acciones
+                  background  #fff 
+                  background -moz-linear-gradient(top,  rgba(50,70,100,0.7) 0%, rgba(63,88,125,0.66) 11%, rgba(71,100,142,0.62) 21%, rgba(62,88,125,0.57) 32%, rgba(55,77,108,0.54) 39%, rgba(40,57,80,0.5) 50%, rgba(16,23,33,0.57) 68%, rgba(5,7,11,0.61) 79%, rgba(0,0,0,0.64) 86%, rgba(0,0,0,0.7) 100%)
+                  background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(50,70,100,0.7)), color-stop(11%,rgba(63,88,125,0.66)), color-stop(21%,rgba(71,100,142,0.62)), color-stop(32%,rgba(62,88,125,0.57)), color-stop(39%,rgba(55,77,108,0.54)), color-stop(50%,rgba(40,57,80,0.5)), color-stop(68%,rgba(16,23,33,0.57)), color-stop(79%,rgba(5,7,11,0.61)), color-stop(86%,rgba(0,0,0,0.64)), color-stop(100%,rgba(0,0,0,0.7)))
+                  background -webkit-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
+                  background -o-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
+                  background -ms-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
+                  background linear-gradient(to bottom,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
+                  border-radius 0px 0px 0px 10px
+                  display none
+                  padding 5px
+                  position absolute
+                  right 0px
+                  top 0px
+                  
+                  a
+                    display inline-block
+
+                .ficha_datos
+                  background #bcbcbc
+                  background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcbcbc), color-stop(50%, #efefef), color-stop(100%, #bcbcbc))
+                  background -webkit-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background -o-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background -ms-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background linear-gradient(to bottom, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  border-top 1px solid #ccc
+                  min-height 100px
+                  padding 5px
+                  text-align justify
+                  
+                  p
+                    text-align justify
+
+                  span
+                    color #222
+                    font-size 14px
+                  
+                  table
+                    text-align center !important
+
+                figure
+                  position relative
+                
+              .ficha_view:hover .ficha_datos
+                background #fff 
+                background #324664
+                background -moz-linear-gradient(top,  #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000000 86%, #000000 100%)
+                background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#324664), color-stop(11%,#3f587d), color-stop(21%,#47648e), color-stop(32%,#3e587d), color-stop(39%,#374d6c), color-stop(68%,#101721), color-stop(79%,#05070b), color-stop(86%,#000000), color-stop(100%,#000000))
+                background -webkit-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+                background -o-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+                background -ms-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+                background linear-gradient(to bottom,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
+
+              .ficha_view:hover span,.ficha_view:hover p
+               color #ddd
+
+              .ficha_view:hover .ficha_acciones
+               display block
+              
+              .crud_fila_secundaria_contenido
+                border solid 1px #000
+                background rgba(255,255,255,0.9)
+                width 100%
+                border-collapse separate
+                border-spacing 0px 0px
+            
+              .crud_fila_secundaria_contenido_fila_primaria 
+                
+                th
+                  border-right solid 1px #000
+                  border-bottom solid 1px #000
+                  padding 5px 6px
+                  font normal 12px tahoma, arial, verdana, sans-serif
+                  background-color rgba(11,13,47,0.9)
+                  color #fff
+                  text-align left
+                  transition all 0.3s linear
+                  -webkit-transition all 0.3s linear
+                  -moz-transition all 0.3s linear
+
+                th:hover
+                  background-color #435775
+                 
+                  a
+                    padding 0px 80% 0px 0px
+                    color #fff
+                    text-decoration none
+                  
+                .th_id
+                  width 10px
+
+                .th_res
+                  min-width 80px
+              
+              table
+                width 100%
+
+            .submit
+              
+              input
+                background #324664
+                background -moz-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+                background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #324664), color-stop(11%, #3f587d), color-stop(21%, #47648e), color-stop(32%, #3e587d), color-stop(39%, #374d6c), color-stop(68%, #101721), color-stop(79%, #05070b), color-stop(86%, #000), color-stop(100%, #000))
+                background -webkit-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+                background -o-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+                background -ms-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+                background linear-gradient(to bottom, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+                border-radius 0px 0px 5px 5px
+                border-top 1px solid #fff
+                border 1px solid rgba(255,255,255,0)
+                color #ddd
+                margin -2px -1px -2px -1px
+                padding 10px
+                text-align center
+                transition all 0.3s linear
+                -webkit-transition all 0.3s linear
+                -moz-transition all 0.3s linear
+                width 100.5%
+
+              input:hover
+                background #bcbcbc
+                background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcbcbc), color-stop(50%, #efefef), color-stop(100%, #bcbcbc))
+                background -webkit-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background -o-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background -ms-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background linear-gradient(to bottom, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                color #226
+
+        .panel_menu
+          
+          .panel_menu_actual
+            background-color #1e71b8 !important
+            color #fff !important
+
+            a
+              color #fff !important
+
+          ul 
+            
+            li
+              display inline-block
+              background-color #aec6da
+              border-radius 5px 5px 0px 0px
+              padding 5px
+              color #000
+              border solid 1px #687d8f
+              -webkit-box-shadow inset 0px 0px 1px 1px #fff
+              -moz-box-shadow inset 0px 0px 1px 1px #fff
+              box-shadow inset 0px 0px 1px 1px #fff
+              font-weight 900
+              font-size 0.9em
+              min-width 160px
+
+              img
+                vertical-align middle
+                margin-right 5px
+
+              a
+                text-decoration none
+                color #000
+
+    .layout_contenido_inicial
+      background: rgba(255,255,255,0.9);
+      border-left: 0px;
+      border-right: 0px;
+      bottom: 30px;
+      height       :auto;
+      left: 0px;
+      margin: 0 auto;
+      overflow     : auto;
+      padding: 25px 50px;
+      position: absolute;
+      right: 0px;
+      top: 43px;
+      vertical-align: top;
+      width: auto;
+    
+    .layout_footer
+      background: #324664; /* Old browsers */
+      background: -moz-linear-gradient(top,  #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000000 86%, #000000 100%); /* FF3.6+ */
+      background: -ms-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%); /* IE10+ */
+      background: -o-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%); /* Opera 11.10+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#324664), color-stop(11%,#3f587d), color-stop(21%,#47648e), color-stop(32%,#3e587d), color-stop(39%,#374d6c), color-stop(68%,#101721), color-stop(79%,#05070b), color-stop(86%,#000000), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%); /* Chrome10+,Safari5.1+ */
+      background: linear-gradient(to bottom,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%); /* W3C */
+      bottom:0px;
+      clear        :both !important;
+      color        :rgba(255,255,255,1);
+      font-size: 14px;
+      line-height  :30px;
+      margin       :0px auto;
+      min-height   :30px;
+      position: absolute;
+      text-align   :center;
+      width: 100%;
+      z-index: 2;
+
+      a
+        text-decoration: none;
+
+        span
+          border-radius: 100%;
+          border: 1px solid white;
+          font-family: icomoon;
+
+          &:hover
+            box-shadow: 0px 0px 10px 5px rgba(255,255,255,0.7);
+            -moz-box-shadow: 0px 0px 10px 5px rgba(255,255,255,0.7);
+            -webkit-box-shadow: 0px 0px 10px 5px rgba(255,255,255,0.7);
+
+      div
+        display: inline-block;
+    
+    /* codigos iconos */
+    .icon-group:before {
+            font-family: icomoon;
+            content: "\e600";
+    }
+    .icon-user-md:before {
+            font-family: icomoon;
+            content: "\e604";
+    }
+    .icon-youtube:before {
+            font-family: icomoon;
+            content: "\e60a";
+    }
+    .icon-file-settings:before {
+            font-family: icomoon;
+            content: "\e601";
+    }
+    .icon-library:before {
+            font-family: icomoon;
+            content: "\e602";
+    }
+    .icon-calendar:before {
+            font-family: icomoon;
+            content: "\e603";
+    }
+    .icon-off:before {
+            font-family: icomoon;
+            content: "\e605";
+    }
+    .icon-minus:before {
+            font-family: icomoon;
+            content: "\e606";
+    }
+    .icon-cancel:before {
+            font-family: icomoon;
+            content: "\e607";
+    }
+    .icon-checkmark:before {
+            font-family: icomoon;
+            content: "\e608";
+    }
+    .icon-suitcase:before {
+            font-family: icomoon;
+            content: "\e609";
+    }
+    .icon-cloudy:before {
+            font-family: icomoon;
+            content: "\e60b";
+    }
+    .icon-auction:before {
+            font-family: icomoon;
+            content: "\e60d";
+    }
+    .icon-stats:before {
+            font-family: icomoon;
+            content: "\e60c";
+    }
+    .icon-facebook2:before {
+            background-color: white;
+            border-radius: 50%;
+            color: #226;
+            content: "\e610";
+            font-family: icomoon;
+    }
+    .icon-github:before {
+            background-color: white;
+            border-radius: 50%;
+            color: black;
+            content: "\e611";
+            font-family: icomoon;
+    }
+    .icon-twitter:before {
+            background-color: white;
+            border-radius: 50%;
+            color: #55acee;
+            content: "\e612";
+            font-family: icomoon;
+    }
+    .icon-batman:before {
+            font-family: icomoon;
+            content: "\e60f";
+    }
+    .icon-earth:before {
+            font-family: icomoon;
+            content: "\e613";
+    }
 
 #login
   background #324664
@@ -591,47 +1286,565 @@
   font-family icomoon
   content 
 
-.panel_frame
-  margin 0 auto
-  min-width 250px
 
-  .panel_internal
-    border 1px solid #2f486e
-    border-top 3px solid #1e71b8
-    padding 10px
+/* Responsive */
+@media screen and (min-width: 690px)
 
-  .panel_menu
+  body 
+    border 0px solid red
+
+  .layout_contenido
+    top 30px
+
+@media screen and (max-width: 690px) and (min-width: 608px)
+
+  body 
+  
+    border 0px solid green
+  
+  .layout_contenido
+  
+    top 30px
+  
+  .layout_contenido_inicial
+  
+    top 100px
+  
+  header 
+
+    #layout_menu_inicio
+      display inline-block
+      text-align center
+      top 0px
+      right 0px
+      position absolute!important
+  
+    .layout_titleLogout
+      display inline-block
+      margin 0px
+      padding 0px
+      top 0px!important
+      position relative!important
+  
+      h1
+        margin 0px
+        padding 10px 0px 0px 0px!important
+        display block
+  
+
+@media screen and (max-width: 607px) and (min-width: 501px)
+
+  body 
+    border 0px solid blue
+  
+    header
+      position relative
+  
+      #logo
+
+        h2
     
-    .panel_menu_actual
-      background-color #1e71b8 !important
-      color #fff !important
-
-      a
-        color #fff !important
-
-    ul 
-      
-      li
+      #layout_menu_inicio
         display inline-block
-        background-color #aec6da
-        border-radius 5px 5px 0px 0px
-        padding 5px
-        color #000
-        border solid 1px #687d8f
-        -webkit-box-shadow inset 0px 0px 1px 1px #fff
-        -moz-box-shadow inset 0px 0px 1px 1px #fff
-        box-shadow inset 0px 0px 1px 1px #fff
-        font-weight 900
-        font-size 0.9em
-        min-width 160px
+        text-align center
+        top 0px
+        right 0px
+        position absolute!important
+    
+      #layout_usuario
+        position absolute
+        top 0px
+        right 0px
+        padding-left 30px
+        padding-right 12px
+        margin 0px
+    
+      .layout_title
+        position static!important
+        display block
+        margin 0px
+        padding 0px
+        min-width: 0px
+        height 45px
+    
+        h1  
+          display inline-block
+          padding 5px 30px!important
+          margin 0px
+    
+      .layout_titleLogout
+        display inline-block
+        margin 0px
+        padding 0px
+        top 0px!important
+        position relative!important
+    
+        h1
+          margin 0px
+          padding 5px 10px 0px 10px!important
+          display block
 
-        img
-          vertical-align middle
-          margin-right 5px
+    input[type="file"]
+      width 180px!important
+    
+    input[type="text"]
+      width 180px!important
+  
+    .layout_contenido
+      top 70px
+    
+    .layout_contenido_inicial
+      top 100px
+  
+    .layout_nav
+      top 90px
+    
+    #login
+      max-height 300px
+    
+      #formulario 
 
+        div
+          display block
+    
+    #logo_skew_left
+    
+      display none
+    
+    .panel_menu 
+
+      ul 
+
+        li
+          text-align center !important 
+    
+    select
+      color #000
+      border 1px solid #324664
+      font-size 12px !important
+      width 180px
+  
+
+
+@media screen and (max-width: 500px) and (min-width: 381px)
+
+  body 
+  
+    border 0px solid yellow
+  
+    input[type="text"]
+      width 180px !important    
+    
+    header
+      position relative
+    
+      #layout_menu_inicio
+        display inline-block
+        text-align center
+        top 0px
+        right 0px
+        position absolute!important
+    
+      #layout_usuario
+        position absolute
+        top 0px
+        right 0px
+        padding-left 80px
+        padding-right 12px
+        margin 0px
+    
+      .layout_title
+        position static!important
+        display block
+        margin 0px
+        padding 0px
+        min-width: 0px
+        height 45px
+    
+        h1
+          display inline-block
+          padding 5px 30px!important
+          margin 0px
+    
+      .layout_titleLogout
+        display inline-block
+        margin 0px
+        padding 0px
+        top 0px!important
+        position relative!important
+    
+        h1
+          margin 0px
+          padding 3px 10px 0px 10px!important
+          display block
+    
+    .layout_contenido
+      top 110px
+      left 0px!important
+    
+    .layout_contenido_inicial
+      top 100px
+
+    .layout_nav
+      display block
+      overflow hidden
+      position relative
+      top 0px
+      width 100%
+    
+      div 
+        display block
+        height auto
+    
+      ul
+        display block
+        border-bottom 1px solid #225
+        
         a
-          text-decoration none
-          color #000
+          color #226
+          cursor pointer
+          display inline-block
+          padding 5px 10px
+          z-index 2
+
+        li
+          text-align center
+          display none
+
+        &:hover
+          
+          li
+            display inline-block!important
+    
+      #lista
+        font-size 16px
+        display block!important
+        color #ddd
+        vertical-align top
+        padding 10px 0px
+
+    #login
+    
+      max-height 300px
+    
+    #login #formulario div
+    
+      display block
+    
+    #logo_skew_left
+    
+      display none
+    
+
+    .panel_menu 
+
+      ul 
+
+        li
+          display inline-block !important
+          text-align center !important 
+      
+
+@media screen and (max-width: 380px) and (min-width: 321px)
+
+  body 
+    border 0px solid black
+  
+    input[type="file"]
+      width 180px !important
+    
+    input[type="text"]
+      width 180px !important
+        
+    header
+      position relative
+      overflow hidden
+
+      .headerLogin
+        text-align left !important
+        display inline-block !important
+    
+      .layout_title
+        position static!important
+        display block
+        margin 0px
+        padding 0px
+        min-width: 0px
+        height 45px
+    
+        h1
+          display inline-block
+          padding 5px 20px!important
+          margin 0px
+    
+      #logo
+        display block
+        text-align  center
+    
+      #layout_usuario
+        margin 0px
+        padding 7px 12px 7px 80px
+        position absolute
+        right 0px
+        top 0px
+      
+      #layout_menu_inicio
+        display block
+        text-align center
+        width 100%
+    
+        #logo_skew_left
+          display none
+    
+      .layout_titleLogout
+        display block
+        margin 0px
+        padding 0px
+        position relative!important
+      
+        h1
+          margin 0px
+          padding 3px 10px 0px 10px!important
+          display block
+    
+    .layout_contenido
+      top 110px
+      left 0px!important
+    
+    .layout_contenido_inicial
+      top 140px
+
+    .layout_nav
+      display block
+      overflow hidden
+      position relative
+      top 0px
+      width 100%
+    
+      div 
+        display block
+        height auto
+    
+      ul
+        display block
+        border-bottom 1px solid #225
+
+        li
+          text-align center
+          display none
+
+          a
+            color #226
+            cursor pointer
+            display inline-block
+            padding 5px 10px
+            z-index 2
+          
+        #lista
+          color #ddd
+          display block!important
+          font-size 16px
+          padding 10px 0px
+          vertical-align top
+  
+        &:hover 
+
+          li
+            display inline-block!important
+    
+    #login
+      max-height 300px
+    
+      #formulario 
+
+        div
+          display block
+    
+    #logo_skew_left
+      display none
+    
+    .panel_menu 
+
+      ul 
+
+        li
+          display block !important
+          text-align center !important 
+    
+    select
+      border 1px solid #324664
+      color #000
+      font-size 12px !important
+      width 180px
+    
+
+@media screen and (max-width: 320px) and (min-width: 0px)
+
+  body 
+  
+    border 0px solid white
+  
+    input[type="file"]
+      width 180px !important
+    
+    input[type="text"]
+      width 180px !important
+    
+    header
+      position relative
+      background -moz-linear-gradient(top,  #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)!important
+      background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#bcbcbc), color-stop(50%,#efefef), color-stop(100%,#bcbcbc))!important
+      background -webkit-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)!important
+      background -o-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)!important
+      background -ms-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)!important
+      background linear-gradient(to bottom,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)!important
+      
+      .headerLogin
+        text-align left !important
+        display inline-block !important
+      
+      #logo
+        background rgba(255,255,255,0)
+        display block
+        text-align  center
+    
+        figure 
+          
+          img
+            width 27px
+        
+        h2
+          font-size 20px 
+    
+    
+        #logo_skew_right
+          display none
+    
+      #layout_menu_inicio
+        background rgba(255,255,255,0)
+        display block
+        float none
+        position static
+        text-align center
+        width 100%
+    
+        nav 
+
+          ul
+            background rgba(255,255,255,0)
+            position static
+    
+            li 
+
+              a
+                font-size 14px
+                background rgba(255,255,255,0)
+    
+        #logo_skew_left
+          display none
+    
+      #layout_usuario
+        margin 0px
+        padding 5px 12px 4px 80px
+        position absolute
+        right 0px
+        top 0px
+    
+      .layout_title
+        display none!important
+    
+        h1
+          display none
+          font-size 14px
+          margin 0px
+          padding 3px
+    
+      .layout_titleLogout
+        display none!important
+    
+    .layout_contenido
+      top 60px
+      left 10px!important
+
+    .layout_contenido_inicial
+      top 80px
+
+    .layout_nav
+      display block
+      overflow hidden
+      position relative
+      top 0px
+      width 100%
+    
+      a 
+
+        span
+          font-size 40px  
+    
+      div 
+        display block
+        height auto
+    
+      ul
+        display block
+        border-bottom 1px solid #225
+    
+        #lista
+          font-size 16px
+          display block!important
+          color #ddd
+          vertical-align top
+          padding 10px 0px
+
+        &:hover 
+
+          li
+            display inline-block!important
+    
+        li
+          text-align center
+          display none
+
+          a
+            color #226
+            cursor pointer
+            display inline-block
+            padding 5px 10px
+            z-index 2
+    
+    #login
+    
+      max-height 230px
+    
+      #formulario 
+
+        div
+          display block
+    
+          figure 
+
+            img
+              width 50px
+    
+    #logo_skew_left
+      display none
+    
+    .panel_menu 
+
+      ul 
+
+        li
+          display block !important
+          text-align center !important 
+    
+    select
+      color #000
+      border 1px solid #324664
+      font-size 12px !important
+      width 180px
+
+/* Responsive */
+
 
 /* Animacion cargando */
 .frame_cargando
@@ -772,3 +1985,13 @@
   100%
     -ms-transform:scale(.3)
 
+@-webkit-keyframes mensaje_flash 
+  0% 
+    opacity 1
+  70% 
+    opacity 1
+  90% 
+    z-index 0
+  100% 
+    opacity 0 
+    z-index -1

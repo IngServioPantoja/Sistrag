@@ -7,14 +7,14 @@
         <meta charset="utf-8"/>
         <?php 
             echo $this->Html->meta('favicon.ico','app/webroot/img/iconos/favicon.ico',array('type' => 'icon'));
-			echo $this->Html->css(array ('layout','normalize','style','extjs','responsive')); 
+			echo $this->Html->css(array ('normalize','extjs')); 
             echo $this->Html->script(array('jquery','jquery.autosize'));
             echo $this->Js->writeBuffer(array('cache'=>true));
         ?>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     </head>
-    <body id="body_layout">
-        <header class="layout_header">
+    <body>
+        <header>
             <div id="logo" <?php if($logged_in)
             { ?> class="headerLogin" <?php } ?>>
                 <figure>
@@ -57,7 +57,16 @@
             <?php  if($logged_in){ ?> 
             <div id="layout_usuario">
                 <?php 
-                echo $this->Html->link($this->Html->image("img_subida/usuarios/1/1_128.jpg", array('height' => '', 'width' => '25px')), array('controller'=>'personas', 'action' => 'edit', $usuario['Persona']['id']),
+                $destino = WWW_ROOT."img/img_subida/usuarios/".$usuario['Persona']['id']."".DS;
+                if (file_exists($destino))
+                {
+                $urlImagen="img_subida/usuarios/".$usuario['Persona']['id']."/1_400.png";
+                }
+                else
+                {
+                $urlImagen="recursos/escudo400.png";
+                }                
+                echo $this->Html->link($this->Html->image($urlImagen, array('height' => '', 'width' => '25px')), array('controller'=>'personas', 'action' => 'edit', $usuario['Persona']['id']),
                 array('escape' => false)); 
                 ?>
                 <?php echo $this->Html->link('',array(
