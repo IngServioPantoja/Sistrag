@@ -49,9 +49,7 @@ $user=NUll;
 									?>
 								</figure>
 							<article class='fichaAgregar'>
-
 								<div class='entradas'>
-									
 									<div>
 										<div>
 											<b>Nombre Área:</b>

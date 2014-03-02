@@ -3,6 +3,9 @@ App::uses('AppModel', 'Model');
 /**
  * Proyecto Model
  *
+ * @property Area $Area
+ * @property Linea $Linea
+ * @property Documento $Documento
  * @property Persona $Persona
  */
 class Proyecto extends AppModel {
@@ -12,10 +15,54 @@ class Proyecto extends AppModel {
  *
  * @var string
  */
-	public $displayField = 'nombre';
+	public $displayField = 'titulo';
 
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
+
+/**
+ * belongsTo associations
+ *
+ * @var array
+ */
+	public $belongsTo = array(
+		'Area' => array(
+			'className' => 'Area',
+			'foreignKey' => 'area_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Linea' => array(
+			'className' => 'Linea',
+			'foreignKey' => 'linea_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
+
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'Documento' => array(
+			'className' => 'Documento',
+			'foreignKey' => 'proyecto_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+
 
 /**
  * hasAndBelongsToMany associations
@@ -35,8 +82,6 @@ class Proyecto extends AppModel {
 			'limit' => '',
 			'offset' => '',
 			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
 		)
 	);
 

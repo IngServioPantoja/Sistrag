@@ -669,6 +669,99 @@ html
                 opacity 1
                 width auto
               
+              .div_agregar_integrantes
+                background-color rgba(255,255,255,0.6)
+                border 1px solid #aaa
+                border-radius 5px 5px 0px 0px
+                display block
+                margin 5px
+                padding-bottom 5px
+                
+                .contenedor_integrantes
+                  display block
+                  width 100%
+  
+                .div_buscar_interventor
+                  display inline-block
+                  margin 0 5px
+
+                  .icono_buscar_interventores
+                    margin-bottom -4px
+                
+                .form_interventores
+                  margin-top -9px
+                  padding 5px 0px
+                  border-bottom 2px solid #777
+                  background-color rgba(0,0,0,0.4)
+
+                .relacion_integrante
+                  background rgb(165,165,165);
+                  background -moz-linear-gradient(top,  rgba(165,165,165,1) 0%, rgba(239,239,239,1) 50%, rgba(165,165,165,1) 100%)
+                  background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(165,165,165,1)), color-stop(50%,rgba(239,239,239,1)), color-stop(100%,rgba(165,165,165,1)))
+                  background -webkit-linear-gradient(top,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
+                  background -o-linear-gradient(top,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
+                  background -ms-linear-gradient(top,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
+                  background linear-gradient(to bottom,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
+                  border-radius 3px 3px 0px 0px
+                  color #555
+                  display block
+                  font-weight 900
+                  margin-bottom 10px
+                  padding 2px 0px 2px 0px
+                  position relative
+                  width 100%
+
+                  #proyectoIcono
+                    position absolute
+                    color #fff
+                    width 30px
+                    top 0px
+                    left 0px
+                    font-size 30px
+                    padding 5px 15px
+                    background-color #7a0400
+                    border-radius 5px 0px 10px 0px
+                    z-index 2
+
+              .div_integrantes
+                border 1px solid #aaa
+                background-color rgba(255,255,255,0.6)
+                display inline-block
+                margin 5px
+                border-radius 5px 5px 0px 0px
+                
+                .contenedor_integrantes
+                  width 100%
+                  display block
+
+                .relacion_integrante
+                  background rgb(165,165,165);
+                  background -moz-linear-gradient(top,  rgba(165,165,165,1) 0%, rgba(239,239,239,1) 50%, rgba(165,165,165,1) 100%)
+                  background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(165,165,165,1)), color-stop(50%,rgba(239,239,239,1)), color-stop(100%,rgba(165,165,165,1)))
+                  background -webkit-linear-gradient(top,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
+                  background -o-linear-gradient(top,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
+                  background -ms-linear-gradient(top,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
+                  background linear-gradient(to bottom,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)
+                  color #555
+                  display block
+                  font-weight 900
+                  padding 2px 0px 2px 0px
+                  position relative
+                  width 100%
+                  border-radius 3px 3px 0px 0px
+
+                  #proyectoIcono
+                    position absolute
+                    color #fff
+                    width 30px
+                    top 0px
+                    left 0px
+                    font-size 30px
+                    padding 5px 15px
+                    background-color #7a0400
+                    border-radius 5px 0px 10px 0px
+                    z-index 2
+
               .ficha_add
                 background-color #fff
                 display block
@@ -712,7 +805,8 @@ html
                 .entradas
                   background-color rgba(255,255,255,0)
                   display block
-                  
+                  max-width 400px
+
                   div
                     display block
                     margin-bottom 3px
@@ -773,11 +867,31 @@ html
                         position absolute
                         right 2px
                         top -12px
-
+                      
                     .inputCorto
-                      width 180px;
+                      width 180px
+                  
+                  .div_doble
+                    text-align center
+                    display inline-block
+                    width 100%
 
+                    .div_left
+                      float left
                     
+                    .div_right
+                      float right
+                  
+                  .input_unico
+                    text-align center
+                    display block
+                    width 100%
+
+                    select,div
+                      float none !important
+                      display block !important
+                      margin 0 auto
+
               .ficha_index
                 background-color rgba(255,255,255,0.6)
                 border-image linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
@@ -787,13 +901,14 @@ html
                 border-left-width 2px
                 border-radius 5px
                 border-right-width 2px
-                box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
-                -moz-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
-                -webkit-box-shadow 0px 0px 30px 5px rgba(255,255,255,0.7)
+                box-shadow 0px 0px 20px 5px rgba(255,255,255,0.7)
+                -moz-box-shadow 0px 0px 20px 5px rgba(255,255,255,0.7)
+                -webkit-box-shadow 0px 0px 20px 5px rgba(255,255,255,0.7)
                 display inline-block
+                position relative
                 margin 5px
                 width 200px
-
+                
                 .ficha_acciones
                   background  #fff 
                   background -moz-linear-gradient(top,  rgba(50,70,100,0.7) 0%, rgba(63,88,125,0.66) 11%, rgba(71,100,142,0.62) 21%, rgba(62,88,125,0.57) 32%, rgba(55,77,108,0.54) 39%, rgba(40,57,80,0.5) 50%, rgba(16,23,33,0.57) 68%, rgba(5,7,11,0.61) 79%, rgba(0,0,0,0.64) 86%, rgba(0,0,0,0.7) 100%)
@@ -823,14 +938,16 @@ html
                   border-top 1px solid #ccc
                   min-height 100px
                   padding 5px
+                  text-align center
 
                   span
                     color #222
                     font-size 14px
                   
                   table
+                    margin 0 auto
                     text-align center !important
-
+                
                 figure
                   position relative
                 
@@ -961,8 +1078,18 @@ html
                 .th_res
                   min-width 80px
               
+              #fichaIndexProyecto
+                position relative
+
+                .ficha_datos
+                  min-height 200px
+
+                .proyectosIndex
+                  left 0px 
+                  position absolute
+                  top 0px
+
               table
-                width 100%
 
             .submit
               
@@ -1084,88 +1211,122 @@ html
     /* codigos iconos */
     .icon-group:before {
             font-family: icomoon;
+      font-weight: 400;
             content: "\e600";
     }
     .icon-user-md:before {
             font-family: icomoon;
+      font-weight: 400;
             content: "\e604";
     }
     .icon-youtube:before {
             font-family: icomoon;
+      font-weight: 400;
             content: "\e60a";
     }
     .icon-file-settings:before {
             font-family: icomoon;
+      font-weight: 400;
             content: "\e601";
     }
     .icon-library:before {
             font-family: icomoon;
+      font-weight: 400;
             content: "\e602";
     }
     .icon-calendar:before {
             font-family: icomoon;
+      font-weight: 400;
             content: "\e603";
     }
     .icon-off:before {
             font-family: icomoon;
+      font-weight: 400;
             content: "\e605";
     }
     .icon-minus:before {
             font-family: icomoon;
+      font-weight: 400;
             content: "\e606";
     }
     .icon-cancel:before {
             font-family: icomoon;
+      font-weight: 400;
             content: "\e607";
     }
     .icon-checkmark:before {
-            font-family: icomoon;
-            content: "\e608";
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e608";
     }
     .icon-suitcase:before {
-            font-family: icomoon;
-            content: "\e609";
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e609";
     }
     .icon-cloudy:before {
-            font-family: icomoon;
-            content: "\e60b";
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e60b";
     }
     .icon-auction:before {
-            font-family: icomoon;
-            content: "\e60d";
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e60d";
     }
     .icon-stats:before {
-            font-family: icomoon;
-            content: "\e60c";
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e60c";
     }
     .icon-facebook2:before {
-            background-color: white;
-            border-radius: 50%;
-            color: #226;
-            content: "\e610";
-            font-family: icomoon;
+      background-color: white;
+      border-radius: 50%;
+      color: #226;
+      content: "\e610";
+      font-family: icomoon;
+      font-weight: 400;
     }
     .icon-github:before {
-            background-color: white;
-            border-radius: 50%;
-            color: black;
-            content: "\e611";
-            font-family: icomoon;
+      background-color: white;
+      border-radius: 50%;
+      color: black;
+      content: "\e611";
+      font-family: icomoon;
+      font-weight: 400;
     }
     .icon-twitter:before {
-            background-color: white;
-            border-radius: 50%;
-            color: #55acee;
-            content: "\e612";
-            font-family: icomoon;
+      background-color: white;
+      border-radius: 50%;
+      color: #55acee;
+      content: "\e612";
+      font-family: icomoon;
+      font-weight: 400;
     }
     .icon-batman:before {
-            font-family: icomoon;
-            content: "\e60f";
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e60f";
     }
     .icon-earth:before {
-            font-family: icomoon;
-            content: "\e613";
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e613";
+    }
+    .icon-superman:before {
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e615";
+    }
+    .icon-skeletor:before {
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e614";
+    }
+    .icon-graduate:before {
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e60e";
     }
 
 #login

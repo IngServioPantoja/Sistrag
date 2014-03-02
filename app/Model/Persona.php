@@ -3,6 +3,8 @@ App::uses('AppModel', 'Model');
 /**
  * Persona Model
  *
+ * @property Programa $Programa
+ * @property Facultad $Facultad
  * @property Tiposusuario $Tiposusuario
  * @property User $User
  * @property Proyecto $Proyecto
@@ -25,6 +27,20 @@ class Persona extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
+		'Programa' => array(
+			'className' => 'Programa',
+			'foreignKey' => 'programa_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Facultad' => array(
+			'className' => 'Facultad',
+			'foreignKey' => 'facultad_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 		'Tiposusuario' => array(
 			'className' => 'Tiposusuario',
 			'foreignKey' => 'tiposusuario_id',
@@ -74,8 +90,6 @@ class Persona extends AppModel {
 			'limit' => '',
 			'offset' => '',
 			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
 		)
 	);
 

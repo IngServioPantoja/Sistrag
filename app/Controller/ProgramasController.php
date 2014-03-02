@@ -179,10 +179,16 @@ var $usuario=array();
 	}
 
 function lista_programas() {
-	print_r($this->request->data);
+	if(isset($this->request->data['Item']['facultad']))
+	{
+		$facultad_id=$this->request->data['Item']['facultad'];
+	}else if(isset($this->request->data['Proyecto']['facultad']))
+	{
+		$facultad_id=$this->request->data['Proyecto']['facultad'];
+	}
 	$select_entrada=$this->Programa->find('list', 
 		array('conditions' => 
-			array('facultad_id'=> $this->request->data['Item']['facultad']
+			array('facultad_id'=> $facultad_id
 			)
 		)
 	);

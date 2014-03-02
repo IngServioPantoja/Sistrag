@@ -89,12 +89,6 @@ $user=NUll;
 										</div>
 									</div>
 									<div id="asociacion">
-										<div>
-											
-										</div>
-										<div>
-											
-										</div>
 									</div>
 									<?php echo $this->Form->create('User'); ?>
 									<div>

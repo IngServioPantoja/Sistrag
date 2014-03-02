@@ -18,23 +18,6 @@ class User extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-
-public function matchPasswords($data){
-	if($data['password']==$this->data['User']['password_confirmation']){
-		return true;
-		}
-		$this->invalidate('password_confirmation','tus password no coinciden');
-		return false;
-	}
-	public function beforeSave($options = Array()){
-		if(isset($this->data['User']['password'])){
-		$this->data['User']['password']=AuthComponent::password($this->data['User']['password']);
-					}
-					return true;
-		
-		
-		}
-
 /**
  * belongsTo associations
  *

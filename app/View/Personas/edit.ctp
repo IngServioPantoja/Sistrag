@@ -13,7 +13,7 @@ $user=NUll;
 				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Usuarios'), array('action' => 'view')); 
+				echo $this->Html->link(__('Usuarios'), array('action' => 'index')); 
 				?></li><li>
 				<?php
 				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));

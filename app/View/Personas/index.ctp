@@ -161,7 +161,6 @@ if(!$this->request->is('ajax'))
 										</div>
 									</a>
 								</article>
-							
 							<?php endforeach; ?>
 						</div>
 						<div class="crud_fila_paginacion">

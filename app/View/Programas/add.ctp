@@ -5,7 +5,7 @@ $user=NUll;
 	<div class="panel_menu">
 		<ul>
 			
-				<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') {?>
+			<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') {?>
 			<li>
 				<?php
 				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));

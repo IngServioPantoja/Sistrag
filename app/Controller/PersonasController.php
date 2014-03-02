@@ -405,39 +405,40 @@ var $uses = array('Persona','User','Facultad','Programa','Tipousuario','Nivel');
 		}
 	}
 
-	function lista_asociaciones() {
-	if ($this->request->data['Persona']['tiposusuario_id']==1) 
+	function lista_asociaciones() 
 	{
-		//Soy un administrador institucional
-		$select_entrada=NULL;
-		$foreign=NULL;
-		$asociacion=NULL;
-	}
-	else if($this->request->data['Persona']['tiposusuario_id']==2)
-	{
-		//Soy un administrador de facultad
-		$select_entrada=$this->Facultad->find('list');
-		$foreign="facultad_id";
-		$asociacion="Facultad";
-	}
-	else if($this->request->data['Persona']['tiposusuario_id']==3 || $this->request->data['Persona']['tiposusuario_id']==4 || $this->request->data['Persona']['tiposusuario_id']==5)
-	{
-		//Soy un administrador de programa
-		$select_entrada=$this->Programa->find('list');
-		$foreign="programa_id";
-		$asociacion="Programa";
+		if ($this->request->data['Persona']['tiposusuario_id']==1) 
+		{
+			//Soy un administrador institucional
+			$select_entrada=NULL;
+			$foreign=NULL;
+			$asociacion=NULL;
+		}
+		else if($this->request->data['Persona']['tiposusuario_id']==2)
+		{
+			//Soy un administrador de facultad
+			$select_entrada=$this->Facultad->find('list');
+			$foreign="facultad_id";
+			$asociacion="Facultad";
+		}
+		else if($this->request->data['Persona']['tiposusuario_id']==3 || $this->request->data['Persona']['tiposusuario_id']==4 || $this->request->data['Persona']['tiposusuario_id']==5)
+		{
+			//Soy un administrador de programa
+			$select_entrada=$this->Programa->find('list');
+			$foreign="programa_id";
+			$asociacion="Programa";
 
-	}
-	else
-	{
-		//No es ninguno posible hack!!
+		}
+		else
+		{
+			//No es ninguno posible hack!!
 
+		}
+		$this->set("asociacion",$asociacion);
+		$this->set("foreign",$foreign);
+		$this->set(compact('select_entrada'));
+		$this->render('/personas/lista_asociaciones');
 	}
-	$this->set("asociacion",$asociacion);
-	$this->set("foreign",$foreign);
-	$this->set(compact('select_entrada'));
-	$this->render('/personas/lista_asociaciones');
-}
 
 	public function view($id = null) {
 		if (!$this->Persona->exists($id)) {

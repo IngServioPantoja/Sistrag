@@ -112,6 +112,24 @@ var $paginate =array('limit' => 10,);
 
 	}
 
+	public function lista_areas() {
+		if(isset($this->request->data['Proyecto']['programa_id']))
+		{
+			$programa_id=$this->request->data['Proyecto']['programa_id'];
+		}else if(isset($this->request->data['programa_id']))
+		{
+			$programa_id=$this->request->data['programa_id'];
+		}
+		$select_entrada=$this->Area->find('list', 
+			array('conditions' => 
+				array('Area.programa_id'=> $programa_id
+				)
+			)
+		);
+		$this->set(compact('select_entrada'));
+		$this->render('/Areas/lista_areas');
+	}
+
 	public function lineas_asociadas($area_id=null,$atributo=null,$valor=null)
 	{
 		$this->Linea->recursive = -1;
