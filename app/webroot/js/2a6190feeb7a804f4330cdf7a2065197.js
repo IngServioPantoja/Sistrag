@@ -1,0 +1,2 @@
+$(document).ready(function () {$("#valor").bind("keyup", function (event) {$.ajax({async:true, beforeSend:function (XMLHttpRequest) {alert("entre");}, data:$("#valor").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#contenedor_interventores").html(data);}, type:"post", url:"\/Sistrag\/proyectos\/lista_interventores"});
+return false;});});

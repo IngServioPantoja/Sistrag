@@ -1,0 +1,2 @@
+$(document).ready(function () {$("#area_id").bind("change", function (event) {$.ajax({async:true, data:$("#area_id").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#asociacion").html(data);}, type:"post", url:"\/Sistrag\/proyectos\/lista_lineas"});
+return false;});});

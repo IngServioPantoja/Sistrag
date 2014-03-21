@@ -1,3 +1,4 @@
+
 <div class="div_doble">
 	<div class="div_left">
 		<label>
@@ -8,7 +9,7 @@
 	<?php
 	if(count($select_areas)>0)
 	{
-		echo $this->Form->select('area_id',array($select_areas),array('empty'=>false,'label'=>false,'id'=>'area_id','class'=>'inputCorto'));
+		echo $this->Form->select('Proyecto][area_id',array($select_areas),array('empty'=>false,'label'=>false,'id'=>'area_id','class'=>'inputCorto'));
 	}else
 	{
 		echo "no hay areas";
@@ -27,7 +28,7 @@
 		<?php
 		if(count($select_lineas)>0)
 		{
-			echo $this->Form->select('linea_id',array($select_lineas),array('empty'=>false,'label'=>false,'class'=>'inputCorto'));
+			echo $this->Form->select('Proyecto][linea_id',array($select_lineas),array('empty'=>false,'label'=>false,'class'=>'inputCorto'));
 		}else
 		{
 		?>

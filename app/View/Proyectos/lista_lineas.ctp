@@ -8,7 +8,7 @@
 	<?php
 	if(count($select_lineas)>0)
 	{
-		echo $this->Form->select('linea_id',array($select_lineas),array('empty'=>false,'label'=>false,'class'=>'inputCorto'));
+		echo $this->Form->select('Proyecto][linea_id',array($select_lineas),array('empty'=>false,'label'=>false,'class'=>'inputCorto'));
 	}else
 	{
 	?>

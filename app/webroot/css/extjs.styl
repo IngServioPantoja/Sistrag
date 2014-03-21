@@ -104,7 +104,7 @@ html
       position relative
       text-align left
       width 100%
-      z-index 2
+      z-index 5
       
       div
         border-bottom 1px solid rgba(200,200,200,0.7)
@@ -125,7 +125,7 @@ html
         text-align center
         top 45%
         width 200px
-        z-index 2 
+        z-index 1 
         animation mensaje_flash 4s 1 forwards
         -webkit-animation mensaje_flash 4s 1 forwards
         -moz-animation mensaje_flash 4s 1 forwards
@@ -139,6 +139,10 @@ html
         position relative
 
         nav
+          width auto!important
+          position relative!important
+          overflow visible
+          top 0px
 
           ul
             list-style none
@@ -156,6 +160,7 @@ html
               display inline-block
               margin 0px -2px
               z-index 2
+              padding 0px!important
 
               a
                 color #226
@@ -194,6 +199,7 @@ html
           top 0px
           vertical-align top
           width 20px
+          height auto!important
 
           &:hover
             background #bcbcbc
@@ -380,7 +386,7 @@ html
       text-align: center;
       top: 40px;
       width         :110px;
-      z-index: 1;
+      z-index: 2;
       transition:all 0.3s linear;
       -moz-transition:all 0.3s linear;
       -webkit-transition:all 0.3s linear;
@@ -676,7 +682,7 @@ html
                 display block
                 margin 5px
                 padding-bottom 5px
-                
+
                 .contenedor_integrantes
                   display block
                   width 100%
@@ -687,6 +693,7 @@ html
 
                   .icono_buscar_interventores
                     margin-bottom -4px
+                    display inline-block
                 
                 .form_interventores
                   margin-top -9px
@@ -710,18 +717,71 @@ html
                   padding 2px 0px 2px 0px
                   position relative
                   width 100%
+                  
+                  .interventor_acciones:hover .lista_agregar_interventor
+                    opacity 1
+                    left 55px
+                    
+                  .lista_agregar_interventor
+                    display inline-block
+                    position absolute
+                    left -100px
+                    top 1px
+                    color #7a0400
+                    background-color white
+                    border-radius 0px 5px 0px 0px
+                    opacity 1
+                    transition all 0.2s linear
+                    
+                    li
+                      display inline-block
+                      font-size 13px
+                      padding 3px 7px 4px 10px
+                      width 55px
+                      box-shadow 2px 2px 5px rgba(0,0,0,0.5)
+                      margin 0 auto
+                      position relative
+
+                      .submit_oculto
+                        position absolute
+                        top 0px
+                        left 0px
+                        width 100%
+                        height 100%
+                        opacity 0
+
+                    li:hover
+                      background-color rgba(180,180,180,1)
+                    
+                    .estudiante
+                      width 100px
+                      padding-right 30px
+
 
                   #proyectoIcono
-                    position absolute
-                    color #fff
-                    width 30px
-                    top 0px
-                    left 0px
-                    font-size 30px
-                    padding 5px 15px
                     background-color #7a0400
                     border-radius 5px 0px 10px 0px
-                    z-index 2
+                    box-shadow 2px 2px 2px rgba(0,0,0,0.8)
+                    color #fff
+                    font-size 30px
+                    left 0px
+                    padding 5px 15px
+                    position absolute
+                    text-shadow 0px 0px 20px rgba(0,0,0,1)
+                    top 0px
+                    width 30px
+                    z-index 1
+
+                .resultado_busqueda
+                  background-color rgba(255,255,255,0.6)
+                  box-shadow 0px 0px 30px rgba(255,255,255,0.6)
+                  color #7a0400
+                  font-size 25px
+                  margin 5px 15px 5px 15px
+      
+                #cargo_interventor
+                  position absolute
+                  top 0px
 
               .div_integrantes
                 border 1px solid #aaa
@@ -751,16 +811,18 @@ html
                   border-radius 3px 3px 0px 0px
 
                   #proyectoIcono
-                    position absolute
-                    color #fff
-                    width 30px
-                    top 0px
-                    left 0px
-                    font-size 30px
-                    padding 5px 15px
                     background-color #7a0400
                     border-radius 5px 0px 10px 0px
-                    z-index 2
+                    box-shadow 2px 2px 2px rgba(0,0,0,0.8)
+                    color #fff
+                    font-size 30px
+                    left 0px
+                    padding 5px 15px
+                    position absolute
+                    text-shadow 0px 0px 20px rgba(0,0,0,1)
+                    top 0px
+                    width 30px
+                    z-index 1
 
               .ficha_add
                 background-color #fff
@@ -908,7 +970,19 @@ html
                 position relative
                 margin 5px
                 width 200px
+                overflow:hidden;
                 
+                .form_oculto_cambiar
+                  display inline-block
+                  position absolute
+                  left 0px
+                  top 0px
+
+                .submit_oculto_cambiar
+                  opacity 0!important
+                  width 30px!important
+                  height 35px
+
                 .ficha_acciones
                   background  #fff 
                   background -moz-linear-gradient(top,  rgba(50,70,100,0.7) 0%, rgba(63,88,125,0.66) 11%, rgba(71,100,142,0.62) 21%, rgba(62,88,125,0.57) 32%, rgba(55,77,108,0.54) 39%, rgba(40,57,80,0.5) 50%, rgba(16,23,33,0.57) 68%, rgba(5,7,11,0.61) 79%, rgba(0,0,0,0.64) 86%, rgba(0,0,0,0.7) 100%)
@@ -946,26 +1020,48 @@ html
                   
                   table
                     margin 0 auto
+                    width 100%
                     text-align center !important
+
+                  .proyectos_ampliar
+                    position relative
+                    overflow visible
+                    border-top solid 1px #888
+
+                    .informacion
+                      position absolute
+                      top 0px
+                      left -7px
+                      right 0px
+                      opacity 0
+                      z-index 0
+                      background rgba(210,210,210,1)
+                      width 200px
+                      transition all 0.2s linear
+
+                  .proyectos_ampliar:hover .informacion
+                      top 0px
+                      opacity 1
+                      z-index 2
+                      box-shadow 0px 5px 10px rgba(0,0,0,1)
                 
                 figure
                   position relative
                 
               .ficha_index:hover .ficha_datos
-                background #fff 
-                background #324664
+                box-shadow 0px 0px 20px rgba(0,0,0,0.7)
+
+              .ficha_index:hover span
+               color #222
+
+              .ficha_index:hover .ficha_acciones
+                display block
                 background -moz-linear-gradient(top,  #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000000 86%, #000000 100%)
                 background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#324664), color-stop(11%,#3f587d), color-stop(21%,#47648e), color-stop(32%,#3e587d), color-stop(39%,#374d6c), color-stop(68%,#101721), color-stop(79%,#05070b), color-stop(86%,#000000), color-stop(100%,#000000))
                 background -webkit-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
                 background -o-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
                 background -ms-linear-gradient(top,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
                 background linear-gradient(to bottom,  #324664 0%,#3f587d 11%,#47648e 21%,#3e587d 32%,#374d6c 39%,#101721 68%,#05070b 79%,#000000 86%,#000000 100%)
-
-              .ficha_index:hover span
-               color #ddd
-
-              .ficha_index:hover .ficha_acciones
-               display block
 
               .ficha_view
                 background-color rgba(255,255,255,0.6)
@@ -1080,9 +1176,10 @@ html
               
               #fichaIndexProyecto
                 position relative
+                overflow visible
 
                 .ficha_datos
-                  min-height 200px
+                  min-height 150px
 
                 .proyectosIndex
                   left 0px 
@@ -2153,6 +2250,11 @@ html
     opacity 1
   90% 
     z-index 0
+  99% 
+    opacity 0 
+    z-index -3
+    display none
   100% 
     opacity 0 
-    z-index -1
+    z-index -5
+    display none

@@ -8,7 +8,7 @@
 	<?php 
 	if(count($select_programas)>0)
 	{
-		echo $this->Form->select('programa',array($select_programas),array('empty'=>false,'label'=>false,'id'=>'programa','class'=>'inputCorto'));
+		echo $this->Form->select('Proyecto][programa',array($select_programas),array('empty'=>false,'label'=>false,'id'=>'programa','class'=>'inputCorto'));
 	}else
 	{
 		echo "No hay programas";
@@ -27,7 +27,7 @@
 	<?php
 	if(count($select_areas)>0)
 	{
-		echo $this->Form->select('area_id',array($select_areas),array('empty'=>false,'label'=>false,'id'=>'area_id','class'=>'inputCorto'));
+		echo $this->Form->select('Proyecto][area_id',array($select_areas),array('empty'=>false,'label'=>false,'id'=>'area_id','class'=>'inputCorto','value'=>'1'));
 	}else
 	{
 		echo "No hay Areas";
@@ -45,7 +45,7 @@
 			<?php
 			if(count($select_areas)>0)
 			{
-				echo $this->Form->select('linea_id',array($select_lineas),array('empty'=>false,'label'=>false,'class'=>'inputCorto')); 
+				echo $this->Form->select('Proyecto][linea_id',array($select_lineas),array('empty'=>false,'label'=>false,'class'=>'inputCorto')); 
 			}else
 			{
 				echo "No hay Líneas";

@@ -3,8 +3,8 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('persona_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('proyecto_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('persona_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('rol_id'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
@@ -12,10 +12,10 @@
 	<tr>
 		<td><?php echo h($personasProyecto['PersonasProyecto']['id']); ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($personasProyecto['Persona']['nombre'], array('controller' => 'personas', 'action' => 'view', $personasProyecto['Persona']['id'])); ?>
+			<?php echo $this->Html->link($personasProyecto['Proyecto']['titulo'], array('controller' => 'proyectos', 'action' => 'view', $personasProyecto['Proyecto']['id'])); ?>
 		</td>
 		<td>
-			<?php echo $this->Html->link($personasProyecto['Proyecto']['nombre'], array('controller' => 'proyectos', 'action' => 'view', $personasProyecto['Proyecto']['id'])); ?>
+			<?php echo $this->Html->link($personasProyecto['Persona']['nombre'], array('controller' => 'personas', 'action' => 'view', $personasProyecto['Persona']['id'])); ?>
 		</td>
 		<td>
 			<?php echo $this->Html->link($personasProyecto['Rol']['nombre'], array('controller' => 'roles', 'action' => 'view', $personasProyecto['Rol']['id'])); ?>
@@ -46,10 +46,10 @@
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('New Personas Proyecto'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Personas'), array('controller' => 'personas', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Persona'), array('controller' => 'personas', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Proyectos'), array('controller' => 'proyectos', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Proyecto'), array('controller' => 'proyectos', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Personas'), array('controller' => 'personas', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Persona'), array('controller' => 'personas', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Roles'), array('controller' => 'roles', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Rol'), array('controller' => 'roles', 'action' => 'add')); ?> </li>
 	</ul>

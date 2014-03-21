@@ -126,40 +126,121 @@ if(!$this->request->is('ajax'))
 														</span>
 													</th>
 												</tr>
+												<?php
+												foreach ($proyecto['Persona'] as $persona) 
+												{
+												if($persona['PersonasProyecto']['rol_id']==3)
+													{
+
+												?>
+													<tr>
+														<td colspan="2">
+															<span>
+														<?php
+															echo $persona['nombre']." ".$persona['apellido'];
+														?>
+															</span>
+														</td>
+													</tr>
+												<?php
+													}
+												}
+												?>
 												<tr>
-													<td colspan="2">
-														<span>
-															francisco
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<td colspan="2">
-														<span>
-															servio
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<th colspan="2">
-														<span>
-															Linea de investigación
-														</span>
-													</th>
-												</tr>
-												<tr>
-													<td colspan="2">
-														<span>
-															gestiod ela iveiggaicon..
-														</span>
+													<td colspan="2" class="proyectos_ampliar">
+														V
+														<table class="informacion">	
+															<tr>
+																<th colspan="2">
+																	<span>
+																		Asesor:
+																	</span>
+																</th>
+															</tr>
+															<?php
+															foreach ($proyecto['Persona'] as $persona) 
+															{
+															if($persona['PersonasProyecto']['rol_id']==2)
+																{
+
+															?>
+																<tr>
+																	<td colspan="2">
+																		<span>
+																	<?php
+																		echo $persona['nombre']." ".$persona['apellido'];
+																	?>
+																		</span>
+																	</td>
+																</tr>
+															<?php
+																}
+															}
+															?>
+															<tr>
+																<th colspan="2">
+																	<span>
+																		Jurados:
+																	</span>
+																</th>
+															</tr>
+															<?php
+															foreach ($proyecto['Persona'] as $persona) 
+															{
+															if($persona['PersonasProyecto']['rol_id']==1)
+																{
+
+															?>
+																<tr>
+																	<td colspan="2">
+																		<span>
+																	<?php
+																		echo $persona['nombre']." ".$persona['apellido'];
+																	?>
+																		</span>
+																	</td>
+																</tr>
+															<?php
+																}
+															}
+															?>
+															<tr>
+																<th colspan="2">
+																	<span>
+																		Área de ivnestigación:
+																	</span>
+																</th>
+															</tr>
+															<tr>
+																<td colspan="2">
+																	<span>
+																		<?php echo h($proyecto['Area']['nombre'])	; ?>
+																	</span>
+																</td>
+															</tr>
+															<tr>
+																<th colspan="2">
+																	<span>
+																		Línea de investigación
+																	</span>
+																</th>
+															</tr>
+															<tr>
+																<td colspan="2">
+																	<span>
+																		<?php echo h($proyecto['Linea']['nombre'])	; ?>
+																	</span>
+																</td>
+															</tr>
+														</table>
 													</td>
 												</tr>
 											</table>
 										</div>
 									</a>
 								</article>
-							
 							<?php endforeach; ?>
+						</br></br></br></br>
 						</div>
 						<div class="crud_fila_paginacion">
 						<?php
