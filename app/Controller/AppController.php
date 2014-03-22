@@ -60,6 +60,10 @@ public function beforeFilter() {
 		$this->set('current_user',$this->Auth->user());
 					
 	    }
+        public function beforeRender() {
+        $this->set('referer',$this->referer());
+                    
+        }
 		
 
 }

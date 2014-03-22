@@ -33,6 +33,13 @@ if(!$this->request->is('ajax'))
 			<tr>
 				<td>
 					<div class="crud_fila_principal">
+						<div class="back">
+							<?php
+							echo $this->Html->link($this->Html->image("iconos/back64.png", array('height' => '', 'width' => '22px','title'=>'Volver')),$referer,
+										array('escape' => false));
+							?>
+
+						</div>
 						<?php echo $this->Form->create('Busqueda'); ?>
 						<span>
 							<?php
@@ -74,171 +81,170 @@ if(!$this->request->is('ajax'))
 					<?php echo $this->Form->end(__('')); ?>
 					</div>
 					<div id="contenedor_datos">
-<?php
-}
-?>						
-						<div class="crud_fila_secundaria">
-<?php
-	if(isset($encontrado)) 
-	{
-	?>
-			<div class="no_hay_registros">
-			<span>No se encontraron registros</span>
-			</div>
-<?php
-	}
-?>
+						<?php
+						}
+						?>						
+							<div class="crud_fila_secundaria">
+						<?php
+							if(isset($encontrado)) 
+							{
+							?>
+								<div class="no_hay_registros">
+								<span>No se encontraron registros</span>
+								</div>
+						<?php
+							}
+						?>
 							<?php foreach ($proyectos as $proyecto): ?>
-								<article class='ficha_index' id='fichaIndexProyecto'>
-									<a href="proyectos/view/<?php  echo $proyecto['Proyecto']['id'];?>">
-										<div class='ficha_datos'>
-											<table>
-												<tr>
+								<div class="div_integrantes">
+									<span class="relacion_integrante">
+										<?php echo h($proyecto['Programa']['nombre']); ?>
+									</span>	
+									<article class='ficha_index'>
+											<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'){ ?>
+											<div class="ficha_acciones">
+												<?php 
+												echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'editar_general', $proyecto['Proyecto']['id']),
+										array('escape' => false));
+										?>
+												<?php 
+												echo $this->Form->postLink($this->Html->image("iconos/eliminar50.png", array('height' => '', 'width' => '25px')), array('action' => 'delete', $proyecto['Proyecto']['id']), array('escape' => false), __('¿Esta seguro que desea borrar el proyecto: %s?', $proyecto['Proyecto']['titulo'])); 
+												?>
+											</div>
+											<?php } ?>
+											<a href="proyectos/documentos/<?php echo $proyecto['Proyecto']['id'];?>">
+												<table class="informacion_proyecto">
 													<th>
 														<span>
 															Codigo
 														</span>	
 													</th>
-													<td>
-														<span>
-															<?php echo h($proyecto['Proyecto']['codigo']); ?>
-														</span>	
-													</td>
-												</tr>
-												<tr>
-													<th colspan="2">
-														<span>
-															Titulo:
-														</span>
-													</th>
-												</tr>
-												<tr>
-													<td colspan="2">
-														<span>
-															<?php echo h($proyecto['Proyecto']['titulo'])	; ?>
-														</span>
-													</td>
-												</tr>
-												<tr>
-													<th colspan="2">
-														<span>
-															Integrantes:
-														</span>
-													</th>
-												</tr>
-												<?php
-												foreach ($proyecto['Persona'] as $persona) 
-												{
-												if($persona['PersonasProyecto']['rol_id']==3)
-													{
-
-												?>
+													<tr>
+														<td>
+															<span>
+																<?php echo h($proyecto['Proyecto']['codigo']); ?>
+															</span>	
+														</td>
+													</tr>
+													<tr>
+														<th colspan="2">
+															<span>
+																Titulo:
+															</span>
+														</th>
+													</tr>
 													<tr>
 														<td colspan="2">
 															<span>
-														<?php
-															echo $persona['nombre']." ".$persona['apellido'];
-														?>
+																<?php echo h($proyecto['Proyecto']['titulo'])	; ?>
 															</span>
 														</td>
 													</tr>
-												<?php
-													}
-												}
-												?>
-												<tr>
-													<td colspan="2" class="proyectos_ampliar">
-														V
-														<table class="informacion">	
-															<tr>
-																<th colspan="2">
-																	<span>
-																		Asesor:
-																	</span>
-																</th>
-															</tr>
-															<?php
-															foreach ($proyecto['Persona'] as $persona) 
+													<tr>
+														<th colspan="2">
+															<span>
+																Integrantes:
+															</span>
+														</th>
+													</tr>
+														<?php
+														foreach ($proyecto['Persona'] as $persona) 
+														{
+														if($persona['PersonasProyecto']['rol_id']==3)
 															{
+
+														?>
+															<tr>
+																<td colspan="2">
+																	<span>
+																<?php
+																	echo $persona['nombre']." ".$persona['apellido'];
+																?>
+																	</span>
+																</td>
+															</tr>
+														<?php
+															}
+														}
+														?>
+													<tr>
+												</table>
+											</a>
+											<a href="proyectos/documentos/<?php echo $proyecto['Proyecto']['id'];?>">
+											<div class='ficha_datos' id="datos_proyecto">
+												<div colspan="2" class="proyectos_ampliar">
+													v
+													<div class="informacion">	
+														<div>
+															<span>
+																<strong>Asesor:</strong>
+															</span>
+														</div>
+														<?php
+														foreach ($proyecto['Persona'] as $persona) 
+														{
 															if($persona['PersonasProyecto']['rol_id']==2)
-																{
-
-															?>
-																<tr>
-																	<td colspan="2">
-																		<span>
-																	<?php
-																		echo $persona['nombre']." ".$persona['apellido'];
-																	?>
-																		</span>
-																	</td>
-																</tr>
-															<?php
-																}
-															}
-															?>
-															<tr>
-																<th colspan="2">
-																	<span>
-																		Jurados:
-																	</span>
-																</th>
-															</tr>
-															<?php
-															foreach ($proyecto['Persona'] as $persona) 
 															{
-															if($persona['PersonasProyecto']['rol_id']==1)
-																{
 
 															?>
-																<tr>
-																	<td colspan="2">
-																		<span>
-																	<?php
-																		echo $persona['nombre']." ".$persona['apellido'];
-																	?>
-																		</span>
-																	</td>
-																</tr>
+																
+																<div>
+																	<span>
+																<?php
+																	echo $persona['nombre']." ".$persona['apellido'];
+																?>
+																	</span>
+																</div>
+															
 															<?php
-																}
 															}
-															?>
-															<tr>
-																<th colspan="2">
-																	<span>
-																		Área de ivnestigación:
-																	</span>
-																</th>
-															</tr>
-															<tr>
-																<td colspan="2">
-																	<span>
-																		<?php echo h($proyecto['Area']['nombre'])	; ?>
-																	</span>
-																</td>
-															</tr>
-															<tr>
-																<th colspan="2">
-																	<span>
-																		Línea de investigación
-																	</span>
-																</th>
-															</tr>
-															<tr>
-																<td colspan="2">
-																	<span>
-																		<?php echo h($proyecto['Linea']['nombre'])	; ?>
-																	</span>
-																</td>
-															</tr>
-														</table>
-													</td>
-												</tr>
-											</table>
-										</div>
-									</a>
-								</article>
+														}
+														?>
+														<div>
+															<span>
+																<strong>Jurados:</strong>
+															</span>
+														</div>
+														<?php
+														foreach ($proyecto['Persona'] as $persona) 
+														{
+														if($persona['PersonasProyecto']['rol_id']==1)
+															{
+
+														?>
+															<div>
+																<span>
+																<?php
+																	echo $persona['nombre']." ".$persona['apellido'];
+																?>
+																</span>
+															</div>		
+														<?php
+															}
+														}
+														?>
+														<div>
+															<span>
+																<strong>Área de ivnestigación:</strong>
+															</span>
+														</div>
+														<span>
+															<?php echo h($proyecto['Area']['nombre'])	; ?>
+														</span>
+														<div>
+															<span>
+																<strong>Línea de ivnestigación:</strong>
+															</span>
+														</div>
+														<span>
+															<?php echo h($proyecto['Linea']['nombre'])	; ?>
+														</span>
+													</div>
+												</div>
+											</div>
+										</a>
+									</article>
+								</div>
 							<?php endforeach; ?>
 						</br></br></br></br>
 						</div>
@@ -310,3 +316,7 @@ $this->Js->get('#valor')->event('keyup',
 );
 }
 ?>
+<script>
+	$('#navicon-suitcase').css( "color", "#7a0400" );
+	$('.navicon-suitcase').css( "color", "#7a0400" );
+</script>

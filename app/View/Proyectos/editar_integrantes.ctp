@@ -11,10 +11,10 @@ $user=NUll;
 			?>
 			<li>
 				<?php
-				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Proyecto'), array('controller'=>'documentos','action' => 'documentos_proyecto')); 
+				echo $this->Html->link(__('Documentos'), array('controller'=>'documentos','action' => 'documentos_proyecto')); 
 				?></li><li>
 				<span class="icon-file-settings" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
 				<?php 

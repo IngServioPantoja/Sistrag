@@ -1,3 +1,5 @@
+vinotinto = #7a0400
+
 @font-face {
   font-family: 'icomoon';
   src:url('fonts/icomoon.eot');
@@ -512,6 +514,12 @@ html
             margin 0 auto
             overflow visible
             
+            .back
+              position absolute
+              top 2px 
+              left -5px
+              width 40px
+
             .crud_fila_paginacion
               background rgb(165,165,165);
               background -moz-linear-gradient(top,  rgba(165,165,165,1) 0%, rgba(239,239,239,1) 50%, rgba(165,165,165,1) 100%)
@@ -618,11 +626,13 @@ html
               border-right solid 1px rgba(255,255,255,0.3)
               border-top solid 1px rgba(255,255,255,0.3)
               color #fff
+              position relative
               font-family tahoma, arial, verdana, sans-serif
               font-size 15px
               font-weight bold
-              padding 1px 10px
+              padding 1px 10px 1px 30px
               text-align center
+              min-height 26px
               
               .div_1
                 left 10px
@@ -784,6 +794,7 @@ html
                   top 0px
 
               .div_integrantes
+                vertical-align top
                 border 1px solid #aaa
                 background-color rgba(255,255,255,0.6)
                 display inline-block
@@ -971,6 +982,13 @@ html
                 margin 5px
                 width 200px
                 overflow:hidden;
+
+                a
+                  text-decoration none
+
+                  .informacion_proyecto
+                    min-height 200px
+                    background-color rgba(200,200,200,0.2)
                 
                 .form_oculto_cambiar
                   display inline-block
@@ -1024,29 +1042,36 @@ html
                     text-align center !important
 
                   .proyectos_ampliar
-                    position relative
                     overflow visible
-                    border-top solid 1px #888
+                    color #eee
 
                     .informacion
-                      position absolute
-                      top 0px
-                      left -7px
-                      right 0px
-                      opacity 0
+                      display block
+                      height 0px
+                      width 100%
                       z-index 0
-                      background rgba(210,210,210,1)
-                      width 200px
                       transition all 0.2s linear
+                      opacity 0
+
+                      span
+                        color #eee
 
                   .proyectos_ampliar:hover .informacion
-                      top 0px
+                      height auto
                       opacity 1
-                      z-index 2
-                      box-shadow 0px 5px 10px rgba(0,0,0,1)
-                
+
                 figure
                   position relative
+
+                #datos_proyecto
+                  min-height 0px
+                  background: -moz-linear-gradient(top,  #600000 0%, #800000 50%, #600000 100%);
+                  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#600000), color-stop(50%,#800000), color-stop(100%,#600000));
+                  background: -webkit-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                  background: -o-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                  background: -ms-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                  background: linear-gradient(to bottom,  #600000 0%,#800000 50%,#600000 100%);
+
                 
               .ficha_index:hover .ficha_datos
                 box-shadow 0px 0px 20px rgba(0,0,0,0.7)

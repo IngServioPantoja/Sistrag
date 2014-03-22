@@ -14,7 +14,7 @@ var $uses = array('Proyecto','Persona','Rol','PersonasProyecto','Linea','Area','
 		$this->set('proyectos', $this->paginate());
 	}
 
-	public function view($id = null) {
+	public function documentos($id = null) {
 		if (!$this->Proyecto->exists($id)) {
 			throw new NotFoundException(__('Invalid proyecto'));
 		}
@@ -66,11 +66,10 @@ var $uses = array('Proyecto','Persona','Rol','PersonasProyecto','Linea','Area','
 		}
 		if ($this->request->is('post') || $this->request->is('put')) 
 		{
-			print_r($this->request->data);
 			if ($this->Proyecto->save($this->request->data)) 
 			{
 				$this->Session->setFlash(__('The proyecto has been saved'));
-				//$this->redirect(array('action' => 'index'));
+				$this->redirect(array('action' => 'index'));
 			} else 
 			{
 				$this->Session->setFlash(__('The proyecto could not be saved. Please, try again.'));
@@ -106,7 +105,8 @@ var $uses = array('Proyecto','Persona','Rol','PersonasProyecto','Linea','Area','
 
 	}
 
-	public function editar_integrantes($id = null) {
+	public function editar_integrantes($id = null) 
+	{
 		if (!$this->Proyecto->exists($id)) {
 			throw new NotFoundException(__('Invalid proyecto'));
 		}

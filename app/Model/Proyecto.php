@@ -39,6 +39,13 @@ class Proyecto extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'Programa' => array(
+			'className' => 'Programa',
+			'foreignKey' => 'programa',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
 
