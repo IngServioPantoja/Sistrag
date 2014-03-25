@@ -14,7 +14,13 @@ $user=NUll;
 				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Documentos'), array('controller'=>'documentos','action' => 'documentos_proyecto')); 
+				echo $this->Html->link(__('Documentos'), array('controller'=>'proyectos','action' => 'documentos',$proyecto['Proyecto']['id'])); 
+				?></li><li>
+				<?php
+				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+				?>
+				<?php 
+				echo $this->Html->link(__('Subir documento'), array('action' => 'add')); 
 				?></li><li>
 				<span class="icon-file-settings" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
 				<?php 
@@ -489,3 +495,6 @@ $this->Js->get('#valor')->event('keyup',
 	)
 );
 ?>
+<script>
+	$('#navicon-suitcase').css( "color", "#7a0400" );
+</script>

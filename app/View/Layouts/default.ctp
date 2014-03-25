@@ -19,7 +19,8 @@
             { ?> class="headerLogin" <?php } ?>>
                 <figure>
                     <?php
-                        echo $this->Html->image('iconos/logo64.png', array('alt' => 'Login','height' => '', 'width' => '32px'));
+                        echo $this->Html->link($this->Html->image('iconos/logo64.png', array('title' => 'Home','height' => '', 'width' => '32px')), array('controller'=>'notificaciones','action' => 'index'),
+                                array('escape' => false));
                     ?>
                     <figcaption>
                         <h2>SISTRÁG</h2>    
@@ -66,12 +67,13 @@
                 {
                 $urlImagen="recursos/escudo400.png";
                 }                
-                echo $this->Html->link($this->Html->image($urlImagen, array('height' => '', 'width' => '25px')), array('controller'=>'personas', 'action' => 'edit', $usuario['Persona']['id']),
+                echo $this->Html->link($this->Html->image($urlImagen, array('height' => '', 'width' => '25px','title'=>'Mi cuenta')), array('controller'=>'personas', 'action' => 'edit', $usuario['Persona']['id']),
                 array('escape' => false)); 
                 ?>
-                <?php echo $this->Html->link('',array(
-                    'controller'=>'users','action'=>'logout'),array(
-                        'class' =>'icon-off','id'=>'salir'));}?>
+                <?php 
+                echo $this->Html->link('',array('controller'=>'users','action'=>'logout'),array('class' =>'icon-off','id'=>'salir','title'=>'Salir'));
+                    }
+                ?>
             </div>
             <?php
             if(!$logged_in)
@@ -118,13 +120,12 @@
                                     <li>
                                         <?php 
                                         echo $this->Html->link(
-                                        $this->Html->tag('span', "", array('class' => $i['icono'])).
+                                        $this->Html->tag('span', "", array('class' => $i['icono'],'id'=>'nav'.$i['icono'])).
                                         $this->Html->tag('span', $i['titulo'],array('class' => 'titulo')). "",
                                                 $i['vinculo'],
                                                 array('escape' => false)
                                              );
                                         ?> 
-
                                     </li>
                                 <?php
                                 }
@@ -134,10 +135,6 @@
                     </nav>
                 <?php
                 } 
-                else 
-                {
-                        //echo $this->html->link("Acceder","/menus/mnuMain/");
-                }
                 ?> 
             <?php
             if(!$logged_in)
@@ -166,7 +163,7 @@
         echo $this->Html->link(
             $this->Html->tag('span', "", array('class' => "icon-facebook2")),
             "https://www.facebook.com/servioandres.pantojarosero",
-                array('escape' => false,'target'=>'_blank')
+                array('escape' => false,'target'=>'_blank','title'=>'Facebook Servio Pantoja')
         );
         ?> 
         <span>Servio Pantoja</span>
@@ -174,7 +171,7 @@
         echo $this->Html->link(
             $this->Html->tag('span', "", array('class' => "icon-twitter")),
             "https://twitter.com/ServioPantoja",
-                array('escape' => false,'target'=>'_blank')
+                array('escape' => false,'target'=>'_blank','title'=>'Twitter Servio Pantoja')
         );
         ?> 
          
@@ -182,8 +179,7 @@
         echo $this->Html->link(
             $this->Html->tag('span', "", array('class' => "icon-github")),
             "https://github.com/IngServioPantoja/Sistrag",
-                array('escape' => false,'target'=>'_blank')
-        );
+                array('escape' => false,'target'=>'_blank','title'=>'Repositorio Sistrag'));
         ?>  
     </div>
     <div>
@@ -191,7 +187,7 @@
         echo $this->Html->link(
             $this->Html->tag('span', "", array('class' => "icon-twitter")),
             "https://twitter.com/PFranciscoRojas",
-                array('escape' => false,'target'=>'_blank')
+                array('escape' => false,'target'=>'_blank','title'=>'Twitter Francisco Rojas')
         );
         ?>
         <span>Francisco Rojas</span>
@@ -199,7 +195,7 @@
         echo $this->Html->link(
             $this->Html->tag('span', "", array('class' => "icon-facebook2")),
             "https://www.facebook.com/francisco.rojas.54943600",
-                array('escape' => false,'target'=>'_blank')
+                array('escape' => false,'target'=>'_blank','title'=>'Facebook Francico Rojas')
         );
         ?>
     </div>  

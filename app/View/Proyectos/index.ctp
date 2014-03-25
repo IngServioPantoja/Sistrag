@@ -318,5 +318,4 @@ $this->Js->get('#valor')->event('keyup',
 ?>
 <script>
 	$('#navicon-suitcase').css( "color", "#7a0400" );
-	$('.navicon-suitcase').css( "color", "#7a0400" );
 </script>

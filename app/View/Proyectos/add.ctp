@@ -166,3 +166,6 @@ $this->Js->get('#area_id')->event('change',
 	)
 );
 ?>
+<script>
+	$('#navicon-suitcase').css( "color", "#7a0400" );
+</script>

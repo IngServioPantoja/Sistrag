@@ -1,4 +1,5 @@
 vinotinto = #7a0400
+azuloscuro= #333377
 
 @font-face {
   font-family: 'icomoon';
@@ -90,7 +91,7 @@ html
     padding 0px
     
     a
-      color #55b
+      color #fff
 
       &:hover
         color #227
@@ -394,22 +395,24 @@ html
       -webkit-transition:all 0.3s linear;
       
       a
-        color: #666;
+        color: #fff;
         display: block;
         font-size: 12px;
         text-decoration: none !important;
 
         span
-          display: block;
           font-family: icomoon;
-          font-size: 50px;
+          font-size: 35px;
           margin: 0 auto;
           text-align: center;
+          background #aaa
+          padding 10px
+          border-radius 50%
 
         .titulo
           background: rgba(255,255,255,0.7);
           border-radius: 50%;
-          bottom: 17px;
+          bottom: 10px;
           font-size: 14px;
           left: 0px;
           opacity: 0;
@@ -422,8 +425,9 @@ html
           position: relative;
           text-decoration: none !important;
 
-        &:hover .titulo,.layout_nav a:hover
-          color: #337;
+        &:hover .titulo
+          color: #225;
+          background rgba(255,255,255,0.8)
           opacity: 1;
 
       div
@@ -438,10 +442,14 @@ html
         vertical-align:middle;
         
         li
-          margin: 3px 0px;
+          margin: 15px 0px;
           text-align: center;
           padding: 5px;
           position: relative;
+          
+          &:hover span
+            background-color #225
+            color #fff
 
           div
             
@@ -630,7 +638,6 @@ html
               font-family tahoma, arial, verdana, sans-serif
               font-size 15px
               font-weight bold
-              padding 1px 10px 1px 30px
               text-align center
               min-height 26px
               
@@ -656,7 +663,7 @@ html
                   height 20px
                   position relative
               
-              span
+              span,label
                 display inline-block
                 vertical-align middle
                 padding 0px
@@ -664,6 +671,9 @@ html
                 img,div
                   margin 0px
                   vertical-align top
+              
+              .principal_titulo
+                margin 2px 20px 7px 30px
 
             .crud_fila_secundaria
               background rgba(174, 198, 218,0.5);
@@ -767,7 +777,6 @@ html
                       width 100px
                       padding-right 30px
 
-
                   #proyectoIcono
                     background-color #7a0400
                     border-radius 5px 0px 10px 0px
@@ -834,6 +843,44 @@ html
                     top 0px
                     width 30px
                     z-index 1
+              
+              .div_estandar_programa
+                vertical-align top
+                border 1px solid #aaa
+                background-color rgba(255,255,255,0.6)
+                display inline-block
+                margin 5px
+                border-radius 5px 5px 0px 0px
+
+                .programa
+                  background: -moz-linear-gradient(top,  #600000 0%, #800000 50%, #600000 100%);
+                  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#600000), color-stop(50%,#800000), color-stop(100%,#600000));
+                  background: -webkit-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                  background: -o-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                  background: -ms-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                  background: linear-gradient(to bottom,  #600000 0%,#800000 50%,#600000 100%);
+                  color #eee
+                  display block
+                  font-weight 900
+                  padding 2px 0px 2px 0px
+                  position relative
+                  width 100%
+                  border-radius 3px 3px 0px 0px
+
+              .estandar
+                background -moz-linear-gradient(top,  #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#bcbcbc), color-stop(50%,#efefef), color-stop(100%,#bcbcbc))
+                background -webkit-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
+                background -o-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
+                background -ms-linear-gradient(top,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
+                background linear-gradient(to bottom,  #bcbcbc 0%,#efefef 50%,#bcbcbc 100%)
+                color #222
+                display block
+                font-weight 900
+                padding 2px 0px 2px 0px
+                position relative
+                width 100%
+                border-radius 3px 3px 0px 0px
 
               .ficha_add
                 background-color #fff
@@ -989,7 +1036,62 @@ html
                   .informacion_proyecto
                     min-height 200px
                     background-color rgba(200,200,200,0.2)
-                
+                    padding 0px 10px
+                    border-spacing initial
+
+                    .documento_iconos
+                      color azuloscuro
+                      font-size 45px
+
+                    .doc_index_aprobado
+                      color #fff;
+                      background: -moz-linear-gradient(top,  #006e00 0%, #00c800 50%, #006e00 100%);
+                      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#006e00), color-stop(50%,#00c800), color-stop(100%,#006e00));
+                      background: -webkit-linear-gradient(top,  #006e00 0%,#00c800 50%,#006e00 100%);
+                      background: -o-linear-gradient(top,  #006e00 0%,#00c800 50%,#006e00 100%);
+                      background: -ms-linear-gradient(top,  #006e00 0%,#00c800 50%,#006e00 100%);
+                      background: linear-gradient(to bottom,  #006e00 0%,#00c800 50%,#006e00 100%);
+                    
+
+                    .doc_index_enproceso
+                      color #720;
+                      background: -moz-linear-gradient(top,  #e09d00 5%, #ffff00 50%, #e09d00 95%);
+                      background: -webkit-gradient(linear, left top, left bottom, color-stop(5%,#e09d00), color-stop(50%,#ffff00), color-stop(95%,#e09d00));
+                      background: -webkit-linear-gradient(top,  #e09d00 5%,#ffff00 50%,#e09d00 95%);
+                      background: -o-linear-gradient(top,  #e09d00 5%,#ffff00 50%,#e09d00 95%);
+                      background: -ms-linear-gradient(top,  #e09d00 5%,#ffff00 50%,#e09d00 95%);
+                      background: linear-gradient(to bottom,  #e09d00 5%,#ffff00 50%,#e09d00 95%);
+
+                    .doc_index_noaprobado
+                      background: -moz-linear-gradient(top,  #600000 0%, #800000 50%, #600000 100%);
+                      background: -ms-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                      background: -o-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#600000), color-stop(50%,#800000), color-stop(100%,#600000));
+                      background: -webkit-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                      background: linear-gradient(to bottom,  #600000 0%,#800000 50%,#600000 100%);
+                      color #fff;
+                    
+                    .estandar_vigencia_inicio 
+
+                      td
+                        border-bottom 3px solid #8f8
+                      
+                    .estandar_vigencia_fin 
+                      margin-bottom 10px
+
+                      td
+                        border-bottom 3px solid #f55
+                        padding 0px
+                        
+
+                    .titulo_estandar
+                      background #fff
+                      border 1px solid #999
+                      font-size 14px
+                      margin 20px 0px 0px 0px
+                      padding 3px
+                      white-space normal
+
                 .form_oculto_cambiar
                   display inline-block
                   position absolute
@@ -1002,7 +1104,6 @@ html
                   height 35px
 
                 .ficha_acciones
-                  background  #fff 
                   background -moz-linear-gradient(top,  rgba(50,70,100,0.7) 0%, rgba(63,88,125,0.66) 11%, rgba(71,100,142,0.62) 21%, rgba(62,88,125,0.57) 32%, rgba(55,77,108,0.54) 39%, rgba(40,57,80,0.5) 50%, rgba(16,23,33,0.57) 68%, rgba(5,7,11,0.61) 79%, rgba(0,0,0,0.64) 86%, rgba(0,0,0,0.7) 100%)
                   background -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(50,70,100,0.7)), color-stop(11%,rgba(63,88,125,0.66)), color-stop(21%,rgba(71,100,142,0.62)), color-stop(32%,rgba(62,88,125,0.57)), color-stop(39%,rgba(55,77,108,0.54)), color-stop(50%,rgba(40,57,80,0.5)), color-stop(68%,rgba(16,23,33,0.57)), color-stop(79%,rgba(5,7,11,0.61)), color-stop(86%,rgba(0,0,0,0.64)), color-stop(100%,rgba(0,0,0,0.7)))
                   background -webkit-linear-gradient(top,  rgba(50,70,100,0.7) 0%,rgba(63,88,125,0.66) 11%,rgba(71,100,142,0.62) 21%,rgba(62,88,125,0.57) 32%,rgba(55,77,108,0.54) 39%,rgba(40,57,80,0.5) 50%,rgba(16,23,33,0.57) 68%,rgba(5,7,11,0.61) 79%,rgba(0,0,0,0.64) 86%,rgba(0,0,0,0.7) 100%)
@@ -1062,6 +1163,9 @@ html
 
                 figure
                   position relative
+
+                #acciones_estandar
+                  top 23px
 
                 #datos_proyecto
                   min-height 0px
@@ -1244,6 +1348,9 @@ html
                 background -ms-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
                 background linear-gradient(to bottom, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
                 color #226
+            
+            #principal_proyecto
+              overflow auto
 
         .panel_menu
           
@@ -1277,6 +1384,12 @@ html
               a
                 text-decoration none
                 color #000
+
+      .proxima_entrega
+        border 1px solid #fff;
+        padding 0px 10px 2px 10px !important
+        background vinotinto
+        display block!important
 
     .layout_contenido_inicial
       background: rgba(255,255,255,0.9);
@@ -1449,6 +1562,16 @@ html
       font-family: icomoon;
       font-weight: 400;
       content: "\e60e";
+    }
+    .icon-pigpenx:before {
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e616";
+    }
+    .icon-pigpenx:before {
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e616";
     }
 
 #login
@@ -1674,7 +1797,7 @@ html
       width 180px!important
   
     .layout_contenido
-      top 70px
+      top 70px!important
     
     .layout_contenido_inicial
       top 100px
@@ -1762,7 +1885,7 @@ html
           display block
     
     .layout_contenido
-      top 110px
+      top 110px!important
       left 0px!important
     
     .layout_contenido_inicial
@@ -1831,7 +1954,7 @@ html
 @media screen and (max-width: 380px) and (min-width: 321px)
 
   body 
-    border 0px solid black
+    border 2px solid red
   
     input[type="file"]
       width 180px !important
@@ -1891,7 +2014,7 @@ html
           display block
     
     .layout_contenido
-      top 110px
+      top 110px!important
       left 0px!important
     
     .layout_contenido_inicial
@@ -2002,6 +2125,7 @@ html
     
         #logo_skew_right
           display none
+          position relative!important
     
       #layout_menu_inicio
         background rgba(255,255,255,0)
@@ -2046,7 +2170,7 @@ html
         display none!important
     
     .layout_contenido
-      top 60px
+      top 60px!important
       left 10px!important
 
     .layout_contenido_inicial
