@@ -248,7 +248,7 @@ if(!$this->request->is('ajax'))
 											</table>
 										</a>
 										<div class='ficha_datos' id="datos_proyecto">
-											<div colspan="2" class="proyectos_ampliar" title="Descargar maqueta XML">
+											<div class="proyectos_ampliar" title="Descargar maqueta XML">
 												<strong>
 													Descargar Estandar
 												</strong>

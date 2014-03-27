@@ -46,7 +46,7 @@ class EstandaresController extends AppController {
 		            	)
 		        	)
 		    		),
-		    	'fields' => array('Item.nombre','ItemsEstandar.id','ItemsEstandar.orden','ItemsEstandar.items_estandar_id'),
+		    	'fields' => array('Item.nombre','Item.extencion_caracteres','Item.extencion_lineas','ItemsEstandar.id','ItemsEstandar.orden','ItemsEstandar.items_estandar_id'),
 		    	'order' => array('ItemsEstandar.orden' => 'asc'),
 		    	'conditions' => 
 		            array(
@@ -69,6 +69,8 @@ class EstandaresController extends AppController {
 			$arr[$a]['ItemsEstandar']['id'] = $v["ItemsEstandar"]["id"];
 			$arr[$a]['ItemsEstandar']['orden'] = $v["ItemsEstandar"]["orden"].".";
 			$arr[$a]['Item']['nombre'] = $v["Item"]["nombre"];
+			$arr[$a]['Item']['extencion_lineas'] = $v["Item"]["extencion_lineas"];
+			$arr[$a]['Item']['extencion_caracteres'] = $v["Item"]["extencion_caracteres"];
 			$arr[$a]['ItemsEstandar']['items_estandar_id'] = $v["ItemsEstandar"]["items_estandar_id"];
 			$larr[$v["ItemsEstandar"]["id"]] = $v["Item"]["nombre"];
 			$a=$a+1;
@@ -86,7 +88,7 @@ class EstandaresController extends AppController {
 		            	)
 		        	)
 		    		),
-		    	'fields' => array('Item.nombre','ItemsEstandar.id','ItemsEstandar.orden','ItemsEstandar.items_estandar_id'),
+		    	'fields' => array('Item.nombre','Item.extencion_caracteres','Item.extencion_lineas','ItemsEstandar.id','ItemsEstandar.orden','ItemsEstandar.items_estandar_id'),
 		    	'order' => array('ItemsEstandar.orden' => 'asc'),
 		    	'conditions' => 
 		            array(
@@ -100,6 +102,8 @@ class EstandaresController extends AppController {
 				$arr2[$b]['ItemsEstandar']['id'] = $v2["ItemsEstandar"]["id"];
 				$arr2[$b]['ItemsEstandar']['orden'] = $v2["ItemsEstandar"]["orden"];
 				$arr2[$b]['Item']['nombre'] = $v2["Item"]["nombre"];
+				$arr2[$b]['Item']['extencion_lineas'] = $v2["Item"]["extencion_lineas"];
+				$arr2[$b]['Item']['extencion_caracteres'] = $v2["Item"]["extencion_caracteres"];
 				$arr2[$b]['ItemsEstandar']['items_estandar_id'] = $v2["ItemsEstandar"]["items_estandar_id"];
 				$larr2[$v2["ItemsEstandar"]["id"]] = $v2["Item"]["nombre"];
 				$b=$b+1;
@@ -118,7 +122,7 @@ class EstandaresController extends AppController {
 		            	)
 		        	)
 		    		),
-		    	'fields' => array('Item.nombre','ItemsEstandar.id','ItemsEstandar.orden','ItemsEstandar.items_estandar_id'),
+		    	'fields' => array('Item.nombre','Item.extencion_caracteres','Item.extencion_lineas','ItemsEstandar.id','ItemsEstandar.orden','ItemsEstandar.items_estandar_id'),
 		    	'order' => array('ItemsEstandar.orden' => 'asc'),
 		    	'conditions' => 
 		            array(
@@ -131,6 +135,8 @@ class EstandaresController extends AppController {
 						$arr2[$b]['ItemsEstandar']['id'] = $v3["ItemsEstandar"]["id"];
 						$arr2[$b]['ItemsEstandar']['orden'] = $v2["ItemsEstandar"]["orden"].".".$v3["ItemsEstandar"]["orden"];
 						$arr2[$b]['Item']['nombre'] = $v3["Item"]["nombre"];
+						$arr2[$b]['Item']['extencion_lineas'] = $v3["Item"]["extencion_lineas"];
+						$arr2[$b]['Item']['extencion_caracteres'] = $v3["Item"]["extencion_caracteres"];
 						$arr2[$b]['ItemsEstandar']['items_estandar_id'] = $v3["ItemsEstandar"]["items_estandar_id"];
 						$larr2[$v3["ItemsEstandar"]["id"]] = $v3["Item"]["nombre"];
 						$b=$b+1;
@@ -146,6 +152,8 @@ class EstandaresController extends AppController {
 					$arr[$a]['ItemsEstandar']['id'] = $v4["ItemsEstandar"]["id"];
 					$arr[$a]['ItemsEstandar']['orden'] = $v["ItemsEstandar"]["orden"].".".$v4["ItemsEstandar"]["orden"];
 					$arr[$a]['Item']['nombre'] = $v4["Item"]["nombre"];
+					$arr[$a]['Item']['extencion_lineas'] = $v4["Item"]["extencion_lineas"];
+					$arr[$a]['Item']['extencion_caracteres'] = $v4["Item"]["extencion_caracteres"];
 					$arr[$a]['ItemsEstandar']['items_estandar_id'] = $v4["ItemsEstandar"]["items_estandar_id"];
 					$larr[$v4["ItemsEstandar"]["id"]] = $v4["Item"]["nombre"];
 					$a=$a+1;
@@ -182,13 +190,6 @@ class EstandaresController extends AppController {
 
 	}
 
-/**
- * Primera parte del metodo de edicion de estandar
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
 	public function editar_estandar($id = null) {
 		if (isset($this->request->data['submit3'])) {
 		    $this->Session->setFlash(__('Button Continuar'));
@@ -219,14 +220,7 @@ class EstandaresController extends AppController {
 	}
 
 
-/**
- * Metodo de edicion de la segunda parte de edicion de estandar
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function editar_compocicion($id = null) {
+	public function editar_composicion($id = null) {
 		if ($this->request->is('post')) {
 			$this->ItemsEstandar->create();
 			if ($this->ItemsEstandar->save($this->request->data)) {
@@ -379,14 +373,6 @@ class EstandaresController extends AppController {
 
 	}
 
-/**
- * delete method
- *
- * @throws NotFoundException
- * @throws MethodNotAllowedExceptions
- * @param string $id
- * @return void
- */
 	public function delete($id = null) {
 		$this->Estandar->id = $id;
 		if (!$this->Estandar->exists()) {
@@ -401,15 +387,7 @@ class EstandaresController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
-/**
- * delete method items estandares
- *
- * @throws NotFoundException
- * @throws MethodNotAllowedException
- * @param string $id
- * @return void
- */
-	public function delete_itemsestandares($ida = null,$idb) {
+public function delete_itemsestandares($ida = null,$idb) {
 
 		
 		$this->ItemsEstandar->id = $ida;
