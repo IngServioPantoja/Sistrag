@@ -260,10 +260,8 @@ var $uses = array('Proyecto','Persona','Rol','PersonasProyecto','Linea','Area','
 		$valor=$this->request->data['Busqueda']['valor'];
 		$atributo=$this->request->data['Busqueda']['atributo'];
 		$ocupados=$this->PersonasProyecto->find('all', array('fields'=>array('PersonasProyecto.persona_id as id'),'conditions' => array('PersonasProyecto.proyecto_id'=>1)));
-		//print_r($ocupados);
 		$subqueryOptions = array('fields' => array('PersonasProyecto.persona_id as id'), 'conditions' => array('PersonasProyecto.proyecto_id'=>1));
 		$subquery ="(SELECT  `PersonasProyecto`.`persona_id` AS  `id` FROM  `software`.`personas_proyectos` AS  `PersonasProyecto` WHERE  `PersonasProyecto`.`proyecto_id` =1)";	
-			//print_r($subquery);
 			$this->Persona->recursive = -1;
 			$opciones = array(
 				'joins' => array(

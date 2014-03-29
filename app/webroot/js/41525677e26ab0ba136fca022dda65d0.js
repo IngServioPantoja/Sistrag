@@ -1,2 +1,0 @@
-$(document).ready(function () {$("#prueba").bind("keyup", function (event) {$.ajax({async:true, data:$("#prueba").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#contenedor_interventores").html(data);}, type:"post", url:"\/Sistrag\/proyectos\/lista_estudiantes"});
-return false;});});

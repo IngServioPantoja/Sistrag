@@ -915,9 +915,9 @@ html
                   color #eee
                   display block
                   font-weight 900
-                  padding 2px 0px 2px 0px
+                  padding 2px 5px 2px 5px
                   position relative
-                  width 100%
+                  width auto
                   border-radius 3px 3px 0px 0px
 
               .estandar
@@ -984,7 +984,7 @@ html
                     display block
                     margin-bottom 3px
                     overflow hidden
-                    text-align center
+                    text-align left
                     vertical-align  top
                     
                     div
@@ -1042,7 +1042,8 @@ html
                         top -12px
                       
                     .inputCorto
-                      width 180px
+                      width 160px
+                      min-width 160px
                   
                   .div_doble
                     text-align center
@@ -1091,6 +1092,7 @@ html
                   min-height 200px
                   background-color rgba(200,200,200,0.2)
                   padding 0px 10px
+                  width 100%
                   border-spacing initial
 
                   .documento_iconos
@@ -1170,7 +1172,7 @@ html
 
                 .itemsDocumento
                   border-spacing: initial
-                  margin 0 15px
+                  margin 0 5px
                   border 1px solid #aaa
                   border-radius 5px 5px 0px 0px
                   display inline-block
@@ -1192,6 +1194,7 @@ html
                       border-bottom 1px solid rgba(200,200,200,0.4)
                       margin 0px
                       padding 1px 5px
+                      font-size 15px
 
                       &:first-child
                         border-left 0px solid
@@ -1252,6 +1255,7 @@ html
                       width auto
                       border-left 1px solid rgba(0,0,0,0)
                       border-right 1px solid rgba(0,0,0,0)
+                      text-align center
 
                     .caracteres
                       width 90px
@@ -1469,7 +1473,7 @@ html
               #fichaIndexInformacionGeneral
                 width auto
                 box-shadow:0px 0px 0px rgba(255,255,255,0)
-                margin:0px 5px
+                margin:0px 0px
 
                 table
                   min-width 240px
@@ -1868,7 +1872,7 @@ html
 @media screen and (min-width: 690px)
 
   body 
-    border 0px solid red
+    border 2px solid red
 
   .layout_contenido
     top 30px
@@ -1877,15 +1881,82 @@ html
 
   body 
   
-    border 0px solid green
+    border 2px solid green
   
-  .layout_contenido
-  
-    top 30px
-  
-  .layout_contenido_inicial
-  
-    top 100px
+    .layout_contenido
+    
+      top 30px
+    
+    .layout_contenido_inicial
+    
+      top 100px
+
+    .itemsDocumento
+
+      .contenidoItemsDocumento
+        color #333
+        position relative
+        overflow auto
+        width auto
+        display block
+        text-align left
+
+        div
+          display inline-block
+
+        .orden
+          width 60px!important
+          position absolute
+          left 0px
+          bottom 0px
+        
+        .item
+          width auto
+          display block!important
+          border-left 1px solid rgba(0,0,0,0)
+          border-right 1px solid rgba(0,0,0,0)
+          border-bottom 1px solid rgba(200,200,200,0)!important
+
+        .caracteres
+          display: block!important;
+          margin-left:  70px!important;
+          margin-right: 70px!important;
+          width auto!important
+          float none!important
+
+        .lineas
+          width 60px 
+          float right
+          
+
+      .tituloItemsDocumento
+        color #fff
+
+        div
+          display inline-block
+
+        .orden
+          width 60px!important
+          position absolute
+          left 0px
+          bottom 0px
+        
+        .item
+          width auto
+          display block!important
+          border-left 1px solid rgba(0,0,0,0)
+          border-right 1px solid rgba(0,0,0,0)
+
+        .caracteres
+          display: block!important;
+          margin-left:  70px!important;
+          margin-right: 70px!important;
+          width auto!important
+          float none!important
+
+        .lineas
+          width 60px 
+          float right
   
   header 
 
@@ -1912,8 +1983,8 @@ html
 @media screen and (max-width: 607px) and (min-width: 501px)
 
   body 
-    border 0px solid blue
-  
+    border 2px solid blue
+    
     header
       position relative
   
@@ -1960,6 +2031,73 @@ html
           margin 0px
           padding 5px 10px 0px 10px!important
           display block
+    
+    .itemsDocumento
+
+      .contenidoItemsDocumento
+        color #333
+        position relative
+        overflow auto
+        width auto
+        display block
+        text-align left
+
+        div
+          display inline-block
+
+        .orden
+          width 60px!important
+          position absolute
+          left 0px
+          bottom 0px
+        
+        .item
+          width auto
+          display block!important
+          border-left 1px solid rgba(0,0,0,0)
+          border-right 1px solid rgba(0,0,0,0)
+          border-bottom 1px solid rgba(200,200,200,0)!important
+
+        .caracteres
+          display: block!important;
+          margin-left:  70px!important;
+          margin-right: 70px!important;
+          width auto!important
+          float none!important
+
+        .lineas
+          width 60px 
+          float right
+          
+
+      .tituloItemsDocumento
+        color #fff
+
+        div
+          display inline-block
+
+        .orden
+          width 60px!important
+          position absolute
+          left 0px
+          bottom 0px
+        
+        .item
+          width auto
+          display block!important
+          border-left 1px solid rgba(0,0,0,0)
+          border-right 1px solid rgba(0,0,0,0)
+
+        .caracteres
+          display: block!important;
+          margin-left:  70px!important;
+          margin-right: 70px!important;
+          width auto!important
+          float none!important
+
+        .lineas
+          width 60px 
+          float right
 
     input[type="file"]
       width 180px!important
@@ -2007,7 +2145,7 @@ html
 
   body 
   
-    border 0px solid yellow
+    border 2px solid yellow
   
     input[type="text"]
       width 180px !important    
@@ -2055,6 +2193,73 @@ html
           padding 3px 10px 0px 10px!important
           display block
     
+    .itemsDocumento
+
+      .contenidoItemsDocumento
+        color #333
+        position relative
+        overflow auto
+        width auto
+        display block
+        text-align left
+
+        div
+          display inline-block
+
+        .orden
+          width 60px!important
+          position absolute
+          left 0px
+          bottom 0px
+        
+        .item
+          width auto
+          display block!important
+          border-left 1px solid rgba(0,0,0,0)
+          border-right 1px solid rgba(0,0,0,0)
+          border-bottom 1px solid rgba(200,200,200,0)!important
+
+        .caracteres
+          display: block!important;
+          margin-left:  70px!important;
+          margin-right: 70px!important;
+          width auto!important
+          float none!important
+
+        .lineas
+          width 60px 
+          float right
+          
+
+      .tituloItemsDocumento
+        color #fff
+
+        div
+          display inline-block
+
+        .orden
+          width 60px!important
+          position absolute
+          left 0px
+          bottom 0px
+        
+        .item
+          width auto
+          display block!important
+          border-left 1px solid rgba(0,0,0,0)
+          border-right 1px solid rgba(0,0,0,0)
+
+        .caracteres
+          display: block!important;
+          margin-left:  70px!important;
+          margin-right: 70px!important;
+          width auto!important
+          float none!important
+
+        .lineas
+          width 60px 
+          float right
+
     .layout_contenido
       top 110px!important
       left 0px!important
@@ -2184,6 +2389,73 @@ html
           padding 3px 10px 0px 10px!important
           display block
     
+    .itemsDocumento
+
+      .contenidoItemsDocumento
+        color #333
+        position relative
+        overflow auto
+        width auto
+        display block
+        text-align left
+
+        div
+          display inline-block
+
+        .orden
+          width 60px!important
+          position absolute
+          left 0px
+          bottom 0px
+        
+        .item
+          width auto
+          display block!important
+          border-left 1px solid rgba(0,0,0,0)
+          border-right 1px solid rgba(0,0,0,0)
+          border-bottom 1px solid rgba(200,200,200,0)!important
+
+        .caracteres
+          display: block!important;
+          margin-left:  70px!important;
+          margin-right: 70px!important;
+          width auto!important
+          float none!important
+
+        .lineas
+          width 60px 
+          float right
+          
+
+      .tituloItemsDocumento
+        color #fff
+
+        div
+          display inline-block
+
+        .orden
+          width 60px!important
+          position absolute
+          left 0px
+          bottom 0px
+        
+        .item
+          width auto
+          display block!important
+          border-left 1px solid rgba(0,0,0,0)
+          border-right 1px solid rgba(0,0,0,0)
+
+        .caracteres
+          display: block!important;
+          margin-left:  70px!important;
+          margin-right: 70px!important;
+          width auto!important
+          float none!important
+
+        .lineas
+          width 60px 
+          float right
+
     .layout_contenido
       top 110px!important
       left 0px!important
@@ -2259,7 +2531,7 @@ html
 
   body 
   
-    border 0px solid white
+    border 2px solid white
   
     input[type="file"]
       width 180px !important
@@ -2340,6 +2612,73 @@ html
       .layout_titleLogout
         display none!important
     
+    .itemsDocumento
+
+      .contenidoItemsDocumento
+        color #333
+        position relative
+        overflow auto
+        width auto
+        display block
+        text-align left
+
+        div
+          display inline-block
+
+        .orden
+          width 60px!important
+          position absolute
+          left 0px
+          bottom 0px
+        
+        .item
+          width auto
+          display block!important
+          border-left 1px solid rgba(0,0,0,0)
+          border-right 1px solid rgba(0,0,0,0)
+          border-bottom 1px solid rgba(200,200,200,0)!important
+
+        .caracteres
+          display: block!important;
+          margin-left:  70px!important;
+          margin-right: 70px!important;
+          width auto!important
+          float none!important
+
+        .lineas
+          width 60px 
+          float right
+          
+
+      .tituloItemsDocumento
+        color #fff
+
+        div
+          display inline-block
+
+        .orden
+          width 60px!important
+          position absolute
+          left 0px
+          bottom 0px
+        
+        .item
+          width auto
+          display block!important
+          border-left 1px solid rgba(0,0,0,0)
+          border-right 1px solid rgba(0,0,0,0)
+
+        .caracteres
+          display: block!important;
+          margin-left:  70px!important;
+          margin-right: 70px!important;
+          width auto!important
+          float none!important
+
+        .lineas
+          width 60px 
+          float right
+
     .layout_contenido
       top 60px!important
       left 10px!important

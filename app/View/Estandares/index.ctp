@@ -71,7 +71,7 @@ if(!$this->request->is('ajax'))
 							if(isset($busqueda))
 							{
 								echo $this->Form->select(
-								'atributo', array('id' => 'Id', 'nombre'=>'Nombre'
+								'atributo', array('tiposestandar_id' => 'Tipo de estandar', 'programa_id'=>'Programa académico'
 									),array('id'=>'atributo','autocomplete' =>'off','empty'=>false,'default'=>$busqueda[0]['atributo'])
 							);	
 							}
@@ -80,7 +80,7 @@ if(!$this->request->is('ajax'))
 							?>
 							<?php
 							echo $this->Form->select(
-								'atributo', array('id' => 'Id', 'nombre'=>'Nombre'
+								'atributo', array('tiposestandar_id' => 'Tipo de estandar', 'programa_id'=>'Programa académico'
 									),array('id'=>'atributo','autocomplete' =>'off','empty'=>false)
 							);
 							}
@@ -115,33 +115,45 @@ if(!$this->request->is('ajax'))
 						<?php
 							}
 						?>
-								<div class="div_estandar_programa">
-									<span class="programa">
-										Ingeniería de Sistemas
-									</span>	
+						<?php
+						if(isset($estandares))
+						{
+							$programa=NULL;
+							$ultimo = end($estandares);
+							foreach ($estandares as $estandar) 
+							{
+								if(isset($estandares))
+								{
+									$programaactual=$estandar['Estandar']['programa_id'];
+									if($programa==$programaactual)
+									{
+									?>
 									<article class='ficha_index'>
 										<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'){ ?>
 										<div class="ficha_acciones" id="acciones_estandar">
 											<?php 
-											echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'editar_general'),
-									array('escape' => false,'title'=>'Modificar Estandar'));
-									?>
+											echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'editar_estandar',$estandar['Estandar']['id']),array('escape' => false,'title'=>'Modificar Estandar'));
+											?>
 											<?php 
-											echo $this->Form->postLink($this->Html->image("iconos/eliminar50.png", array('height' => '', 'width' => '25px')), array('action' => 'delete'), array('escape' => false,'title'=>'Eliminar Estandar'), __('¿Esta seguro que desea borrar el proyecto: %s?')); 
+											echo $this->Form->postLink($this->Html->image("iconos/eliminar50.png", array('height' => '', 'width' => '25px')), array('action' => 'delete',$estandar['Estandar']['id']), array('escape' => false,'title'=>'Eliminar Estandar'), __('¿Esta seguro que desea borrar el estandar para '.$estandar['Estandar']['nombre']."?")); 
 											?>
 										</div>
 										<?php 
 										} 
 										?>
-										<a href="estandares/view/<?php echo "1";?>">
+										<a href="estandares/view/<?php echo $estandar['Estandar']['id'];?>">
 											<span class="estandar">
-												Informe final
+												<?php
+												echo $estandar['Tiposestandar']['nombre'];
+												?>
 											</span>	
 											<table class="informacion_proyecto">
 												<tr>
 													<th colspan="2">
 														<p class="titulo_estandar">
-															Trabajo de grado Ingeniería de Sístemas
+															<?php
+															echo $estandar['Estandar']['nombre'];
+															?>
 														</p>	
 													</th>
 												</tr>
@@ -155,7 +167,9 @@ if(!$this->request->is('ajax'))
 													</td>
 													<td>
 														<strong>
-															10 abril 2014
+															<?php
+															echo $estandar['Estandar']['inicio vigencia'];
+															?>
 														</strong>	
 													</td>
 												</tr>
@@ -169,7 +183,9 @@ if(!$this->request->is('ajax'))
 													</td>
 													<td>
 														<strong>
-															20 abril 2016
+															<?php
+															echo $estandar['Estandar']['fin vigencia'];
+															?>
 														</strong>	
 													</td>
 												</tr>
@@ -186,30 +202,86 @@ if(!$this->request->is('ajax'))
 												</strong>
 											</div>
 										</div>
-									</article>
+									</article>		
+									<?php
+										if($ultimo==$estandar)
+										{
+										?>
+										</div>
+										<?php
+										}
+										?>
+										<?php
+									}
+									else
+									{
+										if($programa==NULL)
+										{
+									?>
+											<div class="div_estandar_programa">
+												<span class="programa">
+													<?php
+													echo $estandar['Programa']['nombre'];
+													?>
+												</span>	
+									<?php
+										}
+										else
+										{
+											if($ultimo==$estandar)
+											{
+											?>
+												</div>
+												<div class="div_estandar_programa">
+													<span class="programa">
+														<?php
+														echo $estandar['Programa']['nombre'];
+														?>
+													</span>	
+											<?php
+											}
+											else
+											{
+											?>
+												</div>
+												<div class="div_estandar_programa">
+													<span class="programa">
+														<?php
+														echo $estandar['Programa']['nombre'];
+														?>
+													</span>	
+											<?php
+											}
+									?>
+									<?php
+										}
+									?>
 									<article class='ficha_index'>
 										<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'){ ?>
 										<div class="ficha_acciones" id="acciones_estandar">
 											<?php 
-											echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'editar_general'),
-									array('escape' => false,'title'=>'Modificar Estandar'));
-									?>
+											echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'editar_estandar',$estandar['Estandar']['id']),array('escape' => false,'title'=>'Modificar Estandar'));
+											?>
 											<?php 
-											echo $this->Form->postLink($this->Html->image("iconos/eliminar50.png", array('height' => '', 'width' => '25px')), array('action' => 'delete'), array('escape' => false,'title'=>'Eliminar Estandar'), __('¿Esta seguro que desea borrar el proyecto: %s?')); 
+											echo $this->Form->postLink($this->Html->image("iconos/eliminar50.png", array('height' => '', 'width' => '25px')), array('action' => 'delete',$estandar['Estandar']['id']), array('escape' => false,'title'=>'Eliminar Estandar'), __('¿Esta seguro que desea borrar el estandar para '.$estandar['Estandar']['nombre'])); 
 											?>
 										</div>
 										<?php 
 										} 
 										?>
-										<a href="estandares/view/<?php echo "1";?>">
+										<a href="estandares/view/<?php echo $estandar['Estandar']['id'];?>">
 											<span class="estandar">
-												Proyecto
+												<?php
+												echo $estandar['Tiposestandar']['nombre'];
+												?>
 											</span>	
 											<table class="informacion_proyecto">
 												<tr>
 													<th colspan="2">
 														<p class="titulo_estandar">
-															Trabajo de grado Ingeniería de Sístemas
+															<?php
+															echo $estandar['Estandar']['nombre'];
+															?>
 														</p>	
 													</th>
 												</tr>
@@ -223,7 +295,9 @@ if(!$this->request->is('ajax'))
 													</td>
 													<td>
 														<strong>
-															10 abril 2014
+															<?php
+															echo $estandar['Estandar']['inicio vigencia'];
+															?>
 														</strong>	
 													</td>
 												</tr>
@@ -237,75 +311,9 @@ if(!$this->request->is('ajax'))
 													</td>
 													<td>
 														<strong>
-															20 abril 2016
-														</strong>	
-													</td>
-												</tr>
-												<tr>
-													<td colspan="2">
-													</td>
-												</tr>
-											</table>
-										</a>
-										<div class='ficha_datos' id="datos_proyecto">
-											<div class="proyectos_ampliar" title="Descargar maqueta XML">
-												<strong>
-													Descargar Estandar
-												</strong>
-											</div>
-										</div>
-									</article>
-									<article class='ficha_index'>
-										<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'){ ?>
-										<div class="ficha_acciones" id="acciones_estandar">
-											<?php 
-											echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'editar_general'),
-									array('escape' => false,'title'=>'Modificar Estandar'));
-									?>
-											<?php 
-											echo $this->Form->postLink($this->Html->image("iconos/eliminar50.png", array('height' => '', 'width' => '25px')), array('action' => 'delete'), array('escape' => false,'title'=>'Eliminar Estandar'), __('¿Esta seguro que desea borrar el proyecto: %s?')); 
-											?>
-										</div>
-										<?php 
-										} 
-										?>
-										<a href="estandares/view/<?php echo "1";?>">
-											<span class="estandar">
-												Propuesta
-											</span>	
-											<table class="informacion_proyecto">
-												<tr>
-													<th colspan="2">
-														<p class="titulo_estandar">
-															Trabajo de grado Ingeniería de Sístemas
-														</p>	
-													</th>
-												</tr>
-												<tr class="estandar_vigencia_inicio" title="Vigencia inicio">
-													<td >
-														<span>
 															<?php
-																echo $this->Html->image("iconos/calendariogreen64.png", array('height' => '', 'width' => '32px'))
+															echo $estandar['Estandar']['fin vigencia'];
 															?>
-														</span>	
-													</td>
-													<td>
-														<strong>
-															10 abril 2014
-														</strong>	
-													</td>
-												</tr>
-												<tr class="estandar_vigencia_fin" title="Vigencia fin">
-													<td>
-														<span>
-															<?php
-																echo $this->Html->image("iconos/calendariorojo64.png", array('height' => '', 'width' => '32px'))
-															?>
-														</span>	
-													</td>
-													<td>
-														<strong>
-															20 abril 2016
 														</strong>	
 													</td>
 												</tr>
@@ -322,9 +330,21 @@ if(!$this->request->is('ajax'))
 												</strong>
 											</div>
 										</div>
-									</article>
-								</div>
-						</br></br></br></br>
+									</article>	
+										<?php
+										if($ultimo==$estandar)
+										{
+										?>
+											</div>
+										<?php
+										}
+									}
+								}
+							$programa=$programaactual;
+							}
+						}
+
+						?>
 						</div>
 						<div class="crud_fila_paginacion">
 						<?php

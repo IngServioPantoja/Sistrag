@@ -16,16 +16,16 @@ $user=NUll;
 				echo $this->Html->link(__('Estandar'), array('action' => 'index')); 
 				?></li><li>
 				<?php
-				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+				echo $this->Html->image('iconos/update40.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Actualizar datos'), array('controller'=>'documentos','action' => 'add')); 
+				echo $this->Html->link(__('Actualizar datos'), array('controller'=>'estandares','action' => 'editar_estandar',$estandar['Estandar']['id'])); 
 				?></li><li>
 				<?php
-				echo $this->Html->image('iconos/agregar32.png', array('title' => 'Registrar Estandar','height' => '', 'width' => '16px'));
+				echo $this->Html->image('iconos/update40.png', array('title' => 'Registrar Estandar','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Modificar estructura'), array('action' => 'add')); 
+				echo $this->Html->link(__('Modificar estructura'), array('action' => 'editar_composicion',$estandar['Estandar']['id'])); 
 			}
 				?>
 			</li>

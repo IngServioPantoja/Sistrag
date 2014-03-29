@@ -296,6 +296,8 @@ textarea {
     font-size: 100%; /* 2 */
     margin: 0; /* 3 */
     padding: 1px 5px;
+    border: 1px solid #324664;
+    font-size: 14px !important;
 }
 
 /**

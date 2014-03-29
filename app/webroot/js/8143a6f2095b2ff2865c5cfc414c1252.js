@@ -1,0 +1,2 @@
+$(document).ready(function () {$("#EstandarFacultad").bind("change", function (event) {$.ajax({async:true, beforeSend:function (XMLHttpRequest) {alert("entre");}, data:$("#EstandarFacultad").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#divPrograma").html(data);}, type:"post", url:"\/Sistrag\/estandares\/lista_programas"});
+return false;});});
