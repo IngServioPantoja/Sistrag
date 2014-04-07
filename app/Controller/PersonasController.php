@@ -106,7 +106,8 @@ var $uses = array('Persona','User','Facultad','Programa','Tipousuario','Nivel');
 			imagedestroy($lienzo);
 		}
 
-		if ($this->request->is('post')) {
+		if ($this->request->is('post')) 
+		{
 			if($this->request->data['User']['password']==$this->request->data['User']['rpassword'])
 			{
 				if(isset($this->request->data['Persona']['programa_id']))

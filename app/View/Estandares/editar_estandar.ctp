@@ -13,7 +13,7 @@ $user=NUll;
 				echo $this->Html->image('iconos/listar32.png', array('title' => 'Listar Estandares','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Estandar'), array('action' => 'index')); 
+				echo $this->Html->link(__('Estandar'), array('action' => 'view',$estandar['Estandar']['id'])); 
 				?></li><li class="panel_menu_actual">
 				<?php
 				echo $this->Html->image('iconos/update40.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
@@ -150,3 +150,7 @@ $this->Js->get('#EstandarFacultad')->event('change',
 	)
 );
 ?>
+<script>
+	$('#navicon-file-settings').css( "background", "#7a0400" );
+	$('#marcicon-file-settings').css( "color", "#7a0400" );
+</script>

@@ -34,10 +34,11 @@ print_r($descomposiciones);
 				<td>
 					<?php echo $this->Form->create('Documento',array('type' => 'file')); ?>
 					<div class="crud_fila_principal">
-						<span>Documento: </span>
+						<span>Documento: 
 						<?php 
-						echo $proyecto['Proyecto']['nombre'];
+						echo $proyecto['Proyecto']['titulo'];
 						?>
+						</span>
 					</div>
 					<div class="crud_fila_secundaria">
 						<!--
@@ -75,14 +76,14 @@ print_r($descomposiciones);
 
 foreach ($descomposiciones as $descomposicion) 
 		    {
-		        echo $descomposicion['titulo']."</br>";
+		        echo "<strong>".$descomposicion['titulo']."</strong></br>";
 		        foreach ($descomposicion['contenido'] as $item) 
 		        {	
 		        	if($item['tipo']=="Imagen")
 		        	{	
 		        		echo "<---->";
 echo $this->Html->image('/app/webroot/files/documentos/'.$item['elementos'], array('alt' => 'Login','height' => '', 'width' => '300px'));		        	}
-		            echo $item['tipo']."</br>";
+		            //echo $item['tipo']."</br>";
 		            echo $item['elementos']."</br>";
 		        }
 		    }

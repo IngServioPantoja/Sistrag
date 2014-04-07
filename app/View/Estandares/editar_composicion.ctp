@@ -1,126 +1,191 @@
-<div class="estandares form">
-
-	<fieldset>
-		<legend>Datos generales Estandar</legend>
-	<?php
-		echo "</br>";
-		echo "Estandar ".$Estandar["Estandar"]["nombre"];
-		echo "</br>";
-		echo "Tipo de estandar ".$Estandar["Tiposestandar"]["nombre"];
-		echo "</br>";
-		echo "Programa ".$Estandar["Programa"]["nombre"];
-		echo "</br>";
-	?>
-	</fieldset>
-	<fieldset>
-	<legend>Compocicion del estadnar</legend>
-
-	<table>
+<?php 
+$user=NUll;
+$litemsestandar[0]='Documento base'; 
+?>
+<section class="panel_frame">
+	<div class="panel_menu">
+		<ul>
 			<?php
-			foreach($itemsestandar as $i => $v){
+			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
+			{
 			?>
-		<tr>
-			<td>
-				
-				<?php echo $v["ItemsEstandar"]["orden"];?>
-            </td>
-            <td>
-            	<?php echo $v["Item"]["nombre"]; ?>
-            </td>
-            <td>
-                <?php
-                echo $v["ItemsEstandar"]["items_estandar_id"]; 
-
-            ?>
-        	</td>
-        	<td>
-				<?php 
-				$ida=$v["ItemsEstandar"]["id"];
-				$idb=$Estandar["Estandar"]["id"];
-
-
-				echo $this->Form->postLink(__('Delete'), 
-					array('action' => 'delete_itemsestandares/'.$ida.'/'.$idb),array('confirm'=> __('Are you sure you want to delete ? %s',$v["Item"]["nombre"]),'escape'=>false));
+			<li>
+				<?php
+				echo $this->Html->image('iconos/listar32.png', array('title' => 'Listar Estandares','height' => '', 'width' => '16px'));
 				?>
-
-
-        	</td>
-			
-<?php //hasta esta parte se muestra la compocicion del estandar ahora proseguiremos en caso de que se requiera agregar un nuevo item?>
-
-
-			</td>
-		</tr>
-			<?php
+				<?php 
+				echo $this->Html->link(__('Estandar'), array('action' => 'index')); 
+				?></li><li>
+				<?php
+				echo $this->Html->image('iconos/update40.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+				?>
+				<?php 
+				echo $this->Html->link(__('Actualizar datos'), array('controller'=>'estandares','action' => 'editar_estandar',$estandar['Estandar']['id'])); 
+				?></li><li class="panel_menu_actual">
+				<?php
+				echo $this->Html->image('iconos/update40.png', array('title' => 'Registrar Estandar','height' => '', 'width' => '16px'));
+				?>
+				<?php 
+				echo $this->Html->link(__('Modificar estructura'), array('action' => 'editar_composicion',$estandar['Estandar']['id'])); 
 			}
-			?>
-	</table>
-
-</fieldset>
-<fieldset>
-	<legend>Agregar un nuevo items</legend>
-	<?php echo $this->Form->create('ItemsEstandar'); ?>	
-		<?php 
-		$litemsestandar[0]='Documento base'; 
-		?>
-		<table>
-			<tr>
-				<th>
-					Item
-				</th>
-				<th>
-					Orden
-				</th>
-				<th>
-					Padre 
-				</th>
-			</tr>
+				?>
+			</li>
+		</ul>
+	</div>
+	<section class="panel_internal">
+		<table class="crud">
 			<tr>
 				<td>
-					<?php
-			            echo $this->Form->select("item_id", $items,array("required" => "required"));
-			            echo $this->Form->hidden("estandar_id", array(
-		                "value" => $Estandar["Estandar"]["id"]
-		            ));
-		            ?>
-				</td>
-				<td>
-					<?php echo $this->Form->number("orden", array("label" => false, "value" => 0, "min" => 0)); ?>
-				</td>
-				<td>
-					<?php
-			            
-					echo $this->Form->select("items_estandar_id", $litemsestandar,array("default" => 0,"required" => "required"));
-		            ?>
+					<div class="crud_fila_principal">
+						<div class="back">
+							<?php
+							echo $this->Html->link($this->Html->image("iconos/back64.png", array('height' => '', 'width' => '22px','title'=>'Volver')),$referer,
+										array('escape' => false));
+							?>
+						</div>
+						<span>
+							<?php
+								echo $estandar["Estandar"]["id"]." ".$estandar["Tiposestandar"]["nombre"].": ";
+								echo $estandar["Estandar"]["nombre"]." ";
+								echo $estandar["Programa"]["nombre"];
+							?>
+						</span>
+					</div>
+					<?php 
+					echo $this->Form->create('ItemsEstandar'); 
+					echo $this->Form->input('id'); 
+					?>
+						<div class="crud_fila_secundaria">
+							<figure class="fondoAgregar">
+								<?php
+								echo $this->Html->image('recursos/escudo400.png', array('width' => '200px'));
+								?>
+							</figure>
+							<article class='ficha_index' id="fichaIndexInformacionGeneral">
+								<span class="estandar">
+									Estructura
+								</span>	
+								<div class="itemsDocumento">
+									<div class="tituloItemsDocumento">
+										<div class="orden">Orden</div><div class="item">
+										Item</div><div class="lineas">
+										Líneas</div><div class="caracteres">
+										Caracteres</div>
+									</div>
+									<?php
+									//idb es el estandar a borrar
+									$idb=$estandar["Estandar"]["id"];
+									$estandarId=$estandar["Estandar"]["id"];
+									$existe=0;
+									foreach($itemsestandar as $item => $v)
+									{$existe=1;
+									?>
+										<div class="contenidoItemsDocumento" id="<?php echo $v["Item"]["id"]; ?>" >
+											<?php
+											//ida es la relación
+											$ida=$v["Item"]["id"];
+											echo $this->Js->link('','/estandares/delete_itemsestandares/'.$ida, 
+												array(
+													'confirm'=>"Realmente desea borrar el item '".$v["Item"]["nombre"]."'",
+													'success' => $this->Js->get("#$ida")->effect('fadeOut'),
+													'class'=>'icon-cancel estructuraEliminarItem'
+												)
+											);
+											?>
+											<div class="orden"><?php echo $v["ItemsEstandar"]["orden"];?></div><div class="item">
+											<?php echo $v["Item"]["nombre"]; ?></div><div class="lineas">
+											<?php echo $v["Item"]["extencion_lineas"]; ?></div><div class="caracteres">
+											<?php echo $v["Item"]["extencion_caracteres"]; ?></div>
+										</div>
+									<?php
+									}
+									if($existe==1)
+									{
+									?>
+									<div class="submit">
+										<?php
+										echo $this->Js->link('Maquetar documento para descarga','/estandares/maquetarDocumento/'.$estandarId, 
+												array(
+													'confirm'=>"¿Realmente desea maquetar el estandar para ".$estandar["Tiposestandar"]["nombre"]." ".$estandar["Estandar"]["nombre"]." ".$estandar["Programa"]["nombre"]."? recuerde que una vez realizada esta operación estara dispone para su descarga y sobreeescribira el anterior estandar",
+													'before' => $this->Js->alert('entre'),
+													'success' => $this->Js->alert('Ready'),
+													'class'=>'submitVinotinto'
+												)
+											);
+										?>
+									</div>
+									<?php 
+									}	
+									?>
+								</div>
+							</article>
+<!-- Aqui empieza el article de agregar items-->
+						<article class='ficha_index articleAgregarItem' id="fichaIndexInformacionGeneral">
+							<span class="estandar">
+								Agregar items
+							</span>	
+							<div class="itemsDocumento" id="itemsAgregar">
+								<?php 
+								echo $this->Form->create('Item'); 
+								echo $this->Form->hidden('programa_id',array('value'=>$estandar["Programa"]["id"])); 
+								?>
+								<div class="agregarItemTitulo">
+									Item:
+								</div>
+								<div class="agregarItemEntrada">
+									<?php 
+									echo $this->Form->text("nombre", array("label" => false,'Placeholder'=>'Ingrese titulo del item')); 
+									?>
+								</div>
+								<div class="agregarItemTitulo">
+									Caracteres:
+								</div>
+								<div class="agregarItemEntrada">
+									<?php 
+									echo $this->Form->number("extencion_caracteres", array("label" => false, "value" => 0, "min" => 0,'max'=>'100000','class'=>'number_corto')); 
+									?>
+								</div>
+								<div class="agregarItemTitulo">
+									Líneas:
+								</div>
+								<div class="agregarItemEntrada">
+									<?php 
+									echo $this->Form->number("extencion_lineas", array("label" => false, "value" => 0, "min" => 0,'max'=>'1000','class'=>'number_corto')); 
+									?>
+								</div>
+								<?php 
+								echo $this->Form->create('ItemsEstandar'); 
+								echo $this->Form->hidden('estandar_id',array('value'=>$estandar["Estandar"]["id"])); 
+								?>
+								<div class="agregarItemTitulo">
+									Orden:
+								</div>
+								<div class="agregarItemEntrada">
+									<?php 
+									echo $this->Form->number("orden", array("label" => false, "value" => 0, "min" => 0,'max'=>'20','class'=>'number_corto')); 
+									?>
+								</div><div class="agregarItemTitulo">
+									Padre:
+								</div>
+								<div class="agregarItemEntrada">
+									<?php
+			            			echo $this->Form->select("items_estandar_id", $litemsestandar,array("default" => 0,"required" => "required",'empty'=>false,'class'=>'inputCorto'));
+						            ?>
+								</div>
+							<?php echo $this->Form->submit(
+							    'Agregar item', 
+							    array('class' => 'submitVinotinto')
+							); 
+							    ?>							
+							</div>
+						</article>
+					</div>
 				</td>
 			</tr>
 		</table>
-	<?php echo $this->Form->end(__('Agregar')); ?>
-</fieldset>
-
-</div>
-<?php
-print_r($itemsestandar);
-?>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Estandar.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('Estandar.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Estandares'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Programas'), array('controller' => 'programas', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Programa'), array('controller' => 'programas', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Tiposestandares'), array('controller' => 'tiposestandares', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Tiposestandar'), array('controller' => 'tiposestandares', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Controles'), array('controller' => 'controles', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Control'), array('controller' => 'controles', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Documentos'), array('controller' => 'documentos', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Documento'), array('controller' => 'documentos', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Items'), array('controller' => 'items', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Item'), array('controller' => 'items', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
-<select required>
-<option value="">Please select</option>
-<option value="first">First</option>
-</select>
+	</section>
+</section>
+<script>
+	$('#navicon-file-settings').css( "background", "#7a0400" );
+	$('#marcicon-file-settings').css( "color", "#7a0400" );
+</script>

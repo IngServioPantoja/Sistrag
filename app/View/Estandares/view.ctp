@@ -13,7 +13,7 @@ $user=NUll;
 				echo $this->Html->image('iconos/listar32.png', array('title' => 'Listar Estandares','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Estandar'), array('action' => 'index')); 
+				echo $this->Html->link(__('Estandar'), array('action' => 'view',$estandar['Estandar']['id'])); 
 				?></li><li>
 				<?php
 				echo $this->Html->image('iconos/update40.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
@@ -48,6 +48,11 @@ $user=NUll;
 					</div>
 					<div id="contenedor_datos">
 						<div class="crud_fila_secundaria">
+							<figure class="fondoAgregar">
+								<?php
+								echo $this->Html->image('recursos/escudo400.png', array('width' => '220px'));
+								?>
+							</figure>
 							<div class="div_estandar_programa">
 								<span class="programa">
 								<span class="icon-file-settings icono_izquierda_pequeño">

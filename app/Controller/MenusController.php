@@ -1,31 +1,16 @@
 <?php
 App::uses('AppController', 'Controller');
-/**
- * Menus Controller
- *
- * @property Menu $Menu
- */
+
 class MenusController extends AppController {
     var $name = "Menus";
     var $helpers = array("Html", "Form");
     var $uses = array('Menu','Nivel','MenusNivel');
-/**
- * index method
- *
- * @return void
- */
+
 	public function index() {
 		$this->Menu->recursive = 0;
 		$this->set('menus', $this->paginate());
 	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
 	public function view($id = null) {
 		if (!$this->Menu->exists($id)) {
 			throw new NotFoundException(__('Invalid menu'));
@@ -34,11 +19,6 @@ class MenusController extends AppController {
 		$this->set('menu', $this->Menu->find('first', $options));
 	}
 
-/**
- * add method
- *
- * @return void
- */
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Menu->create();
@@ -54,13 +34,6 @@ class MenusController extends AppController {
 		$this->set(compact('menus', 'niveles'));
 	}
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
 	public function edit($id = null) {
 		if (!$this->Menu->exists($id)) {
 			throw new NotFoundException(__('Invalid menu'));
@@ -81,14 +54,6 @@ class MenusController extends AppController {
 		$this->set(compact('menus', 'niveles'));
 	}
 
-/**
- * delete method
- *
- * @throws NotFoundException
- * @throws MethodNotAllowedException
- * @param string $id
- * @return void
- */
 	public function delete($id = null) {
 		$this->Menu->id = $id;
 		if (!$this->Menu->exists()) {

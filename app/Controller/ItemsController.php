@@ -47,7 +47,7 @@ var $uses = array('Item','Programa','Estandar','Facultad');
 			print_r($this->request->data);
 			if ($this->Item->save($this->request->data)) {
 				$this->Session->setFlash(__('Item guardado correctamente'));
-				$this->redirect(array('action' => 'index'));
+				//$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('Item no guardado intente de nuevo.'));
 			}

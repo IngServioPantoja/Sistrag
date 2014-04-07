@@ -124,11 +124,11 @@ html
         height 60px
         left 45%
         padding 10px
-        position fixed
+        position absolute
         text-align center
         top 45%
         width 200px
-        z-index 1 
+        z-index 0 
         animation mensaje_flash 4s 1 forwards
         -webkit-animation mensaje_flash 4s 1 forwards
         -moz-animation mensaje_flash 4s 1 forwards
@@ -466,6 +466,7 @@ html
         text-align: center;
     
     select
+      max-width 250px;
       min-width: 170px;
       background-color: #fff;
       color: #000;
@@ -520,7 +521,7 @@ html
             -webkit-box-shadow 5px 5px 11px rgba(0,0,105,0.4)
             display block
             margin 0 auto
-            overflow visible
+            overflow hidden
             
             .back
               position absolute
@@ -943,7 +944,7 @@ html
                   display block
                   
                   input[type="file"]
-                    width 358px
+                    width 280px
 
                   select,span,input,div
                     display inline-block
@@ -1175,17 +1176,40 @@ html
                   margin 0 5px
                   border 1px solid #aaa
                   border-radius 5px 5px 0px 0px
-                  display inline-block
+                  display block
                   width auto
+                  
+                  .agregarItemTitulo
+                    width 90px
+                    text-align left
+                    display inline-block
+                    background: -moz-linear-gradient(top,  #600000 0%, #800000 50%, #600000 100%);
+                    background: -ms-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                    background: -o-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#600000), color-stop(50%,#800000), color-stop(100%,#600000));
+                    background: -webkit-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                    background: linear-gradient(to bottom,  #600000 0%,#800000 50%,#600000 100%);
+                    color #fff
+                    font-weight 900
+                    padding 2px 5px
+
+                    &:first-child
+                      border-left 0px solid
+                      border-radius 4px 0px 0px 0px
+
+                  .agregarItemEntrada
+                    width 200px
+                    display inline-block
                   // Tabla para la muestra de items que componen un documento
                   .contenidoItemsDocumento
+                    background rgba(255,255,255,0.5)
                     color #333
                     position relative
                     overflow auto
                     width auto
                     display block
                     text-align left
-
+                    
                     div
                       display inline-block
                       font-weight 400
@@ -1195,12 +1219,23 @@ html
                       margin 0px
                       padding 1px 5px
                       font-size 15px
+                      
 
                       &:first-child
                         border-left 0px solid
+                        border-radius 10px 0px 0px 0px
 
                       &:last-child
                         border-right 0px solid
+
+                    .estructuraEliminarItem
+                      color vinotinto
+                      position absolute 
+                      top 0px 
+                      right 0px
+                      font-size 15px
+                      margin-top 2px
+                      opacity 0
 
                     .orden
                       width 45px
@@ -1217,8 +1252,14 @@ html
                     .lineas
                       width 60px 
                       float right
-                      
 
+                    &:hover
+                      opacity 1
+                      background rgba(255,200,200,0.5);
+
+                    &:hover .estructuraEliminarItem
+                      opacity 1
+                      
                   .tituloItemsDocumento
                     background: -moz-linear-gradient(top,  #600000 0%, #800000 50%, #600000 100%);
                     background: -ms-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
@@ -1231,6 +1272,7 @@ html
                     overflow auto
                     display block
                     text-align left
+                    border-radius 4px 4px 0px 0px
 
                     div
                       display inline-block
@@ -1264,6 +1306,12 @@ html
                     .lineas
                       width 60px 
                       float right
+                  
+                #itemsAgregar
+                  max-width 330px
+                  text-align left
+                  margin-top 5px
+                  border-radius 5px
 
                 .submit_oculto_cambiar
                   opacity 0!important
@@ -1343,7 +1391,6 @@ html
                   background: -ms-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
                   background: linear-gradient(to bottom,  #600000 0%,#800000 50%,#600000 100%);
 
-                
               .ficha_index:hover .ficha_datos
                 box-shadow 0px 0px 20px rgba(0,0,0,0.9)
 
@@ -1494,6 +1541,29 @@ html
 
             .submit
               
+              a
+                background #324664
+                background -moz-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+                background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #324664), color-stop(11%, #3f587d), color-stop(21%, #47648e), color-stop(32%, #3e587d), color-stop(39%, #374d6c), color-stop(68%, #101721), color-stop(79%, #05070b), color-stop(86%, #000), color-stop(100%, #000))
+                background -webkit-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+                background -o-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+                background -ms-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+                background linear-gradient(to bottom, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+                border-radius 0px
+                border-top 1px solid #fff
+                border 1px solid rgba(255,255,255,0)
+                color #ddd
+                margin -2px 0px -2px 0px
+                padding 10px
+                text-align center
+                transition all 0.3s fade-in
+                -webkit-transition all 0.3s fade-in
+                -moz-transition all 0.3s fade-in
+                display block
+                width auto
+                position relative
+                font-weight 900
+
               input
                 background #324664
                 background -moz-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
@@ -1506,15 +1576,17 @@ html
                 border-top 1px solid #fff
                 border 1px solid rgba(255,255,255,0)
                 color #ddd
-                margin -2px -1px -2px -1px
+                margin -2px 0px -2px 0px
                 padding 10px
                 text-align center
                 transition all 0.3s linear
                 -webkit-transition all 0.3s linear
                 -moz-transition all 0.3s linear
-                width 100.5%
+                display block
+                width 100%
+                position relative
 
-              input:hover
+              input:hover,a:hover
                 background #bcbcbc
                 background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
                 background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcbcbc), color-stop(50%, #efefef), color-stop(100%, #bcbcbc))
@@ -1523,6 +1595,15 @@ html
                 background -ms-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
                 background linear-gradient(to bottom, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
                 color #226
+
+              .submitVinotinto
+                margin-top 2px
+                background: -moz-linear-gradient(top,  #600000 0%, #800000 50%, #600000 100%);
+                background: -ms-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                background: -o-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#600000), color-stop(50%,#800000), color-stop(100%,#600000));
+                background: -webkit-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                background: linear-gradient(to bottom,  #600000 0%,#800000 50%,#600000 100%);
             
             #principal_proyecto
               overflow auto
@@ -1618,6 +1699,9 @@ html
       div
         display: inline-block;
     
+    .number_corto
+      width 75px
+
     /* codigos iconos */
     .icon-group:before {
             font-family: icomoon;
@@ -1877,7 +1961,7 @@ html
   .layout_contenido
     top 30px
 
-@media screen and (max-width: 690px) and (min-width: 608px)
+@media screen and (max-width: 689px) and (min-width: 608px)
 
   body 
   
@@ -2330,7 +2414,7 @@ html
 @media screen and (max-width: 380px) and (min-width: 321px)
 
   body 
-    border 2px solid red
+    border 2px solid violet
   
     input[type="file"]
       width 180px !important
@@ -2389,72 +2473,88 @@ html
           padding 3px 10px 0px 10px!important
           display block
     
-    .itemsDocumento
+    .articleAgregarItem,.ficha_index
+      display block!important
+      width auto!important
+      
+      .itemsDocumento
+        opacity 1
 
-      .contenidoItemsDocumento
-        color #333
-        position relative
-        overflow auto
-        width auto
-        display block
-        text-align left
-
-        div
-          display inline-block
-
-        .orden
-          width 60px!important
-          position absolute
-          left 0px
-          bottom 0px
-        
-        .item
-          width auto
-          display block!important
-          border-left 1px solid rgba(0,0,0,0)
-          border-right 1px solid rgba(0,0,0,0)
-          border-bottom 1px solid rgba(200,200,200,0)!important
-
-        .caracteres
-          display: block!important;
-          margin-left:  70px!important;
-          margin-right: 70px!important;
+        .agregarItemTitulo
           width auto!important
-          float none!important
+          display block!important
+          text-align center!important
 
-        .lineas
-          width 60px 
-          float right
+        .agregarItemEntrada
+          width auto!important
+          display block!important
+          text-align center!important
+          padding 2px
+
+        .contenidoItemsDocumento
+          color #333
+          position relative
+          overflow auto
+          width auto
+          display block
+          text-align left
+
+          div
+            display inline-block
+
+          .orden
+            width 60px!important
+            position absolute
+            left 0px
+            bottom 0px
           
+          .item
+            width auto
+            display block!important
+            border-left 1px solid rgba(0,0,0,0)
+            border-right 1px solid rgba(0,0,0,0)
+            border-bottom 1px solid rgba(200,200,200,0)!important
 
-      .tituloItemsDocumento
-        color #fff
+          .caracteres
+            display: block!important;
+            margin-left:  70px!important;
+            margin-right: 70px!important;
+            width auto!important
+            float none!important
 
-        div
-          display inline-block
+          .lineas
+            width 60px 
+            float right
+            
 
-        .orden
-          width 60px!important
-          position absolute
-          left 0px
-          bottom 0px
-        
-        .item
-          width auto
-          display block!important
-          border-left 1px solid rgba(0,0,0,0)
-          border-right 1px solid rgba(0,0,0,0)
+        .tituloItemsDocumento
+          color #fff
 
-        .caracteres
-          display: block!important;
-          margin-left:  70px!important;
-          margin-right: 70px!important;
-          width auto!important
-          float none!important
+          div
+            display inline-block
 
-        .lineas
-          width 60px 
-          float right
+          .orden
+            width 60px!important
+            position absolute
+            left 0px
+            bottom 0px
+          
+          .item
+            width auto
+            display block!important
+            border-left 1px solid rgba(0,0,0,0)
+            border-right 1px solid rgba(0,0,0,0)
+
+          .caracteres
+            display: block!important;
+            margin-left:  70px!important;
+            margin-right: 70px!important;
+            width auto!important
+            float none!important
+
+          .lineas
+            width 60px 
+            float right
 
     .layout_contenido
       top 110px!important
@@ -2612,72 +2712,88 @@ html
       .layout_titleLogout
         display none!important
     
-    .itemsDocumento
+    .articleAgregarItem,.ficha_index
+      display block!important
+      width auto!important
+      
+      .itemsDocumento
+        opacity 1
 
-      .contenidoItemsDocumento
-        color #333
-        position relative
-        overflow auto
-        width auto
-        display block
-        text-align left
-
-        div
-          display inline-block
-
-        .orden
-          width 60px!important
-          position absolute
-          left 0px
-          bottom 0px
-        
-        .item
-          width auto
-          display block!important
-          border-left 1px solid rgba(0,0,0,0)
-          border-right 1px solid rgba(0,0,0,0)
-          border-bottom 1px solid rgba(200,200,200,0)!important
-
-        .caracteres
-          display: block!important;
-          margin-left:  70px!important;
-          margin-right: 70px!important;
+        .agregarItemTitulo
           width auto!important
-          float none!important
+          display block!important
+          text-align center!important
 
-        .lineas
-          width 60px 
-          float right
+        .agregarItemEntrada
+          width auto!important
+          display block!important
+          text-align center!important
+          padding 2px
+
+        .contenidoItemsDocumento
+          color #333
+          position relative
+          overflow auto
+          width auto
+          display block
+          text-align left
+
+          div
+            display inline-block
+
+          .orden
+            width 60px!important
+            position absolute
+            left 0px
+            bottom 0px
           
+          .item
+            width auto
+            display block!important
+            border-left 1px solid rgba(0,0,0,0)
+            border-right 1px solid rgba(0,0,0,0)
+            border-bottom 1px solid rgba(200,200,200,0)!important
 
-      .tituloItemsDocumento
-        color #fff
+          .caracteres
+            display: block!important;
+            margin-left:  70px!important;
+            margin-right: 70px!important;
+            width auto!important
+            float none!important
 
-        div
-          display inline-block
+          .lineas
+            width 60px 
+            float right
+            
 
-        .orden
-          width 60px!important
-          position absolute
-          left 0px
-          bottom 0px
-        
-        .item
-          width auto
-          display block!important
-          border-left 1px solid rgba(0,0,0,0)
-          border-right 1px solid rgba(0,0,0,0)
+        .tituloItemsDocumento
+          color #fff
 
-        .caracteres
-          display: block!important;
-          margin-left:  70px!important;
-          margin-right: 70px!important;
-          width auto!important
-          float none!important
+          div
+            display inline-block
 
-        .lineas
-          width 60px 
-          float right
+          .orden
+            width 60px!important
+            position absolute
+            left 0px
+            bottom 0px
+          
+          .item
+            width auto
+            display block!important
+            border-left 1px solid rgba(0,0,0,0)
+            border-right 1px solid rgba(0,0,0,0)
+
+          .caracteres
+            display: block!important;
+            margin-left:  70px!important;
+            margin-right: 70px!important;
+            width auto!important
+            float none!important
+
+          .lineas
+            width 60px 
+            float right
 
     .layout_contenido
       top 60px!important
@@ -2911,9 +3027,9 @@ html
     z-index 0
   99% 
     opacity 0 
-    z-index -3
-    display none
+    z-index -3!important
+    display none!important
   100% 
     opacity 0 
-    z-index -5
-    display none
+    z-index -5!important
+    display none!important

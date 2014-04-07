@@ -5,14 +5,15 @@ ini_set('memory_limit', '-2');
 class DocumentosController extends AppController {
 	var $components = array("RequestHandler");
 	var $helpers = array('Html');  // include the HTML helper
-	var $uses = array('Documento','Estandar','Proyecto','Item','ItemsEstandar');
+	var $uses = array('Documento','Estandar','Proyecto','Item','ItemsEstandar','Programa');
 	var $items=array();
 	var	$DatosXML="";
 	var $descomposiciones=array();
 	var $documento_id=0;
 
 		function obtenerItems($itemPadre,$estandar_id)
-		{	global $items;
+		{	
+			global $items;
 			$opciones = array(
 			    	'joins' => array(
 				        array(
@@ -94,7 +95,7 @@ class DocumentosController extends AppController {
 		function quitar_tildes($cadena) 
 		{
 			$no_permitidas= array ("á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","À","Ã","Ì","Ò","Ù","Ã™","Ã ","Ã¨","Ã¬","Ã²","Ã¹","ç","Ç","Ã¢","ê","Ã®","Ã´","Ã»","Ã‚","ÃŠ","ÃŽ","Ã”","Ã›","ü","Ã¶","Ã–","Ã¯","Ã¤","«","Ò","Ã","Ã„","Ã‹");
-			$permitidas= array ("a","e","i","o","u","A","E","I","O","U","n","N","A","E","I","O","U","a","e","i","o","u","c","C","a","e","i","o","u","A","E","I","O","U","u","o","O","i","a","e","U","I","A","E");
+			$permitidas= array ("a","e","i","o","u","a","e","i","o","u","n","n","a","e","i","o","u","a","e","i","o","u","c","c","a","e","i","o","u","a","e","i","o","u","u","o","o","i","a","e","u","i","a","e");
 			$texto = str_replace($no_permitidas, $permitidas ,$cadena);
 			return $texto;
 		}
@@ -190,18 +191,21 @@ class DocumentosController extends AppController {
 	                }
 	            }else if($banderaA==1 && $banderaB==0){
 	                //entramos aqui para buscar el texto dentro del tagg que se ha abierto
-	                if($Etiqueta['tag'] == "W:T" && $Etiqueta['type'] == "complete" && strtolower(quitar_tildes($Etiqueta['value'])) == strtolower(quitar_tildes($items[$itemkey]['titulo'])))
+
+	                if($Etiqueta['tag'] == "W:T" && $Etiqueta['type'] == "complete" && str_replace(".","",strtolower(quitar_tildes($Etiqueta['value']))) == strtolower(quitar_tildes($items[$itemkey]['titulo'])))
 	                {
-  						$items[$itemkey]['titulo']=strtolower($items[$itemkey]['titulo']);	
+  						$items[$itemkey]['titulo']=$Etiqueta['value'];	
 	                   //Acabamos de encontrar el texto dentro del tag 
 	                    $item =$Etiqueta['value'];
 	                    $banderaA=1;
 	                    $banderaB=1;
 	                    $banderaC=0;
 	                }
-	            }else if($banderaA==1 && $banderaB==1){
-	                //entramos aqui para buscar el seguntag del texto y cambiar al bandera para comenzar a caputara datos
-	                if($Etiqueta['tag'] == "W:T" && $Etiqueta['type'] == "complete" && $Etiqueta['value'] == "||"){
+	            }else if($banderaA==1 && $banderaB==1)
+	            {
+	                //entramos aqui para buscar el segundo tag del texto y cambiar al bandera para comenzar a caputara datos
+	                if($Etiqueta['tag'] == "W:T" && $Etiqueta['type'] == "complete" && $Etiqueta['value'] == "||")
+	                {
 	                   //Acabamos de encontrar el texto dentro del tag 
 	                    $item = strtolower($Etiqueta['value']);
 	                    $banderaA=2;
@@ -221,6 +225,7 @@ class DocumentosController extends AppController {
 	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['tipo']="Titulo";
 	                    $esTitulo=1;
 	                }
+
 	            }else if($banderaA==2 && $banderaB==1 && $banderaC==1){
 	                //entramos aqui para adicionar el texto de lo encontrado
 	                if($Etiqueta['tag'] == "W:T" && $Etiqueta['type'] == "complete" && $Etiqueta['value'] =="||")
@@ -347,7 +352,6 @@ class DocumentosController extends AppController {
 	public function subir_documento($id = null) 
 	{
 		$proyecto_id=$id;
-		print_r($this->data);
 		$fecha = date_create();
 		$fecha = date_format($fecha, 'Y-m-d H:i:s');
 		$this->request->data['Documento']['fecha_guardado']=$fecha;
@@ -384,7 +388,41 @@ class DocumentosController extends AppController {
 		$usuario=$this->Session->read("Usuario");
 		if($usuario['nivel_id']==1)
 		{
-			$estandares = $this->Documento->Estandar->find('list');
+			$selectEstandares=array();
+			$opciones=array(
+				'joins' => array(
+			        array(
+			            'table' => 'tiposestandares',
+			            'alias' => 'Tiposestandar',
+			            'type' => 'INNER',
+			            'conditions' => 
+			            array(
+			                'Tiposestandar.id = Estandar.tiposestandar_id'
+			            	)
+			        	)
+	    		),
+			    'fields' => array('Estandar.id','Estandar.nombre','Estandar.programa_id','Tiposestandar.nombre'),
+			    'recursive' => -1
+			);
+			$estandares=$this->Estandar->find('all',$opciones);
+			$opciones=array(
+			    'fields' => array('Programa.nombre','Programa.id'),
+			    'recursive' => 1,
+			    'group' => array('Estandar.programa_id'),
+			    'having'=>array('count(Estandar.programa_id)>0')
+			);
+			$programas = $this->Estandar->find('all',$opciones);
+			foreach ($programas as $programa) 
+			{
+				foreach ($estandares as $estandar) 
+				{
+					if($programa['Programa']['id']==$estandar['Estandar']['programa_id'])
+					{
+						$selectEstandares[$programa['Programa']['nombre']][$estandar['Estandar']['id']]=$estandar['Tiposestandar']['nombre']." ".$estandar['Estandar']['nombre'];
+					}
+				}
+			}
+			$estandares=$selectEstandares;
 		}
 		else if($usuario['nivel_id']==2 || $usuario['nivel_id']==3 )
 		{

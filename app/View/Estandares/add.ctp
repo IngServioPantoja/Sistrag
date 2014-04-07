@@ -13,7 +13,7 @@ $user=NUll;
 				echo $this->Html->image('iconos/listar32.png', array('title' => 'Listar Estandares','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Estandar'), array('action' => 'index')); 
+				echo $this->Html->link(__('Estandares'), array('action' => 'index')); 
 				?></li><li class="panel_menu_actual">
 				<?php
 				echo $this->Html->image('iconos/agregar32.png', array('title' => 'Registrar Estandar','height' => '', 'width' => '16px'));

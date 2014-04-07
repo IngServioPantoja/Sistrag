@@ -1,12 +1,3 @@
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-
-		<li><?php echo $this->Html->link(__('List Documentos'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Personas Proyectos'), array('controller' => 'personas_proyectos', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Personas Proyecto'), array('controller' => 'personas_proyectos', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
 <?php 
 ?>
 <section class="panel_frame">
@@ -30,10 +21,11 @@
 				<td>
 					<?php echo $this->Form->create('Documento',array('type' => 'file')); ?>
 					<div class="crud_fila_principal">
-						<span>Documento: </span>
+						<span>Documento: 
 						<?php 
-						echo $proyecto['Proyecto']['nombre'];
+						echo $proyecto['Proyecto']['titulo'];
 						?>
+						</span>
 					</div>
 					<div class="crud_fila_secundaria">
 							<fieldset class='ficha_add'>
@@ -52,7 +44,7 @@
 										<legend>
 											Tipo de documento
 										</legend>
-										<?php echo $this->Form->input('estandar_id',array('label' =>false)); ?>	
+										<?php echo $this->Form->input('estandar_id',array('label' =>false,'class'=>'inputCorto')); ?>	
 									</fieldset>
 								</div>
 							</fieldset>
