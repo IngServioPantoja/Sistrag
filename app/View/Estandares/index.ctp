@@ -195,12 +195,16 @@ if(!$this->request->is('ajax'))
 												</tr>
 											</table>
 										</a>
-										<div class='ficha_datos' id="datos_proyecto">
-											<div colspan="2" class="proyectos_ampliar" title="Descargar maqueta XML">
-												<strong>
-													Descargar Estandar
-												</strong>
-											</div>
+										<div class="submit">
+										<?php
+										echo $this->Html->link(
+										    'Descargar estandar',
+										    array(
+										        'action' => 'descargarDocumento',$estandar["Estandar"]["id"]
+										        ),
+										    array('class' => 'submitVinotinto','title'=>'Descargar estandar')
+										);
+										?>
 										</div>
 									</article>		
 									<?php
@@ -323,12 +327,16 @@ if(!$this->request->is('ajax'))
 												</tr>
 											</table>
 										</a>
-										<div class='ficha_datos' id="datos_proyecto">
-											<div colspan="2" class="proyectos_ampliar" title="Descargar maqueta XML">
-												<strong>
-													Descargar Estandar
-												</strong>
-											</div>
+										<div class="submit">
+										<?php
+										echo $this->Html->link(
+										    'Descargar estandar',
+										    array(
+										        'action' => 'descargarDocumento',$estandar["Estandar"]["id"]
+										        ),
+										    array('class' => 'submitVinotinto','title'=>'Descargar estandar')
+										);
+										?>
 										</div>
 									</article>	
 										<?php

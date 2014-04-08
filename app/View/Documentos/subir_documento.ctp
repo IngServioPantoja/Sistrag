@@ -7,7 +7,7 @@
 				<?php
 				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
-				<?php echo $this->Html->link(__('Documentos'), array('action' => 'index', $proyecto['Proyecto']['id'])); ?></li><li class="panel_menu_actual">
+				<?php echo $this->Html->link(__('Documentos'), array('controller'=>'proyectos','action' => 'documentos', $proyecto['Proyecto']['id'])); ?></li><li class="panel_menu_actual">
 				<?php
 				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>

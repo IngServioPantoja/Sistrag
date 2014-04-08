@@ -175,12 +175,16 @@ $user=NUll;
 										?>
 									</div>
 								</article>
-								<div class="descargar_plantilla" title="Descargar maqueta XML">
-									<a>
-										<span>
-											Descargar Estandar
-										</span>
-									</a>
+								<div class="submit" title="Descargar maqueta XML">
+									<?php
+										echo $this->Html->link(
+										    'Descargar estandar',
+										    array(
+										        'action' => 'descargarDocumento',$estandar["Estandar"]["id"]
+										        ),
+										    array('class' => 'submitVinotinto','title'=>'Descargar estandar')
+										);
+									?>
 								</div>
 							</div>
 						</div>

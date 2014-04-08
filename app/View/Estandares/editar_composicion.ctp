@@ -104,14 +104,7 @@ $litemsestandar[0]='Documento base';
 									?>
 									<div class="submit">
 										<?php
-										echo $this->Js->link('Maquetar documento para descarga','/estandares/maquetarDocumento/'.$estandarId, 
-												array(
-													'confirm'=>"¿Realmente desea maquetar el estandar para ".$estandar["Tiposestandar"]["nombre"]." ".$estandar["Estandar"]["nombre"]." ".$estandar["Programa"]["nombre"]."? recuerde que una vez realizada esta operación estara dispone para su descarga y sobreeescribira el anterior estandar",
-													'before' => $this->Js->alert('entre'),
-													'success' => $this->Js->alert('Ready'),
-													'class'=>'submitVinotinto'
-												)
-											);
+										echo $this->Html->link("Maquetar documento y descargar", array('action' => 'maquetarDocumento',$estandarId),array('confirm'=> __("¿Realmente desea maquetar el estandar para ".$estandar["Tiposestandar"]["nombre"]." ".$estandar["Estandar"]["nombre"]." ".$estandar["Programa"]["nombre"]."? recuerde que una vez realizada esta operación estara dispone para su descarga y sobreeescribira el anterior estandar"),'escape' => false,'title'=>'Modificar Estandar','class'=>'submitVinotinto'));
 										?>
 									</div>
 									<?php 
@@ -164,7 +157,16 @@ $litemsestandar[0]='Documento base';
 									<?php 
 									echo $this->Form->number("orden", array("label" => false, "value" => 0, "min" => 0,'max'=>'20','class'=>'number_corto')); 
 									?>
-								</div><div class="agregarItemTitulo">
+								</div>
+								<div class="agregarItemTitulo" title="Si selecciona esta opcion el numero no se mostrara en el documento">
+									Numero:
+								</div>
+								<div class="agregarItemEntrada">
+									<?php 
+									echo $this->Form->checkbox("numero", array('title'=>'Si selecciona esta opcion el numero no se mostrara en el documento')); 
+									?>
+								</div>
+								<div class="agregarItemTitulo">
 									Padre:
 								</div>
 								<div class="agregarItemEntrada">
