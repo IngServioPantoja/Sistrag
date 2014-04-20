@@ -8,9 +8,7 @@
 				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php echo $this->Html->link(__('Documentos'), array('controller'=>'proyectos','action' => 'documentos', $proyecto['Proyecto']['id'])); ?></li><li class="panel_menu_actual">
-				<?php
-				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
-				?>
+				<span class="icon-cloudy" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
 				<?php echo $this->Html->link(__('Subir documento'), array('action' => 'subir_documento', $proyecto['Proyecto']['id'])); ?>
 			</li>
 		</ul>
@@ -55,3 +53,7 @@
 		</table>
 	</section>
 </section>
+<script>
+	$('#navicon-suitcase').css( "background", "#7a0400" );
+	$('#marcicon-suitcase').css( "color", "#7a0400" );
+</script>

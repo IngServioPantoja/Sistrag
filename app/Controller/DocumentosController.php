@@ -5,15 +5,18 @@ ini_set('memory_limit', '-2');
 class DocumentosController extends AppController {
 	var $components = array("RequestHandler");
 	var $helpers = array('Html');  // include the HTML helper
-	var $uses = array('Documento','Estandar','Proyecto','Item','ItemsEstandar','Programa');
+	var $uses = array('Documento','Estandar','Proyecto','Item','ItemsEstandar','Programa','ItemsDocumento','ItemsContenido','TiposEstandar','PersonasProyecto','Rol');
 	var $items=array();
+	var $maquetarMostrar=array();
 	var	$DatosXML="";
 	var $descomposiciones=array();
 	var $documento_id=0;
 
 		function obtenerItems($itemPadre,$estandar_id)
 		{	
+			$this->autoRender = false;
 			global $items;
+			$this->ItemsEstandar->recursive = -1;
 			$opciones = array(
 			    	'joins' => array(
 				        array(
@@ -26,7 +29,7 @@ class DocumentosController extends AppController {
 				            	)
 				        	)
 		    		),
-			    	'fields' => array('ItemsEstandar.id','Item.nombre'),
+			    	'fields' => array('ItemsEstandar.id','ItemsEstandar.nivel','Item.nombre','Item.extencion_caracteres','Item.extencion_lineas'),
 			    	'conditions' => 
 			            array(
 			                'ItemsEstandar.items_estandar_id' => $itemPadre,
@@ -35,16 +38,18 @@ class DocumentosController extends AppController {
 		           	'order' => array('ItemsEstandar.orden asc'),		
 
 		   	);
-
-			$itemsConsultar = $this->ItemsEstandar->find('list',$opciones);
+			$itemsConsultar = $this->ItemsEstandar->find('all',$opciones);
 			if (is_array($itemsConsultar)) 
 			{
-				foreach ($itemsConsultar as $item => $value) {
+				foreach ($itemsConsultar as $item) {
 						$arrayTemporal=array();
-						$arrayTemporal['id']=$item;
-						$arrayTemporal['titulo']=$value;
+						$arrayTemporal['id']=$item['ItemsEstandar']['id'];
+						$arrayTemporal['titulo']=$item['Item']['nombre'];
+						$arrayTemporal['nivel']=$item['ItemsEstandar']['nivel'];
+						$arrayTemporal['extencion_caracteres']=$item['Item']['extencion_caracteres'];
+						$arrayTemporal['extencion_lineas']=$item['Item']['extencion_lineas'];
 						$items[]=$arrayTemporal;			
-						$this->requestAction('documentos/obtenerItems/'.$item.'/'.$estandar_id.'');
+						$this->requestAction('documentos/obtenerItems/'.$item['ItemsEstandar']['id'].'/'.$estandar_id.'');
 				}
 			}
 		}
@@ -151,13 +156,10 @@ class DocumentosController extends AppController {
 	        $banderaP=0;//Esta bandera se encarga de definir si se capturara el contenido dentro de un parrafo
 	        //ininiciamos un ciclo para rrecorrer el contenido del array con el contenido del xml
 	        $contadorImg=0;
+	        $contadorCaracteres=0;
 		    global $documento_id;
 		    $documento_id;
 		    $directorio = WWW_ROOT.'files\documentos\\'.$documento_id.'\\';
-	        $nombreArchivo=$directorio."arraytxt.php";
-	        $archivo=fopen($nombreArchivo,"a") or die("Problemas en la creacion del arraytxt");
-	        $contenido='<?php $arraytxt=array();';
-	        fputs($archivo,$contenido);
 	        foreach ($DatosXML as $Etiqueta) {
 	            if(!isset($items[$itemkey])){break;}
 	            // Se ha encontrado una Entrada
@@ -194,6 +196,7 @@ class DocumentosController extends AppController {
 
 	                if($Etiqueta['tag'] == "W:T" && $Etiqueta['type'] == "complete" && str_replace(".","",strtolower(quitar_tildes($Etiqueta['value']))) == strtolower(quitar_tildes($items[$itemkey]['titulo'])))
 	                {
+	                	
   						$items[$itemkey]['titulo']=$Etiqueta['value'];	
 	                   //Acabamos de encontrar el texto dentro del tag 
 	                    $item =$Etiqueta['value'];
@@ -211,26 +214,25 @@ class DocumentosController extends AppController {
 	                    $banderaA=2;
 	                    $banderaB=1;
 	                    $banderaC=1;
-	                    $contenido=' $arraytxt['.$itemkey.']["id"]='.$items[$itemkey]['id'].';';
-	                    fputs($archivo,$contenido);
-	                    $contenido=' $arraytxt['.$itemkey.']["titulo"]="'.$items[$itemkey]['titulo'].'";';
-	                    fputs($archivo,$contenido);
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["elementos"]=" ";';
-	                    fputs($archivo,$contenido);
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["tipo"]="'."Titulo".'";';
-	                    fputs($archivo,$contenido);
 	                    $descomposiciones["$itemkey"]['id']=$items[$itemkey]['id'];
+	                    if($itemkey>1)
+	                    {
+	                    $prevItemkey=$itemkey-1;
+	                    $descomposiciones["$prevItemkey"]['caracteres']=$contadorCaracteres;
+	                    $contadorCaracteres=0;
+	                    }
 	                    $descomposiciones["$itemkey"]['titulo']=$items[$itemkey]['titulo'];
 	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']="";
-	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['tipo']="Titulo";
+	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['tipo']=1;
 	                    $esTitulo=1;
 	                }
 
-	            }else if($banderaA==2 && $banderaB==1 && $banderaC==1){
+	            }else if($banderaA==2 && $banderaB==1 && $banderaC==1)
+	            {
 	                //entramos aqui para adicionar el texto de lo encontrado
 	                if($Etiqueta['tag'] == "W:T" && $Etiqueta['type'] == "complete" && $Etiqueta['value'] =="||")
 	                {	
-	                    //tipos de entrada : 1 texto 2 figura, tabla  y 3 fuente y 4 pie de pagina
+	                    //tipos de entrada : titulo 1 2 texto 3 texto de  figura, 4 fuente 5 pie de pagina 6imagen  7tabla  
 	                    $banderaA=1;
 	                    $banderaB=0;
 	                    $banderaC=0;
@@ -239,46 +241,32 @@ class DocumentosController extends AppController {
 	                   //Acabamos de encontrar el texto dentro del tag 
 	                }
 	                else if($Etiqueta['tag'] == "W:T" && $Etiqueta['type'] == "complete" && strstr(strtolower($Etiqueta['value']),"figura ")){
+	                    //Antes de comenzar una imagen
 	                    if(!isset($descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']))
 	                    {
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["elementos"]=" ";';
-	                    fputs($archivo,$contenido);                    
 	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']="";
 	                    }
 	                    $esTitulo=0;
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["tipo"]="Figura";';
-	                    fputs($archivo,$contenido); 
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["elementos"]="'.$descomposiciones["$itemkey"]["contenido"][$contenidoKey]["elementos"].$Etiqueta["value"].'";';
-	                    fputs($archivo,$contenido); 
-	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['tipo']="Figura";
+	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['tipo']=3;
 	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']=$descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos'].$Etiqueta['value'];
+	                	$contadorCaracteres=$contadorCaracteres+strlen($Etiqueta['value']);
 	                }
 	                else if($Etiqueta['tag'] == "W:T" && $Etiqueta['type'] == "complete" && strstr(strtolower($Etiqueta['value']),"tabla ")){
 	                    if(!isset($descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']))
 	                    {
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["elementos"]=" ";';
-	                    fputs($archivo,$contenido); 
 	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']="";
 	                    }
 	                    $esTitulo=0;
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["tipo"]="Tabla";';
-	                    fputs($archivo,$contenido); 
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["elementos"]="'.$descomposiciones["$itemkey"]["contenido"][$contenidoKey]["elementos"].$Etiqueta["value"].'";';
-	                    fputs($archivo,$contenido);
-	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['tipo']="Tabla";
+	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['tipo']=7;
 	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']=$descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos'].$Etiqueta['value'];
 	                }
 	                else if($Etiqueta['tag'] == "V:IMAGEDATA" && $Etiqueta['type'] == "complete"){
 	                    if(!isset($descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']))
 	                    {
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["elementos"]=" ";';
-	                    fputs($archivo,$contenido); 
 	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']="";
 	                    }
 	                    $esTitulo=0;
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["tipo"]="Imagen";';
-	                    fputs($archivo,$contenido); 
-	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['tipo']="Imagen";
+	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['tipo']=6;
 	                    $id=$Etiqueta['attributes']['R:ID'];
 	                    $nameImagen=getImagen($id);
 	                    $codigoImg=getImagenCode($nameImagen);
@@ -288,57 +276,390 @@ class DocumentosController extends AppController {
 	                    $file=fopen($fileName,"a") or die("Problemas");
 	                    fputs($file,$imagen);
 	                    fclose($file);
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["elementos"]="'.$descomposiciones["$itemkey"]["contenido"][$contenidoKey]["elementos"].$documento_id.'/'.$contadorImg.'.png";';
-	                    fputs($archivo,$contenido);
 	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']=
 	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos'].$documento_id.'/'.$contadorImg.'.png';
 	                }
 	                else if($Etiqueta['tag'] == "W:T" && $Etiqueta['type'] == "complete" && strstr(strtolower($Etiqueta['value']),"fuente:")){
 	                    if(!isset($descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']))
 	                    {
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["elementos"]=" ";';
-	                    fputs($archivo,$contenido); 
 	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']="";
 	                    }
 	                    $esTitulo=0;
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["tipo"]="Fuente";';
-	                    fputs($archivo,$contenido); 
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["elementos"]="'.$descomposiciones["$itemkey"]["contenido"][$contenidoKey]["elementos"].$Etiqueta["value"].'";';
-	                    fputs($archivo,$contenido);
-	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['tipo']="Fuente";
+	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['tipo']=4;
 	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']=$descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos'].$Etiqueta['value'];
+	                	$contadorCaracteres=$contadorCaracteres+strlen($Etiqueta['value']);
 	                }
 	                else if($Etiqueta['tag'] == "W:T" && $Etiqueta['type'] == "complete"){
 	                    if(!isset($descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']))
 	                    {
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["elementos"]=" ";';
-	                    fputs($archivo,$contenido);                 
 	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']="";
 	                    }
 	                    $esTitulo=0;
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["tipo"]="Texto";';
-	                    fputs($archivo,$contenido); 
-	                    $contenido=' $arraytxt['.$itemkey.']["contenido"]['.$contenidoKey.']["elementos"]="'.$descomposiciones["$itemkey"]["contenido"][$contenidoKey]["elementos"].$Etiqueta["value"].'";';
-	                    fputs($archivo,$contenido);
-	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['tipo']="texto";
+	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['tipo']=2;
 	                    $descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos']=$descomposiciones["$itemkey"]['contenido'][$contenidoKey]['elementos'].$Etiqueta['value'];
+	                	$contadorCaracteres=$contadorCaracteres+strlen($Etiqueta['value']);
 	                }
+	                if($itemkey==count($items))
+                    {
+                    	$itemkey;
+	                    $descomposiciones["$itemkey"]['caracteres']=$contadorCaracteres;
+                    }
 	            }
 	        }
-		$contenido=' ?>';
-		fputs($archivo,$contenido); 
-		fclose($archivo);
 		}
 		MostrarDatosXML();
 
 		global $descomposiciones;
-		//print_r($descomposiciones);
 		$this->set('descomposiciones',$descomposiciones);
+		foreach ($descomposiciones as $descomposicion) 
+	    {
+		        $this->ItemsDocumento->create();
+		        $itemDocumento=array();
+		        $itemDocumento['ItemsDocumento']['documento_id']=$id;
+		        $itemDocumento['ItemsDocumento']['items_estandar_id']=$descomposicion['id'];
+		        $itemDocumento['ItemsDocumento']['caracteres']=$descomposicion['caracteres'];
+			if ($this->ItemsDocumento->save($itemDocumento)) 
+			{
+				$orden=1;
+		        foreach ($descomposicion['contenido'] as $item) 
+		        {	
+		        	$this->ItemsContenido->create();
+		        	$itemContenido=array();
+		        	if($item['tipo']==2)
+		        	{	
+		        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
+		        		$itemContenido['ItemsContenido']['tipo']=2;
+		        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
+		        		$itemContenido['ItemsContenido']['orden']=$orden;
+		        		$this->ItemsContenido->save($itemContenido);
+		        		//echo "--texto--";
+		        	
+		        	}
+		        	else if($item['tipo']==3)
+		        	{	
+		        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
+		        		$itemContenido['ItemsContenido']['tipo']=3;
+		        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
+		        		$itemContenido['ItemsContenido']['orden']=$orden;
+		        		$this->ItemsContenido->save($itemContenido);
+		        		//echo "--cabeza figura--";
+		        	}
+		        	else if($item['tipo']==4)
+		        	{	
+		        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
+		        		$itemContenido['ItemsContenido']['tipo']=4;
+		        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
+		        		$itemContenido['ItemsContenido']['orden']=$orden;
+		        		$this->ItemsContenido->save($itemContenido);
+		        		//echo "--fuente--";
+		        	}
+		        	else if($item['tipo']==5)
+		        	{	
+		        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
+		        		$itemContenido['ItemsContenido']['tipo']=5;
+		        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
+		        		$itemContenido['ItemsContenido']['orden']=$orden;
+		        		$this->ItemsContenido->save($itemContenido);
+		        		//echo "--pie de pagina--";
+		        	}
+		        	else if($item['tipo']==6)
+		        	{	
+		        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
+		        		$itemContenido['ItemsContenido']['tipo']=6;
+		        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
+		        		$itemContenido['ItemsContenido']['orden']=$orden;
+		        		$this->ItemsContenido->save($itemContenido);
+		        		//echo "--Imagen--";
+		        	}
+		        	else if($item['tipo']==7)
+		        	{	
+		        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
+		        		$itemContenido['ItemsContenido']['tipo']=7;
+		        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
+		        		$itemContenido['ItemsContenido']['orden']=$orden;
+		        		$this->ItemsContenido->save($itemContenido);
+		        		//echo "--Tabla--";
+		        	}
+		        	++$orden;
+		        }
+			}else
+			{
+				$this->Session->setFlash(__('Error al guardar contenidos en la base de datos'));
+			}
+	    }
+	    $this->redirect(array('action' => 'mostrar_documento',$documento_id));
 	}
 
 	public function index() {
 		$this->Documento->recursive = 0;
 		$this->set('documentos', $this->paginate());
+	}
+
+	public function lista_documentos()
+	{
+		$tipoDocumento=$this->request->data['Proyecto']['tipodocumento'];
+		$proyecto=$this->request->data['Proyecto']['id'];
+		$opciones = array(
+	    	'joins' => array(
+		        array(
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Proyecto.id = Documento.proyecto_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'estandares',
+		            'alias' => 'Estandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Estandar.id = Documento.estandar_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'tiposestandares',
+		            'alias' => 'TiposEstandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'TiposEstandar.id = Estandar.tiposestandar_id'
+	            	)
+	        	)
+    		),
+	    	'fields' => array('Documento.id','Documento.fecha_guardado'),
+	    	'conditions' => 
+	            array(
+	                'Documento.proyecto_id' => $proyecto,
+	                'TiposEstandar.id' => $tipoDocumento
+	           	),
+           	'order' => array('Documento.fecha_guardado asc'),
+	   	);
+		$documentos=$this->Documento->find('list', $opciones);
+		$this->set('documentos',$documentos);
+	}
+
+	function maquetar_documento($id = null)
+	{
+		//aqui simplemente praparamos la información para no mas de ser mostrada se ha 
+		//realizado a manera de funcion para no mas de llamarla y devolver
+		if (!$this->Documento->exists($id)) 
+		{
+			throw new NotFoundException(__('Invalid documento'));
+		}
+		$this->autoRender = false;
+		$this->Documento->recursive = 0;
+		$options = array('conditions' => array('Documento.' . $this->Documento->primaryKey => $id));
+		$proyecto=$this->Documento->find('first', $options);
+		$id_documento=$proyecto['Documento']['id'];
+		global $items;
+		$items[]="";
+		$this->requestAction('documentos/obtenerItems/0/'.$proyecto['Estandar']['id'].'');
+		global $maquetarMostrar;
+		$maquetarMostrar=$items;
+		unset($maquetarMostrar[0]);
+		$opcionesItemsDocumento=array(
+		    'conditions' => array('ItemsDocumento.documento_id'=> $proyecto['Documento']['id']),
+		    'order' => array('ItemsDocumento.id asc'),
+		    'recursive' => -1
+		);
+		$itemsDocumento=$this->ItemsDocumento->find('all', $opcionesItemsDocumento);
+		//obtenemos los contenidos de este documento haciendo join entre contenidos titulo sy documento
+		$opcionesItemsContenido=array(
+		    'joins' => array(
+			        array(
+			            'table' => 'items_documento',
+			            'alias' => 'ItemsDocumento',
+			            'type' => 'INNER',
+			            'conditions' => 
+			            array(
+			                'ItemsDocumento.id = ItemsContenido.items_documento_id'
+			            	)
+			        	)
+    		),
+		    'fields' => array('ItemsContenido.*,ItemsContenido.texto as elementos'),
+		    'conditions' => array('ItemsDocumento.documento_id'=> $proyecto['Documento']['id']),
+		    'order' => array('ItemsContenido.items_documento_id asc','ItemsContenido.orden asc'),
+		    'recursive' => -1
+		);
+		$itemsContenido=$this->ItemsContenido->find('all', $opcionesItemsContenido);
+		$actual=1;
+		foreach ($maquetarMostrar as $item) 
+		{
+			
+			foreach ($itemsDocumento as $itemDocumento) 
+			{
+				if($item['id']==$itemDocumento['ItemsDocumento']['items_estandar_id'])
+				{
+					$maquetarMostrar[$actual]['item_documento_id']=$itemDocumento['ItemsDocumento']['id'];
+					$maquetarMostrar[$actual]['caracteres']=$itemDocumento['ItemsDocumento']['caracteres'];
+					$maquetarMostrar[$actual]['contenido']=array();
+					$keyContenido=0;
+					foreach ($itemsContenido as $itemContenido) 
+					{
+						if($itemDocumento['ItemsDocumento']['id']==$itemContenido['ItemsContenido']['items_documento_id'])
+						{
+							$maquetarMostrar[$actual]['contenido'][$keyContenido]=$itemContenido['ItemsContenido'];
+							++$keyContenido;
+						}
+					}
+				}
+			}
+		++$actual;
+		}
+	}
+
+	public function mostrar_documento($id = null)
+	{	
+		if (!$this->Documento->exists($id)) 
+		{
+			throw new NotFoundException(__('Invalid documento'));
+		}
+		if ($this->request->is('post')) 
+		{
+			$id=$this->request->data['Proyecto']['documento']; 
+			$this->redirect(array('action' => 'mostrar_documento',$id));
+		}
+		$this->Documento->recursive = 0;
+		$options = array('conditions' => array('Documento.' . $this->Documento->primaryKey => $id));
+		$documento=$this->Documento->find('first', $options);
+		$this->TiposEstandar->recursive = -1;
+		$opciones = array('conditions' => array('TiposEstandar.' . $this->TiposEstandar->primaryKey => $documento['Estandar']['tiposestandar_id']));
+		$tipoEstandar=$this->TiposEstandar->find('first', $opciones);
+		$documento['TiposEstandar']=$tipoEstandar['TiposEstandar'];
+		$proyecto = $documento;
+		$this->PersonasProyecto->recursive = -1;
+		$opciones = array(
+		    	'joins' => array(
+			        array(
+			            'table' => 'personas',
+			            'alias' => 'Persona',
+			            'type' => 'INNER',
+			            'conditions' => 
+			            array(
+			                'Persona.id = PersonasProyecto.persona_id'
+		            	)
+		        	)
+	    		),
+		    	'fields' => array('Persona.id','Persona.nombre','Persona.apellido','PersonasProyecto.rol_id'),
+		    	'conditions' => 
+		            array(
+		                'PersonasProyecto.proyecto_id' => $proyecto['Proyecto']['id'],
+		           	),
+	           	'order' => array('PersonasProyecto.rol_id asc'),		
+
+	   	);
+	   	$integrantes=$this->PersonasProyecto->find('all', $opciones);
+	   	$proyecto['Integrantes']=$integrantes;
+		$this->set('proyecto',$proyecto);
+		$id_documento=$proyecto['Documento']['id'];
+		$this->requestAction('documentos/maquetar_documento/'.$id_documento);
+		global $maquetarMostrar;
+		$anclasItems=array();
+		foreach ($maquetarMostrar as $itemAnclar) 
+		{
+			if($itemAnclar['nivel']!=1)
+			{
+				$key=$itemAnclar['item_documento_id'];
+				$anclasItems[$key]=$itemAnclar['titulo'];	
+			}
+		}
+		$this->Documento->recursive = -1;
+		$opciones = array(
+	    	'joins' => array(
+		        array(
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Proyecto.id = Documento.proyecto_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'estandares',
+		            'alias' => 'Estandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Estandar.id = Documento.estandar_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'tiposestandares',
+		            'alias' => 'TiposEstandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'TiposEstandar.id = Estandar.tiposestandar_id'
+	            	)
+	        	)
+    		),
+	    	'fields' => array('TiposEstandar.id','TiposEstandar.nombre'),
+	    	'conditions' => 
+	            array(
+	                'Documento.proyecto_id' => $proyecto['Proyecto']['id'],
+	           	),
+           	'order' => array('TiposEstandar.nombre asc'),
+           	'group' => array('TiposEstandar.id'),		
+	   	);
+		$tiposestandares=$this->Documento->find('list', $opciones);
+		$opciones = array(
+	    	'joins' => array(
+		        array(
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Proyecto.id = Documento.proyecto_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'estandares',
+		            'alias' => 'Estandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Estandar.id = Documento.estandar_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'tiposestandares',
+		            'alias' => 'TiposEstandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'TiposEstandar.id = Estandar.tiposestandar_id'
+	            	)
+	        	)
+    		),
+	    	'fields' => array('Documento.id','Documento.fecha_guardado'),
+	    	'conditions' => 
+	            array(
+	                'Documento.proyecto_id' => $proyecto['Proyecto']['id'],
+	                'Estandar.id' => $proyecto['TiposEstandar']['id']
+	           	),
+           	'order' => array('Documento.fecha_guardado desc'),
+	   	);
+		$documentos=$this->Documento->find('list', $opciones);
+		$opciones = array(
+	    	'conditions' => 
+	            array(
+	                'Rol.id !=' => 3
+	           	),
+           	'order' => array('Rol.nombre desc'),
+	   	);
+		$roles=$this->Rol->find('list', $opciones);
+		$this->set('descomposiciones',$maquetarMostrar);
+		$this->set('tiposestandares',$tiposestandares);
+		$this->set('documentos',$documentos);
+		$this->set('anclasItems',$anclasItems);
+		$this->set('roles',$roles);
+
+
 	}
 
 	public function view($id = null) {

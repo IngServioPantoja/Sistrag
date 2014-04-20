@@ -4,23 +4,19 @@
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('fecha_entrega'); ?></th>
-			<th><?php echo $this->Paginator->sort('fecha_estado'); ?></th>
 			<th><?php echo $this->Paginator->sort('rol_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('documento_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('estado_id'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($entregas as $entrega): ?>
 	<tr>
 		<td><?php echo h($entrega['Entrega']['id']); ?>&nbsp;</td>
 		<td><?php echo h($entrega['Entrega']['fecha_entrega']); ?>&nbsp;</td>
-		<td><?php echo h($entrega['Entrega']['fecha_estado']); ?>&nbsp;</td>
 		<td>
 			<?php echo $this->Html->link($entrega['Rol']['nombre'], array('controller' => 'roles', 'action' => 'view', $entrega['Rol']['id'])); ?>
 		</td>
-		<td><?php echo h($entrega['Entrega']['documento_id']); ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($entrega['Estado']['id'], array('controller' => 'estados', 'action' => 'view', $entrega['Estado']['id'])); ?>
+			<?php echo $this->Html->link($entrega['Documento']['fecha_guardado'], array('controller' => 'documentos', 'action' => 'view', $entrega['Documento']['id'])); ?>
 		</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $entrega['Entrega']['id'])); ?>
@@ -50,7 +46,9 @@
 		<li><?php echo $this->Html->link(__('New Entrega'), array('action' => 'add')); ?></li>
 		<li><?php echo $this->Html->link(__('List Roles'), array('controller' => 'roles', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Rol'), array('controller' => 'roles', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Estados'), array('controller' => 'estados', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Estado'), array('controller' => 'estados', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Documentos'), array('controller' => 'documentos', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Documento'), array('controller' => 'documentos', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Detalleentregas'), array('controller' => 'detalleentregas', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Detalleentrega'), array('controller' => 'detalleentregas', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

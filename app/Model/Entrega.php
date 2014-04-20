@@ -5,7 +5,7 @@ App::uses('AppModel', 'Model');
  *
  * @property Rol $Rol
  * @property Documento $Documento
- * @property Estado $Estado
+ * @property Detalleentrega $Detalleentrega
  */
 class Entrega extends AppModel {
 
@@ -38,13 +38,28 @@ class Entrega extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		),
-		'Estado' => array(
-			'className' => 'Estado',
-			'foreignKey' => 'estado_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
 		)
 	);
+
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'Detalleentrega' => array(
+			'className' => 'Detalleentrega',
+			'foreignKey' => 'entrega_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+
 }

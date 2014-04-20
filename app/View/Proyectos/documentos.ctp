@@ -1,5 +1,6 @@
 <?PHP 
 $user=NUll;
+print_r($documentos);
 ?>
 <section class="panel_frame">
 	<div class="panel_menu">
@@ -9,15 +10,11 @@ $user=NUll;
 			{
 			?>
 			<li class="panel_menu_actual">
-				<?php
-				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
-				?>
+				<span class="icon-list" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:12px;"></span>
 				<?php 
 				echo $this->Html->link(__('Documentos'), array('controller'=>'proyectos','action' => 'documentos',$proyecto['Proyecto']['id'])); 
 				?></li><li>
-				<?php
-				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
-				?>
+				<span class="icon-cloudy" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
 				<?php 
 				echo $this->Html->link(__('Subir documento'), array('controller'=>'documentos','action' => 'subir_documento',$proyecto['Proyecto']['id'])); 
 				?></li><li>
@@ -57,6 +54,113 @@ $user=NUll;
 						</span>
 					</div>
 					<div class="crud_fila_secundaria">
+						
+						<?php
+						foreach ($documentos as $documento) 
+						{
+						?>
+						<div class="div_integrantes">
+							<span class="relacion_integrante">
+							<?php
+							echo $documento['Tiposestandar']['nombre'].": ";
+							echo $documento['Documento']['fecha_guardado'];
+							?>	
+							</span>	
+							<?php
+							if(isset($documento['Documento']['Entregas']))
+							{
+								foreach ($documento['Documento']['Entregas'] as $entrega) 
+								{
+									if (isset($entrega['Detalleentregas'])) 
+									{
+										foreach ($entrega['Detalleentregas'] as $detalleEntrega) 
+										{	
+							?>
+											<article class='ficha_index'>
+												<a href="../../documentos/mostrar_documento/<?php echo $detalleEntrega['id'];?>">
+													<table class="informacion_proyecto">
+														<tr>
+															<th>
+																<span>
+																	<?php 
+																		echo $this->Html->image("iconos/calendariorojo64.png", array('height' => '', 'width' => '32px'));
+																	?>
+																</span>	
+															</th>
+															<td>
+																<span>
+																	<strong>
+																		<?php
+																			echo $entrega['fecha_entrega'];
+																		?>	
+																	</strong>
+																</span>	
+															</td>
+														</tr>
+														<tr>
+															<th>
+																
+																<?php
+																	if($entrega['rol_id']==1)
+																	{
+																?>
+																<span class="icon-auction documento_iconos"></span>
+																<?php
+																	}else
+																	{
+																?>
+																<span class="icon-batman documento_iconos" style="font-size:36px;"></span>
+																<?php
+																	}
+																?>
+															</th>
+															<td>
+																<span>
+																	<strong>
+																		<?php
+																			echo $detalleEntrega['persona'];
+																		?>
+																	</strong>
+																</span>	
+															</td>
+														</tr>
+														<tr>
+															<th>
+																
+															</th>
+															<td>
+																
+															</td>
+														</tr>
+														<tr>
+															<th colspan="2" class="doc_index_aprobado">
+																<strong>
+																	Sin correccines
+																</strong>
+															</th>
+														</tr>
+														<tr>
+															<th colspan="2" class="doc_index_noaprobado">
+																<strong>
+																	No aprobado
+																</strong>
+															</th>
+														</tr>
+													</table>
+												</a>
+											</article>
+							<?php
+										}
+									}
+								}
+							}
+							?>
+
+
+						</div>
+						<?php
+						}
+						?>
 						<div class="div_integrantes">
 							<span class="relacion_integrante">
 								Proyecto 1
@@ -206,6 +310,8 @@ $user=NUll;
 								</a>
 							</article>
 						</div>
+
+
 					</div>
 				</td>
 			</tr>
@@ -213,5 +319,6 @@ $user=NUll;
  	</section>
 </section>
 <script>
-	$('#navicon-suitcase').css( "color", "#7a0400" );
+	$('#navicon-suitcase').css( "background", "#7a0400" );
+	$('#marcicon-suitcase').css( "color", "#7a0400" );
 </script>

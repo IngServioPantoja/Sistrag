@@ -174,10 +174,10 @@ $litemsestandar[0]='Documento base';
 			            			echo $this->Form->select("items_estandar_id", $litemsestandar,array("default" => 0,"required" => "required",'empty'=>false,'class'=>'inputCorto'));
 						            ?>
 								</div>
-							<?php echo $this->Form->submit(
-							    'Agregar item', 
-							    array('class' => 'submitVinotinto')
-							); 
+								<?php echo $this->Form->submit(
+								    'Agregar item', 
+								    array('class' => 'submitVinotinto')
+								); 
 							    ?>							
 							</div>
 						</article>

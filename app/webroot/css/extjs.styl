@@ -1,5 +1,6 @@
 vinotinto = #7a0400
 azuloscuro= #333377
+movile=2
 
 @font-face {
   font-family: 'icomoon';
@@ -495,12 +496,52 @@ html
       top 43px
       vertical-align top
       width auto
-
+      
       table
-        
+        opacity 1
+
         div
           margin: 0 auto; 
           width: auto;
+      
+      .goTop
+        background-color vinotinto
+        border 1px solid #888
+        border-radius 35px 0px 0px 0px
+        bottom 31px
+        color #fff
+        padding 5px 0px 5px 5px
+        position fixed 
+        right 5px
+        text-align center
+        width 280px
+
+        a
+          color #fff
+          text-decoration none
+          padding 0px
+          
+          span
+            display inline-block
+        
+        select
+          background-color rgba(255,255,255,0.3)
+          border 1px solid rgba(255,255,255,0.1)
+          border-radius 35px 0px 0px 0px
+          color #fff
+          display inline-block
+
+        &:hover
+          box-shadow 0px 0px 5px 5px #fff
+          color vinotinto
+          background-color #fff
+          border 1px solid vinotinto
+
+          a
+            color vinotinto
+
+          select
+            color vinotinto
 
       .panel_frame
         margin 0 auto
@@ -528,6 +569,20 @@ html
               top 2px 
               left -5px
               width 40px
+            
+            .contenedorAzul
+              background -moz-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+              background -ms-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+              background -o-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+              background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #324664), color-stop(11%, #3f587d), color-stop(21%, #47648e), color-stop(32%, #3e587d), color-stop(39%, #374d6c), color-stop(68%, #101721), color-stop(79%, #05070b), color-stop(86%, #000), color-stop(100%, #000))
+              background -webkit-linear-gradient(top, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+              background linear-gradient(to bottom, #324664 0%, #3f587d 11%, #47648e 21%, #3e587d 32%, #374d6c 39%, #101721 68%, #05070b 79%, #000 86%, #000 100%)
+              overflow auto
+              padding 5px
+
+              select 
+                vertical-align middle
+                margin 3px
 
             .crud_fila_paginacion
               background -moz-linear-gradient(top,  rgba(165,165,165,1) 0%, rgba(239,239,239,1) 50%, rgba(165,165,165,1) 100%)
@@ -640,14 +695,6 @@ html
               font-weight bold
               text-align center
               min-height 26px
-              
-              .div_1
-                left 10px
-                position absolute
-
-              .div_2
-                position absolute
-                right 30px
 
               h2
                 display inline-block
@@ -672,6 +719,25 @@ html
                   margin 0px
                   vertical-align top
               
+              .div_1
+                left 10px
+                position absolute
+
+              .div_2
+                position absolute
+                right 30px
+
+              .contenedor_integrantes
+                display block
+                border-bottom 1px solid rgba(255,255,255,0.4)
+
+                .unidad_integrantes
+                  display inline-block
+                  margin 5px 20px
+
+                  .icono_izquierda_pequeño
+                    font-size 20px
+              
               .principal_titulo
                 margin 2px 20px 7px 30px
 
@@ -694,7 +760,7 @@ html
                 right 0px
                 opacity 1
                 width auto
-              
+
               .div_agregar_integrantes
                 background-color rgba(255,255,255,0.6)
                 border 1px solid #aaa
@@ -814,6 +880,9 @@ html
                   width 100%
                   display block
 
+                  select 
+                    display inline-block
+
                 .relacion_integrante
                   background rgb(165,165,165);
                   background -moz-linear-gradient(top,  rgba(165,165,165,1) 0%, rgba(239,239,239,1) 50%, rgba(165,165,165,1) 100%)
@@ -881,7 +950,7 @@ html
                 margin 5px
                 position relative
                 vertical-align top
-
+              
                 &:hover .ficha_acciones_estandar
                   display block
 
@@ -1109,7 +1178,6 @@ html
                     background: -ms-linear-gradient(top,  #006e00 0%,#00c800 50%,#006e00 100%);
                     background: linear-gradient(to bottom,  #006e00 0%,#00c800 50%,#006e00 100%);
                   
-                
                   .doc_index_enproceso
                     color #720;
                     background: -moz-linear-gradient(top,  #e09d00 5%, #ffff00 50%, #e09d00 95%);
@@ -1516,6 +1584,140 @@ html
 
                 .th_res
                   min-width 80px
+              
+              .marcoPrincipal
+                background-color rgba(255,255,255,0.6)
+                border 1px solid #aaa
+                border-radius 5px 5px 0px 0px
+                box-shadow:0px 0px 10px rgba(255,255,255,0.5)
+                display inline-block
+                margin 5px
+                position relative
+                vertical-align top
+
+                .headerVinotinto
+                  background: -moz-linear-gradient(top,  #600000 0%, #800000 50%, #600000 100%);
+                  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#600000), color-stop(50%,#800000), color-stop(100%,#600000));
+                  background: -webkit-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                  background: -o-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                  background: -ms-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+                  background: linear-gradient(to bottom,  #600000 0%,#800000 50%,#600000 100%);
+                  color #eee
+                  display block
+                  font-weight 900
+                  padding 2px 5px
+                  position relative
+                  width auto
+                  border-radius 3px 3px 0px 0px
+                  
+                  .tituloModulo
+                    text-align left
+
+                    .marcador
+                      background-color rgba(255,255,255,1)
+                      padding 0px 5px
+                      margin-right 5px
+                      border-radius 50%
+                      color #b22
+                      border 1px solid #aaa
+
+                  .tituloSubmodulo
+                    display inline-block
+                    border 1px solid red
+
+              .marcoSecundario
+                background-color rgba(200,200,200,0)
+                border-image linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                -moz-border-image -moz-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                -o-border-image -o-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                -webkit-border-image -webkit-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                border-left-width 2px
+                border-radius 5px
+                border-right-width 2px
+                box-shadow 0px 0px 10px 5px rgba(255,255,255,0.9)
+                -moz-box-shadow 0px 0px 10px 5px rgba(255,255,255,0.9)
+                -webkit-box-shadow 0px 0px 10px 5px rgba(255,255,255,0.9)
+                display inline-block
+                position relative
+                margin 5px
+                vertical-align top
+                overflow:hidden;
+                
+                .headerGris
+                  background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcbcbc), color-stop(50%, #efefef), color-stop(100%, #bcbcbc))
+                  background -webkit-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background -o-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background -ms-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background linear-gradient(to bottom, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  color #115
+                  display block
+                  font-weight 900
+                  padding 2px 5px
+                  position relative
+                  width auto
+                  border-radius 3px 3px 0px 0px
+                  overflow auto
+                
+                  .extencionAprobado
+                    color #1c1
+
+                  .extencionNoAprobado
+                    color #c11
+
+                  .tituloModulo
+                    text-align left
+
+                    .marcador
+                      background-color rgba(255,255,255,1)
+
+                  .tituloSubmodulo
+                    display inline-block
+
+                  .tituloSubmoduloLeft
+                    float left
+
+                  .tituloSubmoduloRight
+                    float right
+
+                  .tituloUnidad
+                    display inline-block
+                    font-size 14px
+
+                .contenidoItem
+                  background #fff
+                  border 1px solid #ddd
+                  padding 5px
+                  margin 3px
+                  font-family 'Arial'
+                  max-width 570px
+                  text-align justify
+                  
+                  p
+                    font-size 15px
+                    margin 15px 0px
+                    font-weight 400
+                    white-space normal
+                  
+                  .parrafo
+                    font-weight 400
+                    
+                  .figura
+                    font-weight 900
+                    
+                  .fuente
+                    font-size 11px
+                    font-weight 900
+                    margin 0 auto
+                    display block
+                    width auto
+                    text-align center
+
+                  .img
+                    display block
+                    width 50%
+                    margin 0 auto
+
 
               #fichaIndexInformacionGeneral
                 width auto
@@ -1588,7 +1790,6 @@ html
                 position relative
 
               input:hover,a:hover
-                background #bcbcbc
                 background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
                 background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcbcbc), color-stop(50%, #efefef), color-stop(100%, #bcbcbc))
                 background -webkit-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
@@ -1605,6 +1806,73 @@ html
                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#600000), color-stop(50%,#800000), color-stop(100%,#600000));
                 background: -webkit-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
                 background: linear-gradient(to bottom,  #600000 0%,#800000 50%,#600000 100%);
+
+              .submitGris
+                margin-top 2px
+                color #227
+                background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcbcbc), color-stop(50%, #efefef), color-stop(100%, #bcbcbc))
+                background -webkit-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background -o-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background -ms-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background linear-gradient(to bottom, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+
+                &:hover
+                  opacity 1
+
+              .submitGrisRedondo
+                border-radius 10px
+                margin-top 2px
+                color #227
+                background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcbcbc), color-stop(50%, #efefef), color-stop(100%, #bcbcbc))
+                background -webkit-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background -o-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background -ms-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background linear-gradient(to bottom, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+
+                &:hover
+                  opacity 1
+
+              .submitGrisRedondoDelgado
+                border-radius 5px
+                padding 5px 20px
+                margin-top 2px
+                color #227
+                background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcbcbc), color-stop(50%, #efefef), color-stop(100%, #bcbcbc))
+                background -webkit-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background -o-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background -ms-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                background linear-gradient(to bottom, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+
+                &:hover
+                  opacity 1
+                  color #55a
+                  border 1px solid #fff
+                  -moz-box-shadow: 0px 0px 20px #ddd;
+                  -webkit-box-shadow: 0px 0px 20px #ddd;
+                  box-shadow: 0px 0px 20px #ddd;                  
+            
+            #submitCortoRight
+              border-radius 5px
+              padding 5px 20px
+              color #227
+              float right
+              background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+              background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcbcbc), color-stop(50%, #efefef), color-stop(100%, #bcbcbc))
+              background -webkit-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+              background -o-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+              background -ms-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+              background linear-gradient(to bottom, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+
+              &:hover
+                opacity 1
+                color #55a
+                border 1px solid #fff
+                -moz-box-shadow: 0px 0px 20px #ddd;
+                -webkit-box-shadow: 0px 0px 20px #ddd;
+                box-shadow: 0px 0px 20px #ddd; 
             
             #principal_proyecto
               overflow auto
@@ -1790,6 +2058,51 @@ html
       font-family: icomoon;
       font-weight: 400;
     }
+    .icon-key:before {
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e617";
+    }
+    .icon-list:before {
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e618";
+    }
+    .icon-smiley:before {
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e619";
+    }
+    .icon-sad:before {
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e61a";
+    }
+    .icon-neutral:before {
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e61b";
+    }
+    .icon-arrow-up:before {
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e61c";
+    }
+    .icon-arrow-right:before {
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e61d";
+    }
+    .icon-arrow-down:before {
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e61e";
+    }
+    .icon-arrow-left:before {
+      font-family: icomoon;
+      font-weight: 400;
+      content: "\e61f";
+    }
     .icon-twitter:before {
       background-color: white;
       border-radius: 50%;
@@ -1957,7 +2270,7 @@ html
 @media screen and (min-width: 690px)
 
   body 
-    border 2px solid red
+    border movilepx solid red
 
   .layout_contenido
     top 30px
@@ -1966,7 +2279,7 @@ html
 
   body 
   
-    border 2px solid green
+    border movilepx solid green
   
     .layout_contenido
     
@@ -2068,7 +2381,7 @@ html
 @media screen and (max-width: 607px) and (min-width: 501px)
 
   body 
-    border 2px solid blue
+    border movilepx solid blue
     
     header
       position relative
@@ -2230,7 +2543,7 @@ html
 
   body 
   
-    border 2px solid yellow
+    border movilepx solid yellow
   
     input[type="text"]
       width 180px !important    
@@ -2415,7 +2728,7 @@ html
 @media screen and (max-width: 380px) and (min-width: 321px)
 
   body 
-    border 2px solid violet
+    border movilepx solid violet
   
     input[type="file"]
       width 180px !important
@@ -2632,7 +2945,7 @@ html
 
   body 
   
-    border 2px solid white
+    border movilepx solid white
   
     input[type="file"]
       width 180px !important

@@ -1,29 +1,16 @@
 <?php
 App::uses('AppController', 'Controller');
-/**
- * Entregas Controller
- *
- * @property Entrega $Entrega
- */
+
 class EntregasController extends AppController {
 
-/**
- * index method
- *
- * @return void
- */
+	public $components = array('Paginator');
+	var $uses = array('Entrega','Documento','Detalleentrega','PersonasProyecto','Rol');
+
 	public function index() {
 		$this->Entrega->recursive = 0;
-		$this->set('entregas', $this->paginate());
+		$this->set('entregas', $this->Paginator->paginate());
 	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
 	public function view($id = null) {
 		if (!$this->Entrega->exists($id)) {
 			throw new NotFoundException(__('Invalid entrega'));
@@ -32,41 +19,62 @@ class EntregasController extends AppController {
 		$this->set('entrega', $this->Entrega->find('first', $options));
 	}
 
-/**
- * add method
- *
- * @return void
- */
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Entrega->create();
-			if ($this->Entrega->save($this->request->data)) {
-				$this->Session->setFlash(__('The entrega has been saved'));
-				$this->redirect(array('action' => 'index'));
+			$fecha = date_create();
+			$fecha = date_format($fecha, 'Y-m-d');
+			$this->request->data['Entrega']['fecha_entrega']=$fecha;
+			$documento['Documento']['id']=$this->request->data['Entrega']['documento_id'];
+			$documento['Documento']['enviado']=1;
+			if ($this->Entrega->save($this->request->data)) 
+			{	
+				if($this->request->data['Entrega']['rol_id']==1)
+				{
+					if($this->Documento->save($documento))
+					{
+					
+					}
+				}
+				$opciones = array(
+			    	'conditions' => 
+			            array(
+			                'PersonasProyecto.rol_id' => $this->request->data['Entrega']['rol_id'],
+			                'PersonasProyecto.proyecto_id' => $this->request->data['Entrega']['proyecto_id']
+			           	),
+		           	'recursive'=>-1		
+		   		);
+				$receptores = $this->PersonasProyecto->find('all',$opciones);
+				foreach ($receptores as $receptor) {
+					$this->Detalleentrega->create();
+					$detalleentrega['Detalleentrega']['entrega_id']=$this->Entrega->id;
+					$detalleentrega['Detalleentrega']['personas_proyecto_id']=$receptor['PersonasProyecto']['id'];
+					$detalleentrega['Detalleentrega']['estado_id']=1;
+					$detalleentrega['Detalleentrega']['fecha_estado']=$fecha;
+					if($this->Detalleentrega->save($detalleentrega))
+					{
+					}
+
+				}
+				$this->Session->setFlash(__('El documento fue enviado exitosamente'));
+				$this->redirect($this->referer());
 			} else {
-				$this->Session->setFlash(__('The entrega could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('El documento no se ha podido enviar'));
 			}
 		}
 		$roles = $this->Entrega->Rol->find('list');
-		$estados = $this->Entrega->Estado->find('list');
-		$this->set(compact('roles', 'estados'));
+		$documentos = $this->Entrega->Documento->find('list');
+		$this->set(compact('roles', 'documentos'));
 	}
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
 	public function edit($id = null) {
 		if (!$this->Entrega->exists($id)) {
 			throw new NotFoundException(__('Invalid entrega'));
 		}
-		if ($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Entrega->save($this->request->data)) {
-				$this->Session->setFlash(__('The entrega has been saved'));
-				$this->redirect(array('action' => 'index'));
+				$this->Session->setFlash(__('The entrega has been saved.'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The entrega could not be saved. Please, try again.'));
 			}
@@ -75,18 +83,10 @@ class EntregasController extends AppController {
 			$this->request->data = $this->Entrega->find('first', $options);
 		}
 		$roles = $this->Entrega->Rol->find('list');
-		$estados = $this->Entrega->Estado->find('list');
-		$this->set(compact('roles', 'estados'));
+		$documentos = $this->Entrega->Documento->find('list');
+		$this->set(compact('roles', 'documentos'));
 	}
 
-/**
- * delete method
- *
- * @throws NotFoundException
- * @throws MethodNotAllowedException
- * @param string $id
- * @return void
- */
 	public function delete($id = null) {
 		$this->Entrega->id = $id;
 		if (!$this->Entrega->exists()) {
@@ -94,10 +94,10 @@ class EntregasController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Entrega->delete()) {
-			$this->Session->setFlash(__('Entrega deleted'));
-			$this->redirect(array('action' => 'index'));
+			$this->Session->setFlash(__('The entrega has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The entrega could not be deleted. Please, try again.'));
 		}
-		$this->Session->setFlash(__('Entrega was not deleted'));
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 }

@@ -1,22 +1,137 @@
 <?php
 App::uses('AppController', 'Controller');
-/**
- * Proyectos Controller
- *
- * @property Proyecto $Proyecto
- */
+
 class ProyectosController extends AppController {
 var $components = array("RequestHandler");
-var $uses = array('Proyecto','Persona','Rol','PersonasProyecto','Linea','Area','Programa','Facultad');
+var $uses = array(
+	'Proyecto',
+	'Area',
+	'Detalleentrega',
+	'Documento',
+	'Entrega',
+	'Facultad',
+	'Linea',
+	'Persona',
+	'PersonasProyecto',
+	'Programa',
+	'Rol'
+	);
 
 	public function index() {
 		$this->Proyecto->recursive = 1;
 		$this->set('proyectos', $this->paginate());
 	}
 
-	public function documentos($id = null) {
+	public function documentos($id = null) 
+	{
+		//Aqui se muestran los documentos subidos y dependiendo su estado las entregas de los mismos
+		//$this->autoRender = false;
 		if (!$this->Proyecto->exists($id)) {
 			throw new NotFoundException(__('Invalid proyecto'));
+		}
+		$opciones = array(
+			'joins' => array(
+		        array(
+		            'table' => 'estandares',
+		            'alias' => 'Estandar',
+		            'type' => 'left',
+		            'conditions' => 
+		            array(
+		                'Documento.estandar_id = Estandar.id'
+		            	)
+	        	),
+	        	array(
+		            'table' => 'tiposestandares',
+		            'alias' => 'Tiposestandar',
+		            'type' => 'inner',
+		            'conditions' => 
+		            array(
+		                'Estandar.tiposestandar_id = Tiposestandar.id'
+		            	)
+	        	)		
+    		),
+			'fields'=>array('Documento.*','Tiposestandar.*'),
+           	'order' => array('Documento.fecha_guardado asc'),
+           	'recursive'=>-1,		
+	   	);
+		$documentos=$this->Documento->find('all',$opciones);
+		$opciones = array(
+	        'fields'=>array('Entrega.*'),
+           	'order' => array('Entrega.fecha_entrega asc'),
+           	'recursive'=>-1,		
+	   	);
+		$entregas=$this->Entrega->find('all',$opciones);
+		$opciones = array(
+			'joins' => array(
+		        array(
+		            'table' => 'personas_proyectos',
+		            'alias' => 'PersonasProyecto',
+		            'type' => 'left',
+		            'conditions' => 
+		            array(
+		                'Detalleentrega.personas_proyecto_id = PersonasProyecto.id'
+		            	)
+	        	),
+	        	array(
+		            'table' => 'personas',
+		            'alias' => 'Persona',
+		            'type' => 'left',
+		            'conditions' => 
+		            array(
+		                'PersonasProyecto.persona_id = Persona.id'
+		            	)
+	        	)		
+    		),
+	        'fields'=>array('Detalleentrega.*','Persona.*'),
+           	'order' => array('Detalleentrega.id asc'),
+           	'recursive'=>-1,		
+	   	);
+		$detalleEntregas=$this->Detalleentrega->find('all',$opciones);
+		$indiceDocumento=0;
+		foreach ($documentos as $documento) 
+		{
+			
+			$indiceEntrega=0;
+			foreach ($entregas as $entrega) 
+			{
+				if($documento['Documento']['id']==$entrega['Entrega']['documento_id'])
+				{
+					$documentos[$indiceDocumento]['Documento']['Entregas'][$indiceEntrega]=$entrega['Entrega'];
+					$indiceDetalleEntrega=0;
+					foreach ($detalleEntregas as $detalleEntrega) 
+					{	
+						if($entrega['Entrega']['id']==$detalleEntrega['Detalleentrega']['entrega_id'])
+						{
+							$documentos[$indiceDocumento]['Documento']['Entregas'][$indiceEntrega]['Detalleentregas'][$indiceDetalleEntrega]=$detalleEntrega['Detalleentrega'];
+							$documentos[$indiceDocumento]['Documento']['Entregas'][$indiceEntrega]['Detalleentregas'][$indiceDetalleEntrega]['persona']=$detalleEntrega['Persona']['nombre']." ".$detalleEntrega['Persona']['apellido'];
+							++$indiceDetalleEntrega;
+						}
+					}
+					++$indiceEntrega;
+				}
+			}
+			++$indiceDocumento;
+		}
+		$this->set('documentos', $documentos);
+		foreach ($documentos as $documento) 
+		{
+			echo "-".$documento['Documento']['id'];
+			if(isset($documento['Documento']['Entregas']))
+			{
+				foreach ($documento['Documento']['Entregas'] as $entrega) 
+				{
+					echo "-".$entrega['id'];
+					if (isset($entrega['Detalleentregas'])) 
+					{
+						foreach ($entrega['Detalleentregas'] as $detalleEntrega) 
+						{
+							echo "-".$detalleEntrega['id'];
+							# code...
+						}
+					}
+					
+				}		# code...
+			}	
 		}
 		$options = array('conditions' => array('Proyecto.' . $this->Proyecto->primaryKey => $id));
 		$this->set('proyecto', $this->Proyecto->find('first', $options));
@@ -55,7 +170,6 @@ var $uses = array('Proyecto','Persona','Rol','PersonasProyecto','Linea','Area','
 		$opciones = array('conditions' => array('Linea.area_id'=> $area));
 		$lineas = $this->Proyecto->Linea->find('list',$opciones);
 		$this->set(compact('facultades','programas','areas','lineas'));
-
 	}
 
 	public function editar_general($id = null) 
