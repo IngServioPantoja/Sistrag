@@ -5,54 +5,54 @@ ini_set('memory_limit', '-2');
 class DocumentosController extends AppController {
 	var $components = array("RequestHandler");
 	var $helpers = array('Html');  // include the HTML helper
-	var $uses = array('Documento','Estandar','Proyecto','Item','ItemsEstandar','Programa','ItemsDocumento','ItemsContenido','TiposEstandar','PersonasProyecto','Rol');
+	var $uses = array('Documento','Estandar','Proyecto','Item','ItemsEstandar','Programa','ItemsDocumento','ItemsContenido','TiposEstandar','PersonasProyecto','Rol','Entrega','Detalleentrega');
 	var $items=array();
 	var $maquetarMostrar=array();
 	var	$DatosXML="";
 	var $descomposiciones=array();
 	var $documento_id=0;
 
-		function obtenerItems($itemPadre,$estandar_id)
-		{	
-			$this->autoRender = false;
-			global $items;
-			$this->ItemsEstandar->recursive = -1;
-			$opciones = array(
-			    	'joins' => array(
-				        array(
-				            'table' => 'items',
-				            'alias' => 'Item',
-				            'type' => 'INNER',
-				            'conditions' => 
-				            array(
-				                'Item.id = ItemsEstandar.item_id'
-				            	)
-				        	)
-		    		),
-			    	'fields' => array('ItemsEstandar.id','ItemsEstandar.nivel','Item.nombre','Item.extencion_caracteres','Item.extencion_lineas'),
-			    	'conditions' => 
+	function obtenerItems($itemPadre,$estandar_id)
+	{	
+		$this->autoRender = false;
+		global $items;
+		$this->ItemsEstandar->recursive = -1;
+		$opciones = array(
+		    	'joins' => array(
+			        array(
+			            'table' => 'items',
+			            'alias' => 'Item',
+			            'type' => 'INNER',
+			            'conditions' => 
 			            array(
-			                'ItemsEstandar.items_estandar_id' => $itemPadre,
-			                'ItemsEstandar.estandar_id' => $estandar_id
-			           	),
-		           	'order' => array('ItemsEstandar.orden asc'),		
+			                'Item.id = ItemsEstandar.item_id'
+			            	)
+			        	)
+	    		),
+		    	'fields' => array('ItemsEstandar.id','ItemsEstandar.nivel','Item.nombre','Item.extencion_caracteres','Item.extencion_lineas'),
+		    	'conditions' => 
+		            array(
+		                'ItemsEstandar.items_estandar_id' => $itemPadre,
+		                'ItemsEstandar.estandar_id' => $estandar_id
+		           	),
+	           	'order' => array('ItemsEstandar.orden asc'),		
 
-		   	);
-			$itemsConsultar = $this->ItemsEstandar->find('all',$opciones);
-			if (is_array($itemsConsultar)) 
-			{
-				foreach ($itemsConsultar as $item) {
-						$arrayTemporal=array();
-						$arrayTemporal['id']=$item['ItemsEstandar']['id'];
-						$arrayTemporal['titulo']=$item['Item']['nombre'];
-						$arrayTemporal['nivel']=$item['ItemsEstandar']['nivel'];
-						$arrayTemporal['extencion_caracteres']=$item['Item']['extencion_caracteres'];
-						$arrayTemporal['extencion_lineas']=$item['Item']['extencion_lineas'];
-						$items[]=$arrayTemporal;			
-						$this->requestAction('documentos/obtenerItems/'.$item['ItemsEstandar']['id'].'/'.$estandar_id.'');
-				}
+	   	);
+		$itemsConsultar = $this->ItemsEstandar->find('all',$opciones);
+		if (is_array($itemsConsultar)) 
+		{
+			foreach ($itemsConsultar as $item) {
+					$arrayTemporal=array();
+					$arrayTemporal['id']=$item['ItemsEstandar']['id'];
+					$arrayTemporal['titulo']=$item['Item']['nombre'];
+					$arrayTemporal['nivel']=$item['ItemsEstandar']['nivel'];
+					$arrayTemporal['extencion_caracteres']=$item['Item']['extencion_caracteres'];
+					$arrayTemporal['extencion_lineas']=$item['Item']['extencion_lineas'];
+					$items[]=$arrayTemporal;			
+					$this->requestAction('documentos/obtenerItems/'.$item['ItemsEstandar']['id'].'/'.$estandar_id.'');
 			}
 		}
+	}
 
 	public function descomponer_documento($id = null) 
 	{	
@@ -116,6 +116,7 @@ class DocumentosController extends AppController {
 			xml_parser_free($Parser);
 			return $Valores;
 		}
+
 		$this->Documento->recursive = 0;
 		$this->ItemsEstandar->recursive = -1;
 		global $documento_id;
@@ -307,17 +308,17 @@ class DocumentosController extends AppController {
 	            }
 	        }
 		}
-		MostrarDatosXML();
 
+		MostrarDatosXML();
 		global $descomposiciones;
 		$this->set('descomposiciones',$descomposiciones);
 		foreach ($descomposiciones as $descomposicion) 
 	    {
-		        $this->ItemsDocumento->create();
-		        $itemDocumento=array();
-		        $itemDocumento['ItemsDocumento']['documento_id']=$id;
-		        $itemDocumento['ItemsDocumento']['items_estandar_id']=$descomposicion['id'];
-		        $itemDocumento['ItemsDocumento']['caracteres']=$descomposicion['caracteres'];
+	        $this->ItemsDocumento->create();
+	        $itemDocumento=array();
+	        $itemDocumento['ItemsDocumento']['documento_id']=$id;
+	        $itemDocumento['ItemsDocumento']['items_estandar_id']=$descomposicion['id'];
+	        $itemDocumento['ItemsDocumento']['caracteres']=$descomposicion['caracteres'];
 			if ($this->ItemsDocumento->save($itemDocumento)) 
 			{
 				$orden=1;
@@ -387,7 +388,163 @@ class DocumentosController extends AppController {
 				$this->Session->setFlash(__('Error al guardar contenidos en la base de datos'));
 			}
 	    }
+
 	    $this->redirect(array('action' => 'mostrar_documento',$documento_id));
+	}
+
+	public function evaluar_documento($id = null)
+	{	
+		if (!$this->Detalleentrega->exists($id)) 
+		{
+			throw new NotFoundException(__('Entrega invalida'));
+		}
+		if ($this->request->is('post')) 
+		{
+			$id=$this->request->data['Proyecto']['documento']; 
+			$this->redirect(array('action' => 'mostrar_documento',$id));
+		}
+		$this->Detalleentrega->recursive = 0;
+		$options = array('conditions' => array('Detalleentrega.' . $this->Detalleentrega->primaryKey => $id));
+		$detalleEntrega=$this->Detalleentrega->find('first', $options);
+		print_r($detalleEntrega);
+		$this->Documento->recursive = 0;
+		$options = array('conditions' => array('Documento.' . $this->Documento->primaryKey => $detalleEntrega['Entrega']['documento_id']));
+		$documento=$this->Documento->find('first', $options);
+		$id=$documento['Documento']['id'];
+		$this->TiposEstandar->recursive = -1;
+		$opciones = array('conditions' => array('TiposEstandar.' . $this->TiposEstandar->primaryKey => $documento['Estandar']['tiposestandar_id']));
+		$tipoEstandar=$this->TiposEstandar->find('first', $opciones);
+		$documento['TiposEstandar']=$tipoEstandar['TiposEstandar'];
+		$proyecto = $documento;
+		$this->PersonasProyecto->recursive = -1;
+		$opciones = array(
+		    	'joins' => array(
+			        array(
+			            'table' => 'personas',
+			            'alias' => 'Persona',
+			            'type' => 'INNER',
+			            'conditions' => 
+			            array(
+			                'Persona.id = PersonasProyecto.persona_id'
+		            	)
+		        	)
+	    		),
+		    	'fields' => array('Persona.id','Persona.nombre','Persona.apellido','PersonasProyecto.rol_id'),
+		    	'conditions' => 
+		            array(
+		                'PersonasProyecto.proyecto_id' => $proyecto['Proyecto']['id'],
+		           	),
+	           	'order' => array('PersonasProyecto.rol_id asc'),		
+
+	   	);
+	   	$integrantes=$this->PersonasProyecto->find('all', $opciones);
+	   	$proyecto['Integrantes']=$integrantes;
+		$this->set('proyecto',$proyecto);
+		$id_documento=$proyecto['Documento']['id'];
+		$this->requestAction('documentos/maquetar_documento/'.$id_documento);
+		global $maquetarMostrar;
+		$anclasItems=array();
+		foreach ($maquetarMostrar as $itemAnclar) 
+		{
+			if($itemAnclar['nivel']!=1)
+			{
+				$key=$itemAnclar['item_documento_id'];
+				$anclasItems[$key]=$itemAnclar['titulo'];	
+			}
+		}
+		$this->Documento->recursive = -1;
+		$opciones = array(
+	    	'joins' => array(
+		        array(
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Proyecto.id = Documento.proyecto_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'estandares',
+		            'alias' => 'Estandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Estandar.id = Documento.estandar_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'tiposestandares',
+		            'alias' => 'TiposEstandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'TiposEstandar.id = Estandar.tiposestandar_id'
+	            	)
+	        	)
+    		),
+	    	'fields' => array('TiposEstandar.id','TiposEstandar.nombre'),
+	    	'conditions' => 
+	            array(
+	                'Documento.proyecto_id' => $proyecto['Proyecto']['id'],
+	           	),
+           	'order' => array('TiposEstandar.nombre asc'),
+           	'group' => array('TiposEstandar.id'),		
+	   	);
+		$tiposestandares=$this->Documento->find('list', $opciones);
+		$opciones = array(
+	    	'joins' => array(
+		        array(
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Proyecto.id = Documento.proyecto_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'estandares',
+		            'alias' => 'Estandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Estandar.id = Documento.estandar_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'tiposestandares',
+		            'alias' => 'TiposEstandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'TiposEstandar.id = Estandar.tiposestandar_id'
+	            	)
+	        	)
+    		),
+	    	'fields' => array('Documento.id','Documento.fecha_guardado'),
+	    	'conditions' => 
+	            array(
+	                'Documento.proyecto_id' => $proyecto['Proyecto']['id'],
+	                'Estandar.id' => $proyecto['TiposEstandar']['id']
+	           	),
+           	'order' => array('Documento.fecha_guardado desc'),
+	   	);
+		$documentos=$this->Documento->find('list', $opciones);
+		$opciones = array(
+	    	'conditions' => 
+	            array(
+	                'Rol.id !=' => 3
+	           	),
+           	'order' => array('Rol.nombre desc'),
+	   	);
+		$roles=$this->Rol->find('list', $opciones);
+		$this->set('descomposiciones',$maquetarMostrar);
+		$this->set('tiposestandares',$tiposestandares);
+		$this->set('documentos',$documentos);
+		$this->set('anclasItems',$anclasItems);
+		$this->set('roles',$roles);
+
 	}
 
 	public function index() {
@@ -658,8 +815,6 @@ class DocumentosController extends AppController {
 		$this->set('documentos',$documentos);
 		$this->set('anclasItems',$anclasItems);
 		$this->set('roles',$roles);
-
-
 	}
 
 	public function view($id = null) {

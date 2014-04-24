@@ -1,6 +1,8 @@
 <?PHP 
 $user=NUll;
 print_r($documentos);
+$roles;
+print_r($roles);	
 ?>
 <section class="panel_frame">
 	<div class="panel_menu">
@@ -58,6 +60,7 @@ print_r($documentos);
 						<?php
 						foreach ($documentos as $documento) 
 						{
+							$rolescopia=$roles;
 						?>
 						<div class="div_integrantes">
 							<span class="relacion_integrante">
@@ -70,12 +73,13 @@ print_r($documentos);
 							if(isset($documento['Documento']['Entregas']))
 							{
 								foreach ($documento['Documento']['Entregas'] as $entrega) 
-								{
+								{	
+									unset($rolescopia[$entrega['rol_id']]);
 									if (isset($entrega['Detalleentregas'])) 
 									{
 										foreach ($entrega['Detalleentregas'] as $detalleEntrega) 
 										{	
-							?>
+						?>
 											<article class='ficha_index'>
 												<a href="../../documentos/mostrar_documento/<?php echo $detalleEntrega['id'];?>">
 													<table class="informacion_proyecto">
@@ -133,17 +137,85 @@ print_r($documentos);
 															</td>
 														</tr>
 														<tr>
-															<th colspan="2" class="doc_index_aprobado">
-																<strong>
-																	Sin correccines
-																</strong>
+															<th>
+																
+															</th>
+															<td>
+																
+															</td>
+														</tr>
+														<tr>
+															<th colspan="2" 
+
+															<?php
+																	 
+																	if($detalleEntrega['estado_id']==1)
+																	{
+																	?>
+																	class="doc_index_enproceso">
+																	<strong>
+																	Sin ver
+																	</strong>
+																	<?php
+																	}
+																	else if($detalleEntrega['estado_id']==2)
+																	{
+																	?>
+																	class="doc_index_enproceso">
+																	<strong>
+																	Sin ver
+																	</strong>
+																	<?php
+																	}else if($detalleEntrega['estado_id']==3 and $detalleEntrega['correciones']==0)
+																	{
+																	?>
+																	class="doc_index_aprobado">
+																	<strong>
+																	Sin correciones
+																	</strong>
+																	<?php
+																	}else if($detalleEntrega['estado_id']==3 and $detalleEntrega['correciones']==1)
+																	{
+																	?>
+																	class="doc_index_noaprobado">
+																	<strong>
+																	Con correciones
+																	</strong>
+																	<?php
+																	}
+																?>
 															</th>
 														</tr>
 														<tr>
-															<th colspan="2" class="doc_index_noaprobado">
-																<strong>
+															<th colspan="2" 
+
+																<?php
+																	if($detalleEntrega['veredicto']==1)
+																	{
+																?>
+																	class="doc_index_aprobado">
+																	<strong>
+																	Aprobado
+																	</strong>
+																<?php
+																	}else if($detalleEntrega['veredicto']==2)
+																	{
+																?>
+																	class="doc_index_noaprobado">
+																	<strong>
 																	No aprobado
-																</strong>
+																	</strong>
+																<?php
+																	}else if($detalleEntrega['veredicto']==0)
+																	{
+																?>
+																	class="doc_index_enproceso">
+																	<strong>
+																	Presentado
+																	</strong>
+																<?php
+																	}
+																?>
 															</th>
 														</tr>
 													</table>
@@ -154,9 +226,30 @@ print_r($documentos);
 									}
 								}
 							}
-							?>
-
-
+						?>
+						<?php
+						if(count($rolescopia)>0)
+						{
+						?>
+						<div class="contenedorVinotinto">
+						<?php echo $this->Form->create('Entrega',array('controller'=>'entregas','action'=>'add','onSubmit'=>'return confirm("¿Realmente deseas enviar este documento?");'));?>
+							<?php echo $this->Form->hidden('documento_id',array('value'=>$documento['Documento']['id'])); ?>
+							<?php echo $this->Form->hidden('proyecto_id',array('value'=>$documento['Documento']['proyecto_id'])); ?>
+							<?php
+								echo $this->Form->select(
+									'rol_id', $rolescopia,array('id'=>'rol','autocomplete' =>'off','empty'=>false,'class'=>'inputCorto left')
+								);
+						?>
+						<?php 
+							echo $this->Form->submit(
+							    'Enviar documento', 
+							    array('class' => 'submitGrisRedondoDelgado','id'=>'submitCortoRight','div'=>false)
+							); 
+					    ?>
+						</div>	
+						<?php
+						}
+						?>
 						</div>
 						<?php
 						}

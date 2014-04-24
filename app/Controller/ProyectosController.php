@@ -113,28 +113,17 @@ var $uses = array(
 			++$indiceDocumento;
 		}
 		$this->set('documentos', $documentos);
-		foreach ($documentos as $documento) 
-		{
-			echo "-".$documento['Documento']['id'];
-			if(isset($documento['Documento']['Entregas']))
-			{
-				foreach ($documento['Documento']['Entregas'] as $entrega) 
-				{
-					echo "-".$entrega['id'];
-					if (isset($entrega['Detalleentregas'])) 
-					{
-						foreach ($entrega['Detalleentregas'] as $detalleEntrega) 
-						{
-							echo "-".$detalleEntrega['id'];
-							# code...
-						}
-					}
-					
-				}		# code...
-			}	
-		}
 		$options = array('conditions' => array('Proyecto.' . $this->Proyecto->primaryKey => $id));
 		$this->set('proyecto', $this->Proyecto->find('first', $options));
+		$opciones = array(
+	    	'conditions' => 
+	            array(
+	                'Rol.id !=' => 3
+	           	),
+           	'order' => array('Rol.nombre desc'),
+	   	);
+		$roles=$this->Rol->find('list', $opciones);
+		$this->set('roles', $roles);
 	}
 
 	public function add() {

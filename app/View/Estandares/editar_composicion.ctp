@@ -174,10 +174,11 @@ $litemsestandar[0]='Documento base';
 			            			echo $this->Form->select("items_estandar_id", $litemsestandar,array("default" => 0,"required" => "required",'empty'=>false,'class'=>'inputCorto'));
 						            ?>
 								</div>
-								<?php echo $this->Form->submit(
-								    'Agregar item', 
-								    array('class' => 'submitVinotinto')
-								); 
+								<?php 
+									echo $this->Form->submit(
+									    'Agregar item', array('confirm'=> __("¿Realmente desea maquetar el estandar para ".$estandar["Tiposestandar"]["nombre"]." ".$estandar["Estandar"]["nombre"]." ".$estandar["Programa"]["nombre"]."? recuerde que una vez realizada esta operación estara dispone para su descarga y sobreeescribira el anterior estandar"),
+									    array('class' => 'submitVinotinto')
+									); 
 							    ?>							
 							</div>
 						</article>
