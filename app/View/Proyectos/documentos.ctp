@@ -2,7 +2,7 @@
 $user=NUll;
 print_r($documentos);
 $roles;
-print_r($roles);	
+//print_r($roles);	
 ?>
 <section class="panel_frame">
 	<div class="panel_menu">
@@ -81,7 +81,7 @@ print_r($roles);
 										{	
 						?>
 											<article class='ficha_index'>
-												<a href="../../documentos/mostrar_documento/<?php echo $detalleEntrega['id'];?>">
+												<a href="../../documentos/detalle_entrega/<?php echo $detalleEntrega['id'];?>">
 													<table class="informacion_proyecto">
 														<tr>
 															<th>

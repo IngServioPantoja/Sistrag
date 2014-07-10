@@ -3,16 +3,15 @@ azuloscuro= #333377
 movile=2
 
 @font-face {
-  font-family: 'icomoon';
-  src:url('fonts/icomoon.eot');
-  src:url('fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+  font-family: 'icomoon'; 
+  src: url('fonts/icomoon.eot'); 
+  src: url('fonts/icomoon.eot?#iefix') format('embedded-opentype'),
     url('fonts/icomoon.woff') format('woff'),
     url('fonts/icomoon.ttf') format('truetype'),
     url('fonts/icomoon.svg#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
-/* Shdow DOM */
 
 ::-webkit-scrollbar {
     width: 5px;
@@ -1742,6 +1741,98 @@ html
                     width 50%
                     margin 0 auto
 
+              .marcoDescripcion
+                background-color rgba(200,200,200,0)
+                border-image linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                -moz-border-image -moz-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                -o-border-image -o-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                -webkit-border-image -webkit-linear-gradient(90deg, transparent, #000 50%, transparent) 1 100%
+                border-left-width 2px
+                border-radius 5px
+                border-right-width 2px
+                box-shadow 0px 0px 10px 5px rgba(255,255,255,0.9)
+                -moz-box-shadow 0px 0px 10px 5px rgba(255,255,255,0.9)
+                -webkit-box-shadow 0px 0px 10px 5px rgba(255,255,255,0.9)
+                display block
+                position relative
+                margin -15px 5px 5px 5px
+                vertical-align top
+                overflow:hidden;
+                
+                .headerGris
+                  background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bcbcbc), color-stop(50%, #efefef), color-stop(100%, #bcbcbc))
+                  background -webkit-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background -o-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background -ms-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  background linear-gradient(to bottom, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
+                  color #115
+                  display block
+                  font-weight 900
+                  padding 2px 5px
+                  position relative
+                  width auto
+                  border-radius 3px 3px 0px 0px
+                  overflow auto
+                
+                  .extencionAprobado
+                    color #1c1
+
+                  .extencionNoAprobado
+                    color #c11
+
+                  .tituloModulo
+                    text-align left
+
+                    .marcador
+                      background-color rgba(255,255,255,1)
+
+                  .tituloSubmodulo
+                    display inline-block
+
+                  .tituloSubmoduloLeft
+                    float left
+
+                  .tituloSubmoduloRight
+                    float right
+
+                  .tituloUnidad
+                    display inline-block
+                    font-size 14px
+
+                .contenidoItem
+                  background #fff
+                  border 1px solid #ddd
+                  padding 5px
+                  margin 3px
+                  font-family 'Arial'
+                  max-width 570px
+                  text-align justify
+                  
+                  p
+                    font-size 15px
+                    margin 15px 0px
+                    font-weight 400
+                    white-space normal
+                  
+                  .parrafo
+                    font-weight 400
+                    
+                  .figura
+                    font-weight 900
+                    
+                  .fuente
+                    font-size 11px
+                    font-weight 900
+                    margin 0 auto
+                    display block
+                    width auto
+                    text-align center
+
+                  .img
+                    display block
+                    width 50%
+                    margin 0 auto
 
               #fichaIndexInformacionGeneral
                 width auto

@@ -253,6 +253,20 @@
 				        		?>
 										</div>
 									</div>
+									<div class="marcoDescripcion" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
+										<div class="headerGris">
+											<div class="tituloSubmoduloLeft">
+												<div class="tituloUnidad">
+													<span>
+													Líneas:asdasd
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="contenidoItem">
+											asdasdsaassas
+										</div>
+									</div>
 				        		<?php
 								}
 								?>

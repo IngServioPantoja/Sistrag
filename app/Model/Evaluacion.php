@@ -24,16 +24,23 @@ class Evaluacion extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'Itemsestandar' => array(
-			'className' => 'Itemsestandar',
-			'foreignKey' => 'itemestandar_id',
+		'ItemsDocumento' => array(
+			'className' => 'ItemsDocumento',
+			'foreignKey' => 'items_documento_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		),
-		'Concepto' => array(
-			'className' => 'Concepto',
-			'foreignKey' => 'concepto_id',
+		'Detalleentrega' => array(
+			'className' => 'Detalleentrega',
+			'foreignKey' => 'detalles_entrega_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Parametro' => array(
+			'className' => 'Parametro',
+			'foreignKey' => 'parametro_concepto_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
