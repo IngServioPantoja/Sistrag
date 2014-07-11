@@ -147,6 +147,17 @@
 											?>
 											</span>
 										</div>
+										<div class="aprobacionRight">
+											<div class="tituloUnidad">
+												<span style="color:<?php 
+														echo $descomposicion['color'];
+													?>;">								
+													<?php 
+														echo $descomposicion['concepto'];
+													?>
+												</span>
+											</div>
+										</div>
 									</div>
 									<div class="marcoSecundario" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
 										<div class="headerGris">
@@ -168,7 +179,7 @@
 													<?php echo ceil($descomposicion['caracteres']/85); ?>
 													</span>
 												</div>
-											</div>
+											</div>												
 											<div class="tituloSubmoduloRight">
 												<div class="tituloUnidad">
 													<span>
@@ -258,13 +269,15 @@
 											<div class="tituloSubmoduloLeft">
 												<div class="tituloUnidad">
 													<span>
-													Líneas:asdasd
+													Observaciones:
 													</span>
 												</div>
 											</div>
 										</div>
 										<div class="contenidoItem">
-											asdasdsaassas
+											<?php
+												echo $descomposicion['comentario'];												
+											?>
 										</div>
 									</div>
 				        		<?php

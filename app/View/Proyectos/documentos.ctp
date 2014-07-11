@@ -3,6 +3,8 @@ $user=NUll;
 print_r($documentos);
 $roles;
 //print_r($roles);	
+//Aqui tenemos que postear uales son lso documento de ese proyecto...
+//ahora es necesario realizar la evaluaciónd eun documento... y ya casi temrinamos
 ?>
 <section class="panel_frame">
 	<div class="panel_menu">

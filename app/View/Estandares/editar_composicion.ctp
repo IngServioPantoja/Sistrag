@@ -12,20 +12,14 @@ $litemsestandar[0]='Documento base';
 			<li>
 				<?php
 				echo $this->Html->image('iconos/listar32.png', array('title' => 'Listar Estandares','height' => '', 'width' => '16px'));
-				?>
-				<?php 
 				echo $this->Html->link(__('Estandar'), array('action' => 'index')); 
 				?></li><li>
 				<?php
 				echo $this->Html->image('iconos/update40.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
-				?>
-				<?php 
 				echo $this->Html->link(__('Actualizar datos'), array('controller'=>'estandares','action' => 'editar_estandar',$estandar['Estandar']['id'])); 
 				?></li><li class="panel_menu_actual">
 				<?php
 				echo $this->Html->image('iconos/update40.png', array('title' => 'Registrar Estandar','height' => '', 'width' => '16px'));
-				?>
-				<?php 
 				echo $this->Html->link(__('Modificar estructura'), array('action' => 'editar_composicion',$estandar['Estandar']['id'])); 
 			}
 				?>
@@ -177,7 +171,7 @@ $litemsestandar[0]='Documento base';
 								<?php 
 									echo $this->Form->submit(
 									    'Agregar item', array('confirm'=> __("¿Realmente desea maquetar el estandar para ".$estandar["Tiposestandar"]["nombre"]." ".$estandar["Estandar"]["nombre"]." ".$estandar["Programa"]["nombre"]."? recuerde que una vez realizada esta operación estara dispone para su descarga y sobreeescribira el anterior estandar"),
-									    array('class' => 'submitVinotinto')
+									    'class' => 'submitVinotinto')
 									); 
 							    ?>							
 							</div>

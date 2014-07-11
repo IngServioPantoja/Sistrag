@@ -846,10 +846,7 @@ class DocumentosController extends AppController {
 		{
 			$options = array('conditions' => array('Detalleentrega.' . $this->Documento->primaryKey => $id));
 			$detalle_entrega=$this->Detalleentrega->find('first', $options);
-			print_r($detalle_entrega);
-			echo "</br>";
-			echo $id=$detalle_entrega['Entrega']['documento_id'];
-			echo "</br>";
+			$id=$detalle_entrega['Entrega']['documento_id'];
 		}
 
 		$this->Documento->recursive = 0;
@@ -982,10 +979,10 @@ class DocumentosController extends AppController {
 	                'Evaluacion.detalles_entrega_id' => $detalle_entrega['Detalleentrega']['id'],
 	           	),
            	'order' => array('Evaluacion.id desc'),
-           	'recursive'=>'-1'
+           	'recursive'=>'0'
 	   	);
 		$evaluaciones=$this->Evaluacion->find('all', $opciones);
-		print_r($evaluaciones);
+		//print_r($evaluaciones);
 		/* Ahora Se procede a Asignar a cada item los comentarios respectivos */		
 		$opciones = array(
 	    	'conditions' => 
@@ -994,6 +991,30 @@ class DocumentosController extends AppController {
 	           	),
            	'order' => array('Rol.nombre desc'),
 	   	);
+	   	$contador=1;
+		foreach ($maquetarMostrar as $Item) {
+			//print_r($Item);
+			$maquetarMostrar[$contador]['comentario']="Sin comentarios";
+			$maquetarMostrar[$contador]['id_comentario']=0;
+			$maquetarMostrar[$contador]['concepto']="No Aprobado";
+			$maquetarMostrar[$contador]['color']="882222";
+			foreach ($evaluaciones as $evaluacion) 
+			{
+				# Validar si ese comentario pertenece a un detemrinado item
+				if($Item['item_documento_id']==$evaluacion['Evaluacion']['items_documento_id'])
+				{
+					//echo $evaluacion['Evaluacion']['comentarios'];
+					$maquetarMostrar[$contador]['comentario']=$evaluacion['Evaluacion']['comentarios'];
+					$maquetarMostrar[$contador]['id_comentario']=$evaluacion['Evaluacion']['id'];
+					$maquetarMostrar[$contador]['concepto']=$evaluacion['Parametro']['nombre'];
+					$maquetarMostrar[$contador]['color']=$evaluacion['Parametro']['valor'];
+					#Ahora tenemos que presentar el boton de aprobaod no aprobado o aprobado con corecciones
+				}
+			}
+			++$contador;
+		}
+
+
 		$roles=$this->Rol->find('list', $opciones);
 		$this->set('descomposiciones',$maquetarMostrar);
 		$this->set('tiposestandares',$tiposestandares);
@@ -1091,7 +1112,6 @@ class DocumentosController extends AppController {
 			$estandares = $this->Documento->Estandar->find('list',$opciones);
 		}
 		$this->set(compact('estandares'));
-		print_r($estandares);
 	}
 
 	public function edit($id = null) {

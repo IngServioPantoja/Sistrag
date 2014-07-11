@@ -924,7 +924,7 @@ hS2M4ODXGwAAAABJRU5ErkJggg==</pkg:binaryData></pkg:part><pkg:part pkg:name="/wor
 		$nivelItem=0;
 		$this->requestAction('Estandares/obtenerItems/0/'.$id.'');
 		unset($itemsMaquetar[0]);
-		$directorio = WWW_ROOT.'files\estandares\\'.$id.'\\';
+		ECHO $directorio = WWW_ROOT.'files\estandares\\'.$id.'\\';
 	    $nombreArchivo=$directorio."Estandar.xml";
 	    if(file_exists($nombreArchivo)) 
 		{ 
