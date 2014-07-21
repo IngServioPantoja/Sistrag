@@ -6,63 +6,58 @@ App::uses('AppController', 'Controller');
  * @property Control $Control
  */
 class ControlesController extends AppController {
+var $uses = array('Control','Estandar','Programa','Tiposestandar','Roles');
 
-/**
- * index method
- *
- * @return void
- */
 	public function index() {
-		$this->Control->recursive = 0;
+		$this->Control->recursive = 2;
 		$this->set('controles', $this->paginate());
 	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
 	public function view($id = null) {
 		if (!$this->Control->exists($id)) {
 			throw new NotFoundException(__('Invalid control'));
 		}
-		$options = array('conditions' => array('Control.' . $this->Control->primaryKey => $id));
-		$this->set('control', $this->Control->find('first', $options));
+		$options = array('conditions' => array('Control.' . $this->Control->primaryKey => $id),'limit'=>1,'recursive'=>'2');
+		$control= $this->Control->find('first', $options);
+		$this->set('control',$control);
 	}
 
-/**
- * add method
- *
- * @return void
- */
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Control->create();
 			if ($this->Control->save($this->request->data)) {
-				$this->Session->setFlash(__('The control has been saved'));
+				$this->Session->setFlash(__('Ñunto de control registrado exitosamente'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The control could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Error intente nuevamente'));
 			}
 		}
 		$roles = $this->Control->Rol->find('list');
-		$estandares = $this->Control->Estandar->find('list');
-		$this->set(compact('roles', 'estandares'));
+		$opciones = array(
+           	'order' => array('Programa.nombre asc'),
+	   	);
+		$programas = $this->Programa->find('list',$opciones);$opciones=null;
+		$id_programa=key($programas);
+		$opciones = array(
+			
+	    	'fields' => array('Estandar.id','Tiposestandar.nombre'),
+	    	'conditions' => array(
+	    		'Estandar.programa_id' => $id_programa		  
+			  ),
+           	'order' => array('Tiposestandar.nombre asc'),
+           	'recursive' => 0
+	   	);
+		$estandares = $this->Estandar->find('list',$opciones);$opciones=null;
+		$this->set('roles',$roles);
+		$this->set('programas',$programas);
+		$this->set('estandares',$estandares);
 	}
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
 	public function edit($id = null) {
-		if (!$this->Control->exists($id)) {
-			throw new NotFoundException(__('Invalid control'));
-		}
+		
+
+
+
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Control->save($this->request->data)) {
 				$this->Session->setFlash(__('The control has been saved'));
@@ -70,23 +65,65 @@ class ControlesController extends AppController {
 			} else {
 				$this->Session->setFlash(__('The control could not be saved. Please, try again.'));
 			}
-		} else {
+		}else {
 			$options = array('conditions' => array('Control.' . $this->Control->primaryKey => $id));
 			$this->request->data = $this->Control->find('first', $options);
+			
+		
+		$roles = $this->Control->Rol->find('list');
+		$opciones = array(
+			'conditions' => array('Programa.id'=> $this->request->data['Estandar']['programa_id']),
+           	'order' => array('Programa.nombre asc'),
+           	'limit'=>-1
+	   	);
+		$programas = $this->Programa->find('all',$opciones);$opciones=null;
+		$this->request->data['Programa']=$programas;
+		$id_programa=key($programas);
+		$opciones = array(
+			
+	    	'fields' => array('Estandar.id','Tiposestandar.nombre'),
+	    	'conditions' => array(
+	    		'Estandar.programa_id' => $id_programa		  
+			  ),
+           	'order' => array('Tiposestandar.nombre asc'),
+           	'recursive' => 0
+	   	);
+		$estandares = $this->Estandar->find('list',$opciones);$opciones=null;
+		$this->set('roles',$roles);
+		$this->set('programas',$programas);
+		$this->set('estandares',$estandares);
 		}
-		$roles = $this->Control->Roles->find('list');
-		$estandares = $this->Control->Estandares->find('list');
-		$this->set(compact('roles', 'estandares'));
+
+
+
+
+
+
 	}
 
-/**
- * delete method
- *
- * @throws NotFoundException
- * @throws MethodNotAllowedException
- * @param string $id
- * @return void
- */
+	public function cronogramas()
+	{
+		$this->Control->recursive = 2;
+		$this->set('controles', $this->paginate());
+	}
+
+	public function estandar_programa()
+	{
+		$id_programa=$this->request->data['Control']['programa'];
+		$opciones = array(
+			
+	    	'fields' => array('Estandar.id','Tiposestandar.nombre'),
+	    	'conditions' => array(
+	    		'Estandar.programa_id' => $id_programa		  
+			  ),
+           	'order' => array('Tiposestandar.nombre asc'),
+           	'recursive' => 0
+	   	);
+		$estandares = $this->Estandar->find('list',$opciones);$opciones=null;
+		$this->set('estandares',$estandares);
+		$this->render('/Controles/estandar_programa');
+	}
+	
 	public function delete($id = null) {
 		$this->Control->id = $id;
 		if (!$this->Control->exists()) {

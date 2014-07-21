@@ -91,7 +91,7 @@ html
     padding 0px
     
     a
-      color #fff
+      color #888
 
       &:hover
         color #227
@@ -765,7 +765,7 @@ html
               padding 5px 5px 5px 5px
               position relative
               text-align center
-
+              
               figure
                 position absolute
                 top 8%
@@ -774,7 +774,7 @@ html
                 right 0px
                 opacity 1
                 width auto
-
+                
               .div_agregar_integrantes
                 background-color rgba(255,255,255,0.6)
                 border 1px solid #aaa
@@ -1292,6 +1292,7 @@ html
                     width 200px
                     display inline-block
                   // Tabla para la muestra de items que componen un documento
+
                   .contenidoItemsDocumento
                     background rgba(255,255,255,0.5)
                     color #333
@@ -1300,7 +1301,7 @@ html
                     width auto
                     display block
                     text-align left
-                    
+
                     div
                       display inline-block
                       font-weight 400
@@ -1676,6 +1677,8 @@ html
                 margin 5px
                 vertical-align top
                 overflow:hidden;
+                width auto
+                box-sizing content
                 
                 .headerGris
                   background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
@@ -1717,6 +1720,7 @@ html
                   .tituloUnidad
                     display inline-block
                     font-size 14px
+                    margin 0
 
                 .contenidoItem
                   background #fff
@@ -1768,7 +1772,13 @@ html
                 position relative
                 margin -15px 5px 5px 5px
                 vertical-align top
-                overflow:hidden;
+                overflow:hidden
+                max-width 525px
+
+                .cuestionario_titulo_input
+                  width: 100% !important;
+                  background-color #fff
+                  color #666
                 
                 .headerGris
                   background -moz-linear-gradient(top, #bcbcbc 0%, #efefef 50%, #bcbcbc 100%)
@@ -2389,7 +2399,20 @@ html
   font-size 25px
   font-weight 900
   font-family icomoon
-  content 
+
+.div_loading
+  display inline-block
+  width auto
+  box-sizing content
+  margin 0
+  vertical-align top
+  display
+
+  .img_loader
+    width 100%
+    height 20px
+    display inline-block
+    display none
 
 
 /* Responsive */

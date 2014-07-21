@@ -53,10 +53,12 @@ class EntregasController extends AppController {
 					$detalleentrega['Detalleentrega']['fecha_estado']=$fecha;
 					if($this->Detalleentrega->save($detalleentrega))
 					{
+						$this->requestAction('documentos/generar_comentarios/'.$this->Detalleentrega->id);
 					}
 
 				}
 				$this->Session->setFlash(__('El documento fue enviado exitosamente'));
+
 				$this->redirect($this->referer());
 			} else {
 				$this->Session->setFlash(__('El documento no se ha podido enviar'));

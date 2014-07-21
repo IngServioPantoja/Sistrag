@@ -1,0 +1,58 @@
+.divDatatable
+{
+	background-color: red;
+}
+.divDatatable .tablaDatatable
+{
+	border: 1px solid red!important;
+	display: block!important;
+}
+.divDatatable .tablaDatatable tr
+{
+	display: inline-block!important;
+
+	border-radius: 5px 5px 0px 0px!important;
+	overflow: hidden!important;
+}
+.divDatatable .tablaDatatable tbody tr
+{
+	display: inline-block!important;
+	border: 1px solid #bbb!important;
+	margin: 5px!important;
+}
+.divDatatable .tablaDatatable tbody tr .fichaCebecera
+{
+	border:  solid 0px #aaa!important;
+	display: block!important;
+	text-align: center!important;
+	margin: 0px!important;
+	border-bottom:  solid 1px #aaa!important;
+	background: rgb(165,165,165)!important;
+	background: -moz-linear-gradient(top,  rgba(165,165,165,1) 0%, rgba(239,239,239,1) 50%, rgba(165,165,165,1) 100%)!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(165,165,165,1)), color-stop(50%,rgba(239,239,239,1)), color-stop(100%,rgba(165,165,165,1)))!important;
+	background: -webkit-linear-gradient(top,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)!important;
+	background: -o-linear-gradient(top,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)!important;
+	background: -ms-linear-gradient(top,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)!important;
+	background: linear-gradient(to bottom,  rgba(165,165,165,1) 0%,rgba(239,239,239,1) 50%,rgba(165,165,165,1) 100%)!important;
+	color: #666!important;
+}
+
+.divDatatable .tablaDatatable tbody tr td
+{
+	display: block!important;
+	margin: 10px!important;
+	padding: 1px 5px!important;
+	background-color: #fefefe!important;
+}
+.divDatatable .tablaDatatable thead th
+{
+	border: 1px solid blue!important;
+	opacity: 0!important;
+	display: inline-block!important;
+}
+.divDatatable .tablaDatatable tfoot th
+{
+	border: 1px solid blue!important;
+	opacity: 0!important;
+	display: inline-block!important;
+}

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
 if (!isset($channel)) {
 	$channel = array();

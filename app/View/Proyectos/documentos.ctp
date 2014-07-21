@@ -192,7 +192,7 @@ $roles;
 															<th colspan="2" 
 
 																<?php
-																	if($detalleEntrega['veredicto']==1)
+																	if($detalleEntrega['parametro_veredicto_id']==1 && $detalleEntrega['estado_id']==3)
 																	{
 																?>
 																	class="doc_index_aprobado">
@@ -200,7 +200,7 @@ $roles;
 																	Aprobado
 																	</strong>
 																<?php
-																	}else if($detalleEntrega['veredicto']==2)
+																	}else if($detalleEntrega['parametro_veredicto_id']==2 && $detalleEntrega['estado_id']==3)
 																	{
 																?>
 																	class="doc_index_noaprobado">
@@ -208,7 +208,7 @@ $roles;
 																	No aprobado
 																	</strong>
 																<?php
-																	}else if($detalleEntrega['veredicto']==0)
+																	}else if($detalleEntrega['parametro_veredicto_id']==0 || $detalleEntrega['estado_id']==1 || $detalleEntrega['estado_id']==2)
 																	{
 																?>
 																	class="doc_index_enproceso">

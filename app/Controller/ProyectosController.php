@@ -22,6 +22,71 @@ var $uses = array(
 		$this->set('proyectos', $this->paginate());
 	}
 
+	public function asesor() {
+		$usuario=$this->Session->read("Usuario");
+		print_r($usuario);
+		$id_persona=$usuario['Persona']['id'];
+		$this->Proyecto->recursive = 1;
+		//mEJORES CONSULTAS, OINS EN PAGINACIÓN
+		$opciones=array(
+		            'table' => 'personas_proyectos',
+		            'alias' => 'PersonasProyecto',
+		            'type' => 'left',
+		            'conditions' => 
+		            array(
+		                'PersonasProyecto.proyecto_id = Proyecto.id'
+		            	)
+	        	);
+		//Encontraremos en los que mi sessión se desempeña como asesor
+		$this->paginate = array(
+			'Proyecto' => array(
+				'limit' => 10,
+				'joins' => array($opciones),
+				'conditions' => 
+		            array(
+		                'PersonasProyecto.persona_id'=>$id_persona,
+		                'PersonasProyecto.rol_id'=>2
+		            	)
+			)
+		);
+		$proyectos = $this->paginate('Proyecto');
+		$this->set('proyectos',$proyectos);
+	}
+
+	public function Jurado() {
+		$usuario=$this->Session->read("Usuario");
+		print_r($usuario);
+		$id_persona=$usuario['Persona']['id'];
+		$this->Proyecto->recursive = 1;
+		//mEJORES CONSULTAS, OINS EN PAGINACIÓN
+		$opciones=array(
+		            'table' => 'personas_proyectos',
+		            'alias' => 'PersonasProyecto',
+		            'type' => 'left',
+		            'conditions' => 
+		            array(
+		                'PersonasProyecto.proyecto_id = Proyecto.id'
+		            	)
+	        	);
+
+
+
+		//Encontraremos en los que mi sessión se desempeña como jurado
+		$this->paginate = array(
+			'Proyecto' => array(
+				'limit' => 10,
+				'joins' => array($opciones),
+				'conditions' => 
+		            array(
+		                'PersonasProyecto.persona_id'=>$id_persona,
+		                'PersonasProyecto.rol_id'=>1
+		            	)
+			)
+		);
+		$proyectos = $this->paginate('Proyecto');
+		$this->set('proyectos',$proyectos);
+	}
+
 	public function documentos($id = null) 
 	{
 		//Aqui se muestran los documentos subidos y dependiendo su estado las entregas de los mismos
@@ -51,6 +116,10 @@ var $uses = array(
 	        	)		
     		),
 			'fields'=>array('Documento.*','Tiposestandar.*'),
+			'conditions' => 
+		            array(
+		                "Documento.proyecto_id = $id"
+		            	),
            	'order' => array('Documento.fecha_guardado asc'),
            	'recursive'=>-1,		
 	   	);

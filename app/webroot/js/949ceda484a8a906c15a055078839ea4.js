@@ -1,0 +1,2 @@
+$(document).ready(function () {$("#tiposusuario_id").bind("change", function (event) {$.ajax({async:true, data:$("#tiposusuario_id").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#asociacion").html(data);}, type:"post", url:"\/Sistrag\/controles\/lista_asociaciones"});
+return false;});});
