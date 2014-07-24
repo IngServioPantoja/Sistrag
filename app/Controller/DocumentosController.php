@@ -66,7 +66,6 @@ class DocumentosController extends AppController {
 					$this->requestAction('documentos/obtenerItems/'.$item['ItemsEstandar']['id'].'/'.$estandar_id.'');
 			}
 		}
-		echo "---";
 	}
 
 	public function descomponer_documento($id = null) 
@@ -421,7 +420,6 @@ class DocumentosController extends AppController {
 		$this->Detalleentrega->recursive = 0;
 		$options = array('conditions' => array('Detalleentrega.' . $this->Detalleentrega->primaryKey => $id));
 		$detalleEntrega=$this->Detalleentrega->find('first', $options);
-		print_r($detalleEntrega);
 		$this->Documento->recursive = 0;
 		$options = array('conditions' => array('Documento.' . $this->Documento->primaryKey => $detalleEntrega['Entrega']['documento_id']));
 		$documento=$this->Documento->find('first', $options);
@@ -628,15 +626,11 @@ class DocumentosController extends AppController {
 		$id_documento=$proyecto['Documento']['id'];
 		global $items;
 		$items="";
-		print_r($items);
-		echo "antes-";
 		$this->requestAction('documentos/obtenerItems/0/'.$proyecto['Estandar']['id'].'');
-		echo "-despues";
 		//$maquetarMostrar[]="";//cuidado con esta línea
 		global $maquetarMostrar;
 		$maquetarMostrar=$items;
 		unset($maquetarMostrar[0]);
-		//print_r($items);
 		$opcionesItemsDocumento=array(
 		    'conditions' => array('ItemsDocumento.documento_id'=> $proyecto['Documento']['id']),
 		    'order' => array('ItemsDocumento.id asc'),
@@ -663,7 +657,6 @@ class DocumentosController extends AppController {
 		);
 		$itemsContenido=$this->ItemsContenido->find('all', $opcionesItemsContenido);
 		$actual=1;
-		echo "entro maq>>";
 		foreach ($maquetarMostrar as $item) 
 		{
 			
@@ -1051,6 +1044,18 @@ class DocumentosController extends AppController {
 			$options = array('conditions' => array('Detalleentrega.' . $this->Documento->primaryKey => $id));
 			$detalle_entrega=$this->Detalleentrega->find('first', $options);
 			$id=$detalle_entrega['Entrega']['documento_id'];
+			if($detalle_entrega['Detalleentrega']['estado_id']==1)
+			{
+				$this->Detalleentrega->create();
+				$detalleentregag=array();
+				$detalleentregag['Detalleentrega']['id']=$detalle_entrega['Detalleentrega']['id'];
+				$detalleentregag['Detalleentrega']['estado_id']=2;
+				$detalleentregag['Detalleentrega']['fecha_estado']=date('Y-m-d');
+				if($this->Detalleentrega->save($detalleentregag))
+				{
+					
+				}
+			}
 		}
 
 		$this->Documento->recursive = 0;
@@ -1201,6 +1206,7 @@ class DocumentosController extends AppController {
 			$maquetarMostrar[$contador]['comentario']="Sin comentarios";
 			$maquetarMostrar[$contador]['id_comentario']=0;
 			$maquetarMostrar[$contador]['concepto']="No Aprobado";
+			$maquetarMostrar[$contador]['id_concepto']="No Aprobado";
 			$maquetarMostrar[$contador]['color']="882222";
 			foreach ($evaluaciones as $evaluacion) 
 			{
@@ -1211,6 +1217,7 @@ class DocumentosController extends AppController {
 					$maquetarMostrar[$contador]['comentario']=$evaluacion['Evaluacion']['comentarios'];
 					$maquetarMostrar[$contador]['id_comentario']=$evaluacion['Evaluacion']['id'];
 					$maquetarMostrar[$contador]['concepto']=$evaluacion['Parametro']['nombre'];
+					$maquetarMostrar[$contador]['id_concepto']=$evaluacion['Parametro']['id'];
 					$maquetarMostrar[$contador]['color']=$evaluacion['Parametro']['valor'];
 					#Ahora tenemos que presentar el boton de aprobaod no aprobado o aprobado con corecciones
 				}
@@ -1232,7 +1239,19 @@ class DocumentosController extends AppController {
 		$this->autoRender = false;
 		$respuesta=array();
 		$respuesta['Evaluacion']['id']=$_POST['id'];
-		$respuesta['Evaluacion']['comentarios']=$_POST['titulo'];
+		
+		
+		if($_POST['titulo']!=null)
+		{
+			$respuesta['Evaluacion']['comentarios']=$_POST['titulo'];
+		}
+		if($_POST['concepto']!=null)
+		{
+			$respuesta['Evaluacion']['parametro_concepto_id']=$_POST['concepto'];
+			echo "cocnetp indef";
+		}
+		print_r($_POST);
+		print_r($respuesta['Evaluacion']);
 		$this->Evaluacion->save($respuesta);
 		//Funcion para actualizar comentarios de manera asincrona
 	}

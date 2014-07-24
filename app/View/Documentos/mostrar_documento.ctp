@@ -21,275 +21,271 @@
 		</ul>
 	</nav>
 	<section class="panel_internal">
-		<table class="crud">
-			<tr>
-				<td>
-					<?php echo $this->Form->create('Documento',array('type' => 'file')); ?>
-					<div class="crud_fila_principal">
-						<div class="contenedor_integrantes">
-							<div class="back">
-								<?php
-								echo $this->Html->link($this->Html->image("iconos/back64.png", array('height' => '', 'width' => '22px','title'=>'Volver')),$referer,
-											array('escape' => false));
-								?>
-							</div>
-							<span class="principal_titulo"> 
-							<?php 
-							echo $proyecto['TiposEstandar']['nombre'];
-							?>
-							<?php 
-							echo $proyecto['Documento']['fecha_guardado'];
-							?>
-							:
-							<?php 
-							echo $proyecto['Proyecto']['titulo'];
-							?>
-							</span>
-						</div>
-						<div class="contenedor_integrantes">
-							<div class="unidad_integrantes">
-								<span class="icon-graduate icono_izquierda_pequeño">
-								</span>
-								<?php
-								foreach ($proyecto['Integrantes'] as $integrante) 
-								{
-									if($integrante['PersonasProyecto']['rol_id']==3)
-									{
-								?>
-								<span>
-								<?php
-										echo " *";
-										echo $integrante['Persona']['nombre'];
-										echo " ";
-										echo $integrante['Persona']['apellido'];
-								?>
-								</span>
-								<?php
-									}
-								}
-								?>
-							</div>
-							<div class="unidad_integrantes">
-								<span class="icon-batman icono_izquierda_pequeño">
-								</span>
-								<?php
-								foreach ($proyecto['Integrantes'] as $integrante) 
-								{
-									if($integrante['PersonasProyecto']['rol_id']==2)
-									{
-										echo " *";
-										echo $integrante['Persona']['nombre'];
-										echo " ";
-										echo $integrante['Persona']['apellido'];
-
-									}
-								}
-								?>
-							</div>
-							<div class="unidad_integrantes">
-								<span class="icon-auction icono_izquierda_pequeño">
-								</span>
-								<?php
-								foreach ($proyecto['Integrantes'] as $integrante) 
-								{
-									if($integrante['PersonasProyecto']['rol_id']==1)
-									{
-										echo " *";
-										echo $integrante['Persona']['nombre'];
-										echo " ";
-										echo $integrante['Persona']['apellido'];
-									}
-								}
-								?>
-							</div>
-						</div>	
-						<div class="contenedor_integrantes">
-							<?php echo $this->Form->create('Proyecto'); ?>
-							<?php echo $this->Form->input('id',array('value'=>$proyecto['Proyecto']['id'])); ?>
-							<div class="unidad_integrantes">
-								<?php
-								echo $this->Form->select(
-									'tipodocumento', $tiposestandares,array('id'=>'tiposestandares','autocomplete' =>'off','empty'=>false,'value'=>$proyecto['TiposEstandar']['id'])
-								);
-								?>
-							</div>
-							<div class="unidad_integrantes" id="lista_documentos">
-								<?php
-								echo $this->Form->select(
-									'documento', $documentos,array('id'=>'documento','autocomplete' =>'off','empty'=>false,'value'=>$proyecto['Documento']['id'])
-								);
-								?>
-							</div>
-							<div class="unidad_integrantes" id="lista_documentos">
-								<?php echo $this->Form->submit(
-								    'Mostrar', 
-								    array('class' => 'submitGrisRedondoDelgado' )
-								); 
-							    ?>	
-							</div>
-							<?php echo $this->Form->end(__('')); ?>
-						</div>
-					</div>
-					<div class="crud_fila_secundaria">
+		<div class="crud">
+			<?php echo $this->Form->create('Documento',array('type' => 'file')); ?>
+			<div class="crud_fila_principal">
+				<div class="contenedor_integrantes">
+					<div class="back">
 						<?php
-						foreach ($descomposiciones as $descomposicion)
+						echo $this->Html->link($this->Html->image("iconos/back64.png", array('height' => '', 'width' => '22px','title'=>'Volver')),$referer,
+									array('escape' => false));
+						?>
+					</div>
+					<span class="principal_titulo"> 
+					<?php 
+					echo $proyecto['TiposEstandar']['nombre'];
+					?>
+					<?php 
+					echo $proyecto['Documento']['fecha_guardado'];
+					?>
+					:
+					<?php 
+					echo $proyecto['Proyecto']['titulo'];
+					?>
+					</span>
+				</div>
+				<div class="contenedor_integrantes">
+					<div class="unidad_integrantes">
+						<span class="icon-graduate icono_izquierda_pequeño">
+						</span>
+						<?php
+						foreach ($proyecto['Integrantes'] as $integrante) 
 						{
-							if($descomposicion['nivel']!=1)
-	        				{
-	        			?>
-								<article class='marcoPrincipal' id="<?php echo "item".$descomposicion['item_documento_id']; ?>">
-									<div class="headerVinotinto" onClick="encoger(this)" id="<?php echo $descomposicion['item_documento_id']; ?>" style="cursor:pointer;">
-										<div class="tituloModulo">
-											<span id="<?php echo "marcador".$descomposicion['item_documento_id']; ?>" class="marcador">v</span>
-											<span>
-				       						<?php
-				       						echo $descomposicion['titulo'];
-											?>
-											</span>
-										</div>
-									</div>
-									<div class="marcoSecundario" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
-										<div class="headerGris">
-											<div class="tituloSubmoduloLeft">
-												<div class="tituloUnidad">
-													<span>
-													Líneas:
-													</span>
-												</div>
-												<div 
-													<?php if($descomposicion['extencion_lineas']>=ceil($descomposicion['caracteres']/85))
-													{?>class="tituloUnidad extencionAprobado" 
-													<?php 
-													}else{?> class="tituloUnidad extencionNoAprobado" 
-													<?php 
-													} ?>
-													>
-													<span>
-													<?php echo ceil($descomposicion['caracteres']/85); ?>
-													</span>
-												</div>
-											</div>
-											<div class="tituloSubmoduloRight">
-												<div class="tituloUnidad">
-													<span>
-													Caracteres:
-													</span>
-												</div>
-												<div <?php if($descomposicion['extencion_caracteres']>=$descomposicion['caracteres'])
-													{?>class="tituloUnidad extencionAprobado" 
-													<?php 
-													}else{?> class="tituloUnidad extencionNoAprobado" 
-													<?php 
-													} ?>
-													>
-													<span>
-													<?php echo $descomposicion['caracteres']; 
-													?>
-													</span>
-												</div>
-											</div>
-										</div>
-										<div class="contenidoItem" id="<?php echo "txt".$descomposicion['item_documento_id']; ?>">
-								<?php
-								if (isset($descomposicion['contenido'])) 
-								{
-									foreach ($descomposicion['contenido'] as $item) 
-				        			{
-				        				if($item['tipo']==2)
-							        	{	
-							    		?>
-											<p class="parrafo">
-										<?php
-											echo $item['elementos'];
-										?>
-											</p>
-							    		<?php
-							        	}
-							        	else if($item['tipo']==3)
-							        	{	
-							    		?>
-											<p class="figura">
-										<?php
-											echo $item['elementos'];
-										?>
-											</p>
-							    		<?php
-							        	}
-							        	else if($item['tipo']==4)
-							        	{	
-							    		?>
-											<p class="fuente">
-										<?php
-											echo $item['elementos'];
-										?>
-											</p>
-							    		<?php
-							        	}
-							        	else if($item['tipo']==5)
-							        	{	
-							    		?>
-											<p class="piePagina">
-										<?php
-											echo $item['elementos'];
-										?>
-											</p>
-							    		<?php
-							        	}
-							        	else if($item['tipo']==6)
-							        	{
-							        		echo $this->Html->image('/app/webroot/files/documentos/'.$item['elementos'], array('class'=>'img'));
-							        	}
-							        	else if($item['tipo']==7)
-							        	{	
-							    		?>
-											<p class="tabla">
-										<?php
-											echo $item['elementos'];
-										?>
-											</p>
-							    		<?php
-							        	}
-				        			}
-				        		?>
-										</div>
-									</div>
-				        		<?php
-								}
-								?>
-								</article>
+							if($integrante['PersonasProyecto']['rol_id']==3)
+							{
+						?>
+						<span>
+						<?php
+								echo " *";
+								echo $integrante['Persona']['nombre'];
+								echo " ";
+								echo $integrante['Persona']['apellido'];
+						?>
+						</span>
 						<?php
 							}
 						}
 						?>
 					</div>
-					<?php
-						if($proyecto['Documento']['enviado']==0)
-						{
-					?>
-					<div class="contenedorAzul">
-						<?php echo $this->Form->create('Entrega',array('controller'=>'entregas','action'=>'add')); ?>
-						<?php echo $this->Form->hidden('documento_id',array('value'=>$proyecto['Documento']['id'])); ?>
-						<?php echo $this->Form->hidden('proyecto_id',array('value'=>$proyecto['Proyecto']['id'])); ?>
+					<div class="unidad_integrantes">
+						<span class="icon-batman icono_izquierda_pequeño">
+						</span>
 						<?php
-							echo $this->Form->select(
-								'rol_id', $roles,array('id'=>'rol','autocomplete' =>'off','empty'=>false)
-							);
+						foreach ($proyecto['Integrantes'] as $integrante) 
+						{
+							if($integrante['PersonasProyecto']['rol_id']==2)
+							{
+								echo " *";
+								echo $integrante['Persona']['nombre'];
+								echo " ";
+								echo $integrante['Persona']['apellido'];
+
+							}
+						}
 						?>
-						<?php 
-						echo $this->Form->submit(
-						    'Enviar', 
-						    array('class' => 'submitGrisRedondoDelgado','id'=>'submitCortoRight','div'=>false)
+					</div>
+					<div class="unidad_integrantes">
+						<span class="icon-auction icono_izquierda_pequeño">
+						</span>
+						<?php
+						foreach ($proyecto['Integrantes'] as $integrante) 
+						{
+							if($integrante['PersonasProyecto']['rol_id']==1)
+							{
+								echo " *";
+								echo $integrante['Persona']['nombre'];
+								echo " ";
+								echo $integrante['Persona']['apellido'];
+							}
+						}
+						?>
+					</div>
+				</div>	
+				<div class="contenedor_integrantes">
+					<?php echo $this->Form->create('Proyecto'); ?>
+					<?php echo $this->Form->input('id',array('value'=>$proyecto['Proyecto']['id'])); ?>
+					<div class="unidad_integrantes">
+						<?php
+						echo $this->Form->select(
+							'tipodocumento', $tiposestandares,array('id'=>'tiposestandares','autocomplete' =>'off','empty'=>false,'value'=>$proyecto['TiposEstandar']['id'])
+						);
+						?>
+					</div>
+					<div class="unidad_integrantes" id="lista_documentos">
+						<?php
+						echo $this->Form->select(
+							'documento', $documentos,array('id'=>'documento','autocomplete' =>'off','empty'=>false,'value'=>$proyecto['Documento']['id'])
+						);
+						?>
+					</div>
+					<div class="unidad_integrantes" id="lista_documentos">
+						<?php echo $this->Form->submit(
+						    'Mostrar', 
+						    array('class' => 'submitGrisRedondoDelgado' )
 						); 
 					    ?>	
 					</div>
-					<?php
+					<?php echo $this->Form->end(__('')); ?>
+				</div>
+			</div>
+			<div class="crud_fila_secundaria">
+				<?php
+				foreach ($descomposiciones as $descomposicion)
+				{
+					if($descomposicion['nivel']!=1)
+    				{
+    			?>
+						<article class='marcoPrincipal' id="<?php echo "item".$descomposicion['item_documento_id']; ?>">
+							<div class="headerVinotinto" onClick="encoger(this)" id="<?php echo $descomposicion['item_documento_id']; ?>" style="cursor:pointer;">
+								<div class="tituloModulo">
+									<span id="<?php echo "marcador".$descomposicion['item_documento_id']; ?>" class="marcador">v</span>
+									<span>
+		       						<?php
+		       						echo $descomposicion['titulo'];
+									?>
+									</span>
+								</div>
+							</div>
+							<div class="marcoSecundario" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
+								<div class="headerGris">
+									<div class="tituloSubmoduloLeft">
+										<div class="tituloUnidad">
+											<span>
+											Líneas:
+											</span>
+										</div>
+										<div 
+											<?php if($descomposicion['extencion_lineas']>=ceil($descomposicion['caracteres']/85))
+											{?>class="tituloUnidad extencionAprobado" 
+											<?php 
+											}else{?> class="tituloUnidad extencionNoAprobado" 
+											<?php 
+											} ?>
+											>
+											<span>
+											<?php echo ceil($descomposicion['caracteres']/85); ?>
+											</span>
+										</div>
+									</div>
+									<div class="tituloSubmoduloRight">
+										<div class="tituloUnidad">
+											<span>
+											Caracteres:
+											</span>
+										</div>
+										<div <?php if($descomposicion['extencion_caracteres']>=$descomposicion['caracteres'])
+											{?>class="tituloUnidad extencionAprobado" 
+											<?php 
+											}else{?> class="tituloUnidad extencionNoAprobado" 
+											<?php 
+											} ?>
+											>
+											<span>
+											<?php echo $descomposicion['caracteres']; 
+											?>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="contenidoItem" id="<?php echo "txt".$descomposicion['item_documento_id']; ?>">
+						<?php
+						if (isset($descomposicion['contenido'])) 
+						{
+							foreach ($descomposicion['contenido'] as $item) 
+		        			{
+		        				if($item['tipo']==2)
+					        	{	
+					    		?>
+									<p class="parrafo">
+								<?php
+									echo $item['elementos'];
+								?>
+									</p>
+					    		<?php
+					        	}
+					        	else if($item['tipo']==3)
+					        	{	
+					    		?>
+									<p class="figura">
+								<?php
+									echo $item['elementos'];
+								?>
+									</p>
+					    		<?php
+					        	}
+					        	else if($item['tipo']==4)
+					        	{	
+					    		?>
+									<p class="fuente">
+								<?php
+									echo $item['elementos'];
+								?>
+									</p>
+					    		<?php
+					        	}
+					        	else if($item['tipo']==5)
+					        	{	
+					    		?>
+									<p class="piePagina">
+								<?php
+									echo $item['elementos'];
+								?>
+									</p>
+					    		<?php
+					        	}
+					        	else if($item['tipo']==6)
+					        	{
+					        		echo $this->Html->image('/app/webroot/files/documentos/'.$item['elementos'], array('class'=>'img'));
+					        	}
+					        	else if($item['tipo']==7)
+					        	{	
+					    		?>
+									<p class="tabla">
+								<?php
+									echo $item['elementos'];
+								?>
+									</p>
+					    		<?php
+					        	}
+		        			}
+		        		?>
+								</div>
+							</div>
+		        		<?php
 						}
-					?>
-					<span id="bot">
-					</span>
-				</td>
-			</tr>
-		</table>
+						?>
+						</article>
+				<?php
+					}
+				}
+				?>
+			</div>
+			<?php
+				if($proyecto['Documento']['enviado']==0)
+				{
+			?>
+			<div class="contenedorAzul">
+				<?php echo $this->Form->create('Entrega',array('controller'=>'entregas','action'=>'add')); ?>
+				<?php echo $this->Form->hidden('documento_id',array('value'=>$proyecto['Documento']['id'])); ?>
+				<?php echo $this->Form->hidden('proyecto_id',array('value'=>$proyecto['Proyecto']['id'])); ?>
+				<?php
+					echo $this->Form->select(
+						'rol_id', $roles,array('id'=>'rol','autocomplete' =>'off','empty'=>false)
+					);
+				?>
+				<?php 
+				echo $this->Form->submit(
+				    'Enviar', 
+				    array('class' => 'submitGrisRedondoDelgado','id'=>'submitCortoRight','div'=>false)
+				); 
+			    ?>	
+			</div>
+			<?php
+				}
+			?>
+			<span id="bot">
+			</span>
+		</div>
 	</section>
 </section>
 <div class="goTop">

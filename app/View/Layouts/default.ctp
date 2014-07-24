@@ -16,6 +16,8 @@ $usuario=$this->Session->read("Usuario"); ?>
         ?>
         <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
         <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         
     </head>
@@ -206,6 +208,9 @@ $usuario=$this->Session->read("Usuario"); ?>
         ?>
     </div>  
 </footer>
+<script>
+    $('.use-tooltip').tooltip();
+</script>
 <?php echo $this->Js->writeBuffer(); ?>
 </body>
 </html>

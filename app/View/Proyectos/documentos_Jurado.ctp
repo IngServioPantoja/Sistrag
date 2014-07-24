@@ -18,17 +18,13 @@ $roles;
 				<?php 
 				echo $this->Html->link(__('Documentos'), array('controller'=>'proyectos','action' => 'documentos',$proyecto['Proyecto']['id'])); 
 				?></li><li>
-				<span class="icon-cloudy" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
-				<?php 
-				echo $this->Html->link(__('Subir documento'), array('controller'=>'documentos','action' => 'subir_documento',$proyecto['Proyecto']['id'])); 
-				?></li><li>
 				<span class="icon-file-settings" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
 				<?php 
-				echo $this->Html->link(__('Datos generales'), array('action' => 'editar_general',$proyecto['Proyecto']['id'])); 
+				echo $this->Html->link(__('Datos generales'), array('action' => 'detallar_general',$proyecto['Proyecto']['id'])); 
 				?></li><li>
 				<span class="icon-group" style="color:#ddd;text-shadow:0px 0px 4px #222;"></span>
 				<?php 
-				echo $this->Html->link(__('Integrantes'), array('action' => 'editar_integrantes',$proyecto['Proyecto']['id']));
+				echo $this->Html->link(__('Integrantes'), array('action' => 'detallar_integrantes',$proyecto['Proyecto']['id']));
 				?>
 			</li>
 			<?php
@@ -83,7 +79,7 @@ $roles;
 										{	
 						?>
 											<article class='ficha_index'>
-												<a href="../../documentos/detalle_entrega/<?php echo $detalleEntrega['id'];?>">
+												<a href="../../documentos/evaluar_documento/<?php echo $detalleEntrega['id'];?>">
 													<table class="informacion_proyecto">
 														<tr>
 															<th>
@@ -150,7 +146,6 @@ $roles;
 															<th colspan="2" 
 
 															<?php
-															//ya tengo la parte qeu evalua y si mira el documento me dice cuando , ahroa solo falta decir completar documento y que le aparesca en notificaciones jejeje y brevacia la vuelta!!!	
 																	 
 																	if($detalleEntrega['estado_id']==1)
 																	{
@@ -166,8 +161,7 @@ $roles;
 																	?>
 																	class="doc_index_enproceso">
 																	<strong>
-																	Visto 
-																	<?php echo $detalleEntrega['fecha_estado']; ?>
+																	Visto
 																	</strong>
 																	<?php
 																	}else if($detalleEntrega['estado_id']==3)

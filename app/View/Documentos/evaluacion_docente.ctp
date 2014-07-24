@@ -147,20 +147,27 @@
 											?>
 											</span>
 										</div>
-										<div class="aprobacionRight">
-											<div class="tituloUnidad">
-												<span style="color:<?php 
-														echo $descomposicion['color'];
-													?>;">								
-													<?php 
-														echo $descomposicion['concepto'];
-													?>
-												</span>
-												<input type="radio" name="concepto" value="1">
-												<input type="radio" name="concepto" value="2">
-												<input type="radio" name="concepto" value="3">
+										<?php
+											echo $this->Form->create('Evaluacion');
+										?>
+
+										<div class="row-fluid pull-right">
+											<div class="btn-group" data-toggle="buttons">
+											  <label class="btn btn-success btn-xs aclarar <?php if($descomposicion['id_concepto']==1){echo 'active';}?>" idconcepto="1" onClick="actualizar_comentario(this)" idpregunta="<?php echo $descomposicion['id_comentario']; ?>">
+											    <input type="radio" name="concepto" <?php if($descomposicion['id_concepto']==1){echo "checked";}?>>Aprobado
+											  </label>
+											  <label class="btn btn-warning btn-xs aclarar <?php if($descomposicion['id_concepto']==2){echo 'active';}?>" idconcepto="2" onClick="actualizar_comentario(this)" idpregunta="<?php echo $descomposicion['id_comentario']; ?>">
+											    <input type="radio" name="concepto" <?php if($descomposicion['id_concepto']==2){echo "checked";}?>>Intermedio
+											  </label>
+											  <label class="btn btn-danger btn-xs aclarar <?php if($descomposicion['id_concepto']==3){echo 'active';}?>" idconcepto="3" onClick="actualizar_comentario(this)" idpregunta="<?php echo $descomposicion['id_comentario']; ?>">
+											    <input type="radio" name="concepto" <?php if($descomposicion['id_concepto']==3){echo "checked";}?>>No aprobado
+											  </label>
 											</div>
 										</div>
+
+										<?php
+											echo $this->Form->end();
+										?>
 									</div>
 									<div class="marcoSecundario" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
 										<div class="headerGris">
@@ -376,22 +383,42 @@ $this->Js->get('#tiposestandares')->event('change',
 	{	
 		var valor=$(e).val();
 		var id=$(e).attr("idpregunta");
-		var respuesta=$.ajax
-		(
-			{
-			  type: 'post',
-	          dataType: 'json',
-	          url: "<?php echo $this->Html->url(array('action' => 'actualizar_comentario')); ?>",
-			  data: 'id='+id+'&titulo='+valor,
-			  beforeSend: function() {
-				$("#"+id).fadeIn();
+		var id_concepto=$(e).attr("idconcepto");
+		
+		if (id_concepto === undefined) 
+		{
+			var respuesta=$.ajax
+			(
+				{
+				  type: 'post',
+		          dataType: 'json',
+		          url: "<?php echo $this->Html->url(array('action' => 'actualizar_comentario')); ?>",
+				  data: 'id='+id+'&titulo='+valor,
+				  beforeSend: function() {
+					$("#"+id).fadeIn();
 
-			  }
-			}
-		);
+				  }
+				}
+			);	
+			}else
+			{
+			var respuesta=$.ajax
+			(
+				{
+				  type: 'post',
+		          dataType: 'json',
+		          url: "<?php echo $this->Html->url(array('action' => 'actualizar_comentario')); ?>",
+				  data: 'id='+id+'&titulo='+valor+'&concepto='+id_concepto,
+				  beforeSend: function() {
+					$("#"+id).fadeIn();
+
+				  }
+				}
+			);
+		}
 		respuesta.always(function() 
 		{
-		$("#"+id).fadeOut();
+			$("#"+id).fadeOut();
 		}
 		)
 	}

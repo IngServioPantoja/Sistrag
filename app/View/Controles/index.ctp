@@ -26,84 +26,80 @@ $user=NUll;
 		</ul>
 	</div>
 	<section class="panel_internal">
- 		<table class="crud">
-			<tr>
-				<td>
-					<div class="crud_fila_principal" id="principal_proyecto">
-						<div class="back">
-							<?php
-							echo $this->Html->link($this->Html->image("iconos/back64.png", array('height' => '', 'width' => '22px','title'=>'Volver')),$referer,
-										array('escape' => false));
-							?>
+ 		<div class="crud">
+			<div class="crud_fila_principal" id="principal_proyecto">
+				<div class="back">
+					<?php
+					echo $this->Html->link($this->Html->image("iconos/back64.png", array('height' => '', 'width' => '22px','title'=>'Volver')),$referer,
+								array('escape' => false));
+					?>
 
-						</div>
-						<span class="principal_titulo">
-							Fechas de control			
-						</span>
-					</div>
-					<div class="crud_fila_secundaria">
-						<table id="tabla_fechas" cellspacing="0" width="100%">
-						    <thead>
-						        <tr>
-						            <th>Programa</th>
-						            <th>Fecha</th>
-						            <th>Documento</th>
-						            <th>Receptor</th>
-						            <th>Acciones</th>
-						        </tr>
-						    </thead>
-						    <tfoot>
-						        <tr>
-						            <th>Programa</th>
-						            <th>Fecha</th>
-						            <th>Documento</th>
-						            <th>Receptor</th>
-						            <th>Acciones</th>
-						        </tr>
-						    </tfoot>
-						    <tbody>
-						    	<?php
-						    		foreach ($controles as $control) 
-						    		{
-						    	?>
+				</div>
+				<span class="principal_titulo">
+					Fechas de control			
+				</span>
+			</div>
+			<div class="crud_fila_secundaria table-responsive">
+				<table id="tabla_fechas" class="table" cellspacing="0" width="100%">
+				    <thead>
+				        <tr>
+				            <th>Programa</th>
+				            <th>Fecha</th>
+				            <th>Documento</th>
+				            <th>Receptor</th>
+				            <th>Acciones</th>
+				        </tr>
+				    </thead>
+				    <tfoot>
+				        <tr>
+				            <th>Programa</th>
+				            <th>Fecha</th>
+				            <th>Documento</th>
+				            <th>Receptor</th>
+				            <th>Acciones</th>
+				        </tr>
+				    </tfoot>
+				    <tbody>
+				    	<?php
+				    		foreach ($controles as $control) 
+				    		{
+				    	?>
 
-						    		<tr>
-						    			<td>
-						    				<?php
-						    					echo $control['Estandar']['Programa']['nombre'];
-						    				?>
-						    			</td>
-						    			<td>
-						    				<?php
-						    					echo $control['Control']['fecha'];
-						    				?>
-						    			</td>
-						    			<td>
-						    				<?php
-						    					echo $control['Estandar']['nombre'];
-						    				?>
-						    			</td>
-						    			<td>
-						    				<?php
-						    					echo $control['Rol']['nombre'];
-						    				?>
-						    			</td>
-						    			<td>
-						    				<?php echo $this->Html->link(__('Ver'), array('action' => 'view', $control['Control']['id'])); ?>
-											<?php echo $this->Html->link(__('Modificar'), array('action' => 'edit', $control['Control']['id'])); ?>
-						    			</td>
-						    		</tr>
+				    		<tr>
+				    			<td>
+				    				<?php
+				    					echo $control['Estandar']['Programa']['nombre'];
+				    				?>
+				    			</td>
+				    			<td>
+				    				<?php
+				    					echo $control['Control']['fecha'];
+				    				?>
+				    			</td>
+				    			<td>
+				    				<?php
+				    					echo $control['Estandar']['nombre'];
+				    				?>
+				    			</td>
+				    			<td>
+				    				<?php
+				    					echo $control['Rol']['nombre'];
+				    				?>
+				    			</td>
+				    			<td>
+				    				<?php echo $this->Html->link(__('Ver'), array('action' => 'view', $control['Control']['id'])); ?>
+									<?php echo $this->Html->link(__('Modificar'), array('action' => 'edit', $control['Control']['id'])); ?>
+				    			</td>
+				    		</tr>
 
-						    	<?php
-						    		}
+				    	<?php
+				    		}
 
-						    	?>
-						    </tbody>
-						</table>
-					</div>
-				</td>
-			</tr>
-		</table>
+				    	?>
+				    </tbody>
+				</table>
+			</div>
+		</div>
  	</section>
 </section>
 <script>

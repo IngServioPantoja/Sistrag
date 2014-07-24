@@ -2,6 +2,13 @@ vinotinto = #7a0400
 azuloscuro= #333377
 movile=2
 
+h1, h2, h3 {
+margin: 0px!important;
+}
+
+input
+  color #666!important
+
 @font-face {
   font-family: 'icomoon'; 
   src: url('fonts/icomoon.eot'); 
@@ -29,12 +36,12 @@ movile=2
 
 ::-webkit-scrollbar-button 
 {
-  padding-bottom: 10px;
+  padding-bottom: 5px;
 
 }
 ::-moz-scrollbar-button 
 {
-  -moz-padding-bottom: 10px;
+  -moz-padding-bottom: 5px;
 
 }
 
@@ -257,9 +264,9 @@ html
           color: #b22;
           display: inline-block;
           font-family: icomoon;
-          font-size:24px; 
+          font-size:19px; 
           margin-left: 3px;
-          padding: 1px 2px;
+          padding: 0px 5px;
           text-decoration: none;
           -moz-box-shadow: 0px 0px 1px 2px #666;
           -webkit-box-shadow: 0px 0px 1px 2px #666;
@@ -295,7 +302,7 @@ html
             font-weight: 900;
             line-height: 17px;
             margin: 0px 15px 0px 0px;
-            padding: 10px 0px;
+            padding: 4px 0px;
             text-shadow: 0px 0px 8px #000;
             vertical-align: top;
 
@@ -550,6 +557,7 @@ html
           border 1px solid #2f486e
           border-top 3px solid #1e71b8
           padding 10px
+          overflow auto
 
           .crud
             border 1px solid #000
@@ -559,7 +567,7 @@ html
             box-shadow 5px 5px 11px rgba(0,0,105,0.4)
             -moz-box-shadow 5px 5px 11px rgba(0,0,105,0.4)
             -webkit-box-shadow 5px 5px 11px rgba(0,0,105,0.4)
-            display block
+            display table
             margin 0 auto
             overflow hidden
             
@@ -868,7 +876,7 @@ html
                     position absolute
                     text-shadow 0px 0px 20px rgba(0,0,0,1)
                     top 0px
-                    width 30px
+                    width 55px
                     z-index 1
 
                 .resultado_busqueda
@@ -924,7 +932,7 @@ html
                     position absolute
                     text-shadow 0px 0px 20px rgba(0,0,0,1)
                     top 0px
-                    width 30px
+                    width 60px
                     z-index 1
               
               .descargar_plantilla
@@ -1062,7 +1070,8 @@ html
                 .entradas
                   background-color rgba(255,255,255,0)
                   display block
-                  max-width 400px
+                  max-width 450px
+                  margin 0 auto
 
                   div
                     display block
@@ -1219,8 +1228,8 @@ html
                     background: linear-gradient(to bottom,  #600000 0%,#800000 50%,#600000 100%);
                     color #fff;
                   
-                  td
-                    text-align center
+                  td,th
+                    text-align center !important
 
                   .estandar_vigencia_inicio 
 
@@ -2023,6 +2032,7 @@ html
               color #fff !important
 
           ul 
+            margin-bottom 0px !important;
             
             li
               display inline-block
@@ -2331,7 +2341,7 @@ html
   #titulo h2
     color #eee
     font-family tahoma, arial, verdana, sans-serif
-    font-size 14px
+    font-size 14px!important
     padding 5px
     position relative
     text-shadow 0px 0px 8px #000
@@ -2414,6 +2424,32 @@ html
     display inline-block
     display none
 
+.dataTable
+  auto
+
+.dataTable thead
+  color #eee
+  background: -moz-linear-gradient(top,  #600000 0%, #800000 50%, #600000 100%);
+  background: -ms-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+  background: -o-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#600000), color-stop(50%,#800000), color-stop(100%,#600000));
+  background: -webkit-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+  background: linear-gradient(to bottom,  #600000 0%,#800000 50%,#600000 100%);
+
+.dataTable tbody tr:hover
+  background-color #fee;
+
+.dataTable tfoot
+  color #eee
+  background: -moz-linear-gradient(top,  #600000 0%, #800000 50%, #600000 100%);
+  background: -ms-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+  background: -o-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#600000), color-stop(50%,#800000), color-stop(100%,#600000));
+  background: -webkit-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+  background: linear-gradient(to bottom,  #600000 0%,#800000 50%,#600000 100%);
+
+.active
+  box-shadow 0px 0px 15px 15px rgba(250,250,250,0.5)!important
 
 /* Responsive */
 @media screen and (min-width: 690px)
