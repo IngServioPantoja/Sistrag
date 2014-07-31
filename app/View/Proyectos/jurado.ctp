@@ -160,11 +160,11 @@ if(!$this->request->is('ajax'))
 									<?php
 									echo $this->Html->link(
 									    '
-									    <button type="button" class="btn btn-default btn-lg use-tooltip" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+									    <button type="button" class="btn btn-default btn-lg use-tooltip" data-toggle="tooltip" data-placement="top" title="Ver documentos">
 											<span class="glyphicon glyphicon-list-alt"></span>
 										</button>
 										',
-									    array('controller'=>'proyectos', 'action'=>'documentos/'.$proyecto['Proyecto']['id']),
+									    array('controller'=>'proyectos', 'action'=>'documentosJurado/'.$proyecto['Proyecto']['id']),
 									    array('escape' => FALSE)
 									);
 									?>

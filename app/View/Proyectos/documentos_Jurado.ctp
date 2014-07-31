@@ -79,7 +79,7 @@ $roles;
 										{	
 						?>
 											<article class='ficha_index'>
-												<a href="../../documentos/evaluar_documento/<?php echo $detalleEntrega['id'];?>">
+												<a href="../../documentos/evaluacion_docente/<?php echo $detalleEntrega['id'];?>">
 													<table class="informacion_proyecto">
 														<tr>
 															<th>
@@ -180,7 +180,7 @@ $roles;
 															<th colspan="2" 
 
 																<?php
-																	if($detalleEntrega['parametro_veredicto_id']==1)
+																	if($detalleEntrega['parametro_veredicto_id']==1 && $detalleEntrega['estado_id']==3)
 																	{
 																?>
 																	class="doc_index_aprobado">
@@ -188,15 +188,15 @@ $roles;
 																		Aprobado
 																		</strong>
 																<?php
-																	}else if($detalleEntrega['parametro_veredicto_id']==2)
+																	}else if($detalleEntrega['parametro_veredicto_id']==2 && $detalleEntrega['estado_id']==3)
 																	{
 																?>
-																	class="doc_index_noaprobado">
+																	class="doc_index_enproceso">
 																		<strong>
 																		Aprobado con correciones
 																		</strong>
 																<?php
-																	}else if($detalleEntrega['parametro_veredicto_id']==3)
+																	}else if($detalleEntrega['parametro_veredicto_id']==3 && $detalleEntrega['estado_id']==3)
 																	{
 																?>
 																	class="doc_index_noaprobado">
@@ -212,15 +212,15 @@ $roles;
 															<th colspan="2" 
 
 																<?php
-																	if($detalleEntrega['correcciones']===0)
+																	if($detalleEntrega['correcciones']===0 && $detalleEntrega['estado_id']==3)
 																	{
 																?>
 																	class="doc_index_aprobado">
 																	<strong>
-																	Sin correccione
+																	Sin correcciones
 																	</strong>
 																<?php
-																	}else if($detalleEntrega['correcciones']==1)
+																	}else if($detalleEntrega['correcciones']==1 && $detalleEntrega['estado_id']==3)
 																	{
 																?>
 																	class="doc_index_noaprobado">

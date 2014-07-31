@@ -27,6 +27,7 @@ var $uses = array(
 	public function index() {
 		$this->Proyecto->recursive = 1;
 		$this->set('proyectos', $this->paginate());
+		
 	}
 
 	public function asesor() {

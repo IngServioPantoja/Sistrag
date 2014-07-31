@@ -1,5 +1,5 @@
-+<?php
-//print_r($descomposiciones);
+<?php
+print_r($descomposiciones);
 ?>
 <?php 
 ?>

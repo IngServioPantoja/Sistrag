@@ -1,8 +1,3 @@
-<?php
-//print_r($descomposiciones);
-?>
-<?php 
-?>
 <section class="panel_frame">
 	<div class="panel_menu">
 		<ul>
@@ -152,12 +147,9 @@
 										?>
 
 										<div class="row-fluid pull-right">
-											<div class="btn-group" data-toggle="buttons">
+											<div class="btn-group" data-toggle="buttons" style="overflow:hidden;">
 											  <label class="btn btn-success btn-xs aclarar <?php if($descomposicion['id_concepto']==1){echo 'active';}?>" idconcepto="1" onClick="actualizar_comentario(this)" idpregunta="<?php echo $descomposicion['id_comentario']; ?>">
 											    <input type="radio" name="concepto" <?php if($descomposicion['id_concepto']==1){echo "checked";}?>>Aprobado
-											  </label>
-											  <label class="btn btn-warning btn-xs aclarar <?php if($descomposicion['id_concepto']==2){echo 'active';}?>" idconcepto="2" onClick="actualizar_comentario(this)" idpregunta="<?php echo $descomposicion['id_comentario']; ?>">
-											    <input type="radio" name="concepto" <?php if($descomposicion['id_concepto']==2){echo "checked";}?>>Intermedio
 											  </label>
 											  <label class="btn btn-danger btn-xs aclarar <?php if($descomposicion['id_concepto']==3){echo 'active';}?>" idconcepto="3" onClick="actualizar_comentario(this)" idpregunta="<?php echo $descomposicion['id_comentario']; ?>">
 											    <input type="radio" name="concepto" <?php if($descomposicion['id_concepto']==3){echo "checked";}?>>No aprobado
@@ -282,10 +274,12 @@
 													Observaciones:
 													</span>
 												</div>
-												<div class='div_loading'>
-													<?php 
-														echo $this->Html->image('loader1.gif', array('alt' => 'loader',"class" => "img_loader", 'id' => $descomposicion['id_comentario'])); 
-													?>
+												<div style=";display:inline-block;margin:0px;vertical-align:top;" >
+													<div class="progress" id="<?php echo $descomposicion['id_comentario'];?>" style="display:none; width: 250px; height:16px;">
+														<div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%; padding:0px; font-size:10px;line-height:15px;">
+															Guardando
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -307,34 +301,71 @@
 								}
 								?>
 								</article>
+								
 						<?php
 							}
 						}
 						?>
+								
+						<div class="panel panel-default">
+							<div class="panel-heading"><h3>Veredicto final</h3></div>
+							<div class="panel-body">
+								<?php
+									echo $this->Form->create('Detalleentrega',array('id'=>'formularioDetalleentrega'));
+									echo $this->Form->input('id',array('value'=>$detalleentrega['Detalleentrega']['id']));
+								?>
+								<div class="row pd-5 pull-left form-inline">
+									<div class="btn-group" data-toggle="buttons" style="overflow:hidden; display:inline-block; vertical-align:top;">
+									  <label class="btn btn-success btn-md aclarar <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==1){echo 'active';}?>">
+									    <input type="radio" name="data[Detalleentrega][parametro_veredicto_id]" <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==1){echo "checked";}?> value="1">Aprobado
+									  </label>
+									  <label class="btn btn-warning btn-md aclarar <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==2){echo 'active';}?>">
+									    <input type="radio" name="data[Detalleentrega][parametro_veredicto_id]" <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==2){echo "checked";}?> value="2">Aprobado con correcciones
+									  </label>
+									  <label class="btn btn-danger btn-md aclarar <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==3){echo 'active';}?>">
+									    <input type="radio" name="data[Detalleentrega][parametro_veredicto_id]" <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==3){echo "checked";}?> value="3">No aprobado
+									  </label>
+									</div>
+									<div style=";display:inline-block;" >
+										<div class="progress" id="barraComentarios" style="display:none; width: 250px; height:30px;">
+											<div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%; padding:8px;">
+												Guardando
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group pd-5">
+									<?php
+										echo $this->Form->textarea('comentarios', array("label" => false,'type'=>'text',"class" => "cuestionario_titulo_input form-control use-tooltip",'data-toggle' =>'tooltip','data-placement' =>'top','title' =>'Correcciones generales del documento','value'=>$detalleentrega['Detalleentrega']['comentarios']));
+									?>
+								</div>
+								<?php
+									echo $this->Form->end(); 
+								?>
+								<?php
+									echo $this->Form->create('Detalleentrega',array('action'=>'emitir_concepto','onsubmit'=>'return confirm("¿Realmente desea terminar la evaluación de este documento y emitir un concepto?");'));
+									echo $this->Form->input('id',array('value'=>$detalleentrega['Detalleentrega']['id']));
+									echo $this->Form->hidden('estado_id',array('value'=>3));
+								?>
+								<?php
+									//echo $this->Form->submit(
+									 //   'Enviar evaluación', 
+									 //   array('class' => 'submitGrisRedondoDelgado','id'=>'submitCortoRight','div'=>false,'style'=>'float:none;margin:0 auto;')
+								//	); 
+
+									echo $this->Form->submit('Emitir concepto', array(
+										'url'=>array('controller'=>'detalleentregas','action'=>'emitir_concepto'),
+									    'div' => false,
+									    'class'=>'submitGrisRedondoDelgado',
+									    'id'=>'submitCortoRight',
+									    'style'=>'float:none;margin:0 auto;'
+									));
+								?>
+
+
+							</div>
+						</div>
 					</div>
-					<?php
-						if($proyecto['Documento']['enviado']==0)
-						{
-					?>
-					<div class="contenedorAzul">
-						<?php echo $this->Form->create('Entrega',array('controller'=>'entregas','action'=>'add')); ?>
-						<?php echo $this->Form->hidden('documento_id',array('value'=>$proyecto['Documento']['id'])); ?>
-						<?php echo $this->Form->hidden('proyecto_id',array('value'=>$proyecto['Proyecto']['id'])); ?>
-						<?php
-							echo $this->Form->select(
-								'rol_id', $roles,array('id'=>'rol','autocomplete' =>'off','empty'=>false)
-							);
-						?>
-						<?php 
-						echo $this->Form->submit(
-						    'Enviar', 
-						    array('class' => 'submitGrisRedondoDelgado','id'=>'submitCortoRight','div'=>false)
-						); 
-					    ?>	
-					</div>
-					<?php
-						}
-					?>
 					<span id="bot">
 					</span>
 				</td>
@@ -358,6 +389,26 @@
 	</a>
 </div>
 <?php
+$this->Js->get('#formularioDetalleentrega')->event('change',
+	$this->Js->request(
+	    array(
+	        'controller'=>'detalleentregas','action' => 'edit',
+	    ),
+	    array(
+	        'before'=>'$("#barraComentarios").fadeIn();',
+		    'complete' => '$("#barraComentarios").fadeOut();',
+	        'update'=>'#sss',
+	        'async' => true,
+	        'method' => 'post',
+	        'dataExpression'=>true,
+	        'data'=> $this->Js->serializeForm(array(
+	            'isForm' => false,
+	            'inline' => true
+	        ))
+	    )
+	)
+);
+?><?php
 $this->Js->get('#tiposestandares')->event('change',
 	$this->Js->request(
 	    array(
@@ -377,8 +428,8 @@ $this->Js->get('#tiposestandares')->event('change',
 );
 ?>
 <script>
+
 	$('.cuestionario_titulo_input').autosize();
-	//Realizar script para ctualizar comentarios de manera asincrona
 	function actualizar_comentario(e)
 	{	
 		var valor=$(e).val();
