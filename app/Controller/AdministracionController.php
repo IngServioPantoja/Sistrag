@@ -207,4 +207,9 @@ var $paginate =array(
 		$facultad['Facultad']['programas']=$this->Programa->find('count', $options);
 		$this->set('facultad',$facultad);
 	}
+
+	public function bienvenido()
+	{
+
+	}
 }

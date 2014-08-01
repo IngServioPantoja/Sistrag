@@ -1,5 +1,5 @@
 <?php
-print_r($descomposiciones);
+//print_r($descomposiciones);
 ?>
 <?php 
 ?>
@@ -123,11 +123,16 @@ print_r($descomposiciones);
 							<div class="unidad_integrantes" id="lista_documentos">
 								<?php echo $this->Form->submit(
 								    'Mostrar', 
-								    array('class' => 'submitGrisRedondoDelgado' )
+								    array('class' => 'btn btn-default','div'=>false,'role'=>'button')
 								); 
-							    ?>	
+							    ?>
+							    <a href="../comparar_documento/<?php echo $entrega['Detalleentrega']['id'];?>" class="btn btn-default" role="button">Comparar
+							    </a>	
 							</div>
-							<?php echo $this->Form->end(__('')); ?>
+							<?php 
+							//tengo un problemita... con la renderización de vistas de comparar tiene que ser coerente debe ser por el ajxa...
+							//asds
+							echo $this->Form->end(__('')); ?>
 						</div>
 					</div>
 					<div class="crud_fila_secundaria">

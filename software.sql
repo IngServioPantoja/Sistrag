@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-07-2014 a las 06:59:37
+-- Tiempo de generación: 31-07-2014 a las 02:56:47
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.11
 
@@ -89,7 +89,17 @@ CREATE TABLE IF NOT EXISTS `controles` (
   PRIMARY KEY (`id`),
   KEY `rol_id` (`rol_id`),
   KEY `estandar_id` (`estandar_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
+
+--
+-- Volcado de datos para la tabla `controles`
+--
+
+INSERT INTO `controles` (`id`, `fecha`, `rol_id`, `estandar_id`) VALUES
+(2, '2014-07-29', 2, 2),
+(9, '2014-07-31', 1, 2),
+(10, '2014-07-31', 1, 2),
+(11, '2014-07-31', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -99,28 +109,31 @@ CREATE TABLE IF NOT EXISTS `controles` (
 
 CREATE TABLE IF NOT EXISTS `detalleentregas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `entrega_id` int(11) NOT NULL,
+  `entrega_id` int(11) DEFAULT NULL,
   `personas_proyecto_id` int(11) DEFAULT NULL,
   `estado_id` int(11) DEFAULT NULL,
   `fecha_estado` date NOT NULL,
-  `veredicto` tinyint(4) NOT NULL DEFAULT '0',
-  `correciones` int(11) NOT NULL DEFAULT '0',
+  `parametro_veredicto_id` int(11) DEFAULT NULL,
+  `correcciones` int(11) DEFAULT NULL,
+  `comentarios` varchar(1000) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `entrega_id` (`entrega_id`),
   KEY `personas_proyecto_id` (`personas_proyecto_id`),
-  KEY `estado_id` (`estado_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+  KEY `estado_id` (`estado_id`),
+  KEY `parametro_veredicto_id` (`parametro_veredicto_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=73 ;
 
 --
 -- Volcado de datos para la tabla `detalleentregas`
 --
 
-INSERT INTO `detalleentregas` (`id`, `entrega_id`, `personas_proyecto_id`, `estado_id`, `fecha_estado`, `veredicto`, `correciones`) VALUES
-(1, 3250, 55, 1, '2014-07-02', 0, 0),
-(2, 3251, 53, 1, '2014-07-02', 0, 0),
-(3, 3251, 54, 1, '2014-07-02', 0, 0),
-(4, 3252, 50, 1, '2014-07-11', 0, 0),
-(5, 3253, 47, 1, '2014-07-11', 0, 0);
+INSERT INTO `detalleentregas` (`id`, `entrega_id`, `personas_proyecto_id`, `estado_id`, `fecha_estado`, `parametro_veredicto_id`, `correcciones`, `comentarios`) VALUES
+(67, 3290, 53, 1, '2014-07-22', NULL, NULL, ''),
+(68, 3290, 54, 1, '2014-07-22', NULL, NULL, ''),
+(69, 3291, 56, 3, '2014-07-24', 1, NULL, 'Esta es la evaluación del documento de trabajo de grado de sistragasdasdssdasd'),
+(70, 3292, 50, 1, '2014-07-22', NULL, NULL, ''),
+(71, 3293, 56, 1, '2014-07-30', NULL, NULL, ''),
+(72, 3294, 50, 1, '2014-07-30', NULL, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -138,15 +151,16 @@ CREATE TABLE IF NOT EXISTS `documentos` (
   PRIMARY KEY (`id`),
   KEY `estandar_id` (`estandar_id`),
   KEY `proyecto_id` (`proyecto_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=97 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=110 ;
 
 --
 -- Volcado de datos para la tabla `documentos`
 --
 
 INSERT INTO `documentos` (`id`, `fecha_guardado`, `enlace`, `enviado`, `estandar_id`, `proyecto_id`) VALUES
-(95, '2014-07-02 09:57:37', '', 1, 2, 109),
-(96, '2014-07-11 11:53:10', '', 1, 2, 108);
+(107, '2014-07-22 06:06:40', '', 1, 2, 109),
+(108, '2014-07-22 08:55:23', '', 1, 2, 108),
+(109, '2014-07-29 10:19:29', '', 1, 2, 108);
 
 -- --------------------------------------------------------
 
@@ -162,17 +176,19 @@ CREATE TABLE IF NOT EXISTS `entregas` (
   PRIMARY KEY (`id`),
   KEY `documento_id` (`documento_id`),
   KEY `rol_id` (`rol_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3254 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3295 ;
 
 --
 -- Volcado de datos para la tabla `entregas`
 --
 
 INSERT INTO `entregas` (`id`, `fecha_entrega`, `rol_id`, `documento_id`) VALUES
-(3250, '2014-07-02', 2, 95),
-(3251, '2014-07-02', 1, 95),
-(3252, '2014-07-11', 2, 96),
-(3253, '2014-07-11', 1, 96);
+(3289, '2014-07-22', 2, 107),
+(3290, '2014-07-22', 1, 107),
+(3291, '2014-07-22', 1, 108),
+(3292, '2014-07-22', 2, 108),
+(3293, '2014-07-30', 1, 109),
+(3294, '2014-07-30', 2, 109);
 
 -- --------------------------------------------------------
 
@@ -211,7 +227,7 @@ CREATE TABLE IF NOT EXISTS `estandares` (
   PRIMARY KEY (`id`),
   KEY `tiposestandar_id` (`tiposestandar_id`),
   KEY `programa_id` (`programa_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Volcado de datos para la tabla `estandares`
@@ -236,15 +252,103 @@ CREATE TABLE IF NOT EXISTS `evaluaciones` (
   KEY `parametro_concepto_id` (`parametro_concepto_id`),
   KEY `detalles_entrega_id` (`detalles_entrega_id`),
   KEY `items_documento_id` (`items_documento_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1232 ;
 
 --
 -- Volcado de datos para la tabla `evaluaciones`
 --
 
 INSERT INTO `evaluaciones` (`id`, `items_documento_id`, `detalles_entrega_id`, `parametro_concepto_id`, `comentarios`) VALUES
-(1, 1357, 1, 3, 'Primer come'),
-(2, 1358, 1, 2, 'Segundo com');
+(1142, 1550, 67, 3, ''),
+(1143, 1551, 67, 3, ''),
+(1144, 1552, 67, 3, ''),
+(1145, 1553, 67, 3, ''),
+(1146, 1554, 67, 3, ''),
+(1147, 1555, 67, 3, ''),
+(1148, 1556, 67, 3, ''),
+(1149, 1557, 67, 3, ''),
+(1150, 1558, 67, 3, ''),
+(1151, 1559, 67, 3, ''),
+(1152, 1560, 67, 3, ''),
+(1153, 1561, 67, 3, ''),
+(1154, 1562, 67, 3, ''),
+(1155, 1563, 67, 3, ''),
+(1156, 1564, 67, 3, ''),
+(1157, 1550, 68, 3, ''),
+(1158, 1551, 68, 3, ''),
+(1159, 1552, 68, 3, ''),
+(1160, 1553, 68, 3, ''),
+(1161, 1554, 68, 3, ''),
+(1162, 1555, 68, 3, ''),
+(1163, 1556, 68, 3, ''),
+(1164, 1557, 68, 3, ''),
+(1165, 1558, 68, 3, ''),
+(1166, 1559, 68, 3, ''),
+(1167, 1560, 68, 3, ''),
+(1168, 1561, 68, 3, ''),
+(1169, 1562, 68, 3, ''),
+(1170, 1563, 68, 3, ''),
+(1171, 1564, 68, 3, ''),
+(1172, 1566, 69, 3, ''),
+(1173, 1567, 69, 1, 'servio adnres pantoja troserasdndjdjisk'),
+(1174, 1568, 69, 3, 'asdasd'),
+(1175, 1569, 69, 3, 'asdasd'),
+(1176, 1570, 69, 1, 'asd'),
+(1177, 1571, 69, 1, 'asd'),
+(1178, 1572, 69, 3, 'asd'),
+(1179, 1573, 69, 1, '123'),
+(1180, 1574, 69, 1, '123123'),
+(1181, 1575, 69, 3, '123'),
+(1182, 1576, 69, 1, '123'),
+(1183, 1577, 69, 1, '123123'),
+(1184, 1578, 69, 3, ''),
+(1185, 1579, 69, 3, '12312'),
+(1186, 1580, 69, 3, 'asdasdssdssssdddsdssdsdddasdasdsadsadasdasdasdassdasdssssssssasddaaasdasdsdsdasdasdasdasdasdasdasdasdasdaasdasdsdsadasdasdasdasdaasdsaasdsddasdasdasd'),
+(1187, 1566, 70, 3, ''),
+(1188, 1567, 70, 3, ''),
+(1189, 1568, 70, 3, ''),
+(1190, 1569, 70, 3, ''),
+(1191, 1570, 70, 3, ''),
+(1192, 1571, 70, 3, ''),
+(1193, 1572, 70, 3, ''),
+(1194, 1573, 70, 3, ''),
+(1195, 1574, 70, 3, ''),
+(1196, 1575, 70, 3, ''),
+(1197, 1576, 70, 3, ''),
+(1198, 1577, 70, 3, ''),
+(1199, 1578, 70, 3, ''),
+(1200, 1579, 70, 3, ''),
+(1201, 1580, 70, 3, ''),
+(1202, 1582, 71, 3, ''),
+(1203, 1583, 71, 3, ''),
+(1204, 1584, 71, 3, ''),
+(1205, 1585, 71, 3, ''),
+(1206, 1586, 71, 3, ''),
+(1207, 1587, 71, 3, ''),
+(1208, 1588, 71, 3, ''),
+(1209, 1589, 71, 3, ''),
+(1210, 1590, 71, 3, ''),
+(1211, 1591, 71, 3, ''),
+(1212, 1592, 71, 3, ''),
+(1213, 1593, 71, 3, ''),
+(1214, 1594, 71, 3, ''),
+(1215, 1595, 71, 3, ''),
+(1216, 1596, 71, 3, ''),
+(1217, 1582, 72, 3, ''),
+(1218, 1583, 72, 3, ''),
+(1219, 1584, 72, 3, ''),
+(1220, 1585, 72, 3, ''),
+(1221, 1586, 72, 3, ''),
+(1222, 1587, 72, 3, ''),
+(1223, 1588, 72, 3, ''),
+(1224, 1589, 72, 3, ''),
+(1225, 1590, 72, 3, ''),
+(1226, 1591, 72, 3, ''),
+(1227, 1592, 72, 3, ''),
+(1228, 1593, 72, 3, ''),
+(1229, 1594, 72, 3, ''),
+(1230, 1595, 72, 3, ''),
+(1231, 1596, 72, 3, '');
 
 -- --------------------------------------------------------
 
@@ -284,7 +388,7 @@ CREATE TABLE IF NOT EXISTS `items` (
   `programa_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `programa_id` (`programa_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=60 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=58 ;
 
 --
 -- Volcado de datos para la tabla `items`
@@ -324,185 +428,271 @@ CREATE TABLE IF NOT EXISTS `items_contenidos` (
   `orden` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `items_documento_id` (`items_documento_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7173 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8291 ;
 
 --
 -- Volcado de datos para la tabla `items_contenidos`
 --
 
 INSERT INTO `items_contenidos` (`id`, `texto`, `tipo`, `items_documento_id`, `orden`) VALUES
-(7001, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1357, 1),
-(7002, 'Figura 3 Modelo en V.', '3', 1357, 2),
-(7003, '95/1.png', '6', 1357, 3),
-(7004, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1357, 4),
-(7005, 'Continuando con el contenido que se plantea', '2', 1357, 5),
-(7006, 'Otra línea de texto.', '2', 1357, 6),
-(7007, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1359, 1),
-(7008, 'Figura 3 Modelo en V.', '3', 1359, 2),
-(7009, '95/2.png', '6', 1359, 3),
-(7010, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1359, 4),
-(7011, 'Continuando con el contenido que se plantea', '2', 1359, 5),
-(7012, 'Otra línea de texto.', '2', 1359, 6),
-(7013, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1360, 1),
-(7014, 'Figura 3 Modelo en V.', '3', 1360, 2),
-(7015, '95/3.png', '6', 1360, 3),
-(7016, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1360, 4),
-(7017, 'Continuando con el contenido que se plantea', '2', 1360, 5),
-(7018, 'Otra línea de texto.', '2', 1360, 6),
-(7019, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1361, 1),
-(7020, 'Figura 3 Modelo en V.', '3', 1361, 2),
-(7021, '95/4.png', '6', 1361, 3),
-(7022, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1361, 4),
-(7023, 'Continuando con el contenido que se plantea', '2', 1361, 5),
-(7024, 'Otra línea de texto.', '2', 1361, 6),
-(7025, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1362, 1),
-(7026, 'Figura 3 Modelo en V.', '3', 1362, 2),
-(7027, '95/5.png', '6', 1362, 3),
-(7028, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1362, 4),
-(7029, 'Continuando con el contenido que se plantea', '2', 1362, 5),
-(7030, 'Otra línea de texto.', '2', 1362, 6),
-(7031, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1363, 1),
-(7032, 'Figura 3 Modelo en V.', '3', 1363, 2),
-(7033, '95/6.png', '6', 1363, 3),
-(7034, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1363, 4),
-(7035, 'Continuando con el contenido que se plantea', '2', 1363, 5),
-(7036, 'Otra línea de texto.', '2', 1363, 6),
-(7037, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1364, 1),
-(7038, 'Figura 3 Modelo en V.', '3', 1364, 2),
-(7039, '95/7.png', '6', 1364, 3),
-(7040, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1364, 4),
-(7041, 'Continuando con el contenido que se plantea', '2', 1364, 5),
-(7042, 'Otra línea de texto.', '2', 1364, 6),
-(7043, 'Descripción del contenido del ítem.', '2', 1365, 1),
-(7044, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1365, 2),
-(7045, 'Figura 3 Modelo en V.', '3', 1365, 3),
-(7046, '95/8.png', '6', 1365, 4),
-(7047, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico, pág 31.', '4', 1365, 5),
-(7048, 'Continuando con el contenido que se plantea', '2', 1365, 6),
-(7049, 'Otra línea de texto.', '2', 1365, 7),
-(7050, 'Descripción del contenido del ítem.', '2', 1366, 1),
-(7051, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1366, 2),
-(7052, 'Figura 3 Modelo en V.', '3', 1366, 3),
-(7053, '95/9.png', '6', 1366, 4),
-(7054, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico, pág 31.', '4', 1366, 5),
-(7055, 'Continuando con el contenido que se plantea', '2', 1366, 6),
-(7056, 'Otra línea de texto.', '2', 1366, 7),
-(7057, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1367, 1),
-(7058, 'Figura 3 Modelo en V.', '3', 1367, 2),
-(7059, '95/10.png', '6', 1367, 3),
-(7060, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1367, 4),
-(7061, 'Continuando con el contenido que se plantea', '2', 1367, 5),
-(7062, 'Otra línea de texto.', '2', 1367, 6),
-(7063, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1368, 1),
-(7064, 'Figura 3 Modelo en V.', '3', 1368, 2),
-(7065, '95/11.png', '6', 1368, 3),
-(7066, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1368, 4),
-(7067, 'Continuando con el contenido que se plantea', '2', 1368, 5),
-(7068, 'Otra línea de texto.', '2', 1368, 6),
-(7069, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1369, 1),
-(7070, 'Figura 3 Modelo en V.', '3', 1369, 2),
-(7071, '95/12.png', '6', 1369, 3),
-(7072, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1369, 4),
-(7073, 'Continuando con el contenido que se plantea', '2', 1369, 5),
-(7074, 'Otra línea de texto.', '2', 1369, 6),
-(7075, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1371, 1),
-(7076, 'Figura 3 Modelo en V.', '3', 1371, 2),
-(7077, '95/13.png', '6', 1371, 3),
-(7078, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1371, 4),
-(7079, 'Continuando con el contenido que se plantea', '2', 1371, 5),
-(7080, 'Otra línea de texto.', '2', 1371, 6),
-(7081, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1372, 1),
-(7082, 'Figura 3 Modelo en V.', '3', 1372, 2),
-(7083, '95/14.png', '6', 1372, 3),
-(7084, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1372, 4),
-(7085, 'Continuando con el contenido que se plantea', '2', 1372, 5),
-(7086, 'Otra línea de texto.', '2', 1372, 6),
-(7087, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1373, 1),
-(7088, 'Figura 3 Modelo en V.', '3', 1373, 2),
-(7089, '96/1.png', '6', 1373, 3),
-(7090, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1373, 4),
-(7091, 'Continuando con el contenido que se plantea', '2', 1373, 5),
-(7092, 'Otra línea de texto.', '2', 1373, 6),
-(7093, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1375, 1),
-(7094, 'Figura 3 Modelo en V.', '3', 1375, 2),
-(7095, '96/2.png', '6', 1375, 3),
-(7096, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1375, 4),
-(7097, 'Continuando con el contenido que se plantea', '2', 1375, 5),
-(7098, 'Otra línea de texto.', '2', 1375, 6),
-(7099, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1376, 1),
-(7100, 'Figura 3 Modelo en V.', '3', 1376, 2),
-(7101, '96/3.png', '6', 1376, 3),
-(7102, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1376, 4),
-(7103, 'Continuando con el contenido que se plantea', '2', 1376, 5),
-(7104, 'Otra línea de texto.', '2', 1376, 6),
-(7105, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1377, 1),
-(7106, 'Figura 3 Modelo en V.', '3', 1377, 2),
-(7107, '96/4.png', '6', 1377, 3),
-(7108, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1377, 4),
-(7109, 'Continuando con el contenido que se plantea', '2', 1377, 5),
-(7110, 'Otra línea de texto.', '2', 1377, 6),
-(7111, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1378, 1),
-(7112, 'Figura 3 Modelo en V.', '3', 1378, 2),
-(7113, '96/5.png', '6', 1378, 3),
-(7114, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1378, 4),
-(7115, 'Continuando con el contenido que se plantea', '2', 1378, 5),
-(7116, 'Otra línea de texto.', '2', 1378, 6),
-(7117, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1379, 1),
-(7118, 'Figura 3 Modelo en V.', '3', 1379, 2),
-(7119, '96/6.png', '6', 1379, 3),
-(7120, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1379, 4),
-(7121, 'Continuando con el contenido que se plantea', '2', 1379, 5),
-(7122, 'Otra línea de texto.', '2', 1379, 6),
-(7123, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1380, 1),
-(7124, 'Figura 3 Modelo en V.', '3', 1380, 2),
-(7125, '96/7.png', '6', 1380, 3),
-(7126, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1380, 4),
-(7127, 'Continuando con el contenido que se plantea', '2', 1380, 5),
-(7128, 'Otra línea de texto.', '2', 1380, 6),
-(7129, 'Descripción del contenido del ítem.', '2', 1381, 1),
-(7130, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1381, 2),
-(7131, 'Figura 3 Modelo en V.', '3', 1381, 3),
-(7132, '96/8.png', '6', 1381, 4),
-(7133, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico, pág 31.', '4', 1381, 5),
-(7134, 'Continuando con el contenido que se plantea', '2', 1381, 6),
-(7135, 'Otra línea de texto.', '2', 1381, 7),
-(7136, 'Descripción del contenido del ítem.', '2', 1382, 1),
-(7137, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1382, 2),
-(7138, 'Figura 3 Modelo en V.', '3', 1382, 3),
-(7139, '96/9.png', '6', 1382, 4),
-(7140, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico, pág 31.', '4', 1382, 5),
-(7141, 'Continuando con el contenido que se plantea', '2', 1382, 6),
-(7142, 'Otra línea de texto.', '2', 1382, 7),
-(7143, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1383, 1),
-(7144, 'Figura 3 Modelo en V.', '3', 1383, 2),
-(7145, '96/10.png', '6', 1383, 3),
-(7146, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1383, 4),
-(7147, 'Continuando con el contenido que se plantea', '2', 1383, 5),
-(7148, 'Otra línea de texto.', '2', 1383, 6),
-(7149, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1384, 1),
-(7150, 'Figura 3 Modelo en V.', '3', 1384, 2),
-(7151, '96/11.png', '6', 1384, 3),
-(7152, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1384, 4),
-(7153, 'Continuando con el contenido que se plantea', '2', 1384, 5),
-(7154, 'Otra línea de texto.', '2', 1384, 6),
-(7155, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1385, 1),
-(7156, 'Figura 3 Modelo en V.', '3', 1385, 2),
-(7157, '96/12.png', '6', 1385, 3),
-(7158, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1385, 4),
-(7159, 'Continuando con el contenido que se plantea', '2', 1385, 5),
-(7160, 'Otra línea de texto.', '2', 1385, 6),
-(7161, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1387, 1),
-(7162, 'Figura 3 Modelo en V.', '3', 1387, 2),
-(7163, '96/13.png', '6', 1387, 3),
-(7164, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1387, 4),
-(7165, 'Continuando con el contenido que se plantea', '2', 1387, 5),
-(7166, 'Otra línea de texto.', '2', 1387, 6),
-(7167, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1388, 1),
-(7168, 'Figura 3 Modelo en V.', '3', 1388, 2),
-(7169, '96/14.png', '6', 1388, 3),
-(7170, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1388, 4),
-(7171, 'Continuando con el contenido que se plantea', '2', 1388, 5),
-(7172, 'Otra línea de texto.', '2', 1388, 6);
+(8033, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1549, 1),
+(8034, 'Figura 3 Modelo en V.', '3', 1549, 2),
+(8035, '107/1.png', '6', 1549, 3),
+(8036, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1549, 4),
+(8037, 'Continuando con el contenido que se plantea', '2', 1549, 5),
+(8038, 'Otra línea de texto.', '2', 1549, 6),
+(8039, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1551, 1),
+(8040, 'Figura 3 Modelo en V.', '3', 1551, 2),
+(8041, '107/2.png', '6', 1551, 3),
+(8042, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1551, 4),
+(8043, 'Continuando con el contenido que se plantea', '2', 1551, 5),
+(8044, 'Otra línea de texto.', '2', 1551, 6),
+(8045, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1552, 1),
+(8046, 'Figura 3 Modelo en V.', '3', 1552, 2),
+(8047, '107/3.png', '6', 1552, 3),
+(8048, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1552, 4),
+(8049, 'Continuando con el contenido que se plantea', '2', 1552, 5),
+(8050, 'Otra línea de texto.', '2', 1552, 6),
+(8051, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1553, 1),
+(8052, 'Figura 3 Modelo en V.', '3', 1553, 2),
+(8053, '107/4.png', '6', 1553, 3),
+(8054, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1553, 4),
+(8055, 'Continuando con el contenido que se plantea', '2', 1553, 5),
+(8056, 'Otra línea de texto.', '2', 1553, 6),
+(8057, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1554, 1),
+(8058, 'Figura 3 Modelo en V.', '3', 1554, 2),
+(8059, '107/5.png', '6', 1554, 3),
+(8060, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1554, 4),
+(8061, 'Continuando con el contenido que se plantea', '2', 1554, 5),
+(8062, 'Otra línea de texto.', '2', 1554, 6),
+(8063, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1555, 1),
+(8064, 'Figura 3 Modelo en V.', '3', 1555, 2),
+(8065, '107/6.png', '6', 1555, 3),
+(8066, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1555, 4),
+(8067, 'Continuando con el contenido que se plantea', '2', 1555, 5),
+(8068, 'Otra línea de texto.', '2', 1555, 6),
+(8069, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1556, 1),
+(8070, 'Figura 3 Modelo en V.', '3', 1556, 2),
+(8071, '107/7.png', '6', 1556, 3),
+(8072, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1556, 4),
+(8073, 'Continuando con el contenido que se plantea', '2', 1556, 5),
+(8074, 'Otra línea de texto.', '2', 1556, 6),
+(8075, 'Descripción del contenido del ítem.', '2', 1557, 1),
+(8076, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1557, 2),
+(8077, 'Figura 3 Modelo en V.', '3', 1557, 3),
+(8078, '107/8.png', '6', 1557, 4),
+(8079, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico, pág 31.', '4', 1557, 5),
+(8080, 'Continuando con el contenido que se plantea', '2', 1557, 6),
+(8081, 'Otra línea de texto.', '2', 1557, 7),
+(8082, 'Descripción del contenido del ítem.', '2', 1558, 1),
+(8083, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1558, 2),
+(8084, 'Figura 3 Modelo en V.', '3', 1558, 3),
+(8085, '107/9.png', '6', 1558, 4),
+(8086, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico, pág 31.', '4', 1558, 5),
+(8087, 'Continuando con el contenido que se plantea', '2', 1558, 6),
+(8088, 'Otra línea de texto.', '2', 1558, 7),
+(8089, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1559, 1),
+(8090, 'Figura 3 Modelo en V.', '3', 1559, 2),
+(8091, '107/10.png', '6', 1559, 3),
+(8092, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1559, 4),
+(8093, 'Continuando con el contenido que se plantea', '2', 1559, 5),
+(8094, 'Otra línea de texto.', '2', 1559, 6),
+(8095, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1560, 1),
+(8096, 'Figura 3 Modelo en V.', '3', 1560, 2),
+(8097, '107/11.png', '6', 1560, 3),
+(8098, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1560, 4),
+(8099, 'Continuando con el contenido que se plantea', '2', 1560, 5),
+(8100, 'Otra línea de texto.', '2', 1560, 6),
+(8101, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1561, 1),
+(8102, 'Figura 3 Modelo en V.', '3', 1561, 2),
+(8103, '107/12.png', '6', 1561, 3),
+(8104, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1561, 4),
+(8105, 'Continuando con el contenido que se plantea', '2', 1561, 5),
+(8106, 'Otra línea de texto.', '2', 1561, 6),
+(8107, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1563, 1),
+(8108, 'Figura 3 Modelo en V.', '3', 1563, 2),
+(8109, '107/13.png', '6', 1563, 3),
+(8110, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1563, 4),
+(8111, 'Continuando con el contenido que se plantea', '2', 1563, 5),
+(8112, 'Otra línea de texto.', '2', 1563, 6),
+(8113, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1564, 1),
+(8114, 'Figura 3 Modelo en V.', '3', 1564, 2),
+(8115, '107/14.png', '6', 1564, 3),
+(8116, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1564, 4),
+(8117, 'Continuando con el contenido que se plantea', '2', 1564, 5),
+(8118, 'Otra línea de texto.', '2', 1564, 6),
+(8119, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1565, 1),
+(8120, 'Figura 3 Modelo en V.', '3', 1565, 2),
+(8121, '108/1.png', '6', 1565, 3),
+(8122, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1565, 4),
+(8123, 'Continuando con el contenido que se plantea', '2', 1565, 5),
+(8124, 'Otra línea de texto.', '2', 1565, 6),
+(8125, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1567, 1),
+(8126, 'Figura 3 Modelo en V.', '3', 1567, 2),
+(8127, '108/2.png', '6', 1567, 3),
+(8128, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1567, 4),
+(8129, 'Continuando con el contenido que se plantea', '2', 1567, 5),
+(8130, 'Otra línea de texto.', '2', 1567, 6),
+(8131, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1568, 1),
+(8132, 'Figura 3 Modelo en V.', '3', 1568, 2),
+(8133, '108/3.png', '6', 1568, 3),
+(8134, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1568, 4),
+(8135, 'Continuando con el contenido que se plantea', '2', 1568, 5),
+(8136, 'Otra línea de texto.', '2', 1568, 6),
+(8137, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1569, 1),
+(8138, 'Figura 3 Modelo en V.', '3', 1569, 2),
+(8139, '108/4.png', '6', 1569, 3),
+(8140, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1569, 4),
+(8141, 'Continuando con el contenido que se plantea', '2', 1569, 5),
+(8142, 'Otra línea de texto.', '2', 1569, 6),
+(8143, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1570, 1),
+(8144, 'Figura 3 Modelo en V.', '3', 1570, 2),
+(8145, '108/5.png', '6', 1570, 3),
+(8146, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1570, 4),
+(8147, 'Continuando con el contenido que se plantea', '2', 1570, 5),
+(8148, 'Otra línea de texto.', '2', 1570, 6),
+(8149, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1571, 1),
+(8150, 'Figura 3 Modelo en V.', '3', 1571, 2),
+(8151, '108/6.png', '6', 1571, 3),
+(8152, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1571, 4),
+(8153, 'Continuando con el contenido que se plantea', '2', 1571, 5),
+(8154, 'Otra línea de texto.', '2', 1571, 6),
+(8155, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1572, 1),
+(8156, 'Figura 3 Modelo en V.', '3', 1572, 2),
+(8157, '108/7.png', '6', 1572, 3),
+(8158, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1572, 4),
+(8159, 'Continuando con el contenido que se plantea', '2', 1572, 5),
+(8160, 'Otra línea de texto.', '2', 1572, 6),
+(8161, 'Descripción del contenido del ítem.', '2', 1573, 1),
+(8162, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1573, 2),
+(8163, 'Figura 3 Modelo en V.', '3', 1573, 3),
+(8164, '108/8.png', '6', 1573, 4),
+(8165, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico, pág 31.', '4', 1573, 5),
+(8166, 'Continuando con el contenido que se plantea', '2', 1573, 6),
+(8167, 'Otra línea de texto.', '2', 1573, 7),
+(8168, 'Descripción del contenido del ítem.', '2', 1574, 1),
+(8169, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1574, 2),
+(8170, 'Figura 3 Modelo en V.', '3', 1574, 3),
+(8171, '108/9.png', '6', 1574, 4),
+(8172, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico, pág 31.', '4', 1574, 5),
+(8173, 'Continuando con el contenido que se plantea', '2', 1574, 6),
+(8174, 'Otra línea de texto.', '2', 1574, 7),
+(8175, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1575, 1),
+(8176, 'Figura 3 Modelo en V.', '3', 1575, 2),
+(8177, '108/10.png', '6', 1575, 3),
+(8178, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1575, 4),
+(8179, 'Continuando con el contenido que se plantea', '2', 1575, 5),
+(8180, 'Otra línea de texto.', '2', 1575, 6),
+(8181, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1576, 1),
+(8182, 'Figura 3 Modelo en V.', '3', 1576, 2),
+(8183, '108/11.png', '6', 1576, 3),
+(8184, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1576, 4),
+(8185, 'Continuando con el contenido que se plantea', '2', 1576, 5),
+(8186, 'Otra línea de texto.', '2', 1576, 6),
+(8187, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1577, 1),
+(8188, 'Figura 3 Modelo en V.', '3', 1577, 2),
+(8189, '108/12.png', '6', 1577, 3),
+(8190, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1577, 4),
+(8191, 'Continuando con el contenido que se plantea', '2', 1577, 5),
+(8192, 'Otra línea de texto.', '2', 1577, 6),
+(8193, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1579, 1),
+(8194, 'Figura 3 Modelo en V.', '3', 1579, 2),
+(8195, '108/13.png', '6', 1579, 3),
+(8196, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1579, 4),
+(8197, 'Continuando con el contenido que se plantea', '2', 1579, 5),
+(8198, 'Otra línea de texto.', '2', 1579, 6),
+(8199, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1580, 1),
+(8200, 'Figura 3 Modelo en V.', '3', 1580, 2),
+(8201, '108/14.png', '6', 1580, 3),
+(8202, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1580, 4),
+(8203, 'Continuando con el contenido que se plantea', '2', 1580, 5),
+(8204, 'Otra línea de texto.', '2', 1580, 6),
+(8205, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1581, 1),
+(8206, 'Figura 3 Modelo en V.', '3', 1581, 2),
+(8207, '109/1.png', '6', 1581, 3),
+(8208, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1581, 4),
+(8209, 'Continuando con el contenido que se plantea', '2', 1581, 5),
+(8210, 'Otra línea de texto.', '2', 1581, 6),
+(8211, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1583, 1),
+(8212, 'Figura 3 Modelo en V.', '3', 1583, 2),
+(8213, '109/2.png', '6', 1583, 3),
+(8214, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1583, 4),
+(8215, 'Continuando con el contenido que se plantea', '2', 1583, 5),
+(8216, 'Otra línea de texto.', '2', 1583, 6),
+(8217, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1584, 1),
+(8218, 'Figura 3 Modelo en V.', '3', 1584, 2),
+(8219, '109/3.png', '6', 1584, 3),
+(8220, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1584, 4),
+(8221, 'Continuando con el contenido que se plantea', '2', 1584, 5),
+(8222, 'Otra línea de texto.', '2', 1584, 6),
+(8223, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1585, 1),
+(8224, 'Figura 3 Modelo en V.', '3', 1585, 2),
+(8225, '109/4.png', '6', 1585, 3),
+(8226, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1585, 4),
+(8227, 'Continuando con el contenido que se plantea', '2', 1585, 5),
+(8228, 'Otra línea de texto.', '2', 1585, 6),
+(8229, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1586, 1),
+(8230, 'Figura 3 Modelo en V.', '3', 1586, 2),
+(8231, '109/5.png', '6', 1586, 3),
+(8232, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1586, 4),
+(8233, 'Continuando con el contenido que se plantea', '2', 1586, 5),
+(8234, 'Otra línea de texto.', '2', 1586, 6),
+(8235, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1587, 1),
+(8236, 'Figura 3 Modelo en V.', '3', 1587, 2),
+(8237, '109/6.png', '6', 1587, 3),
+(8238, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1587, 4),
+(8239, 'Continuando con el contenido que se plantea', '2', 1587, 5),
+(8240, 'Otra línea de texto.', '2', 1587, 6),
+(8241, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1588, 1),
+(8242, 'Figura 3 Modelo en V.', '3', 1588, 2),
+(8243, '109/7.png', '6', 1588, 3),
+(8244, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1588, 4),
+(8245, 'Continuando con el contenido que se plantea', '2', 1588, 5),
+(8246, 'Otra línea de texto.', '2', 1588, 6),
+(8247, 'Descripción del contenido del ítem.', '2', 1589, 1),
+(8248, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1589, 2),
+(8249, 'Figura 3 Modelo en V.', '3', 1589, 3),
+(8250, '109/8.png', '6', 1589, 4),
+(8251, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico, pág 31.', '4', 1589, 5),
+(8252, 'Continuando con el contenido que se plantea', '2', 1589, 6),
+(8253, 'Otra línea de texto.', '2', 1589, 7),
+(8254, 'Descripción del contenido del ítem.', '2', 1590, 1),
+(8255, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1590, 2),
+(8256, 'Figura 3 Modelo en V.', '3', 1590, 3),
+(8257, '109/9.png', '6', 1590, 4),
+(8258, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico, pág 31.', '4', 1590, 5),
+(8259, 'Continuando con el contenido que se plantea', '2', 1590, 6),
+(8260, 'Otra línea de texto.', '2', 1590, 7),
+(8261, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1591, 1),
+(8262, 'Figura 3 Modelo en V.', '3', 1591, 2),
+(8263, '109/10.png', '6', 1591, 3),
+(8264, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1591, 4),
+(8265, 'Continuando con el contenido que se plantea', '2', 1591, 5),
+(8266, 'Otra línea de texto.', '2', 1591, 6),
+(8267, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1592, 1),
+(8268, 'Figura 3 Modelo en V.', '3', 1592, 2),
+(8269, '109/11.png', '6', 1592, 3),
+(8270, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1592, 4),
+(8271, 'Continuando con el contenido que se plantea', '2', 1592, 5),
+(8272, 'Otra línea de texto.', '2', 1592, 6),
+(8273, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1593, 1),
+(8274, 'Figura 3 Modelo en V.', '3', 1593, 2),
+(8275, '109/12.png', '6', 1593, 3),
+(8276, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1593, 4),
+(8277, 'Continuando con el contenido que se plantea', '2', 1593, 5),
+(8278, 'Otra línea de texto.', '2', 1593, 6),
+(8279, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1595, 1),
+(8280, 'Figura 3 Modelo en V.', '3', 1595, 2),
+(8281, '109/13.png', '6', 1595, 3),
+(8282, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1595, 4),
+(8283, 'Continuando con el contenido que se plantea', '2', 1595, 5),
+(8284, 'Otra línea de texto.', '2', 1595, 6),
+(8285, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1596, 1),
+(8286, 'Figura 3 Modelo en V.', '3', 1596, 2),
+(8287, '109/14.png', '6', 1596, 3),
+(8288, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1596, 4),
+(8289, 'Continuando con el contenido que se plantea', '2', 1596, 5),
+(8290, 'Otra línea de texto.', '2', 1596, 6);
 
 -- --------------------------------------------------------
 
@@ -518,45 +708,61 @@ CREATE TABLE IF NOT EXISTS `items_documento` (
   PRIMARY KEY (`id`),
   KEY `documento_id` (`documento_id`),
   KEY `items_estandar_id` (`items_estandar_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1389 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1597 ;
 
 --
 -- Volcado de datos para la tabla `items_documento`
 --
 
 INSERT INTO `items_documento` (`id`, `caracteres`, `documento_id`, `items_estandar_id`) VALUES
-(1357, 243, 95, 30),
-(1358, 0, 95, 33),
-(1359, 243, 95, 34),
-(1360, 243, 95, 35),
-(1361, 243, 95, 36),
-(1362, 243, 95, 37),
-(1363, 243, 95, 38),
-(1364, 243, 95, 39),
-(1365, 281, 95, 40),
-(1366, 281, 95, 41),
-(1367, 243, 95, 42),
-(1368, 243, 95, 43),
-(1369, 243, 95, 50),
-(1370, 0, 95, 51),
-(1371, 243, 95, 52),
-(1372, 243, 95, 55),
-(1373, 243, 96, 30),
-(1374, 0, 96, 33),
-(1375, 243, 96, 34),
-(1376, 243, 96, 35),
-(1377, 243, 96, 36),
-(1378, 243, 96, 37),
-(1379, 243, 96, 38),
-(1380, 243, 96, 39),
-(1381, 281, 96, 40),
-(1382, 281, 96, 41),
-(1383, 243, 96, 42),
-(1384, 243, 96, 43),
-(1385, 243, 96, 50),
-(1386, 0, 96, 51),
-(1387, 243, 96, 52),
-(1388, 243, 96, 55);
+(1549, 243, 107, 30),
+(1550, 0, 107, 33),
+(1551, 243, 107, 34),
+(1552, 243, 107, 35),
+(1553, 243, 107, 36),
+(1554, 243, 107, 37),
+(1555, 243, 107, 38),
+(1556, 243, 107, 39),
+(1557, 281, 107, 40),
+(1558, 281, 107, 41),
+(1559, 243, 107, 42),
+(1560, 243, 107, 43),
+(1561, 243, 107, 50),
+(1562, 0, 107, 51),
+(1563, 243, 107, 52),
+(1564, 243, 107, 55),
+(1565, 243, 108, 30),
+(1566, 0, 108, 33),
+(1567, 243, 108, 34),
+(1568, 243, 108, 35),
+(1569, 243, 108, 36),
+(1570, 243, 108, 37),
+(1571, 243, 108, 38),
+(1572, 243, 108, 39),
+(1573, 281, 108, 40),
+(1574, 281, 108, 41),
+(1575, 243, 108, 42),
+(1576, 243, 108, 43),
+(1577, 243, 108, 50),
+(1578, 0, 108, 51),
+(1579, 243, 108, 52),
+(1580, 243, 108, 55),
+(1581, 243, 109, 30),
+(1582, 0, 109, 33),
+(1583, 243, 109, 34),
+(1584, 243, 109, 35),
+(1585, 243, 109, 36),
+(1586, 243, 109, 37),
+(1587, 243, 109, 38),
+(1588, 243, 109, 39),
+(1589, 281, 109, 40),
+(1590, 281, 109, 41),
+(1591, 243, 109, 42),
+(1592, 243, 109, 43),
+(1593, 243, 109, 50),
+(1594, 0, 109, 51),
+(1595, 243, 109, 52),
+(1596, 243, 109, 55);
 
 -- --------------------------------------------------------
 
@@ -575,7 +781,7 @@ CREATE TABLE IF NOT EXISTS `items_estandares` (
   KEY `estandar_id` (`estandar_id`),
   KEY `item_id` (`item_id`),
   KEY `items_estandar_id` (`items_estandar_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=91 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=56 ;
 
 --
 -- Volcado de datos para la tabla `items_estandares`
@@ -661,7 +867,7 @@ INSERT INTO `menus` (`id`, `texto`, `vinculo`, `icono`, `estado`, `menu_id`) VAL
 (26, 'Notificaciones', '/notificaciones/index', 'icon-earth', 0, 1),
 (27, 'Documentos', '/documentos', '', 0, 1),
 (30, 'Entregas', '/entregas', '', 0, 1),
-(33, 'Conogramas', '/cronogramas', 'icon-calendar', 0, 1),
+(33, 'Conogramas', '/controles/cronogramas', 'icon-calendar', 0, 1),
 (34, 'Proyectos Asesorados', '/proyectos/asesor', 'icon-batman', 0, 1),
 (35, 'Proyectos A Evaluar', '/proyectos/jurado', 'icon-auction', 0, 1);
 
@@ -807,7 +1013,7 @@ CREATE TABLE IF NOT EXISTS `personas_proyectos` (
   KEY `proyecto_id` (`proyecto_id`),
   KEY `persona_id` (`persona_id`),
   KEY `rol_id` (`rol_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=56 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=57 ;
 
 --
 -- Volcado de datos para la tabla `personas_proyectos`
@@ -817,14 +1023,14 @@ INSERT INTO `personas_proyectos` (`id`, `proyecto_id`, `persona_id`, `rol_id`) V
 (33, 107, 164, 3),
 (35, 107, 2, 1),
 (36, 107, 1, 1),
-(47, 108, 1, 1),
 (49, 108, 164, 3),
 (50, 108, 165, 2),
 (51, 109, 5, 3),
 (52, 109, 161, 3),
 (53, 109, 3, 1),
 (54, 109, 162, 1),
-(55, 109, 4, 2);
+(55, 109, 4, 2),
+(56, 108, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1050,7 +1256,8 @@ ALTER TABLE `controles`
 ALTER TABLE `detalleentregas`
   ADD CONSTRAINT `detalleentregas_ibfk_1` FOREIGN KEY (`entrega_id`) REFERENCES `entregas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `detalleentregas_ibfk_2` FOREIGN KEY (`personas_proyecto_id`) REFERENCES `personas_proyectos` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `detalleentregas_ibfk_3` FOREIGN KEY (`estado_id`) REFERENCES `estados` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
+  ADD CONSTRAINT `detalleentregas_ibfk_3` FOREIGN KEY (`estado_id`) REFERENCES `estados` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `veredicto_fk` FOREIGN KEY (`parametro_veredicto_id`) REFERENCES `parametros` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `documentos`
@@ -1078,8 +1285,8 @@ ALTER TABLE `estandares`
 --
 ALTER TABLE `evaluaciones`
   ADD CONSTRAINT `evaluaciones_ibfk_1` FOREIGN KEY (`parametro_concepto_id`) REFERENCES `parametros` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `evaluaciones_ibfk_2` FOREIGN KEY (`items_documento_id`) REFERENCES `items_documento` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `evaluaciones_ibfk_3` FOREIGN KEY (`detalles_entrega_id`) REFERENCES `detalleentregas` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `evaluaciones_ibfk_2` FOREIGN KEY (`items_documento_id`) REFERENCES `items_documento` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `evaluaciones_ibfk_3` FOREIGN KEY (`detalles_entrega_id`) REFERENCES `detalleentregas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `items`

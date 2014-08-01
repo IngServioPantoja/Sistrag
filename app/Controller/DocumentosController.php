@@ -19,7 +19,8 @@ class DocumentosController extends AppController {
 		'Rol',
 		'Entrega',
 		'Detalleentrega',
-		'Evaluacion');
+		'Evaluacion',
+		'Persona');
 	var $items=array();
 	var $maquetarMostrar=array();
 	var	$DatosXML="";
@@ -847,6 +848,7 @@ class DocumentosController extends AppController {
 		{
 			$options = array('conditions' => array('Detalleentrega.' . $this->Documento->primaryKey => $id));
 			$detalle_entrega=$this->Detalleentrega->find('first', $options);
+			$this->set('entrega',$detalle_entrega);
 			$id=$detalle_entrega['Entrega']['documento_id'];
 		}
 		
@@ -1026,26 +1028,33 @@ class DocumentosController extends AppController {
 
 	public function comparar_documento($id = null)
 	{	
-		if (!$this->Detalleentrega->exists($id)) 
-		{
-			throw new NotFoundException(__('No se ha ingresado una entrega valida'));
-		}
 		if ($this->request->is('post')) 
 		{
-			$this->request->data['Proyecto']['id_primero'];
-			$this->request->data['Proyecto']['id_segundo'];
-			$segundo=70;
-			//Solo nos falta traer el otro array del mismo pero de otro documento y brebaci al vuelta presentamos y comparamos.
-			$id=$this->request->data['Proyecto']['documento']; 
-			$this->redirect(array('action' => 'mostrar_documento',$id));
+			$this->request->data['Documento']['id_primero'];
+			$this->request->data['Documento']['id_segundo'];
+			//print_r($this->request->data);
 
-		}
-		if(isset($id))
+			$options = array('conditions' => array('Detalleentrega.' . $this->Documento->primaryKey => $this->request->data['Documento']['id_primero']));
+			$detalle_entrega=$this->Detalleentrega->find('first', $options);
+			$id=$detalle_entrega['Entrega']['documento_id'];
+			$primerDocumento=$detalle_entrega['Detalleentrega']['id'];
+			$this->set('idPrimerDocumento',$primerDocumento);
+
+
+			$optiones = array('conditions' => array('Detalleentrega.' . $this->Documento->primaryKey => $this->request->data['Documento']['id_segundo']));
+			$detalle_entrega2=$this->Detalleentrega->find('first', $optiones);
+			$segundo=$detalle_entrega2['Entrega']['documento_id'];
+			$segundoDocumento=$detalle_entrega2['Detalleentrega']['id'];
+			$this->set('idSegundoDocumento',$segundoDocumento);
+
+		}else
 		{
 			$options = array('conditions' => array('Detalleentrega.' . $this->Documento->primaryKey => $id));
 			$detalle_entrega=$this->Detalleentrega->find('first', $options);
 			$id=$detalle_entrega['Entrega']['documento_id'];
-
+			$segundo=$id;
+			$this->set('idPrimerDocumento',$id);
+			$this->set('idSegundoDocumento',$id);		
 		}
 		
 
@@ -1139,13 +1148,40 @@ class DocumentosController extends AppController {
 		$tiposestandares=$this->Documento->find('list', $opciones);
 		$opciones = array(
 	    	'joins' => array(
-		        array(
-		            'table' => 'proyectos',
-		            'alias' => 'Proyecto',
+	        	array(
+		            'table' => 'personas_proyectos',
+		            'alias' => 'PersonaProyecto',
 		            'type' => 'INNER',
 		            'conditions' => 
 		            array(
-		                'Proyecto.id = Documento.proyecto_id'
+		                'Persona.id = PersonaProyecto.persona_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'detalleentregas',
+		            'alias' => 'DetalleEntrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'PersonaProyecto.id = DetalleEntrega.personas_proyecto_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'entregas',
+		            'alias' => 'Entrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Entrega.id = DetalleEntrega.entrega_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'documentos',
+		            'alias' => 'Documento',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Documento.id = Entrega.documento_id'
 	            	)
 	        	),
 	        	array(
@@ -1158,24 +1194,115 @@ class DocumentosController extends AppController {
 	            	)
 	        	),
 	        	array(
-		            'table' => 'tiposestandares',
-		            'alias' => 'TiposEstandar',
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
 		            'type' => 'INNER',
 		            'conditions' => 
 		            array(
-		                'TiposEstandar.id = Estandar.tiposestandar_id'
+		                'Proyecto.id = Documento.proyecto_id'
 	            	)
 	        	)
     		),
-	    	'fields' => array('Documento.id','Documento.fecha_guardado'),
+	    	'fields' => array('DetalleEntrega.id','Documento.fecha_guardado','Persona.id'),
 	    	'conditions' => 
 	            array(
-	                'Documento.proyecto_id' => $proyecto['Proyecto']['id'],
+	                'Proyecto.id' => $proyecto['Proyecto']['id'],
 	                'Estandar.id' => $proyecto['TiposEstandar']['id']
 	           	),
            	'order' => array('Documento.fecha_guardado desc'),
+           	'recursive'=>0
 	   	);
-		$documentos=$this->Documento->find('list', $opciones);
+
+		$entregasDocumento=$this->Persona->find('all', $opciones);
+
+		//Personas que recibieorn los documentos
+		$opciones = array(
+	    	'joins' => array(
+	        	array(
+		            'table' => 'personas_proyectos',
+		            'alias' => 'PersonaProyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Persona.id = PersonaProyecto.persona_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'detalleentregas',
+		            'alias' => 'DetalleEntrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'PersonaProyecto.id = DetalleEntrega.personas_proyecto_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'entregas',
+		            'alias' => 'Entrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Entrega.id = DetalleEntrega.entrega_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'documentos',
+		            'alias' => 'Documento',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Documento.id = Entrega.documento_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'estandares',
+		            'alias' => 'Estandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Estandar.id = Documento.estandar_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Proyecto.id = Documento.proyecto_id'
+	            	)
+	        	)
+    		),
+	    	'fields' => array('DISTINCT Persona.id','Persona.nombre','Persona.apellido'),
+	    	'conditions' => 
+	            array(
+	                'Proyecto.id' => $proyecto['Proyecto']['id'],
+	                'Estandar.id' => $proyecto['TiposEstandar']['id']
+	           	),
+           	'order' => array('Documento.fecha_guardado desc'),
+           	'recursive'=>0
+	   	);
+
+		$personas=$this->Persona->find('all', $opciones);
+
+		$listaEntregas=array();
+		foreach ($personas as $persona) 
+		{
+			
+			foreach ($entregasDocumento as $entregaDocumento) {
+				
+			if($persona['Persona']['id']==$entregaDocumento['Persona']['id'])
+			{
+				$listaEntregas[$persona['Persona']['nombre']." ".$persona['Persona']['apellido']][$entregaDocumento['DetalleEntrega']['id']]=$entregaDocumento['Documento']['fecha_guardado'];
+
+			}	
+
+			}
+
+		}
+		//Previamente organizamo stodos lso elementos para que dijeran aquien se hiso la entrega
+		$this->set('documentos',$listaEntregas);
+
 		//4
 	/* Contenido de las evaluaciones */
 		$opciones = array(
@@ -1223,12 +1350,10 @@ class DocumentosController extends AppController {
 		$roles=$this->Rol->find('list', $opciones);
 		$this->set('descomposiciones',$maquetarMostrar);
 		$this->set('tiposestandares',$tiposestandares);
-		$this->set('documentos',$documentos);
 		$this->set('anclasItems',$anclasItems);
 		$this->set('roles',$roles);
 
 		//Crearemos la segunda lista de items
-		$segundo=108;
 		//La entrega 70 con el documento 108;
 		$this->Documento->recursive = 0;
 		$options = array('conditions' => array('Documento.' . $this->Documento->primaryKey => $segundo));
@@ -1318,45 +1443,6 @@ class DocumentosController extends AppController {
            	'group' => array('TiposEstandar.id'),		
 	   	);
 		$tiposestandares=$this->Documento->find('list', $opciones);
-		$opciones = array(
-	    	'joins' => array(
-		        array(
-		            'table' => 'proyectos',
-		            'alias' => 'Proyecto',
-		            'type' => 'INNER',
-		            'conditions' => 
-		            array(
-		                'Proyecto.id = Documento.proyecto_id'
-	            	)
-	        	),
-	        	array(
-		            'table' => 'estandares',
-		            'alias' => 'Estandar',
-		            'type' => 'INNER',
-		            'conditions' => 
-		            array(
-		                'Estandar.id = Documento.estandar_id'
-	            	)
-	        	),
-	        	array(
-		            'table' => 'tiposestandares',
-		            'alias' => 'TiposEstandar',
-		            'type' => 'INNER',
-		            'conditions' => 
-		            array(
-		                'TiposEstandar.id = Estandar.tiposestandar_id'
-	            	)
-	        	)
-    		),
-	    	'fields' => array('Documento.id','Documento.fecha_guardado'),
-	    	'conditions' => 
-	            array(
-	                'Documento.proyecto_id' => $proyecto['Proyecto']['id'],
-	                'Estandar.id' => $proyecto['TiposEstandar']['id']
-	           	),
-           	'order' => array('Documento.fecha_guardado desc'),
-	   	);
-		$documentos=$this->Documento->find('list', $opciones);
 		//4
 		$opciones = array(
 	    	'conditions' => 
@@ -1405,7 +1491,70 @@ class DocumentosController extends AppController {
 	}
 
 
+	public function lista_comparaciones()
+	{
+		$proyecto=$this->request->data['Documento']['Proyecto'];
+		$estandar=$this->request->data['Documento']['tipodocumento'];
+		$opciones = array(
+	    	'joins' => array(
+	        	array(
+		            'table' => 'entregas',
+		            'alias' => 'Entrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Entrega.id = Detalleentrega.entrega_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'documentos',
+		            'alias' => 'Documento',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Documento.id = Entrega.documento_id'
+	            	)
+	        	),
+		        array(
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Proyecto.id = Documento.proyecto_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'estandares',
+		            'alias' => 'Estandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Estandar.id = Documento.estandar_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'tiposestandares',
+		            'alias' => 'TiposEstandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'TiposEstandar.id = Estandar.tiposestandar_id'
+	            	)
+	        	)
+    		),
+	    	'fields' => array('Detalleentrega.id','Documento.fecha_guardado'),
+	    	'conditions' => 
+	            array(
+	                'Proyecto.id' => $proyecto,
+	                'Estandar.id' => $estandar
+	           	),
+           	'order' => array('Documento.fecha_guardado desc'),
+	   	);
 
+		$documentos2=$this->Detalleentrega->find('list', $opciones);
+		$this->set('documentos',$documentos2);
+	}
 
 
 	public function evaluacion_docente($id = null)
@@ -1730,6 +1879,7 @@ class DocumentosController extends AppController {
 			$opciones= array('conditions' => array('Estandar.programa_id' => $usuario['Persona']['programa_id']));
 			$estandares = $this->Documento->Estandar->find('list',$opciones);
 		}
+		print_r($estandares);
 		$this->set(compact('estandares'));
 	}
 

@@ -123,13 +123,13 @@ var $uses = array(
 		            array(
 		                "Documento.proyecto_id = $id"
 		            	),
-           	'order' => array('Documento.fecha_guardado asc'),
+           	'order' => array('Documento.fecha_guardado desc'),
            	'recursive'=>-1,		
 	   	);
 		$documentos=$this->Documento->find('all',$opciones);
 		$opciones = array(
 	        'fields'=>array('Entrega.*'),
-           	'order' => array('Entrega.fecha_entrega asc'),
+           	'order' => array('Entrega.fecha_entrega desc'),
            	'recursive'=>-1,		
 	   	);
 		$entregas=$this->Entrega->find('all',$opciones);

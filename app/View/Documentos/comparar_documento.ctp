@@ -103,60 +103,370 @@
 								?>
 							</div>
 						</div>	
-						<div class="contenedor_integrantes">
-							<?php echo $this->Form->create('Proyecto'); ?>
-							<?php echo $this->Form->input('id',array('value'=>$proyecto['Proyecto']['id'])); ?>
-							<div class="unidad_integrantes">
+						<div class="pd-top-5 row">
+							<?php echo $this->Form->create('Documento'); ?>
+							<?php echo $this->Form->hidden('Proyecto',array('value'=>$proyecto['Proyecto']['id'])); ?>
+							
+							<div class="col-sm-3">
 								<?php
 								echo $this->Form->select(
-									'tipodocumento', $tiposestandares,array('id'=>'tiposestandares','autocomplete' =>'off','empty'=>false,'value'=>$proyecto['TiposEstandar']['id'])
+									'tipodocumento', $tiposestandares,array('id'=>'tipodocumento','autocomplete' =>'off','empty'=>false,'value'=>$proyecto['TiposEstandar']['id'],'class' => 'form-control col-sm-6' )
 								);
 								?>
 							</div>
-							<div class="unidad_integrantes" id="lista_documentos">
+							<div class="col-sm-8" id="div_listas_comparacion">
 								<?php
 								echo $this->Form->select(
-									'documento', $documentos,array('id'=>'documento','autocomplete' =>'off','empty'=>false,'value'=>$proyecto['Documento']['id'])
+									'id_primero', $documentos,array('id'=>'documento','autocomplete' =>'off','empty'=>false,'value'=>$idPrimerDocumento,'class' => 'form-control col-sm-6' )
+								);
+								?>
+								<?php
+								echo $this->Form->select(
+									'id_segundo', $documentos,array('id'=>'documento','autocomplete' =>'off','empty'=>false,'value'=>$idSegundoDocumento,'class' => 'form-control col-sm-6' )
 								);
 								?>
 							</div>
-							<div class="unidad_integrantes" id="lista_documentos">
-								<?php echo $this->Form->submit(
-								    'Mostrar', 
-								    array('class' => 'submitGrisRedondoDelgado' )
-								); 
-							    ?>	
+							<div class="col-sm-1">
+								<button type="submit" class="btn btn-default btn-lg" title="Refrescar">
+								  <span class="glyphicon glyphicon-refresh"></span>
+								</button>
 							</div>
+							
 							<?php echo $this->Form->end(__('')); ?>
 						</div>
 					</div>
 					<div class="crud_fila_secundaria">
 
 							<table class="tabla-comparacion">
-								<tr>
-									<td class="col-sm-6">
-										asdasd
-									</td>
-									<td class="col-sm-6">
-										asd
-									</td>
-								</tr>
-							</table>
 							<?php
-								echo count($descomposiciones);
+							$tamañoDocumento=count($descomposiciones);
+							for ($i=1; $i <= $tamañoDocumento; $i++)
+							{ 
 							?>
+								
+							<tr>	
+								<td class="col-sm-6">
 							<?php
+									$descomposicion=$descomposiciones[$i];
+									if($descomposicion['nivel']!=1)
+			        				{
+			        			?>
+										<article class='marcoPrincipal' id="<?php echo "item".$descomposicion['item_documento_id']; ?>">
+											<div class="headerVinotinto" onClick="encoger(this)" id="<?php echo $descomposicion['item_documento_id']; ?>" style="cursor:pointer;">
+												<div class="tituloModulo">
+													<span id="<?php echo "marcador".$descomposicion['item_documento_id']; ?>" class="marcador">v</span>
+													<span>
+						       						<?php
+						       						echo $descomposicion['titulo'];
+													?>
+													</span>
+												</div>
+												<div class="aprobacionRight">
+													<div class="tituloUnidad">
+														<span style="color:<?php 
+																echo $descomposicion['color'];
+															?>;">								
+															<?php 
+																echo $descomposicion['concepto'];
+															?>
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="marcoSecundario" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
+												<div class="headerGris">
+													<div class="tituloSubmoduloLeft">
+														<div class="tituloUnidad">
+															<span>
+															Líneas:
+															</span>
+														</div>
+														<div 
+															<?php if($descomposicion['extencion_lineas']>=ceil($descomposicion['caracteres']/85))
+															{?>class="tituloUnidad extencionAprobado" 
+															<?php 
+															}else{?> class="tituloUnidad extencionNoAprobado" 
+															<?php 
+															} ?>
+															>
+															<span>
+															<?php echo ceil($descomposicion['caracteres']/85); ?>
+															</span>
+														</div>
+													</div>												
+													<div class="tituloSubmoduloRight">
+														<div class="tituloUnidad">
+															<span>
+															Caracteres:
+															</span>
+														</div>
+														<div <?php if($descomposicion['extencion_caracteres']>=$descomposicion['caracteres'])
+															{?>class="tituloUnidad extencionAprobado" 
+															<?php 
+															}else{?> class="tituloUnidad extencionNoAprobado" 
+															<?php 
+															} ?>
+															>
+															<span>
+															<?php echo $descomposicion['caracteres']; 
+															?>
+															</span>
+														</div>
+													</div>
+												</div>
+												<div class="contenidoItem" id="<?php echo "txt".$descomposicion['item_documento_id']; ?>">
+										<?php
+										if (isset($descomposicion['contenido'])) 
+										{
+											foreach ($descomposicion['contenido'] as $item) 
+						        			{
+						        				if($item['tipo']==2)
+									        	{	
+									    		?>
+													<p class="parrafo">
+												<?php
+													echo $item['elementos'];
+												?>
+													</p>
+									    		<?php
+									        	}
+									        	else if($item['tipo']==3)
+									        	{	
+									    		?>
+													<p class="figura">
+												<?php
+													echo $item['elementos'];
+												?>
+													</p>
+									    		<?php
+									        	}
+									        	else if($item['tipo']==4)
+									        	{	
+									    		?>
+													<p class="fuente">
+												<?php
+													echo $item['elementos'];
+												?>
+													</p>
+									    		<?php
+									        	}
+									        	else if($item['tipo']==5)
+									        	{	
+									    		?>
+													<p class="piePagina">
+												<?php
+													echo $item['elementos'];
+												?>
+													</p>
+									    		<?php
+									        	}
+									        	else if($item['tipo']==6)
+									        	{
+									        		echo $this->Html->image('/app/webroot/files/documentos/'.$item['elementos'], array('class'=>'img'));
+									        	}
+									        	else if($item['tipo']==7)
+									        	{	
+									    		?>
+													<p class="tabla">
+												<?php
+													echo $item['elementos'];
+												?>
+													</p>
+									    		<?php
+									        	}
+						        			}
+						        		?>
+												</div>
+											</div>
+											<div class="marcoDescripcion" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
+												<div class="headerGris">
+													<div class="tituloSubmoduloLeft">
+														<div class="tituloUnidad">
+															<span>
+															Observaciones:
+															</span>
+														</div>
+													</div>
+												</div>
+												<div class="contenidoItem">
+													<?php
+														echo $descomposicion['comentario'];												
+													?>
+												</div>
+											</div>
+						        		<?php
+										}
+										?>
+										</article>
+								<?php
+									}
+							?>
+								</td>
+								<td class="col-sm-6">
+							<?php
+									$descomposicion=$descomposiciones2[$i];
+									if($descomposicion['nivel']!=1)
+			        				{
+			        			?>
+										<article class='marcoPrincipal' id="<?php echo "item".$descomposicion['item_documento_id']; ?>">
+											<div class="headerVinotinto" onClick="encoger(this)" id="<?php echo $descomposicion['item_documento_id']; ?>" style="cursor:pointer;">
+												<div class="tituloModulo">
+													<span id="<?php echo "marcador".$descomposicion['item_documento_id']; ?>" class="marcador">v</span>
+													<span>
+						       						<?php
+						       						echo $descomposicion['titulo'];
+													?>
+													</span>
+												</div>
+												<div class="aprobacionRight">
+													<div class="tituloUnidad">
+														<span style="color:<?php 
+																echo $descomposicion['color'];
+															?>;">								
+															<?php 
+																echo $descomposicion['concepto'];
+															?>
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="marcoSecundario" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
+												<div class="headerGris">
+													<div class="tituloSubmoduloLeft">
+														<div class="tituloUnidad">
+															<span>
+															Líneas:
+															</span>
+														</div>
+														<div 
+															<?php if($descomposicion['extencion_lineas']>=ceil($descomposicion['caracteres']/85))
+															{?>class="tituloUnidad extencionAprobado" 
+															<?php 
+															}else{?> class="tituloUnidad extencionNoAprobado" 
+															<?php 
+															} ?>
+															>
+															<span>
+															<?php echo ceil($descomposicion['caracteres']/85); ?>
+															</span>
+														</div>
+													</div>												
+													<div class="tituloSubmoduloRight">
+														<div class="tituloUnidad">
+															<span>
+															Caracteres:
+															</span>
+														</div>
+														<div <?php if($descomposicion['extencion_caracteres']>=$descomposicion['caracteres'])
+															{?>class="tituloUnidad extencionAprobado" 
+															<?php 
+															}else{?> class="tituloUnidad extencionNoAprobado" 
+															<?php 
+															} ?>
+															>
+															<span>
+															<?php echo $descomposicion['caracteres']; 
+															?>
+															</span>
+														</div>
+													</div>
+												</div>
+												<div class="contenidoItem" id="<?php echo "txt".$descomposicion['item_documento_id']; ?>">
+										<?php
+										if (isset($descomposicion['contenido'])) 
+										{
+											foreach ($descomposicion['contenido'] as $item) 
+						        			{
+						        				if($item['tipo']==2)
+									        	{	
+									    		?>
+													<p class="parrafo">
+												<?php
+													echo $item['elementos'];
+												?>
+													</p>
+									    		<?php
+									        	}
+									        	else if($item['tipo']==3)
+									        	{	
+									    		?>
+													<p class="figura">
+												<?php
+													echo $item['elementos'];
+												?>
+													</p>
+									    		<?php
+									        	}
+									        	else if($item['tipo']==4)
+									        	{	
+									    		?>
+													<p class="fuente">
+												<?php
+													echo $item['elementos'];
+												?>
+													</p>
+									    		<?php
+									        	}
+									        	else if($item['tipo']==5)
+									        	{	
+									    		?>
+													<p class="piePagina">
+												<?php
+													echo $item['elementos'];
+												?>
+													</p>
+									    		<?php
+									        	}
+									        	else if($item['tipo']==6)
+									        	{
+									        		echo $this->Html->image('/app/webroot/files/documentos/'.$item['elementos'], array('class'=>'img'));
+									        	}
+									        	else if($item['tipo']==7)
+									        	{	
+									    		?>
+													<p class="tabla">
+												<?php
+													echo $item['elementos'];
+												?>
+													</p>
+									    		<?php
+									        	}
+						        			}
+						        		?>
+												</div>
+											</div>
+											<div class="marcoDescripcion" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
+												<div class="headerGris">
+													<div class="tituloSubmoduloLeft">
+														<div class="tituloUnidad">
+															<span>
+															Observaciones:
+															</span>
+														</div>
+													</div>
+												</div>
+												<div class="contenidoItem">
+													<?php
+														echo $descomposicion['comentario'];												
+													?>
+												</div>
+											</div>
+						        		<?php
+										}
+										?>
+										</article>
+								<?php
+									}
+							?>
+								</td>
 
-							for ($i=1; $i <= count($descomposiciones2); $i++) { 
+							</tr>
 							
-								$miItem=$descomposiciones[$i];
-								print_r($miItem);
-								echo "</br></br>";
-
-
+							<?php
 							}
-
+								//echo count($descomposiciones);
 							?>
+							</table>
 
 
 
@@ -165,158 +475,7 @@
 						<?php
 						foreach ($descomposiciones as $descomposicion)
 						{
-							if($descomposicion['nivel']!=1)
-	        				{
-	        			?>
-								<article class='marcoPrincipal' id="<?php echo "item".$descomposicion['item_documento_id']; ?>">
-									<div class="headerVinotinto" onClick="encoger(this)" id="<?php echo $descomposicion['item_documento_id']; ?>" style="cursor:pointer;">
-										<div class="tituloModulo">
-											<span id="<?php echo "marcador".$descomposicion['item_documento_id']; ?>" class="marcador">v</span>
-											<span>
-				       						<?php
-				       						echo $descomposicion['titulo'];
-											?>
-											</span>
-										</div>
-										<div class="aprobacionRight">
-											<div class="tituloUnidad">
-												<span style="color:<?php 
-														echo $descomposicion['color'];
-													?>;">								
-													<?php 
-														echo $descomposicion['concepto'];
-													?>
-												</span>
-											</div>
-										</div>
-									</div>
-									<div class="marcoSecundario" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
-										<div class="headerGris">
-											<div class="tituloSubmoduloLeft">
-												<div class="tituloUnidad">
-													<span>
-													Líneas:
-													</span>
-												</div>
-												<div 
-													<?php if($descomposicion['extencion_lineas']>=ceil($descomposicion['caracteres']/85))
-													{?>class="tituloUnidad extencionAprobado" 
-													<?php 
-													}else{?> class="tituloUnidad extencionNoAprobado" 
-													<?php 
-													} ?>
-													>
-													<span>
-													<?php echo ceil($descomposicion['caracteres']/85); ?>
-													</span>
-												</div>
-											</div>												
-											<div class="tituloSubmoduloRight">
-												<div class="tituloUnidad">
-													<span>
-													Caracteres:
-													</span>
-												</div>
-												<div <?php if($descomposicion['extencion_caracteres']>=$descomposicion['caracteres'])
-													{?>class="tituloUnidad extencionAprobado" 
-													<?php 
-													}else{?> class="tituloUnidad extencionNoAprobado" 
-													<?php 
-													} ?>
-													>
-													<span>
-													<?php echo $descomposicion['caracteres']; 
-													?>
-													</span>
-												</div>
-											</div>
-										</div>
-										<div class="contenidoItem" id="<?php echo "txt".$descomposicion['item_documento_id']; ?>">
-								<?php
-								if (isset($descomposicion['contenido'])) 
-								{
-									foreach ($descomposicion['contenido'] as $item) 
-				        			{
-				        				if($item['tipo']==2)
-							        	{	
-							    		?>
-											<p class="parrafo">
-										<?php
-											echo $item['elementos'];
-										?>
-											</p>
-							    		<?php
-							        	}
-							        	else if($item['tipo']==3)
-							        	{	
-							    		?>
-											<p class="figura">
-										<?php
-											echo $item['elementos'];
-										?>
-											</p>
-							    		<?php
-							        	}
-							        	else if($item['tipo']==4)
-							        	{	
-							    		?>
-											<p class="fuente">
-										<?php
-											echo $item['elementos'];
-										?>
-											</p>
-							    		<?php
-							        	}
-							        	else if($item['tipo']==5)
-							        	{	
-							    		?>
-											<p class="piePagina">
-										<?php
-											echo $item['elementos'];
-										?>
-											</p>
-							    		<?php
-							        	}
-							        	else if($item['tipo']==6)
-							        	{
-							        		echo $this->Html->image('/app/webroot/files/documentos/'.$item['elementos'], array('class'=>'img'));
-							        	}
-							        	else if($item['tipo']==7)
-							        	{	
-							    		?>
-											<p class="tabla">
-										<?php
-											echo $item['elementos'];
-										?>
-											</p>
-							    		<?php
-							        	}
-				        			}
-				        		?>
-										</div>
-									</div>
-									<div class="marcoDescripcion" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
-										<div class="headerGris">
-											<div class="tituloSubmoduloLeft">
-												<div class="tituloUnidad">
-													<span>
-													Observaciones:
-													</span>
-												</div>
-											</div>
-										</div>
-										<div class="contenidoItem">
-											<?php
-												echo $descomposicion['comentario'];												
-											?>
-										</div>
-									</div>
-				        		<?php
-								}
-								?>
-								</article>
-						<?php
-							}
+							
 						}
 						?>
 					</div>
@@ -366,13 +525,13 @@
 	</a>
 </div>
 <?php
-$this->Js->get('#tiposestandares')->event('change',
+$this->Js->get('#tipodocumento')->event('change',
 	$this->Js->request(
 	    array(
-	        'controller'=>'documentos','action' => 'lista_documentos',
+	        'controller'=>'documentos','action' => 'lista_comparaciones',
 	    ),
 	    array(
-	        'update'=>'#lista_documentos',
+	        'update'=>'#div_listas_comparacion',
 	        'async' => true,
 	        'method' => 'post',
 	        'dataExpression'=>true,

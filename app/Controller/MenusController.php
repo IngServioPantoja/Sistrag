@@ -81,7 +81,7 @@ class MenusController extends AppController {
 		++$p;
 		endforeach;
         $this->Session->write("Menu",$menu);
-        $this->redirect("/menus");
+        $this->redirect("/administracion/bienvenido");
     }
     
     /**
