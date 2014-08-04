@@ -859,7 +859,9 @@ class DocumentosController extends AppController {
 		$opciones = array('conditions' => array('TiposEstandar.' . $this->TiposEstandar->primaryKey => $documento['Estandar']['tiposestandar_id']));
 		$tipoEstandar=$this->TiposEstandar->find('first', $opciones);
 		$documento['TiposEstandar']=$tipoEstandar['TiposEstandar'];
+
 		$proyecto = $documento;
+
 		$this->PersonasProyecto->recursive = -1;
 		$opciones = array(
 		    	'joins' => array(
@@ -936,6 +938,7 @@ class DocumentosController extends AppController {
            	'group' => array('TiposEstandar.id'),		
 	   	);
 		$tiposestandares=$this->Documento->find('list', $opciones);
+		//print_r($proyecto);
 		$opciones = array(
 	    	'joins' => array(
 		        array(
@@ -970,11 +973,12 @@ class DocumentosController extends AppController {
 	    	'conditions' => 
 	            array(
 	                'Documento.proyecto_id' => $proyecto['Proyecto']['id'],
-	                'Estandar.id' => $proyecto['TiposEstandar']['id']
+	                'TiposEstandar.id' => $proyecto['TiposEstandar']['id']
 	           	),
            	'order' => array('Documento.fecha_guardado desc'),
 	   	);
 		$documentos=$this->Documento->find('list', $opciones);
+		//print_r($documentos);
 	/* Contenido de las evaluaciones */
 		$opciones = array(
 	    	'conditions' => 
@@ -1032,11 +1036,11 @@ class DocumentosController extends AppController {
 		{
 			$this->request->data['Documento']['id_primero'];
 			$this->request->data['Documento']['id_segundo'];
-			//print_r($this->request->data);
 
 			$options = array('conditions' => array('Detalleentrega.' . $this->Documento->primaryKey => $this->request->data['Documento']['id_primero']));
 			$detalle_entrega=$this->Detalleentrega->find('first', $options);
 			$id=$detalle_entrega['Entrega']['documento_id'];
+			$this->set('persona1',$this->Persona->find('first', array('conditions'=>array('Persona.id'=>$detalle_entrega['PersonasProyecto']['persona_id']))));
 			$primerDocumento=$detalle_entrega['Detalleentrega']['id'];
 			$this->set('idPrimerDocumento',$primerDocumento);
 
@@ -1044,6 +1048,7 @@ class DocumentosController extends AppController {
 			$optiones = array('conditions' => array('Detalleentrega.' . $this->Documento->primaryKey => $this->request->data['Documento']['id_segundo']));
 			$detalle_entrega2=$this->Detalleentrega->find('first', $optiones);
 			$segundo=$detalle_entrega2['Entrega']['documento_id'];
+			$this->set('persona2',$this->Persona->find('first', array('conditions'=>array('Persona.id'=>$detalle_entrega2['PersonasProyecto']['persona_id']))));
 			$segundoDocumento=$detalle_entrega2['Detalleentrega']['id'];
 			$this->set('idSegundoDocumento',$segundoDocumento);
 
@@ -1054,10 +1059,11 @@ class DocumentosController extends AppController {
 			$id=$detalle_entrega['Entrega']['documento_id'];
 			$segundo=$id;
 			$this->set('idPrimerDocumento',$id);
-			$this->set('idSegundoDocumento',$id);		
+			$this->set('idSegundoDocumento',$id);
+			$this->set('persona2',$this->Persona->find('first', array('conditions'=>array('Persona.id'=>$detalle_entrega['PersonasProyecto']['persona_id']))));
+			$this->set('persona1',$this->Persona->find('first', array('conditions'=>array('Persona.id'=>$detalle_entrega['PersonasProyecto']['persona_id']))));
+			$segundoDocumento=$detalle_entrega['Detalleentrega']['id'];
 		}
-		
-
 
 		$this->Documento->recursive = 0;
 		$options = array('conditions' => array('Documento.' . $this->Documento->primaryKey => $id));
@@ -1339,6 +1345,7 @@ class DocumentosController extends AppController {
 					$maquetarMostrar[$contador]['comentario']=$evaluacion['Evaluacion']['comentarios'];
 					$maquetarMostrar[$contador]['id_comentario']=$evaluacion['Evaluacion']['id'];
 					$maquetarMostrar[$contador]['concepto']=$evaluacion['Parametro']['nombre'];
+					$maquetarMostrar[$contador]['id_concepto']=$evaluacion['Parametro']['id'];
 					$maquetarMostrar[$contador]['color']=$evaluacion['Parametro']['valor'];
 					#Ahora tenemos que presentar el boton de aprobaod no aprobado o aprobado con corecciones
 				}
@@ -1404,50 +1411,11 @@ class DocumentosController extends AppController {
 		}
 		//3
 		$this->Documento->recursive = -1;
-		$opciones = array(
-	    	'joins' => array(
-		        array(
-		            'table' => 'proyectos',
-		            'alias' => 'Proyecto',
-		            'type' => 'INNER',
-		            'conditions' => 
-		            array(
-		                'Proyecto.id = Documento.proyecto_id'
-	            	)
-	        	),
-	        	array(
-		            'table' => 'estandares',
-		            'alias' => 'Estandar',
-		            'type' => 'INNER',
-		            'conditions' => 
-		            array(
-		                'Estandar.id = Documento.estandar_id'
-	            	)
-	        	),
-	        	array(
-		            'table' => 'tiposestandares',
-		            'alias' => 'TiposEstandar',
-		            'type' => 'INNER',
-		            'conditions' => 
-		            array(
-		                'TiposEstandar.id = Estandar.tiposestandar_id'
-	            	)
-	        	)
-    		),
-	    	'fields' => array('TiposEstandar.id','TiposEstandar.nombre'),
-	    	'conditions' => 
-	            array(
-	                'Documento.proyecto_id' => $proyecto['Proyecto']['id'],
-	           	),
-           	'order' => array('TiposEstandar.nombre asc'),
-           	'group' => array('TiposEstandar.id'),		
-	   	);
-		$tiposestandares=$this->Documento->find('list', $opciones);
 		//4
 		$opciones = array(
 	    	'conditions' => 
 	            array(
-	                'Evaluacion.detalles_entrega_id' => $detalle_entrega['Detalleentrega']['id'],
+	                'Evaluacion.detalles_entrega_id' => $segundoDocumento,
 	           	),
            	'order' => array('Evaluacion.id desc'),
            	'recursive'=>'0'
@@ -1478,6 +1446,7 @@ class DocumentosController extends AppController {
 					$maquetarMostrar[$contador]['comentario']=$evaluacion['Evaluacion']['comentarios'];
 					$maquetarMostrar[$contador]['id_comentario']=$evaluacion['Evaluacion']['id'];
 					$maquetarMostrar[$contador]['concepto']=$evaluacion['Parametro']['nombre'];
+					$maquetarMostrar[$contador]['id_concepto']=$evaluacion['Parametro']['id'];
 					$maquetarMostrar[$contador]['color']=$evaluacion['Parametro']['valor'];
 					#Ahora tenemos que presentar el boton de aprobaod no aprobado o aprobado con corecciones
 				}
@@ -1498,12 +1467,30 @@ class DocumentosController extends AppController {
 		$opciones = array(
 	    	'joins' => array(
 	        	array(
+		            'table' => 'personas_proyectos',
+		            'alias' => 'PersonaProyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Persona.id = PersonaProyecto.persona_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'detalleentregas',
+		            'alias' => 'DetalleEntrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'PersonaProyecto.id = DetalleEntrega.personas_proyecto_id'
+	            	)
+	        	),
+	        	array(
 		            'table' => 'entregas',
 		            'alias' => 'Entrega',
 		            'type' => 'INNER',
 		            'conditions' => 
 		            array(
-		                'Entrega.id = Detalleentrega.entrega_id'
+		                'Entrega.id = DetalleEntrega.entrega_id'
 	            	)
 	        	),
 	        	array(
@@ -1513,15 +1500,6 @@ class DocumentosController extends AppController {
 		            'conditions' => 
 		            array(
 		                'Documento.id = Entrega.documento_id'
-	            	)
-	        	),
-		        array(
-		            'table' => 'proyectos',
-		            'alias' => 'Proyecto',
-		            'type' => 'INNER',
-		            'conditions' => 
-		            array(
-		                'Proyecto.id = Documento.proyecto_id'
 	            	)
 	        	),
 	        	array(
@@ -1534,26 +1512,115 @@ class DocumentosController extends AppController {
 	            	)
 	        	),
 	        	array(
-		            'table' => 'tiposestandares',
-		            'alias' => 'TiposEstandar',
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
 		            'type' => 'INNER',
 		            'conditions' => 
 		            array(
-		                'TiposEstandar.id = Estandar.tiposestandar_id'
+		                'Proyecto.id = Documento.proyecto_id'
 	            	)
 	        	)
     		),
-	    	'fields' => array('Detalleentrega.id','Documento.fecha_guardado'),
+	    	'fields' => array('DetalleEntrega.id','Documento.fecha_guardado','Persona.id'),
 	    	'conditions' => 
 	            array(
 	                'Proyecto.id' => $proyecto,
 	                'Estandar.id' => $estandar
 	           	),
            	'order' => array('Documento.fecha_guardado desc'),
+           	'recursive'=>0
 	   	);
 
-		$documentos2=$this->Detalleentrega->find('list', $opciones);
-		$this->set('documentos',$documentos2);
+		$entregasDocumento=$this->Persona->find('all', $opciones);
+
+		//Personas que recibieorn los documentos
+		$opciones = array(
+	    	'joins' => array(
+	        	array(
+		            'table' => 'personas_proyectos',
+		            'alias' => 'PersonaProyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Persona.id = PersonaProyecto.persona_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'detalleentregas',
+		            'alias' => 'DetalleEntrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'PersonaProyecto.id = DetalleEntrega.personas_proyecto_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'entregas',
+		            'alias' => 'Entrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Entrega.id = DetalleEntrega.entrega_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'documentos',
+		            'alias' => 'Documento',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Documento.id = Entrega.documento_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'estandares',
+		            'alias' => 'Estandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Estandar.id = Documento.estandar_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Proyecto.id = Documento.proyecto_id'
+	            	)
+	        	)
+    		),
+	    	'fields' => array('DISTINCT Persona.id','Persona.nombre','Persona.apellido'),
+	    	'conditions' => 
+	            array(
+	                'Proyecto.id' => $proyecto,
+	                'Estandar.id' => $estandar
+	           	),
+           	'order' => array('Documento.fecha_guardado desc'),
+           	'recursive'=>0
+	   	);
+
+		$personas=$this->Persona->find('all', $opciones);
+
+		$listaEntregas=array();
+		foreach ($personas as $persona) 
+		{
+			
+			foreach ($entregasDocumento as $entregaDocumento) {
+				
+			if($persona['Persona']['id']==$entregaDocumento['Persona']['id'])
+			{
+				$listaEntregas[$persona['Persona']['nombre']." ".$persona['Persona']['apellido']][$entregaDocumento['DetalleEntrega']['id']]=$entregaDocumento['Documento']['fecha_guardado'];
+
+			}	
+
+			}
+
+		}
+		//Previamente organizamo stodos lso elementos para que dijeran aquien se hiso la entrega
+		$this->set('documentos',$listaEntregas);
+
 	}
 
 
@@ -1879,7 +1946,6 @@ class DocumentosController extends AppController {
 			$opciones= array('conditions' => array('Estandar.programa_id' => $usuario['Persona']['programa_id']));
 			$estandares = $this->Documento->Estandar->find('list',$opciones);
 		}
-		print_r($estandares);
 		$this->set(compact('estandares'));
 	}
 

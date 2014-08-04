@@ -1,2 +1,0 @@
-$(document).ready(function () {$("#facultad").bind("change", function (event) {$.ajax({async:true, data:$("#facultad").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#div_programa").html(data);}, type:"post", url:"\/Sistrag\/proyectos\/lista_programas"});
-return false;});});

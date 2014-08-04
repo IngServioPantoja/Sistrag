@@ -211,6 +211,9 @@ $usuario=$this->Session->read("Usuario"); ?>
 <script>
     $('.use-tooltip').tooltip();
 </script>
+<?php
+  echo $this->Html->script(array('highcharts','highcharts-3d','modules/exporting'));
+?>
 <?php echo $this->Js->writeBuffer(); ?>
 </body>
 </html>

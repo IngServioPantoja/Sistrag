@@ -1,6 +1,0 @@
-$(document).ready(function () {$("#submit-1232234618").bind("click", function (event) {$.ajax({async:false, beforeSend:function (XMLHttpRequest) {alert("antes");}, complete:function (XMLHttpRequest, textStatus) {alert("complete");}, data:$("#submit-1232234618").closest("form").serialize(), dataType:"json", type:"post", url:"\/Sistrag\/documentos\/evaluacion_docente\/69"});
-return false;});
-$("#formularioDetalleentrega").bind("change", function (event) {$.ajax({async:true, beforeSend:function (XMLHttpRequest) {$("#barraComentarios").fadeIn();}, complete:function (XMLHttpRequest, textStatus) {$("#barraComentarios").fadeOut();}, data:$("#formularioDetalleentrega").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#sss").html(data);}, type:"post", url:"\/Sistrag\/detalleentregas\/edit"});
-return false;});
-$("#tiposestandares").bind("change", function (event) {$.ajax({async:true, data:$("#tiposestandares").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#lista_documentos").html(data);}, type:"post", url:"\/Sistrag\/documentos\/lista_documentos"});
-return false;});});

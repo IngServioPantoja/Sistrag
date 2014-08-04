@@ -123,14 +123,15 @@
 							<div class="unidad_integrantes" id="lista_documentos">
 								<?php echo $this->Form->submit(
 								    'Mostrar', 
-								    array('class' => 'btn btn-default','div'=>false,'role'=>'button')
+								    array('class' => 'btn btn-default botones-acciones','div'=>false,'role'=>'button')
 								); 
 							    ?>
-							    <a href="../comparar_documento/<?php echo $entrega['Detalleentrega']['id'];?>" class="btn btn-default" role="button">Comparar
+							    <a href="../comparar_documento/<?php echo $entrega['Detalleentrega']['id'];?>" class="btn btn-default botones-acciones" role="button">Comparar
 							    </a>	
 							</div>
 							<?php 
 							//tengo un problemita... con la renderización de vistas de comparar tiene que ser coerente debe ser por el ajxa...
+							//aun no se aregla es eproblema debo de corregir solo la reder
 							//asds
 							echo $this->Form->end(__('')); ?>
 						</div>

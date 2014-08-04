@@ -1,2 +1,0 @@
-$(document).ready(function () {$("#tipodocumento").bind("change", function (event) {$.ajax({async:true, data:$("#tipodocumento").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#div_listas_comparacion").html(data);}, type:"post", url:"\/Sistrag\/documentos\/lista_comparaciones"});
-return false;});});

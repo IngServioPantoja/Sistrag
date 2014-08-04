@@ -751,7 +751,14 @@ html
               .contenedor_integrantes
                 display block
                 border-bottom 1px solid rgba(255,255,255,0.4)
+                text-align center!important
 
+                div
+                  opacity 1
+
+                  select,input,*
+                    margin 0 auto                   
+                
                 .unidad_integrantes
                   display inline-block
                   margin 5px 20px
@@ -1748,6 +1755,8 @@ html
                   
                   .parrafo
                     font-weight 400
+                    word-wrap:break-word!important;
+                    word-break: break-all!important;
                     
                   .figura
                     font-weight 900
@@ -1847,6 +1856,8 @@ html
                   
                   .parrafo
                     font-weight 400
+                    word-wrap:break-word!important;
+                    word-break: break-all!important;
                     
                   .figura
                     font-weight 900
@@ -2451,6 +2462,9 @@ html
 .active
   box-shadow 0px 0px 15px 350px rgba(50,50,50,0.6)!important
 
+.pd-2
+  padding 2px
+
 .pd-5
   padding 5px
 
@@ -2474,6 +2488,9 @@ html
 
 .mg-top-10
   padding-top 10px
+
+.br-5
+  border-radius 5px
 
 .tabla-comparacion
   width 100%
@@ -2543,6 +2560,35 @@ html
   }     
 }
 
+.inline-block
+  display inline-block!important;
+  float none!important;
+
+.contenedor-reportes
+  
+  div
+    
+    a
+      text-decoration none!important
+
+.article-reporte:hover
+  box-shadow 0px 0px 10px 10px #428bca
+
+.contenedor-grafica
+  
+  div 
+    margin 0 auto
+
+.bg-sistrag-azul
+  background: -moz-linear-gradient(top,  #600000 0%, #800000 50%, #600000 100%);
+  background: -ms-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+  background: -o-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#600000), color-stop(50%,#800000), color-stop(100%,#600000));
+  background: -webkit-linear-gradient(top,  #600000 0%,#800000 50%,#600000 100%);
+  background: linear-gradient(to bottom,  #600000 0%,#800000 50%,#600000 100%);
+  
+  h1,h2,h3,h4
+    color #eee         
 /* Responsive */
 @media screen and (min-width: 690px)
 

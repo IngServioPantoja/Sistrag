@@ -1,2 +1,0 @@
-$(document).ready(function () {$("#tiposestandares").bind("change", function (event) {$.ajax({async:true, data:$("#tiposestandares").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#lista_documentos").html(data);}, type:"post", url:"\/Sistrag\/documentos\/lista_documentos"});
-return false;});});
