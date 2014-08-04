@@ -1,0 +1,16 @@
+$(document).ready(function () {$("#submit-256834741").bind("click", function (event) {$.ajax({async:false, data:$("#submit-256834741").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#myModal").html(data);}, type:"post", url:"\/Sistrag\/reportes\/detalleReporteDocente"});
+return false;});
+$("#submit-445809741").bind("click", function (event) {$.ajax({async:false, data:$("#submit-445809741").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#myModal").html(data);}, type:"post", url:"\/Sistrag\/reportes\/detalleReporteDocente"});
+return false;});
+$("#submit-1999641320").bind("click", function (event) {$.ajax({async:false, data:$("#submit-1999641320").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#myModal").html(data);}, type:"post", url:"\/Sistrag\/reportes\/detalleReporteDocente"});
+return false;});
+$("#submit-745767265").bind("click", function (event) {$.ajax({async:false, data:$("#submit-745767265").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#myModal").html(data);}, type:"post", url:"\/Sistrag\/reportes\/detalleReporteDocente"});
+return false;});
+$("#submit-308852235").bind("click", function (event) {$.ajax({async:false, data:$("#submit-308852235").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#myModal").html(data);}, type:"post", url:"\/Sistrag\/reportes\/detalleReporteDocente"});
+return false;});
+$("#submit-1591462883").bind("click", function (event) {$.ajax({async:false, data:$("#submit-1591462883").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#myModal").html(data);}, type:"post", url:"\/Sistrag\/reportes\/detalleReporteDocente"});
+return false;});
+$("#submit-477206450").bind("click", function (event) {$.ajax({async:false, data:$("#submit-477206450").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#myModal").html(data);}, type:"post", url:"\/Sistrag\/reportes\/detalleReporteDocente"});
+return false;});
+$("#submit-1269692783").bind("click", function (event) {$.ajax({async:false, data:$("#submit-1269692783").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#myModal").html(data);}, type:"post", url:"\/Sistrag\/reportes\/detalleReporteDocente"});
+return false;});});

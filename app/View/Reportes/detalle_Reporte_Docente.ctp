@@ -1,7 +1,7 @@
 <?php
 
 $this->layout = false;
-
+$nombrePersona=$persona['Persona']['nombre']." ".$persona['Persona']['apellido'];
 ?>
 <div class="modal-dialog modal-lg">
   <div class="modal-content">
@@ -18,8 +18,7 @@ $this->layout = false;
 </div>
 
 <script type="text/javascript">
-    var Trabajos =['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas'];
-
+    var nombrePersona="<?php echo $nombrePersona; ?>";
 $(function () {
     $('#container').highcharts({
 
@@ -41,7 +40,7 @@ $(function () {
         },
 
         xAxis: {
-            categories: <?php echo $estandares;?>
+            categories: <?php echo $roles;?>
         },
 
         yAxis: {
@@ -65,12 +64,8 @@ $(function () {
         },
 
         series: [{
-            name: 'Asesor',
-            data: [3, 3, 4]
-        },
-        {
-            name: 'Jurado',
-            data: [3, 1, 6]
+            name: nombrePersona,
+            data: <?php echo $reporte; ?>
         }]
     });
 });

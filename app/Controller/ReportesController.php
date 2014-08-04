@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 class ReportesController extends AppController {
 var $components = array("RequestHandler");
 var $helpers = array('Form', 'Html', 'Js','Paginator');
-var $uses = array('Facultad','Programa','Persona','TipoUsuario','TiposEstandar');
+var $uses = array('Facultad','Programa','Persona','TipoUsuario','TiposEstandar','PersonasProyecto');
 var $paginate =array(
         'limit' => 10,
         );
@@ -87,7 +87,7 @@ var $paginate =array(
 				'joins' => array($join,$join2),
 				'conditions' => 
 		            array(
-		                'TipoUsuario.id'!=5
+		                'TipoUsuario.id !='=>5
 	            	),
 	            'fields'=>
 	            	array(
@@ -102,29 +102,36 @@ var $paginate =array(
 
 	public function detalleReporteDocente()
 	{
-		$options = array('conditions' => array('Persona.' . $this->Persona->primaryKey => $this->request->data['Reporte']['id']));
+		$options = array('conditions' => array('Persona.id'=> $this->request->data['Reporte']['id']));
+		$persona_id=$this->request->data['Reporte']['id'];
 		$persona=$this->Persona->find('first', $options);	
 		$this->set('persona',$persona);
-		$options = 
-		array(
-			'fields' => 
-			array(
-				'TiposEstandar.nombre'
-			),
-			'order'=>'TiposEstandar.nombre desc'
-		);
-		$estandares=$this->TiposEstandar->find('list', $options);
-		$this->response->type('json');
-
-	    $estandares = json_encode($estandares);
-		$this->set('estandares',$estandares);
-		print_r($estandares);
 		
+		$this->response->type('json');
+	    $roles = json_encode(
+	    	array(
+	    		"Jurado",
+	    		"Asesor"
+	    	)
+	    );
+		$this->set('roles',$roles);
+		//Obteniendo proyectos como Jurado
+        $opcionesJurado = 
+		array(
+			'conditions'=>array('PersonasProyecto.persona_id'=>$persona_id,'PersonasProyecto.rol_id'=>1)
+		);
+		$cantidadJurado=$this->PersonasProyecto->find('count', $opcionesJurado );
 
-
-
-
-
+		$opcionesAsesor = 
+		array(
+			'conditions'=>array('PersonasProyecto.persona_id'=>$persona_id,'PersonasProyecto.rol_id'=>2)
+		);
+		$cantidadAsesor=$this->PersonasProyecto->find('count', $opcionesAsesor);
+		$reporte=array();
+		$reporte[0]=$cantidadJurado;
+		$reporte[1]=$cantidadAsesor;
+		$reporte=json_encode($reporte);
+		$this->set('reporte',$reporte);
 	}
 
 	public function isAuthorized($user){
@@ -198,6 +205,11 @@ var $paginate =array(
 	}
 
 	public function bienvenido()
+	{
+
+	}
+
+	public function index()
 	{
 
 	}
