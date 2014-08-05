@@ -4,9 +4,9 @@ App::uses('AppController', 'Controller');
 class ReportesController extends AppController {
 var $components = array("RequestHandler");
 var $helpers = array('Form', 'Html', 'Js','Paginator');
-var $uses = array('Facultad','Programa','Persona','TipoUsuario','TiposEstandar','PersonasProyecto');
+var $uses = array('Facultad','Programa','Persona','TipoUsuario','TiposEstandar','PersonasProyecto','Area','Linea','Proyecto');
 var $paginate =array(
-        'limit' => 10,
+        'limit' => 99999999,
         );
 
 	public function add() {
@@ -148,36 +148,75 @@ var $paginate =array(
 
 	public function detalleReportePrograma()
 	{
-		$options = array('conditions' => array('Persona.id'=> $this->request->data['Reporte']['id']));
-		$persona_id=$this->request->data['Reporte']['id'];
-		$persona=$this->Persona->find('first', $options);	
-		$this->set('persona',$persona);
-		
+		$options = array('conditions' => array('Programa.id'=> $this->request->data['Reporte']['id']));
+		$programa_id=$this->request->data['Reporte']['id'];
+		$programa=$this->Programa->find('first', $options);	
+		$this->set('programa',$programa);
 		$this->response->type('json');
-	    $roles = json_encode(
-	    	array(
-	    		"Jurado",
-	    		"Asesor"
-	    	)
-	    );
-		$this->set('roles',$roles);
-		//Obteniendo proyectos como Jurado
-        $opcionesJurado = 
+		$opcionesConteo = 
 		array(
-			'conditions'=>array('PersonasProyecto.persona_id'=>$persona_id,'PersonasProyecto.rol_id'=>1)
+			'conditions'=>
+				array(
+					'Proyecto.programa'=>$programa_id),
+			'fields'=>
+				array(
+					"Area.nombre as name",'COUNT("Proyecto.id") as data'
+				),
+			'group' => array('Area.id'),
+			'order'=>
+				array(
+					'Area.nombre asc'
+				),
+			'recursive'=>-2
 		);
-		$cantidadJurado=$this->PersonasProyecto->find('count', $opcionesJurado );
-
-		$opcionesAsesor = 
-		array(
-			'conditions'=>array('PersonasProyecto.persona_id'=>$persona_id,'PersonasProyecto.rol_id'=>2)
-		);
-		$cantidadAsesor=$this->PersonasProyecto->find('count', $opcionesAsesor);
+		$cantidadConteo=$this->Proyecto->find('all', $opcionesConteo);
 		$reporte=array();
-		$reporte[0]=$cantidadJurado;
-		$reporte[1]=$cantidadAsesor;
-		$reporte=json_encode($reporte);
+		$contador=0;
+		foreach ($cantidadConteo as $area) {
+			$reporte[$contador]=$area['Area'];
+			$reporte[$contador]['data'][0]=$area[0]['data'];
+			++$contador;
+		}
+		$reporte=json_encode($reporte, JSON_NUMERIC_CHECK);
 		$this->set('reporte',$reporte);
+
+		$opcionesConteoLineas = 
+		array(
+			'conditions'=>
+				array(
+					'Area.programa_id'=>$programa_id),
+			'joins' => array(
+		        array(
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
+		            'type' => 'left',
+		            'conditions' => 
+		            array(
+		                'Linea.id = Proyecto.linea_id'
+	            	)
+	        	)
+    		),
+			'fields'=>
+				array(
+					"Linea.nombre as name",'IFNULL(COUNT(Proyecto.id),0) as data'
+				),
+			'group' => array('Linea.id'),
+			'order'=>
+				array(
+					'Linea.nombre asc'
+				),
+			'recursive'=>-2
+		);
+		$cantidadConteoLineas=$this->Linea->find('all', $opcionesConteoLineas);
+		$reporte2=array();
+		$contador=0;
+		foreach ($cantidadConteoLineas as $linea) {
+			$reporte2[$contador]=$linea['Linea'];
+			$reporte2[$contador]['data'][0]=$linea[0]['data'];
+			++$contador;
+		}
+		$reporte2=json_encode($reporte2, JSON_NUMERIC_CHECK);
+		$this->set('reporte2',$reporte2);
 	}
 
 	public function view($id = null)

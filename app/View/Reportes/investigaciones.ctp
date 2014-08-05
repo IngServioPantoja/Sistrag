@@ -68,7 +68,7 @@ $user=NUll;
 										echo $this->Form->create('Reporte');
 										echo $this->Form->hidden('id',array('value'=>$programa['Programa']['id']));
 										
-										echo $this->Js->submit("Ver reporte", 
+										echo $this->Js->submit("Ver", 
 											array(
 											    'url'=> array(
 											    	'controller'=>'reportes',
