@@ -41,24 +41,36 @@ var $paginate =array(
 		$this->redirect(array('action' => 'index'));
 	}
 
-	public function edit($id = null) {
-			if (!$this->Facultad->exists($id)) {
-				throw new NotFoundException(__('Facultad invalida'));
-			}
-			if ($this->request->is('post') || $this->request->is('put')) {
-				if ($this->Facultad->save($this->request->data)) {
-					$this->Session->setFlash(__('La facultad ha sido registrada exitosamente'));
-					$this->redirect(array('action' => 'index'));
-				} else {
-					$this->Session->setFlash(__('No se ha podido guardar la Facultad intente de nuevo.'));
-				}
-			} else {
-				$options = array('conditions' => array('Facultad.' . $this->Facultad->primaryKey => $id));
-				$this->request->data = $this->Facultad->find('first', $options);
-				$facultad = $this->Facultad->find('first', $options);
-				$this->set('facultad',$facultad);
-			}
-		}
+	public function investigaciones() 
+	{	
+		//Paginación con Joins
+		$join=array(
+            'table' => 'facultades',
+            'alias' => 'Facutad',
+            'type' => 'inner',
+            'conditions' => 
+	            array(
+	                'Facultad.id = Programa.facultad_id'
+            	)
+    	);
+		$this->paginate = array(
+			'Persona' => array(
+				'limit' => 10000,
+				'joins' => array($join),
+				'conditions' => 
+		            array(
+		                'TipoUsuario.id !='=>5
+	            	),
+	            'fields'=>
+	            	array(
+	            		'Programa.id','Programa.nombre','Facultad.nombre'
+	            	),
+	            'recursive'=>-1
+			)
+		);
+		$programas = $this->paginate('Programa');
+		$this->set('programas',$programas);
+	}
 
 	public function docentes() 
 	{	
@@ -134,60 +146,38 @@ var $paginate =array(
 		$this->set('reporte',$reporte);
 	}
 
-	public function isAuthorized($user){
-		if($user['nivel_id'] == 1){
-			return true;
-			}
-		if(in_array($this->action,array('edit','delete'))){
-			if($user['id']!= $this->request->params['pass'][0]){
-			return false;
-			}
-		}
-		return true;
-	}
-
-	public function programas_asociados($facultad_id=null,$atributo=null,$valor=null)
+	public function detalleReportePrograma()
 	{
-		if (!$this->Facultad->exists($facultad_id))
-		{
-			throw new NotFoundException(__('Facultad invalida'));
-		}
-		$this->Facultad->recursive = 0;
-		$options = array('conditions' => array('Facultad.' . $this->Facultad->primaryKey => $facultad_id));
-		$facultad=$this->Facultad->find('first', $options);	
-		$this->set('facultad',$facultad);
-		if(isset($this->request->data['Busqueda']))
-		{ 
-			if($this->request->data['Busqueda']['atributo']!=NULL and $this->request->data['Busqueda']['valor']!=NULL)
-			{	
-				$opciones=array('Programa.'.$this->request->data['Busqueda']['atributo'].' LIKE' => '%'.$this->request->data['Busqueda']['valor'].'%','Programa.facultad_id'=>$this->request->data['Busqueda']['facultad_id']);
-				$programas = $this->paginate('Programa',$opciones);
-				if (empty($programas)) 
-				{
-					$this->set('encontrado',0);
-				}
-			}
-			else
-			{	
-				$opciones=array('Programa.facultad_id'=>$this->request->data['Busqueda']['facultad_id']);
-    			$programas = $this->paginate('Programa',$opciones);		
-    		}
-    		$busqueda=array();
-    		$busqueda[0]['atributo']=$this->request->data['Busqueda']['atributo'];
-    		$busqueda[0]['valor']=$this->request->data['Busqueda']['valor'];
-    		$busqueda[0]['facultad_id']=$this->request->data['Busqueda']['facultad_id'];
-    		$this->set('busqueda',$busqueda);
-		}
-		else
-		{
-			$opciones=array('Programa.facultad_id'=>$facultad_id);
-			$programas = $this->paginate('Programa',$opciones);	
-		}
-		$this->set('programas',$programas);
-		if($this->request->is('ajax'))    	
-		{
-			$this->render('/facultades/programas_asociados');
-		}
+		$options = array('conditions' => array('Persona.id'=> $this->request->data['Reporte']['id']));
+		$persona_id=$this->request->data['Reporte']['id'];
+		$persona=$this->Persona->find('first', $options);	
+		$this->set('persona',$persona);
+		
+		$this->response->type('json');
+	    $roles = json_encode(
+	    	array(
+	    		"Jurado",
+	    		"Asesor"
+	    	)
+	    );
+		$this->set('roles',$roles);
+		//Obteniendo proyectos como Jurado
+        $opcionesJurado = 
+		array(
+			'conditions'=>array('PersonasProyecto.persona_id'=>$persona_id,'PersonasProyecto.rol_id'=>1)
+		);
+		$cantidadJurado=$this->PersonasProyecto->find('count', $opcionesJurado );
+
+		$opcionesAsesor = 
+		array(
+			'conditions'=>array('PersonasProyecto.persona_id'=>$persona_id,'PersonasProyecto.rol_id'=>2)
+		);
+		$cantidadAsesor=$this->PersonasProyecto->find('count', $opcionesAsesor);
+		$reporte=array();
+		$reporte[0]=$cantidadJurado;
+		$reporte[1]=$cantidadAsesor;
+		$reporte=json_encode($reporte);
+		$this->set('reporte',$reporte);
 	}
 
 	public function view($id = null)
@@ -206,7 +196,8 @@ var $paginate =array(
 
 	public function bienvenido()
 	{
-
+//AHORA SI A SACAR EL RESTP DE REPORTES Y REVACIA LA VUELTA
+		
 	}
 
 	public function index()
