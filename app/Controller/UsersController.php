@@ -17,13 +17,6 @@ class UsersController extends AppController {
 		$this->set('users', $this->paginate());
 	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
 	public function view($id = null) {
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));
@@ -32,11 +25,6 @@ class UsersController extends AppController {
 		$this->set('user', $this->User->find('first', $options));
 	}
 
-/**
- * add method
- *
- * @return void
- */
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->User->create();
@@ -111,16 +99,26 @@ public function login() {
             $this->redirect("/menus/mnuMain/");
 
 
-}else if ($this->Auth->user('nivel_id') == '2'){
+			}else if ($this->Auth->user('nivel_id') == '2'){
 
-						$this->redirect("/menus/mnuMain/");
+				$this->redirect("/menus/mnuMain/");
 
-}
-else if ($this->Auth->user('nivel_id') == '3'){
+			}
+			else if ($this->Auth->user('nivel_id') == '3'){
 
-						$this->redirect("/menus/mnuMain/");
+				$this->redirect("/menus/mnuMain/");
 
-}
+			}
+			else if ($this->Auth->user('nivel_id') == '4'){
+
+				$this->redirect("/menus/mnuMain/");
+
+			}
+			else if ($this->Auth->user('nivel_id') == '5'){
+
+				$this->redirect("/menus/mnuMain/");
+
+			}
 
         } else {
             $this->Session->setFlash(__('intente de nuevo usuario invalido'));

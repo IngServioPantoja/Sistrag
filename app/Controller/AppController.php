@@ -34,6 +34,9 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 var $helpers = array('Html', 'Form', 'Js' => array('Jquery'));
 var $paginate =array('limit' => 10,);
+var $uses = array(
+    'Notificacion'
+    );
 
 	public $components = array(
         'Session',
@@ -47,23 +50,37 @@ var $paginate =array('limit' => 10,);
 
     
 	public function isAuthorized($user) {
-    // Admin can access every action
-    //    if (isset($user['nivel_id']) && $user['role'] === 'admin') {
         $this->Session->write("Usuario",$user);
         $Usuario=$this->Session->read("Usuario");
        
       return true;
     }
-public function beforeFilter() {
+
+    public function beforeFilter() 
+    {
         $this->Auth->allow('index', 'view');
         $this->set('logged_in',$this->Auth->loggedin());
 		$this->set('current_user',$this->Auth->user());
 					
-	    }
-        public function beforeRender() {
-        $this->set('referer',$this->referer());
-                    
-        }
+    }
+
+    public function beforeRender() 
+    {
+    $this->set('referer',$this->referer());
+    $usuario=$this->Session->read("Usuario");
+    $id_persona=$usuario['Persona']['id'];
+    $opcionesConteo = 
+        array(
+            'conditions'=>
+                array(
+                    'Notificacion.persona_id'=>$id_persona,
+                    'Notificacion.parametro_estado_id' => 5
+                ),
+            'recursive'=>0
+        );
+    $nuevasNotificaciones=$this->Notificacion->find('count', $opcionesConteo);    
+    $this->set('nuevasNotificaciones', $nuevasNotificaciones);
+    }
 		
 
 }

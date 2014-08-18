@@ -46,6 +46,13 @@ class Proyecto extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'Estado' => array(
+			'className' => 'Tiposestandar',
+			'foreignKey' => 'estado_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
 

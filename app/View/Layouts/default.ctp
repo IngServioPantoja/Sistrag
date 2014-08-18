@@ -74,9 +74,11 @@ $usuario=$this->Session->read("Usuario"); ?>
                 else
                 {
                 $urlImagen="recursos/escudo400.png";
-                }                
-                echo $this->Html->link($this->Html->image($urlImagen, array('height' => '', 'width' => '25px','title'=>'Mi cuenta')), array('controller'=>'personas', 'action' => 'edit', $usuario['Persona']['id']),
+                }   
+   
+                echo $this->Html->link($this->Html->image($urlImagen, array('height' => '', 'width' => '25px','title'=>$usuario['Nivel']['nombre'].": ".$usuario['Persona']['nombre']." ".$usuario['Persona']['apellido'])), array('controller'=>'personas', 'action' => 'editarContrasena', $usuario['Persona']['id']),
                 array('escape' => false)); 
+
                 ?>
                 <?php 
                 echo $this->Html->link('',array('controller'=>'users','action'=>'logout'),array('class' =>'icon-off','id'=>'salir','title'=>'Salir'));
@@ -127,12 +129,40 @@ $usuario=$this->Session->read("Usuario"); ?>
                                 ?>
                                     <li>
                                         <?php 
-                                        echo $this->Html->link(
-                                        $this->Html->tag('span', "", array('class' => $i['icono'],'id'=>'nav'.$i['icono'])).
-                                        $this->Html->tag('span', $i['titulo'],array('class' => 'titulo')). "",
+                                        
+                                        if($i['id']==26)
+                                        {
+                                            if($nuevasNotificaciones>0)
+                                            {
+                                                echo $this->Html->link(
+                                                $this->Html->tag('span', "", array('class' => $i['icono'],'id'=>'nav'.$i['icono'])).
+                                                $this->Html->tag('span', $i['titulo'],array('class' => 'titulo')). "",
+                                                    $i['vinculo'],
+                                                    array('escape' => false,'class'=>'notificado')
+                                                 );
+                                            ?>
+                                                <div class="divNotificacion">
+                                                    <?php echo $nuevasNotificaciones; ?>
+                                                </div>
+                                            <?php
+                                            }else
+                                            {
+                                                echo $this->Html->link(
+                                                $this->Html->tag('span', "", array('class' => $i['icono'],'id'=>'nav'.$i['icono'])).
+                                                $this->Html->tag('span', $i['titulo'],array('class' => 'titulo')). "",
+                                                    $i['vinculo'],
+                                                    array('escape' => false)
+                                                 );    
+                                            }
+                                        }else
+                                        {
+                                            echo $this->Html->link(
+                                            $this->Html->tag('span', "", array('class' => $i['icono'],'id'=>'nav'.$i['icono'])).
+                                            $this->Html->tag('span', $i['titulo'],array('class' => 'titulo')). "",
                                                 $i['vinculo'],
                                                 array('escape' => false)
-                                             );
+                                             );    
+                                        }
                                         ?> 
                                     </li>
                                 <?php

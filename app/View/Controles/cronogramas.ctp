@@ -89,8 +89,29 @@ $user=NUll;
 						    				?>
 						    			</td>
 						    			<td>
-						    				<?php echo $this->Html->link(__('Ver'), array('action' => 'view', $control['Control']['id'])); ?>
-											<?php echo $this->Html->link(__('Modificar'), array('action' => 'edit', $control['Control']['id'])); ?>
+											<?php
+												echo $this->Html->link(
+												    '
+												    <button type="button" class="btn btn-default btn-lg use-tooltip" data-toggle="tooltip" data-placement="top" title="Ver control">
+														<span class="glyphicon glyphicon-eye-open"></span>
+													</button>
+													',
+												    array('controller'=>'controles', 'action'=>'view',$control['Control']['id']),
+												    array('escape' => FALSE)
+												);
+											?>
+											<?php
+												echo $this->Html->link(
+												    '
+												    <button type="button" class="btn btn-default btn-lg use-tooltip" data-toggle="tooltip" data-placement="top" title="Ver control">
+														<span class="glyphicon glyphicon-pencil"></span>
+													</button>
+													',
+												    array('controller'=>'controles', 'action'=>'edit',$control['Control']['id']),
+												    array('escape' => FALSE)
+												);
+											//Ahora si a cuadrar menus...
+											?>
 						    			</td>
 						    		</tr>
 

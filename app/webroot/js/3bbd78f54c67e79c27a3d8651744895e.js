@@ -1,0 +1,2 @@
+$(document).ready(function () {$("#programa").bind("change", function (event) {$.ajax({async:true, data:$("#programa").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#estandar").html(data);}, type:"post", url:"\/Sistrag\/notificaciones\/estandar_programa"});
+return false;});});

@@ -136,6 +136,7 @@ var $uses = array('Persona','User','Facultad','Programa','Tipousuario','Nivel');
 				}
 				if($extension!='bmp')
 				{	
+					$this->request->data['User']['password']=Security::hash($this->request->data['User']['password'], null, true);
 					if ($this->Persona->User->saveall($this->request->data)) 
 					{
 						if(isset($this->request->data['Persona']['avatar']))
@@ -190,6 +191,34 @@ var $uses = array('Persona','User','Facultad','Programa','Tipousuario','Nivel');
 			$this->Session->setFlash(__('No se ha podido borrar el usuario intente de nuevo'));
 		}
 		return $this->redirect(array('action' => 'index'));
+	}
+
+	public function editarContrasena($id = null) 
+	{
+		if (!$this->Persona->exists($id)) {
+			throw new NotFoundException(__('Invalid persona'));
+		}
+		if ($this->request->is(array('post', 'put'))) 
+		{
+			$this->Session->setFlash(__('Contraseña actualizada satisfactoriamente'));
+			$this->request->data['User']['password']=Security::hash($this->request->data['User']['password'], null, true);
+			if($this->User->save($this->request->data))
+			{
+				$this->Session->setFlash(__('Contraseña actualizada satisfactoriamente'));
+				return $this->redirect(array('action' => 'view/'.$id));
+			}else
+			{
+
+				$this->Session->setFlash(__('Ha ocurrido un error al actualizar la contraseñ intente nuevamente'));
+			}
+
+		}else
+		{
+			$options = array('conditions' => array('User.persona_id'=> $id));
+			$user = $this->User->find('first', $options);
+			$this->request->data = $user;
+			$this->set('persona',$user);
+		}
 	}
 
 	public function edit($id = null) {

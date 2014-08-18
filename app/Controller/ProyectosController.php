@@ -20,13 +20,206 @@ var $uses = array(
 	public function getSesionPersona()
 	{
 		$usuario=$this->Session->read("Usuario");
-		//print_r($usuario);
 		return $usuario['Persona'];
 	}
 
-	public function index() {
-		$this->Proyecto->recursive = 1;
+	public function add() {
+		//Metodo encargado de registrar proyectos
+		//APROBADO 14-08-2014 CONTROLADOR
+		//APROBADO 14-08-2014 VISTA
+		$usuario=$this->Session->read("Usuario");
+		$id_persona=$usuario['Persona']['id'];
+
+		if ($this->request->is('post')) 
+		{
+					$this->Proyecto->create();
+					if ($this->Proyecto->save($this->request->data)) {
+						$this->Session->setFlash(__('El proyecto ha sido registrado exitosamente'));
+						$this->redirect(array('action' => 'editar_integrantes/'.$this->Proyecto->id));
+					} else {
+						$this->Session->setFlash(__('El proyecto no ha sido registrado'));
+					}
+		}
+
+		if($usuario['nivel_id']==1)
+		{
+			//Administrados institucional
+			$facultades = $this->Facultad->find('list');
+			foreach ($facultades as $key => $value) 
+			{
+				$facultad=$key;
+				break;
+			}
+			$opciones = array('conditions' => array('Programa.facultad_id'=> $facultad));
+			$programas = $this->Programa->find('list',$opciones);
+			foreach ($programas as $key => $value) 
+			{
+				$programa=$key;
+				break;
+			}
+			$opciones = array('conditions' => array('Area.programa_id'=> $programa));
+			$areas = $this->Proyecto->Area->find('list',$opciones);
+			foreach ($areas as $key => $value) 
+			{
+				$area=$key;
+				break;
+			}
+			$opciones = array('conditions' => array('Linea.area_id'=> $area));
+			$lineas = $this->Proyecto->Linea->find('list',$opciones);
+
+		}else if($usuario['nivel_id']==2)
+		{
+
+			//Adminsitrador facultad
+			$id_facultad=$usuario['Persona']['facultad_id'];
+			$opciones = array('conditions' => array('Facultad.id'=> $id_facultad));
+			//Consultaremos listas
+			$facultades = $this->Facultad->find('list',$opciones);
+
+			$opciones = array('conditions' => array('Programa.facultad_id'=> $id_facultad));
+			$programas = $this->Programa->find('list',$opciones);
+			foreach ($programas as $key => $value) 
+			{
+				$programa=$key;
+				break;
+			}
+			$opciones = array('conditions' => array('Area.programa_id'=> $programa));
+			$areas = $this->Proyecto->Area->find('list',$opciones);
+			foreach ($areas as $key => $value) 
+			{
+				$area=$key;
+				break;
+			}
+			$opciones = array('conditions' => array('Linea.area_id'=> $area));
+			$lineas = $this->Proyecto->Linea->find('list',$opciones);
+
+		}else if($usuario['nivel_id']==3)
+		{
+			//Adminsitrador programa
+			$id_facultad=$usuario['Persona']['facultad_id'];
+			$id_programa=$usuario['Persona']['programa_id'];
+			$opciones = array('conditions' => array('Facultad.id'=> $id_facultad));
+			//Consultaremos listas
+			$facultades = $this->Facultad->find('list',$opciones);
+
+			$opciones = array('conditions' => array('Programa.id'=> $id_programa));
+			$programas = $this->Programa->find('list',$opciones);
+			foreach ($programas as $key => $value) 
+			{
+				$programa=$key;
+				break;
+			}
+			$opciones = array('conditions' => array('Area.programa_id'=> $programa));
+			$areas = $this->Proyecto->Area->find('list',$opciones);
+			foreach ($areas as $key => $value) 
+			{
+				$area=$key;
+				break;
+			}
+			$opciones = array('conditions' => array('Linea.area_id'=> $area));
+			$lineas = $this->Proyecto->Linea->find('list',$opciones);
+
+		}
+
+		$this->set(compact('facultades','programas','areas','lineas'));
+
+	}
+
+	public function index() 
+	{
+		//APROBADO 13-08-2014 Controlador
+		//APROBADO 14-08-2014 Vista
+
+		$usuario=$this->Session->read("Usuario");
+		$id_persona=$usuario['Persona']['id'];
+
+		if($usuario['nivel_id']==1)
+		{
+			//Administrados institucional
+
+		}else if($usuario['nivel_id']==2)
+		{
+			$id_facultad=$usuario['Persona']['facultad_id'];
+			//Adminsitrador facultad
+			//Encontraremos en los que mi sessión se desempeña como jurado
+			$this->paginate = array(
+				'Proyecto' => array(
+					'limit' => 10000,
+					'conditions' => 
+			            array(
+			                'Programa.facultad_id'=>$id_facultad,
+			            	),'recursive'=>1
+				)
+				
+			);
+
+		}else if($usuario['nivel_id']==3)
+		{
+			//Adminsitrador programa
+			$id_programa=$usuario['Persona']['programa_id'];
+			//Encontraremos en los que mi sessión se desempeña como jurado
+			$this->paginate = array(
+				'Proyecto' => array(
+					'limit' => 10000,
+					'conditions' => 
+			            array(
+			                'Programa.id'=>$id_programa,
+			            	),'recursive'=>1
+				)
+				
+			);
+
+		}else if($usuario['nivel_id']==4)
+		{
+
+			//Docente
+			$id_programa=$usuario['Persona']['programa_id'];
+
+			$this->paginate = array(
+				'Proyecto' => array(
+					'limit' => 10000,
+					'conditions' => 
+			            array(
+			                'Programa.id'=>$id_programa,
+			            	),'recursive'=>1
+				)
+				
+			);
+
+		}else if($usuario['nivel_id']==5)
+		{
+			
+			
+			$id_programa=$usuario['Persona']['programa_id'];
+			//Econtraremos los proyectos en los que actuo de alguna manera
+
+			$opciones=array(
+            'table' => 'personas_proyectos',
+            'alias' => 'PersonasProyecto',
+            'type' => 'left',
+            'conditions' => 
+            array(
+                'PersonasProyecto.proyecto_id = Proyecto.id'
+            	)
+	    	);
+			//Encontraremos en los que mi sessión se desempeña como jurado
+			$this->paginate = array(
+				'Proyecto' => array(
+					'limit' => 10000,
+					'joins' => array($opciones),
+					'conditions' => 
+			            array(
+			                'PersonasProyecto.persona_id'=>$id_persona,
+			                'PersonasProyecto.rol_id'=>3
+			            	)
+				)
+			);
+
+		}
+
+		$proyectos = $this->paginate('Proyecto');
 		$this->set('proyectos', $this->paginate());
+
 		
 	}
 
@@ -36,14 +229,14 @@ var $uses = array(
 		$this->Proyecto->recursive = 1;
 		//mEJORES CONSULTAS, OINS EN PAGINACIÓN
 		$opciones=array(
-		            'table' => 'personas_proyectos',
-		            'alias' => 'PersonasProyecto',
-		            'type' => 'left',
-		            'conditions' => 
-		            array(
-		                'PersonasProyecto.proyecto_id = Proyecto.id'
-		            	)
-	        	);
+            'table' => 'personas_proyectos',
+            'alias' => 'PersonasProyecto',
+            'type' => 'left',
+            'conditions' => 
+            array(
+                'PersonasProyecto.proyecto_id = Proyecto.id'
+            	)
+    	);
 		//Encontraremos en los que mi sessión se desempeña como jurado
 		$this->paginate = array(
 			'Proyecto' => array(
@@ -345,42 +538,6 @@ var $uses = array(
 		$this->set('roles', $roles);
 	}
 
-
-	public function add() {
-		if ($this->request->is('post')) {
-					$this->Proyecto->create();
-					if ($this->Proyecto->save($this->request->data)) {
-						$this->Session->setFlash(__('The proyecto has been saved'));
-						$this->redirect(array('action' => 'editar_integrantes/'.$this->Proyecto->id));
-					} else {
-						$this->Session->setFlash(__('The proyecto could not be saved. Please, try again.'));
-					}
-		}
-		$facultades = $this->Facultad->find('list');
-		foreach ($facultades as $key => $value) 
-		{
-			$facultad=$key;
-			break;
-		}
-		$opciones = array('conditions' => array('Programa.facultad_id'=> $facultad));
-		$programas = $this->Programa->find('list',$opciones);
-		foreach ($programas as $key => $value) 
-		{
-			$programa=$key;
-			break;
-		}
-		$opciones = array('conditions' => array('Area.programa_id'=> $programa));
-		$areas = $this->Proyecto->Area->find('list',$opciones);
-		foreach ($areas as $key => $value) 
-		{
-			$area=$key;
-			break;
-		}
-		$opciones = array('conditions' => array('Linea.area_id'=> $area));
-		$lineas = $this->Proyecto->Linea->find('list',$opciones);
-		$this->set(compact('facultades','programas','areas','lineas'));
-	}
-
 	public function detallar_general($id = null) 
 	{
 		if (!$this->Proyecto->exists($id)) 
@@ -393,7 +550,7 @@ var $uses = array(
 			        array(
 			            'table' => 'programas',
 			            'alias' => 'Programa',
-			            'type' => 'INNER',
+			            'type' => 'left',
 			            'conditions' => 
 			            array(
 			                'Proyecto.programa = Programa.id'
@@ -402,7 +559,7 @@ var $uses = array(
 			        array(
 			            'table' => 'facultades',
 			            'alias' => 'Facultad',
-			            'type' => 'INNER',
+			            'type' => 'inner',
 			            'conditions' => 
 			            array(
 			                'Programa.facultad_id = Facultad.id'
@@ -411,7 +568,7 @@ var $uses = array(
 			        array(
 			            'table' => 'areas',
 			            'alias' => 'Area',
-			            'type' => 'INNER',
+			            'type' => 'left',
 			            'conditions' => 
 			            array(
 			                'Proyecto.area_id = Area.id'
@@ -420,15 +577,15 @@ var $uses = array(
 			        array(
 			            'table' => 'lineas',
 			            'alias' => 'Linea',
-			            'type' => 'INNER',
+			            'type' => 'left',
 			            'conditions' => 
 			            array(
-			                'Proyecto.area_id = Linea.id'
+			                'Proyecto.linea_id = Linea.id'
 			            	)
 			        	)
 			        ),
 				'conditions' => array(
-					'Proyecto.' . $this->Proyecto->primaryKey => $id
+					'Proyecto.id' => $id
 				),
 				'fields'=>array('Proyecto.*','Programa.*','Facultad.*','Area.*','Linea.*'),
 				'recursive'=>-1,
@@ -459,29 +616,107 @@ var $uses = array(
 		} 
 		else 
 		{
+			$usuario=$this->Session->read("Usuario");
+			$id_persona=$usuario['Persona']['id'];
+
 			$options = array('conditions' => array('Proyecto.' . $this->Proyecto->primaryKey => $id));
 			$this->request->data = $this->Proyecto->find('first', $options);
 			$this->set('proyecto',$this->request->data);
-			$facultades = $this->Facultad->find('list');
-			foreach ($facultades as $key => $value) 
+
+			if ($this->request->is('post')) 
 			{
-				$facultad=$key;
-				break;
+						$this->Proyecto->create();
+						if ($this->Proyecto->save($this->request->data)) {
+							$this->Session->setFlash(__('El proyecto ha sido registrado exitosamente'));
+							$this->redirect(array('action' => 'editar_integrantes/'.$this->Proyecto->id));
+						} else {
+							$this->Session->setFlash(__('El proyecto no ha sido registrado'));
+						}
 			}
-			$opciones = array('conditions' => array('Programa.facultad_id'=> $facultad));
-			$programas = $this->Programa->find('list',$opciones);
-			foreach ($programas as $key => $value) 
+
+			if($usuario['nivel_id']==1)
 			{
-				$programa=$key;
-				break;
+				//Administrados institucional
+				$facultades = $this->Facultad->find('list');
+				foreach ($facultades as $key => $value) 
+				{
+					$facultad=$key;
+					break;
+				}
+				$opciones = array('conditions' => array('Programa.facultad_id'=> $facultad));
+				$programas = $this->Programa->find('list',$opciones);
+				foreach ($programas as $key => $value) 
+				{
+					$programa=$key;
+					break;
+				}
+				$opciones = array('conditions' => array('Area.programa_id'=> $programa));
+				$areas = $this->Proyecto->Area->find('list',$opciones);
+				foreach ($areas as $key => $value) 
+				{
+					$area=$key;
+					break;
+				}
+				$opciones = array('conditions' => array('Linea.area_id'=> $area));
+				$lineas = $this->Proyecto->Linea->find('list',$opciones);
+
+			}else if($usuario['nivel_id']==2)
+			{
+
+				//Adminsitrador facultad
+				$id_facultad=$usuario['Persona']['facultad_id'];
+				$opciones = array('conditions' => array('Facultad.id'=> $id_facultad));
+				//Consultaremos listas
+				$facultades = $this->Facultad->find('list',$opciones);
+
+				$opciones = array('conditions' => array('Programa.facultad_id'=> $id_facultad));
+				$programas = $this->Programa->find('list',$opciones);
+				foreach ($programas as $key => $value) 
+				{
+					$programa=$key;
+					break;
+				}
+				$opciones = array('conditions' => array('Area.programa_id'=> $programa));
+				$areas = $this->Proyecto->Area->find('list',$opciones);
+				foreach ($areas as $key => $value) 
+				{
+					$area=$key;
+					break;
+				}
+				$opciones = array('conditions' => array('Linea.area_id'=> $area));
+				$lineas = $this->Proyecto->Linea->find('list',$opciones);
+
+			}else if($usuario['nivel_id']==3)
+			{
+				//Adminsitrador programa
+				$id_facultad=$usuario['Persona']['facultad_id'];
+				$id_programa=$usuario['Persona']['programa_id'];
+				$opciones = array('conditions' => array('Facultad.id'=> $id_facultad));
+				//Consultaremos listas
+				$facultades = $this->Facultad->find('list',$opciones);
+
+				$opciones = array('conditions' => array('Programa.id'=> $id_programa));
+				$programas = $this->Programa->find('list',$opciones);
+				foreach ($programas as $key => $value) 
+				{
+					$programa=$key;
+					break;
+				}
+				$opciones = array('conditions' => array('Area.programa_id'=> $programa));
+				$areas = $this->Proyecto->Area->find('list',$opciones);
+				foreach ($areas as $key => $value) 
+				{
+					$area=$key;
+					break;
+				}
+				$opciones = array('conditions' => array('Linea.area_id'=> $area));
+				$lineas = $this->Proyecto->Linea->find('list',$opciones);
+
 			}
-			$area=$this->request->data['Area']['id'];
-			$opciones = array('conditions' => array('Area.programa_id'=> $programa));
-			$areas = $this->Proyecto->Area->find('list',$opciones);
-			$area = $this->Proyecto->Area->find('first',array('fields'=>array('id'),'conditions'=>array('Area.id'=>$area)));
-			$area=$area['Area']['id'];
-			$opciones = array('conditions' => array('Linea.area_id'=> $area));
-			$lineas = $this->Proyecto->Linea->find('list',$opciones);
+
+
+
+
 			$this->set(compact('facultades','programas','areas','lineas'));
 		}
 

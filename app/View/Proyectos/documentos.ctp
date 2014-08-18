@@ -7,18 +7,28 @@ $roles;
 	<div class="panel_menu">
 		<ul>
 			<?php
-			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
-			{
+
 			?>
 			<li class="panel_menu_actual">
 				<span class="icon-list" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:12px;"></span>
 				<?php 
 				echo $this->Html->link(__('Documentos'), array('controller'=>'proyectos','action' => 'documentos',$proyecto['Proyecto']['id'])); 
-				?></li><li>
+				?></li>
+				<?php
+				if($current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2' || $current_user['nivel_id'] == '3' || $current_user['nivel_id'] == '5') 
+				{
+				?>
+				<li>
 				<span class="icon-cloudy" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
 				<?php 
 				echo $this->Html->link(__('Subir documento'), array('controller'=>'documentos','action' => 'subir_documento',$proyecto['Proyecto']['id'])); 
-				?></li><li>
+				?></li>
+				<?php
+				}
+				if($current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2' || $current_user['nivel_id'] == '3') 
+				{
+				?>
+				<li>
 				<span class="icon-file-settings" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
 				<?php 
 				echo $this->Html->link(__('Datos generales'), array('action' => 'editar_general',$proyecto['Proyecto']['id'])); 
@@ -27,10 +37,24 @@ $roles;
 				<?php 
 				echo $this->Html->link(__('Integrantes'), array('action' => 'editar_integrantes',$proyecto['Proyecto']['id']));
 				?>
-			</li>
-			<?php
-			}
-			?>
+				</li>
+				<?php
+				}else
+				{
+				?>
+				<li>
+				<span class="icon-file-settings" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
+				<?php 
+				echo $this->Html->link(__('Datos generales'), array('action' => 'detallar_general',$proyecto['Proyecto']['id'])); 
+				?></li><li>
+				<span class="icon-group" style="color:#ddd;text-shadow:0px 0px 4px #222;"></span>
+				<?php 
+				echo $this->Html->link(__('Integrantes'), array('action' => 'detallar_integrantes',$proyecto['Proyecto']['id']));
+				?>
+				</li>
+				<?php
+				}
+				?>
 		</ul>
 	</div>
 	<section class="panel_internal">

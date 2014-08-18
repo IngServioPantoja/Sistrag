@@ -4,36 +4,55 @@ $user=NUll;
 <section class="panel_frame">
 	<div class="panel_menu">
 		<ul>
-			
 			<?php
-			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
-			{
+
 			?>
 			<li>
-				<?php
-				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
-				?>
+				<span class="icon-list" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:12px;"></span>
 				<?php 
 				echo $this->Html->link(__('Documentos'), array('controller'=>'proyectos','action' => 'documentos',$proyecto['Proyecto']['id'])); 
-				?></li><li>
+				?></li>
 				<?php
-				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+				if($current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2' || $current_user['nivel_id'] == '3' || $current_user['nivel_id'] == '5') 
+				{
 				?>
+				<li>
+				<span class="icon-cloudy" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
 				<?php 
-				echo $this->Html->link(__('Subir documento'), array('action' => 'add')); 
-				?></li><li>
+				echo $this->Html->link(__('Subir documento'), array('controller'=>'documentos','action' => 'subir_documento',$proyecto['Proyecto']['id'])); 
+				?></li>
+				<?php
+				}
+				if($current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2' || $current_user['nivel_id'] == '3') 
+				{
+				?>
+				<li>
 				<span class="icon-file-settings" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
 				<?php 
 				echo $this->Html->link(__('Datos generales'), array('action' => 'editar_general',$proyecto['Proyecto']['id'])); 
-				?><li class="panel_menu_actual">
+				?></li><li class="panel_menu_actual">
 				<span class="icon-group" style="color:#ddd;text-shadow:0px 0px 4px #222;"></span>
 				<?php 
-				echo $this->Html->link(__('Integrantes'), array('action' => 'editar_integrantes',$proyecto['Proyecto']['id'])); 
-				?>				
-			<?php
-			}
-			?>
-			</li>
+				echo $this->Html->link(__('Integrantes'), array('action' => 'editar_integrantes',$proyecto['Proyecto']['id']));
+				?>
+				</li>
+				<?php
+				}else
+				{
+				?>
+				<li>
+				<span class="icon-file-settings" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
+				<?php 
+				echo $this->Html->link(__('Datos generales'), array('action' => 'detallar_general',$proyecto['Proyecto']['id'])); 
+				?></li><li class="panel_menu_actual">
+				<span class="icon-group" style="color:#ddd;text-shadow:0px 0px 4px #222;"></span>
+				<?php 
+				echo $this->Html->link(__('Integrantes'), array('action' => 'detallar_integrantes',$proyecto['Proyecto']['id']));
+				?>
+				</li>
+				<?php
+				}
+				?>
 		</ul>
 	</div>
 	<section class="panel_internal">

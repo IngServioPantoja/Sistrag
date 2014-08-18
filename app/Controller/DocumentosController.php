@@ -1941,7 +1941,7 @@ class DocumentosController extends AppController {
 			}
 			$estandares=$selectEstandares;
 		}
-		else if($usuario['nivel_id']==2 || $usuario['nivel_id']==3 )
+		else if($usuario['nivel_id']==1 || $usuario['nivel_id']==2 || $usuario['nivel_id']==3 || $usuario['nivel_id']==5 )
 		{
 			$opciones= array('conditions' => array('Estandar.programa_id' => $usuario['Persona']['programa_id']));
 			$estandares = $this->Documento->Estandar->find('list',$opciones);

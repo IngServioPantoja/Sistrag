@@ -3,14 +3,55 @@
 <section class="panel_frame">
 	<div class="panel_menu">
 		<ul>
+			<?php
+
+			?>
 			<li>
+				<span class="icon-list" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:12px;"></span>
+				<?php 
+				echo $this->Html->link(__('Documentos'), array('controller'=>'proyectos','action' => 'documentos',$proyecto['Proyecto']['id'])); 
+				?></li>
 				<?php
-				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+				if($current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2' || $current_user['nivel_id'] == '3' || $current_user['nivel_id'] == '5') 
+				{
 				?>
-				<?php echo $this->Html->link(__('Documentos'), array('controller'=>'proyectos','action' => 'documentos', $proyecto['Proyecto']['id'])); ?></li><li class="panel_menu_actual">
+				<li class="panel_menu_actual">
 				<span class="icon-cloudy" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
-				<?php echo $this->Html->link(__('Subir documento'), array('action' => 'subir_documento', $proyecto['Proyecto']['id'])); ?>
-			</li>
+				<?php 
+				echo $this->Html->link(__('Subir documento'), array('controller'=>'documentos','action' => 'subir_documento',$proyecto['Proyecto']['id'])); 
+				?></li>
+				<?php
+				}
+				if($current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2' || $current_user['nivel_id'] == '3') 
+				{
+				?>
+				<li>
+				<span class="icon-file-settings" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
+				<?php 
+				echo $this->Html->link(__('Datos generales'), array('controller'=>'proyectos','action' => 'editar_general',$proyecto['Proyecto']['id'])); 
+				?></li><li>
+				<span class="icon-group" style="color:#ddd;text-shadow:0px 0px 4px #222;"></span>
+				<?php 
+				echo $this->Html->link(__('Integrantes'), array('controller'=>'proyectos','action' => 'editar_integrantes',$proyecto['Proyecto']['id']));
+				?>
+				</li>
+				<?php
+				}else
+				{
+				?>
+				<li>
+				<span class="icon-file-settings" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
+				<?php 
+				echo $this->Html->link(__('Datos generales'), array('controller'=>'proyectos','action' => 'detallar_general',$proyecto['Proyecto']['id'])); 
+				?></li><li>
+				<span class="icon-group" style="color:#ddd;text-shadow:0px 0px 4px #222;"></span>
+				<?php 
+				echo $this->Html->link(__('Integrantes'), array('controller'=>'proyectos','action' => 'detallar_integrantes',$proyecto['Proyecto']['id']));
+				?>
+				</li>
+				<?php
+				}
+				?>
 		</ul>
 	</nav>
 	<section class="panel_internal">

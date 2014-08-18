@@ -17,13 +17,6 @@ class MenusNivelesController extends AppController {
 		$this->set('menusNiveles', $this->paginate());
 	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
 	public function view($id = null) {
 		if (!$this->MenusNivel->exists($id)) {
 			throw new NotFoundException(__('Invalid menus nivel'));
@@ -32,11 +25,6 @@ class MenusNivelesController extends AppController {
 		$this->set('menusNivel', $this->MenusNivel->find('first', $options));
 	}
 
-/**
- * add method
- *
- * @return void
- */
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->MenusNivel->create();
@@ -52,13 +40,6 @@ class MenusNivelesController extends AppController {
 		$this->set(compact('menus', 'niveles'));
 	}
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
 	public function edit($id = null) {
 		if (!$this->MenusNivel->exists($id)) {
 			throw new NotFoundException(__('Invalid menus nivel'));
@@ -79,14 +60,6 @@ class MenusNivelesController extends AppController {
 		$this->set(compact('menus', 'niveles'));
 	}
 
-/**
- * delete method
- *
- * @throws NotFoundException
- * @throws MethodNotAllowedException
- * @param string $id
- * @return void
- */
 	public function delete($id = null) {
 		$this->MenusNivel->id = $id;
 		if (!$this->MenusNivel->exists()) {

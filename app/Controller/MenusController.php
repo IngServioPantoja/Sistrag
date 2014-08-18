@@ -71,13 +71,14 @@ class MenusController extends AppController {
 	    function mnuMain(){ //La vista queda mnu_main.ctp
 	    $this->MenusNivel->recursive = 0;
 	    $Usuario=$this->Session->read("Usuario");
-        $r = $this->MenusNivel->find('all',array('conditions' => array('nivel_id'=> $Usuario['nivel_id']),"fields" => array('Menu.icono','Menu.vinculo','Menu.texto'),'order' => array('MenusNivel.orden' => 'asc')));
+        $r = $this->MenusNivel->find('all',array('conditions' => array('nivel_id'=> $Usuario['nivel_id']),"fields" => array('Menu.icono','Menu.vinculo','Menu.texto','Menu.id'),'order' => array('MenusNivel.orden' => 'asc')));
         $menu = array(); 
 		$p=0;
 		foreach ($r as $key):
 		$menu [$p]['titulo']=$key['Menu']['texto'];
 		$menu [$p]['vinculo']=$key['Menu']['vinculo'];
 		$menu [$p]['icono']=$key['Menu']['icono'];
+		$menu [$p]['id']=$key['Menu']['id'];
 		++$p;
 		endforeach;
         $this->Session->write("Menu",$menu);

@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 class ReportesController extends AppController {
 var $components = array("RequestHandler");
 var $helpers = array('Form', 'Html', 'Js','Paginator');
-var $uses = array('Facultad','Programa','Persona','TipoUsuario','TiposEstandar','PersonasProyecto','Area','Linea','Proyecto');
+var $uses = array('Facultad','Programa','Persona','TipoUsuario','Tiposestandar','PersonasProyecto','Area','Linea','Proyecto');
 var $paginate =array(
         'limit' => 99999999,
         );
@@ -42,6 +42,37 @@ var $paginate =array(
 	}
 
 	public function investigaciones() 
+	{	
+		//Paginación con Joins
+		$join=array(
+            'table' => 'facultades',
+            'alias' => 'Facutad',
+            'type' => 'inner',
+            'conditions' => 
+	            array(
+	                'Facultad.id = Programa.facultad_id'
+            	)
+    	);
+		$this->paginate = array(
+			'Persona' => array(
+				'limit' => 10000,
+				'joins' => array($join),
+				'conditions' => 
+		            array(
+		                'TipoUsuario.id !='=>5
+	            	),
+	            'fields'=>
+	            	array(
+	            		'Programa.id','Programa.nombre','Facultad.nombre'
+	            	),
+	            'recursive'=>-1
+			)
+		);
+		$programas = $this->paginate('Programa');
+		$this->set('programas',$programas);
+	}
+
+	public function estados() 
 	{	
 		//Paginación con Joins
 		$join=array(
@@ -217,6 +248,45 @@ var $paginate =array(
 		}
 		$reporte2=json_encode($reporte2, JSON_NUMERIC_CHECK);
 		$this->set('reporte2',$reporte2);
+	}
+
+	public function detalleReporteEstado()
+	{
+		$options = array('conditions' => array('Programa.id'=> $this->request->data['Reporte']['id']));
+		$programa_id=$this->request->data['Reporte']['id'];
+		$programa=$this->Programa->find('first', $options);	
+		$this->set('programa',$programa);
+		$this->response->type('json');
+		$opcionesConteo = 
+		array(
+			'conditions'=>
+				array(
+					'Proyecto.programa'=>$programa_id),
+			'fields'=>
+				array(
+					"Tiposestandar.nombre as name",'COUNT("Proyecto.id") as data'
+				),
+			'group' => array('Proyecto.estado_id'),
+			'order'=>
+				array(
+					'Tiposestandar.nombre asc'
+				),
+			'recursive'=>-2
+		);
+		$cantidadConteo=$this->Proyecto->find('all', $opcionesConteo);
+		print_r($cantidadConteo);
+		echo "---";
+		$reporte=array();
+		$contador=0;
+		foreach ($cantidadConteo as $estanadar) {
+			$reporte[$contador]=$estanadar['Tiposestandar'];
+			$reporte[$contador]['data'][0]=$estanadar[0]['data'];
+			++$contador;
+		}
+		$reporte=json_encode($reporte, JSON_NUMERIC_CHECK);
+		$this->set('reporte',$reporte);
+
+		
 	}
 
 	public function view($id = null)
