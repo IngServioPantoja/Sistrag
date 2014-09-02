@@ -62,11 +62,19 @@ $user=NUll;
 									echo h($estandar['Estandar']['nombre']);
 									?>
 								</span>
+								<?php
+								if($current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2' || $current_user['nivel_id'] == '3')
+								{
+								?>
 								<div class="ficha_acciones_estandar" id="acciones_estandar">
 									<?php 
+
 									echo $this->Form->postLink($this->Html->image("iconos/eliminar50.png", array('height' => '', 'width' => '25px')), array('action' => 'delete',$estandar['Estandar']['id']), array('escape' => false,'title'=>'Eliminar Estandar'), __('¿Esta seguro que desea borrar el estandar para: '.$estandar['Tiposestandar']['nombre']." ".$estandar['Estandar']['nombre']."?")); 
 									?>
 								</div>
+								<?php
+								}
+								?>
 								</br></br>
 								<article class='ficha_index' id="fichaIndexInformacionGeneral">
 									<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'){ ?>

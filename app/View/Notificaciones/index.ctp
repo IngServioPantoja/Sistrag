@@ -100,8 +100,8 @@ $user=NUll;
  	</section>
 </section>
 <script>
-	$('#navicon-suitcase').css( "background", "#7a0400" );
-	$('#marcicon-suitcase').css( "color", "#7a0400" );
+	$('#navicon-earth').css( "background", "#7a0400" );
+	$('#marcicon-earth').css( "color", "#7a0400" );
 	$(document).ready(function () {
 		var tabla=
 		$('#tabla_fechas').dataTable( {

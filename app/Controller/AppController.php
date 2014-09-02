@@ -52,7 +52,8 @@ var $uses = array(
 	public function isAuthorized($user) {
         $this->Session->write("Usuario",$user);
         $Usuario=$this->Session->read("Usuario");
-       
+        $this->set('miUsuario', $Usuario); 
+       // print_r( $Usuario); 
       return true;
     }
 
@@ -78,8 +79,8 @@ var $uses = array(
                 ),
             'recursive'=>0
         );
-    $nuevasNotificaciones=$this->Notificacion->find('count', $opcionesConteo);    
-    $this->set('nuevasNotificaciones', $nuevasNotificaciones);
+    $nuevasNotificaciones=$this->Notificacion->find('count', $opcionesConteo);  
+    $this->set('nuevasNotificaciones', $nuevasNotificaciones);  
     }
 		
 

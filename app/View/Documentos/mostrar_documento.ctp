@@ -33,7 +33,7 @@
 					</div>
 					<span class="principal_titulo"> 
 					<?php 
-					echo $proyecto['TiposEstandar']['nombre'];
+					echo $proyecto['tiposestandaresndar']['nombre'];
 					?>
 					<?php 
 					echo $proyecto['Documento']['fecha_guardado'];

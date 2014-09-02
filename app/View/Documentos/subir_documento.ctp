@@ -67,26 +67,27 @@
 						</span>
 					</div>
 					<div class="crud_fila_secundaria">
-							<fieldset class='ficha_add'>
-								<div>
-									<fieldset>
-										<legend>
-											Subir documento
-										</legend>
-									<?php
-									echo $this->Form->input('documentoxml',array('type' => 'file',"label" => false));
-									?>
-									</fieldset>
-								</div>
-								<div>
-									<fieldset>
-										<legend>
-											Tipo de documento
-										</legend>
-										<?php echo $this->Form->input('estandar_id',array('label' =>false,'class'=>'inputCorto')); ?>	
-									</fieldset>
-								</div>
-							</fieldset>
+						<fieldset class='ficha_add'>
+							<div>
+								<fieldset>
+									<legend>
+										Subir documento
+									</legend>
+								<?php
+								echo $this->Form->input('documentoxml',array('type' => 'file',"label" => false,'required'=>'required'));
+								?>
+								</fieldset>
+							</div>
+							</br>
+							<div>
+								<fieldset>
+									<legend>
+										Tipo de documento
+									</legend>
+									<?php echo $this->Form->input('estandar_id',array('label' =>false,'class'=>'inputCorto','required'=>'required')); ?>	
+								</fieldset>
+							</div></br></br>
+						</fieldset>
 					</div>
 					<?php echo $this->Form->end(__('Subir')); ?>
 				</td>

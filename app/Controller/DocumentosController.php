@@ -698,11 +698,16 @@ class DocumentosController extends AppController {
 		$this->Documento->recursive = 0;
 		$options = array('conditions' => array('Documento.' . $this->Documento->primaryKey => $id));
 		$documento=$this->Documento->find('first', $options);
+
+		$id_del_proyecto=$documento['Documento']['proyecto_id'];
 		$this->TiposEstandar->recursive = -1;
+
 		$opciones = array('conditions' => array('TiposEstandar.' . $this->TiposEstandar->primaryKey => $documento['Estandar']['tiposestandar_id']));
 		$tipoEstandar=$this->TiposEstandar->find('first', $opciones);
+
 		$documento['TiposEstandar']=$tipoEstandar['TiposEstandar'];
 		$proyecto = $documento;
+
 		$this->PersonasProyecto->recursive = -1;
 		$opciones = array(
 		    	'joins' => array(
@@ -779,6 +784,7 @@ class DocumentosController extends AppController {
            	'group' => array('TiposEstandar.id'),		
 	   	);
 		$tiposestandares=$this->Documento->find('list', $opciones);
+
 		$opciones = array(
 	    	'joins' => array(
 		        array(
@@ -813,11 +819,12 @@ class DocumentosController extends AppController {
 	    	'conditions' => 
 	            array(
 	                'Documento.proyecto_id' => $proyecto['Proyecto']['id'],
-	                'Estandar.id' => $proyecto['TiposEstandar']['id']
+	                'TiposEstandar.id' => $proyecto['TiposEstandar']['id']
 	           	),
            	'order' => array('Documento.fecha_guardado desc'),
 	   	);
 		$documentos=$this->Documento->find('list', $opciones);
+
 		$opciones = array(
 	    	'conditions' => 
 	            array(
@@ -842,7 +849,7 @@ class DocumentosController extends AppController {
 		if ($this->request->is('post')) 
 		{
 			$id=$this->request->data['Proyecto']['documento']; 
-			$this->redirect(array('action' => 'mostrar_documento',$id));
+			$this->redirect(array('action' => 'detalle_entrega',$id));
 		}
 		if(isset($id))
 		{
@@ -938,16 +945,45 @@ class DocumentosController extends AppController {
            	'group' => array('TiposEstandar.id'),		
 	   	);
 		$tiposestandares=$this->Documento->find('list', $opciones);
-		//print_r($proyecto);
+		
+
+		//Obtendremos los documentos enviados y los presentaremos por persona a la que se entrego
 		$opciones = array(
 	    	'joins' => array(
-		        array(
-		            'table' => 'proyectos',
-		            'alias' => 'Proyecto',
+	        	array(
+		            'table' => 'personas_proyectos',
+		            'alias' => 'PersonaProyecto',
 		            'type' => 'INNER',
 		            'conditions' => 
 		            array(
-		                'Proyecto.id = Documento.proyecto_id'
+		                'Persona.id = PersonaProyecto.persona_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'detalleentregas',
+		            'alias' => 'DetalleEntrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'PersonaProyecto.id = DetalleEntrega.personas_proyecto_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'entregas',
+		            'alias' => 'Entrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Entrega.id = DetalleEntrega.entrega_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'documentos',
+		            'alias' => 'Documento',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Documento.id = Entrega.documento_id'
 	            	)
 	        	),
 	        	array(
@@ -960,25 +996,121 @@ class DocumentosController extends AppController {
 	            	)
 	        	),
 	        	array(
-		            'table' => 'tiposestandares',
-		            'alias' => 'TiposEstandar',
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
 		            'type' => 'INNER',
 		            'conditions' => 
 		            array(
-		                'TiposEstandar.id = Estandar.tiposestandar_id'
+		                'Proyecto.id = Documento.proyecto_id'
 	            	)
 	        	)
     		),
-	    	'fields' => array('Documento.id','Documento.fecha_guardado'),
+	    	'fields' => array('DetalleEntrega.id','Documento.fecha_guardado','Persona.id'),
 	    	'conditions' => 
 	            array(
-	                'Documento.proyecto_id' => $proyecto['Proyecto']['id'],
-	                'TiposEstandar.id' => $proyecto['TiposEstandar']['id']
+	                'Proyecto.id' => $proyecto['Proyecto']['id'],
+	                'Estandar.tiposestandar_id' => $proyecto['TiposEstandar']['id']
 	           	),
            	'order' => array('Documento.fecha_guardado desc'),
+           	'recursive'=>0
 	   	);
-		$documentos=$this->Documento->find('list', $opciones);
-		//print_r($documentos);
+
+		$entregasDocumento=$this->Persona->find('all', $opciones);
+
+
+
+		//Personas que recibieorn los documentos
+		$opciones = array(
+	    	'joins' => array(
+	        	array(
+		            'table' => 'personas_proyectos',
+		            'alias' => 'PersonaProyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Persona.id = PersonaProyecto.persona_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'detalleentregas',
+		            'alias' => 'DetalleEntrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'PersonaProyecto.id = DetalleEntrega.personas_proyecto_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'entregas',
+		            'alias' => 'Entrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Entrega.id = DetalleEntrega.entrega_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'documentos',
+		            'alias' => 'Documento',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Documento.id = Entrega.documento_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'estandares',
+		            'alias' => 'Estandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Estandar.id = Documento.estandar_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Proyecto.id = Documento.proyecto_id'
+	            	)
+	        	)
+    		),
+	    	'fields' => array('DISTINCT Persona.id','Persona.nombre','Persona.apellido'),
+	    	'conditions' => 
+	            array(
+	                'Proyecto.id' => $proyecto['Proyecto']['id'],
+	                'Estandar.tiposestandar_id' => $proyecto['TiposEstandar']['id']
+	           	),
+           	'order' => array('Documento.fecha_guardado desc'),
+           	'recursive'=>0
+	   	);
+
+		$personas=$this->Persona->find('all', $opciones);
+
+		$listaEntregas=array();
+		foreach ($personas as $persona) 
+		{
+			
+			foreach ($entregasDocumento as $entregaDocumento) {
+				
+			if($persona['Persona']['id']==$entregaDocumento['Persona']['id'])
+			{
+				$listaEntregas[$persona['Persona']['nombre']." ".$persona['Persona']['apellido']][$entregaDocumento['DetalleEntrega']['id']]=$entregaDocumento['Documento']['fecha_guardado'];
+
+			}	
+
+			}
+
+		}
+		$documentos=$listaEntregas;
+		//Previamente organizamo stodos lso elementos para que dijeran aquien se hiso la entrega
+		$this->set('documentos',$listaEntregas);
+
+
+
+
 	/* Contenido de las evaluaciones */
 		$opciones = array(
 	    	'conditions' => 
@@ -1073,6 +1205,7 @@ class DocumentosController extends AppController {
 		$opciones = array('conditions' => array('TiposEstandar.' . $this->TiposEstandar->primaryKey => $documento['Estandar']['tiposestandar_id']));
 		$tipoEstandar=$this->TiposEstandar->find('first', $opciones);
 		$documento['TiposEstandar']=$tipoEstandar['TiposEstandar'];
+
 		$proyecto = $documento;
 		$this->PersonasProyecto->recursive = -1;
 		$opciones = array(
@@ -1213,13 +1346,15 @@ class DocumentosController extends AppController {
 	    	'conditions' => 
 	            array(
 	                'Proyecto.id' => $proyecto['Proyecto']['id'],
-	                'Estandar.id' => $proyecto['TiposEstandar']['id']
+	                'Estandar.tiposestandar_id' => $proyecto['TiposEstandar']['id']
 	           	),
            	'order' => array('Documento.fecha_guardado desc'),
            	'recursive'=>0
 	   	);
 
 		$entregasDocumento=$this->Persona->find('all', $opciones);
+
+
 
 		//Personas que recibieorn los documentos
 		$opciones = array(
@@ -1283,7 +1418,7 @@ class DocumentosController extends AppController {
 	    	'conditions' => 
 	            array(
 	                'Proyecto.id' => $proyecto['Proyecto']['id'],
-	                'Estandar.id' => $proyecto['TiposEstandar']['id']
+	                'Estandar.tiposestandar_id' => $proyecto['TiposEstandar']['id']
 	           	),
            	'order' => array('Documento.fecha_guardado desc'),
            	'recursive'=>0
@@ -1525,7 +1660,7 @@ class DocumentosController extends AppController {
 	    	'conditions' => 
 	            array(
 	                'Proyecto.id' => $proyecto,
-	                'Estandar.id' => $estandar
+	                'Estandar.tiposestandar_id' => $estandar
 	           	),
            	'order' => array('Documento.fecha_guardado desc'),
            	'recursive'=>0
@@ -1595,7 +1730,7 @@ class DocumentosController extends AppController {
 	    	'conditions' => 
 	            array(
 	                'Proyecto.id' => $proyecto,
-	                'Estandar.id' => $estandar
+	                'Estandar.tiposestandar_id' => $estandar
 	           	),
            	'order' => array('Documento.fecha_guardado desc'),
            	'recursive'=>0
@@ -1903,47 +2038,18 @@ class DocumentosController extends AppController {
 		$proyecto=  $this->Proyecto->find('first',$opciones);
 		$this->set(compact('proyecto'));
 		$usuario=$this->Session->read("Usuario");
-		if($usuario['nivel_id']==1)
+		if($usuario['nivel_id']==1 || $usuario['nivel_id']==2 || $usuario['nivel_id']==3 || $usuario['nivel_id']==5 )
 		{
-			$selectEstandares=array();
-			$opciones=array(
-				'joins' => array(
-			        array(
-			            'table' => 'tiposestandares',
-			            'alias' => 'Tiposestandar',
-			            'type' => 'INNER',
-			            'conditions' => 
-			            array(
-			                'Tiposestandar.id = Estandar.tiposestandar_id'
-			            	)
-			        	)
-	    		),
-			    'fields' => array('Estandar.id','Estandar.nombre','Estandar.programa_id','Tiposestandar.nombre'),
-			    'recursive' => -1
+			$opciones= array(
+				'conditions' => array(
+					'Estandar.programa_id' => $proyecto['Proyecto']['programa'],
+					'Estandar.tiposestandar_id'=>$proyecto['Proyecto']['estado_id']
+				),
+				'fields'=>array(
+					'Estandar.id','Tiposestandar.nombre'
+				),
+				'recursive'=>0
 			);
-			$estandares=$this->Estandar->find('all',$opciones);
-			$opciones=array(
-			    'fields' => array('Programa.nombre','Programa.id'),
-			    'recursive' => 1,
-			    'group' => array('Estandar.programa_id'),
-			    'having'=>array('count(Estandar.programa_id)>0')
-			);
-			$programas = $this->Estandar->find('all',$opciones);
-			foreach ($programas as $programa) 
-			{
-				foreach ($estandares as $estandar) 
-				{
-					if($programa['Programa']['id']==$estandar['Estandar']['programa_id'])
-					{
-						$selectEstandares[$programa['Programa']['nombre']][$estandar['Estandar']['id']]=$estandar['Tiposestandar']['nombre']." ".$estandar['Estandar']['nombre'];
-					}
-				}
-			}
-			$estandares=$selectEstandares;
-		}
-		else if($usuario['nivel_id']==1 || $usuario['nivel_id']==2 || $usuario['nivel_id']==3 || $usuario['nivel_id']==5 )
-		{
-			$opciones= array('conditions' => array('Estandar.programa_id' => $usuario['Persona']['programa_id']));
 			$estandares = $this->Documento->Estandar->find('list',$opciones);
 		}
 		$this->set(compact('estandares'));

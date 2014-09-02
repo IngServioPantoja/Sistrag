@@ -286,7 +286,6 @@ var $uses = array(
 	public function documentos($id = null) 
 	{
 		//Aqui se muestran los documentos subidos y dependiendo su estado las entregas de los mismos
-		//$this->autoRender = false;
 		if (!$this->Proyecto->exists($id)) {
 			throw new NotFoundException(__('Invalid proyecto'));
 		}

@@ -15,7 +15,7 @@
 			<?php echo $this->Html->link(__('Subir documento'), array('action' => 'subir_documento', $proyecto['Proyecto']['id'])); 
 			?></li><li class="panel_menu_actual">
 			<span class="icon-file-settings" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
-			<?php echo $this->Html->link(__('Documento'), array('action' => 'mostrar_documento', $proyecto['Documento']['id'])); 
+			<?php echo $this->Html->link(__('Documento'), array('action' => 'detalle_entrega', $entrega['Detalleentrega']['id'])); 
 			?>
 			</li>
 		</ul>
@@ -104,7 +104,7 @@
 							</div>
 						</div>	
 						<div class="contenedor_integrantes">
-							<?php echo $this->Form->create('Proyecto'); ?>
+							<?php echo $this->Form->create('Proyecto',array('controller'=>'documentos','action'=>'detalle_entrega')); ?>
 							<?php echo $this->Form->input('id',array('value'=>$proyecto['Proyecto']['id'])); ?>
 							<div class="unidad_integrantes">
 								<?php
@@ -116,7 +116,7 @@
 							<div class="unidad_integrantes" id="lista_documentos">
 								<?php
 								echo $this->Form->select(
-									'documento', $documentos,array('id'=>'documento','autocomplete' =>'off','empty'=>false,'value'=>$proyecto['Documento']['id'])
+									'documento', $documentos,array('id'=>'documento','autocomplete' =>'off','empty'=>false,'value'=>$entrega['Detalleentrega']['id'])
 								);
 								?>
 							</div>

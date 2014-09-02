@@ -218,7 +218,8 @@ if(!$this->request->is('ajax'))
 }
 ?>
 <script>
-	$('#navicon-suitcase').css( "color", "#7a0400" );
+	$('#navicon-suitcase').css( "background", "#7a0400" );
+	$('#marcicon-suitcase').css( "color", "#7a0400" );
 $(document).ready(function() {
     $('#table').dataTable( {
         "dom": '<"top"fl>rt<"bottom"pi>',

@@ -2,13 +2,39 @@
 App::uses('AppController', 'Controller');
 class PersonasProyectosController extends AppController {
 var $components = array("RequestHandler","Paginator");
-var $uses = array('PersonasProyecto','Proyecto','Persona','Rol');
+var $uses = array('PersonasProyecto','Proyecto','Persona','Rol','Notificacion');
 
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->PersonasProyecto->create();
 			if ($this->PersonasProyecto->save($this->request->data)) {
+				echo "perfect";
 				$this->Session->setFlash(__('La relación se ha establecido correctamente'));
+				print_r($this->request->data);
+				$this->Notificacion->create();
+				$notificacion=array();
+				$fecha = date_create();
+				$fecha = date_format($fecha, 'Y-m-d H:i:s');
+				$notificacion['Notificacion']['parametro_estado_id']=5;
+				$notificacion['Notificacion']['fecha']=$fecha;
+				if($this->request->data['PersonasProyecto']['rol_id']==1)
+				{
+				$notificacion['Notificacion']['parametro_tipo_notificacion']=7;
+				}else if($this->request->data['PersonasProyecto']['rol_id']==2)
+				{
+				$notificacion['Notificacion']['parametro_tipo_notificacion']=8;
+				}else if($this->request->data['PersonasProyecto']['rol_id']==3)
+				{
+				$notificacion['Notificacion']['parametro_tipo_notificacion']=10;
+				}
+				$notificacion['Notificacion']['url_action']='documentos';
+				$notificacion['Notificacion']['url_controlador']='proyectos';
+				$notificacion['Notificacion']['url_valor']=$this->request->data['PersonasProyecto']['proyecto_id'];
+				$notificacion['Notificacion']['persona_id']=$this->request->data['PersonasProyecto']['persona_id'];
+				if($this->Notificacion->save($notificacion))
+				{
+
+				}
 				$this->redirect($this->referer());
 			} else {
 				$this->Session->setFlash(__('No se ha podido realizar la opreación'));

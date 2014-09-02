@@ -71,7 +71,7 @@ $user=NUll;
 									<strong><label for="Estandar_id">Estandar:</label></strong>
 								</div>
 								<div id="estandar">
-								<?php echo $control['Estandar']['nombre']; ?>
+								<?php echo $control['Estandar']['Tiposestandar']['nombre'].": ".$control['Estandar']['nombre']; ?>
 								</div>
 							</div>
 						</div>
@@ -82,3 +82,7 @@ $user=NUll;
 		</table>
 	</section>
 </section>
+<script>
+	$('#navicon-calendar').css( "background", "#7a0400" );
+	$('#marcicon-calendar').css( "color", "#7a0400" );
+</script>

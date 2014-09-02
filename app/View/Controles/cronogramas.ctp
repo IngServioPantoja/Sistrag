@@ -80,7 +80,7 @@ $user=NUll;
 						    			</td>
 						    			<td>
 						    				<?php
-						    					echo $control['Estandar']['nombre'];
+						    					echo $control['Estandar']['Tiposestandar']['nombre'].": ".$control['Estandar']['nombre'];
 						    				?>
 						    			</td>
 						    			<td>
@@ -101,7 +101,9 @@ $user=NUll;
 												);
 											?>
 											<?php
-												echo $this->Html->link(
+												if($miUsuario['nivel_id']==1 || $miUsuario['nivel_id']==2 || $miUsuario['nivel_id']==3)
+												{
+													echo $this->Html->link(
 												    '
 												    <button type="button" class="btn btn-default btn-lg use-tooltip" data-toggle="tooltip" data-placement="top" title="Ver control">
 														<span class="glyphicon glyphicon-pencil"></span>
@@ -109,7 +111,9 @@ $user=NUll;
 													',
 												    array('controller'=>'controles', 'action'=>'edit',$control['Control']['id']),
 												    array('escape' => FALSE)
-												);
+													);
+												}
+												
 											//Ahora si a cuadrar menus...
 											?>
 						    			</td>
@@ -128,8 +132,9 @@ $user=NUll;
  	</section>
 </section>
 <script>
-	$('#navicon-suitcase').css( "background", "#7a0400" );
-	$('#marcicon-suitcase').css( "color", "#7a0400" );
+	$('#navicon-calendar').css( "background", "#7a0400" );
+	$('#marcicon-calendar').css( "color", "#7a0400" );
+	
 	$(document).ready(function () {
 		var tabla=
 		$('#tabla_fechas').dataTable( {
