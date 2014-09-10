@@ -59,7 +59,7 @@ var $uses = array(
 
     public function beforeFilter() 
     {
-        $this->Auth->allow('index', 'view');
+        $this->Auth->allow('index', 'view','autores');
         $this->set('logged_in',$this->Auth->loggedin());
 		$this->set('current_user',$this->Auth->user());
 					

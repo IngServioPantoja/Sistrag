@@ -2,6 +2,8 @@
 
 $usuario=$this->Session->read("Usuario"); ?>
 <!-- <!doctype html> -->
+
+<!-- Al parecer solof alta cuadrar meno de director , decano y el otro-->
 <html lang='es_Es'>
     <head>
         <title>
@@ -102,7 +104,7 @@ $usuario=$this->Session->read("Usuario"); ?>
                         </li>
                         <li>
                             <?php
-                                echo $this->Html->link('Desarrolladores',array('controller'=>'users','action'=>'login'));                         
+                                echo $this->Html->link('Desarrolladores',array('controller'=>'users','action'=>'autores'));                         
                             ?>
                         </li>
                     </ul>

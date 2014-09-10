@@ -7,9 +7,7 @@ if(!$this->request->is('ajax'))
 	<div class="panel_menu">
 		<ul>
 			
-			<?php
-			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
-			{
+			<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'|| $current_user['nivel_id'] == '2'|| $current_user['nivel_id'] == '3') {
 			?>
 			<li class="panel_menu_actual">
 				<?php
@@ -44,7 +42,7 @@ if(!$this->request->is('ajax'))
 							if(isset($busqueda))
 							{
 								echo $this->Form->select(
-								'atributo', array('id' => 'Id', 'nombre'=>'Nombre'
+								'atributo', array('identificacion' => 'Identificación', 'nombre'=>'Nombre'
 									),array('id'=>'atributo','autocomplete' =>'off','empty'=>false,'default'=>$busqueda[0]['atributo'])
 							);	
 							}
@@ -53,7 +51,7 @@ if(!$this->request->is('ajax'))
 							?>
 							<?php
 							echo $this->Form->select(
-								'atributo', array('id' => 'Id', 'nombre'=>'Nombre'
+								'atributo', array('identificacion' => 'Identificación', 'nombre'=>'Nombre'
 									),array('id'=>'atributo','autocomplete' =>'off','empty'=>false)
 							);
 							}
@@ -104,7 +102,7 @@ if(!$this->request->is('ajax'))
 											}
 											echo $this->Html->image($urlImagen, array('alt' => 'Login','height' => '200px', 'width' => '200px'));
 											?>
-											<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'): ?>
+											<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'|| $current_user['nivel_id'] == '2'|| $current_user['nivel_id'] == '3'): ?>
 												<div class="ficha_acciones">
 											<?php echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'edit', $persona['Persona']['id']),
 											array('escape' => false)); 
@@ -125,7 +123,7 @@ if(!$this->request->is('ajax'))
 													</th>
 													<td>
 														<span>
-															<?php echo h($persona['Persona']['id']); ?>
+															<?php echo h($persona['Persona']['identificacion']); ?>
 														</span>	
 													</td>
 												</tr>
@@ -190,6 +188,10 @@ if(!$this->request->is('ajax'))
 		</table>
 	</section>
 </section>
+<script >
+	$('#navicon-group').css( "background", "#7a0400" );
+	$('#marcicon-group').css( "color", "#7a0400" );
+</script>
 <?php
 $this->Js->get('#atributo')->event('change',
 	$this->Js->request(

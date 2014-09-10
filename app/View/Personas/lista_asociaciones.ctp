@@ -1,5 +1,5 @@
 <?php
-if($select_entrada!=NULL)
+if($select_entrada!=NULL && isset($select_entrada))
 {
 ?>
 <div>
@@ -8,10 +8,16 @@ if($select_entrada!=NULL)
 	</strong>
 </div>
 <div>
-<?php echo $this->Form->select($foreign,
-						   		array($select_entrada),
-						   		array('empty'=>false,"required" => "required", 'id' => $foreign,'autocomplete' =>'off',"class"=>"inputCorto")
-						   	); 
+<?php
+	if(isset($foreign))
+	{
+		echo $this->Form->select($foreign,
+	   		array($select_entrada),
+	   		array('empty'=>false,"required" => "required", 'id' => $foreign,'autocomplete' =>'off',"class"=>"inputCorto")
+	   	);
+	}
+?>
+<?php  
 ?>
 </div>
 <?php

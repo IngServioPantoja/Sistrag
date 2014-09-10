@@ -5,7 +5,7 @@ $user=NUll;
 	<div class="panel_menu">
 		<ul>
 			
-				<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'|| $current_user['nivel_id'] == '2'|| $current_user['nivel_id'] == '3') {?>
+			<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'|| $current_user['nivel_id'] == '2'|| $current_user['nivel_id'] == '3') {?>
 			<li>
 				<?php
 				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
@@ -53,7 +53,7 @@ $user=NUll;
 											<strong><label for="PersonaIdentificacion">Identificación:</label></strong>
 										</div>
 										<div>
-										<?php echo $this->Form->input('identificacion',array('label'=>false,"autocomplete"=>"off")); ?>
+										<?php echo $this->Form->input('identificacion',array('label'=>false,"autocomplete"=>"off",'required'=>'required')); ?>
 										</div>
 									</div>
 									<div>
@@ -61,7 +61,7 @@ $user=NUll;
 											<strong><label for="PersonaNombre">Nombres:</label></strong>
 										</div>
 										<div>
-										<?php echo $this->Form->input('nombre',array('label'=>false,"autocomplete"=>"off")); ?>
+										<?php echo $this->Form->input('nombre',array('label'=>false,"autocomplete"=>"off",'required'=>'required')); ?>
 										</div>
 									</div>
 									<div>
@@ -69,7 +69,7 @@ $user=NUll;
 											<strong><label for="PersonaApellido">Apellidos:</label></strong>
 										</div>
 										<div>
-										<?php echo $this->Form->input('apellido',array('label'=>false,"autocomplete"=>"off")); ?>
+										<?php echo $this->Form->input('apellido',array('label'=>false,"autocomplete"=>"off",'required'=>'required')); ?>
 										</div>
 									</div>
 									<div>
@@ -85,7 +85,7 @@ $user=NUll;
 											<strong><label for="PersonaTipousuario_id">Tipo de usuario:</label></strong>
 										</div>
 										<div>
-										<?php echo $this->Form->input('tiposusuario_id',array('label'=>false,"id"=>"tiposusuario_id","class"=>"inputCorto")); ?>
+										<?php echo $this->Form->input('tiposusuario_id',array('label'=>false,"id"=>"tiposusuario_id","class"=>"inputCorto",'empty'=>'Seleccionar','required'=>'required')); ?>
 										</div>
 									</div>
 									<div id="asociacion">
@@ -96,7 +96,7 @@ $user=NUll;
 											<strong><label for="PersonaNivel_id">Nivel de acceso:</label></strong>
 										</div>
 										<div>
-										<?php echo $this->Form->input('nivel_id',array('label'=>false,"id"=>"nivel_id","class"=>"inputCorto")); ?>
+										<?php echo $this->Form->input('nivel_id',array('label'=>false,"id"=>"nivel_id","class"=>"inputCorto",'required'=>'required')); ?>
 										</div>
 									</div>
 									<div>
@@ -104,7 +104,7 @@ $user=NUll;
 											<strong><label for="UserUsername">Username:</label></strong>
 										</div>
 										<div>
-										<?php echo $this->Form->input('username',array("label"=>false,"autocomplete"=>"off")); ?>
+										<?php echo $this->Form->input('username',array("label"=>false,"autocomplete"=>"off",'required'=>'required')); ?>
 										</div>
 									</div>		
 									<div>
@@ -112,7 +112,7 @@ $user=NUll;
 											<strong><label for="UserPassword">Contraseña:</label></strong>
 										</div>
 										<div>
-										<?php echo $this->Form->input('rpassword',array('label'=>false,"autocomplete"=>"off","type"=>"password")); ?>
+										<?php echo $this->Form->input('rpassword',array('label'=>false,"autocomplete"=>"off","type"=>"password",'required'=>'required')); ?>
 										</div>
 									</div>	
 									<div>
@@ -120,7 +120,7 @@ $user=NUll;
 											<strong><label for="UserPasswordconfirmacion">Confirmar contraseña:</label></strong>
 										</div>
 										<div>
-										<?php echo $this->Form->input('password',array('label'=>false,"autocomplete"=>"off","id"=>"UserPasswordconfirmacion")); ?>
+										<?php echo $this->Form->input('password',array('label'=>false,"autocomplete"=>"off","id"=>"UserPasswordconfirmacion",'required'=>'required')); ?>
 										</div>
 									</div>	
 								</div>
@@ -133,6 +133,8 @@ $user=NUll;
 	</section>
 </section>
 <script>
+$('#navicon-group').css( "background", "#7a0400" );
+$('#marcicon-group').css( "color", "#7a0400" );
 $('textarea').autosize();
 function resizeInput() {
     $(this).attr('size', $(this).val().length+1);

@@ -143,6 +143,42 @@ var $paginate =array(
 		$this->set('personas',$personas);
 	}
 
+	public function miReporte()
+	{
+		$usuario=$this->Session->read("Usuario");
+		$id_persona=$usuario['Persona']['id'];
+		$options = array('conditions' => array('Persona.id'=> $id_persona));
+		$persona_id=$id_persona;
+		$persona=$this->Persona->find('first', $options);	
+		$this->set('persona',$persona);
+		
+		//$this->response->type('json');
+	    $roles = json_encode(
+	    	array(
+	    		"Jurado",
+	    		"Asesor"
+	    	)
+	    );
+		$this->set('roles',$roles);
+		//Obteniendo proyectos como Jurado
+        $opcionesJurado = 
+		array(
+			'conditions'=>array('PersonasProyecto.persona_id'=>$persona_id,'PersonasProyecto.rol_id'=>1)
+		);
+		$cantidadJurado=$this->PersonasProyecto->find('count', $opcionesJurado );
+
+		$opcionesAsesor = 
+		array(
+			'conditions'=>array('PersonasProyecto.persona_id'=>$persona_id,'PersonasProyecto.rol_id'=>2)
+		);
+		$cantidadAsesor=$this->PersonasProyecto->find('count', $opcionesAsesor);
+		$reporte=array();
+		$reporte[0]=$cantidadJurado;
+		$reporte[1]=$cantidadAsesor;
+		$reporte=json_encode($reporte);
+		$this->set('reporte',$reporte);
+	}
+
 	public function detalleReporteDocente()
 	{
 		$options = array('conditions' => array('Persona.id'=> $this->request->data['Reporte']['id']));

@@ -76,7 +76,8 @@ $user=NUll;
 	</section>
 </section>
 <script>
-
+$('#navicon-group').css( "background", "#7a0400" );
+$('#marcicon-group').css( "color", "#7a0400" );
 $('#UserEditarContrasenaForm').submit(function validarPassword()
 	{
 		var password= $('#UserPasswordconfirmacion').val();

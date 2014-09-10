@@ -8,9 +8,7 @@ var $uses = array('PersonasProyecto','Proyecto','Persona','Rol','Notificacion');
 		if ($this->request->is('post')) {
 			$this->PersonasProyecto->create();
 			if ($this->PersonasProyecto->save($this->request->data)) {
-				echo "perfect";
 				$this->Session->setFlash(__('La relación se ha establecido correctamente'));
-				print_r($this->request->data);
 				$this->Notificacion->create();
 				$notificacion=array();
 				$fecha = date_create();

@@ -4,9 +4,7 @@ $user=NUll;
 <section class="panel_frame">
 	<div class="panel_menu">
 		<ul>
-			<?php   
-			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
-			{
+			<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'|| $current_user['nivel_id'] == '2'|| $current_user['nivel_id'] == '3') {
 			?>
 			<li>
 				<?php
@@ -94,7 +92,7 @@ $user=NUll;
 										<strong><label for="PersonaTipousuario_id">Tipo de usuario:</label></strong>
 									</div>
 									<div>
-									<?php echo $this->Html->link($persona['Programa']['nombre'], array('controller' => 'programas', 'action' => 'view', $persona['Programa']['id'])); ?>
+									<?php echo $persona['Nivel']['nombre']; ?>
 									</div>
 								</div>
 								<div id="asociacion">
@@ -121,3 +119,7 @@ $user=NUll;
 		</table>
 	</section>
 </section>
+<script>
+$('#navicon-group').css( "background", "#7a0400" );
+$('#marcicon-group').css( "color", "#7a0400" );
+</script>

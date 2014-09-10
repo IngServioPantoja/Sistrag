@@ -174,8 +174,17 @@ var $uses = array('Persona','User','Facultad','Programa','Tipousuario','Nivel');
 				$this->Session->setFlash(__('Las contraseñas son diferentes intente de nuevo'));
 			}
 		}
-		$tiposusuarios = $this->Persona->Tiposusuario->find('list');
-		$niveles = $this->Nivel->find('list');
+		$usuario=$this->Session->read("Usuario");
+		$id_persona=$usuario['Persona']['id'];
+		//Flujo para presentar todos los elementos del formulario
+		//Administrados institucional
+		$opciones = array('conditions' => array('Tiposusuario.id >='=> $usuario['nivel_id']));
+		$tiposusuarios = $this->Persona->Tiposusuario->find('list',$opciones);
+		$opciones = array('conditions' => array('Nivel.id >='=> $usuario['nivel_id']));
+		$niveles = $this->Nivel->find('list',$opciones);
+
+
+
 		$this->set(compact('tiposusuarios', 'niveles'));
 	}
 
@@ -383,9 +392,14 @@ var $uses = array('Persona','User','Facultad','Programa','Tipousuario','Nivel');
 			$this->set('persona',$user);
 		}
 		$programas = $this->Persona->Programa->find('list');
-		$tiposusuarios = $this->Persona->Tiposusuario->find('list');
-		$proyectos = $this->Persona->Proyecto->find('list');
-		$niveles = $this->Nivel->find('list');
+		$usuario=$this->Session->read("Usuario");
+		$id_persona=$usuario['Persona']['id'];
+		//Flujo para presentar todos los elementos del formulario
+		//Administrados institucional
+		$opciones = array('conditions' => array('Tiposusuario.id >='=> $usuario['nivel_id']));
+		$tiposusuarios = $this->Persona->Tiposusuario->find('list',$opciones);
+		$opciones = array('conditions' => array('Nivel.id >='=> $usuario['nivel_id']));
+		$niveles = $this->Nivel->find('list',$opciones);
 		$this->set(compact('programas', 'tiposusuarios', 'proyectos','niveles'));
 	}
 
@@ -437,36 +451,42 @@ var $uses = array('Persona','User','Facultad','Programa','Tipousuario','Nivel');
 
 	function lista_asociaciones() 
 	{
-		if ($this->request->data['Persona']['tiposusuario_id']==1) 
+		$select_entrada=NULL;
+		$foreign=NULL;
+		$asociacion=NULL;
+		if(isset($this->request->data['Persona']['tiposusuario_id']))
 		{
-			//Soy un administrador institucional
-			$select_entrada=NULL;
-			$foreign=NULL;
-			$asociacion=NULL;
-		}
-		else if($this->request->data['Persona']['tiposusuario_id']==2)
-		{
-			//Soy un administrador de facultad
-			$select_entrada=$this->Facultad->find('list');
-			$foreign="facultad_id";
-			$asociacion="Facultad";
-		}
-		else if($this->request->data['Persona']['tiposusuario_id']==3 || $this->request->data['Persona']['tiposusuario_id']==4 || $this->request->data['Persona']['tiposusuario_id']==5)
-		{
-			//Soy un administrador de programa
-			$select_entrada=$this->Programa->find('list');
-			$foreign="programa_id";
-			$asociacion="Programa";
+			if ($this->request->data['Persona']['tiposusuario_id']==1) 
+			{
+				//Soy un administrador institucional
+				$select_entrada=NULL;
+				$foreign=NULL;
+				$asociacion=NULL;
+			}
+			else if($this->request->data['Persona']['tiposusuario_id']==2)
+			{
+				//Soy un administrador de facultad
+				$select_entrada=$this->Facultad->find('list');
+				$foreign="facultad_id";
+				$asociacion="Facultad";
+			}
+			else if($this->request->data['Persona']['tiposusuario_id']==3 || $this->request->data['Persona']['tiposusuario_id']==4 || $this->request->data['Persona']['tiposusuario_id']==5)
+			{
+				//Soy un administrador de programa
+				$select_entrada=$this->Programa->find('list');
+				$foreign="programa_id";
+				$asociacion="Programa";
 
-		}
-		else
-		{
-			//No es ninguno posible hack!!
+			}
+			else
+			{
+				//No es ninguno posible hack!!
 
+			}
+			$this->set("asociacion",$asociacion);
+			$this->set("foreign",$foreign);
+			$this->set(compact('select_entrada'));
 		}
-		$this->set("asociacion",$asociacion);
-		$this->set("foreign",$foreign);
-		$this->set(compact('select_entrada'));
 		$this->render('/personas/lista_asociaciones');
 	}
 
@@ -474,7 +494,33 @@ var $uses = array('Persona','User','Facultad','Programa','Tipousuario','Nivel');
 		if (!$this->Persona->exists($id)) {
 			throw new NotFoundException(__('Invalid persona'));
 		}
-		$options = array('conditions' => array('Persona.' . $this->Persona->primaryKey => $id));
+		$options = array(
+			'joins' => array(
+		        array(
+		            'table' => 'users',
+		            'alias' => 'User',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Persona.id = User.persona_id'
+		            	)
+		        	),
+		        array(
+		            'table' => 'niveles',
+		            'alias' => 'Nivel',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Nivel.id = User.nivel_id'
+		            	)
+		        	)
+    		),
+			'conditions' => array(
+				'Persona.' . $this->Persona->primaryKey => $id),
+			'fields'=>array(
+				'Persona.*','Programa.*','Facultad.*','Tiposusuario.*','Nivel.*'
+			),
+			'recursive'=>0);
 		$this->set('persona', $this->Persona->find('first', $options));
 	}
 

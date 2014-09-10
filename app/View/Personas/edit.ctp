@@ -5,7 +5,7 @@ $user=NUll;
 	<div class="panel_menu">
 		<ul>
 			<?php   
-			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
+			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'|| $current_user['nivel_id'] == '2'|| $current_user['nivel_id'] == '3') 
 			{
 			?>
 			<li>
@@ -21,13 +21,12 @@ $user=NUll;
 				<?php 
 				echo $this->Html->link(__('Registrar usuario'), array('action' => 'add')); 
 				?></li><li class="panel_menu_actual">
-				<?php
-				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
-				?>
+				<span class="glyphicon glyphicon-pencil" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<?php 
-				echo $this->Html->link(__('Usuario'), array('action' => 'view',$persona['Persona']['id'])); 
+				echo $this->Html->link(__('Modificar usuario'), array('action' => 'edit',$persona['Persona']['id'])); 
 			}
 			?>
+			
 			</li>
 		</ul>
 	</div>
@@ -37,7 +36,7 @@ $user=NUll;
 				<td>
 					<div class="crud_fila_principal">
 						<span>
-							Modificar facultad
+							Modificar usuario
 						</span>
 					</div>
 					<?php echo $this->Form->create('Persona',array('type' => 'file')); ?>
@@ -63,7 +62,7 @@ $user=NUll;
 											<strong><label for="PersonaIdentificacion">Identificación:</label></strong>
 										</div>
 										<div>
-										<?php echo $this->Form->input('identificacion',array('label'=>false,"autocomplete"=>"off")); ?>
+										<?php echo $this->Form->input('identificacion',array('label'=>false,"autocomplete"=>"off",'required'=>'required')); ?>
 										</div>
 									</div>
 									<div>
@@ -71,7 +70,7 @@ $user=NUll;
 											<strong><label for="PersonaNombre">Nombres:</label></strong>
 										</div>
 										<div>
-										<?php echo $this->Form->input('nombre',array('label'=>false,"autocomplete"=>"off")); ?>
+										<?php echo $this->Form->input('nombre',array('label'=>false,"autocomplete"=>"off",'required'=>'required')); ?>
 										</div>
 									</div>
 									<div>
@@ -79,7 +78,7 @@ $user=NUll;
 											<strong><label for="PersonaApellido">Apellidos:</label></strong>
 										</div>
 										<div>
-										<?php echo $this->Form->input('apellido',array('label'=>false,"autocomplete"=>"off")); ?>
+										<?php echo $this->Form->input('apellido',array('label'=>false,"autocomplete"=>"off",'required'=>'required')); ?>
 										</div>
 									</div>
 									<div>
@@ -95,7 +94,7 @@ $user=NUll;
 											<strong><label for="PersonaTipousuario_id">Tipo de usuario:</label></strong>
 										</div>
 										<div>
-										<?php echo $this->Form->input('tiposusuario_id',array('label'=>false,"id"=>"tiposusuario_id","class"=>"inputCorto")); ?>
+										<?php echo $this->Form->input('tiposusuario_id',array('label'=>false,"id"=>"tiposusuario_id","class"=>"inputCorto",'required'=>'required','empty'=>'seleccionar')); ?>
 										</div>
 									</div>
 									<div id="asociacion">
@@ -126,6 +125,8 @@ $user=NUll;
 	</section>
 </section>
 <script>
+$('#navicon-group').css( "background", "#7a0400" );
+$('#marcicon-group').css( "color", "#7a0400" );
 $('textarea').autosize();
 function resizeInput() {
     $(this).attr('size', $(this).val().length+1);

@@ -1,8 +1,6 @@
 <?php 
 $user=NUll;
-if(!$this->request->is('ajax'))
-{
-?> 	
+?>
 <section class="panel_frame">
 	<div class="panel_menu">
 		<ul>
@@ -41,155 +39,132 @@ if(!$this->request->is('ajax'))
 				Proyectos asesorados
 			</div>
 			<div id="contenedor_datos">
-				<?php
-				}
-				?>						
-					<div class="crud_fila_secundaria">
-				<?php
-					if(isset($encontrado)) 
-					{
-					?>
-						<div class="no_hay_registros">
-							<span>No se encontraron registros</span>
-						</div>
-				<?php
-					}
-				?>
-
-				<div class="table-responsive">
-					<table class="table" id="table">
-						<thead>
-							<tr>
-								<th>
-									Programa:
-								</th>
-								<th>
-									Titulo:
-								</th>
-								<th>
-									Integrantes:
-								</th>
-								<th>
-									Jurados:
-								</th>
-								<th>
-									Área y línea de investigación:
-								</th>
-								<th>
-									Acciónes
-								</th>
-							</tr>	
-						</thead>
-						<tfoot>
-							<tr>
-								<th>
-									Programa:
-								</th>
-								<th>
-									Titulo:
-								</th>
-								<th>
-									Integrantes:
-								</th>
-								<th>
-									Jurados:
-								</th>
-								<th>
-									Área y línea de investigación:
-								</th>
-								<th>
-									Acciónes
-								</th>
-							</tr>
-						</tfoot>	
-						<tbody>
-						<?php
-						foreach ($proyectos as $proyecto)
-						{
-						?>
-							<tr >
-								<td>
-									<?php echo h($proyecto['Programa']['nombre']); ?>
-								</td>
-								<td>
-									<?php echo h($proyecto['Proyecto']['titulo']); ?>
-								</td>
-								<td>
-								<?php
-								foreach ($proyecto['Persona'] as $persona) 
-								{
-									if($persona['PersonasProyecto']['rol_id']==3)
+				<div class="crud_fila_secundaria">
+					<div class="table-responsive">
+						<table class="table" id="table">
+							<thead>
+								<tr>
+									<th>
+										Programa:
+									</th>
+									<th>
+										Titulo:
+									</th>
+									<th>
+										Integrantes:
+									</th>
+									<th>
+										Jurados:
+									</th>
+									<th>
+										Área y línea de investigación:
+									</th>
+									<th>
+										Acciónes
+									</th>
+								</tr>	
+							</thead>
+							<tfoot>
+								<tr>
+									<th>
+										Programa:
+									</th>
+									<th>
+										Titulo:
+									</th>
+									<th>
+										Integrantes:
+									</th>
+									<th>
+										Jurados:
+									</th>
+									<th>
+										Área y línea de investigación:
+									</th>
+									<th>
+										Acciónes
+									</th>
+								</tr>
+							</tfoot>	
+							<tbody>
+							<?php
+							foreach ($proyectos as $proyecto)
+							{
+							?>
+								<tr >
+									<td>
+										<?php echo h($proyecto['Programa']['nombre']); ?>
+									</td>
+									<td>
+										<?php echo h($proyecto['Proyecto']['titulo']); ?>
+									</td>
+									<td>
+									<?php
+									foreach ($proyecto['Persona'] as $persona) 
 									{
+										if($persona['PersonasProyecto']['rol_id']==3)
+										{
 
+										?>
+											<span>
+										<?php
+											echo $persona['nombre']." ".$persona['apellido'];
+										?>
+											</span>
+										<?php
+										}
+									}
 									?>
+									</td>
+									<td>
+									<?php
+									foreach ($proyecto['Persona'] as $persona) 
+									{
+										if($persona['PersonasProyecto']['rol_id']==1)
+										{
+
+										?>
 										<span>
-									<?php
-										echo $persona['nombre']." ".$persona['apellido'];
-									?>
+										<?php
+											echo $persona['nombre']." ".$persona['apellido'];
+										?>
 										</span>
-									<?php
+										</br>
+										<?php
+										}
 									}
-								}
-								?>
-								</td>
-								<td>
-								<?php
-								foreach ($proyecto['Persona'] as $persona) 
-								{
-									if($persona['PersonasProyecto']['rol_id']==1)
-									{
-
-									?>
-									<span>
-									<?php
-										echo $persona['nombre']." ".$persona['apellido'];
-									?>
-									</span>
-									</br>
-									<?php
-									}
-								}
-								?>	
-								</td>
-								<td>
-									<?php echo h($proyecto['Area']['nombre'])	; ?>
-									</br>
-									<?php echo h($proyecto['Linea']['nombre'])	; ?>
-								</td>
-								<td>
-									<?php
-									echo $this->Html->link(
-									    '
-									    <button type="button" class="btn btn-default btn-lg use-tooltip" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-											<span class="glyphicon glyphicon-list-alt"></span>
-										</button>
-										',
-									    array('controller'=>'proyectos', 'action'=>'documentos/'.$proyecto['Proyecto']['id']),
-									    array('escape' => FALSE)
-									);
-									?>
-								</td>
-							</tr>	
-						<?php
-						}
-						?>
-
-						</tbody>
-					</table>
+									?>	
+									</td>
+									<td>
+										<?php echo h($proyecto['Area']['nombre'])	; ?>
+										</br>
+										<?php echo h($proyecto['Linea']['nombre'])	; ?>
+									</td>
+									<td>
+										<?php
+										echo $this->Html->link(
+										    '
+										    <button type="button" class="btn btn-default btn-lg use-tooltip" data-toggle="tooltip" data-placement="top" title="Revizar documento">
+												<span class="glyphicon glyphicon-list-alt"></span>
+											</button>
+											',
+										    array('controller'=>'proyectos', 'action'=>'documentos/'.$proyecto['Proyecto']['id']),
+										    array('escape' => FALSE)
+										);
+										?>
+									</td>
+								</tr>	
+							<?php
+							}
+							?>
+							</tbody>
+						</table>
+					</div>
 				</div>
-			</div>
- 
-<?php
-if(!$this->request->is('ajax'))
-{
-?>						
 			</div>
 		</div>
 	</section>
 </section>
-<?php
-}
-?>
 <script>
 	$('#navicon-batman').css( "background", "#7a0400" );
 	$('#marcicon-batman').css( "color", "#7a0400" );	
@@ -214,7 +189,5 @@ $(document).ready(function() {
 			}
 		}
     } );
-
-
 } );
 </script>	

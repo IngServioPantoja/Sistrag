@@ -1787,6 +1787,9 @@ class DocumentosController extends AppController {
 				if($this->Detalleentrega->save($detalleentregag))
 				{
 					
+					//Se crea la notificación
+					
+
 				}
 			}
 		}

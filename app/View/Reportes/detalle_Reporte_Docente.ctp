@@ -1,5 +1,4 @@
 <?php
-
 $this->layout = false;
 $nombrePersona=$persona['Persona']['nombre']." ".$persona['Persona']['apellido'];
 ?>

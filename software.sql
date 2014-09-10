@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-08-2014 a las 04:16:43
+-- Tiempo de generación: 04-09-2014 a las 03:28:47
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.11
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `areas` (
   `programa_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `programa_id` (`programa_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `areas`
@@ -43,7 +43,8 @@ INSERT INTO `areas` (`id`, `nombre`, `descripcion`, `programa_id`) VALUES
 (1, 'TICs', '', 1),
 (3, 'Gestión de la información', '', 1),
 (4, 'Matematícas aplicadas', '', 1),
-(5, 'Administración BIG DATA', 'Todo lo relacionado con grandes tamaño de información en cada una de sus ramas', 1);
+(5, 'Administración BIG DATA', 'Todo lo relacionado con grandes tamaño de información en cada una de sus ramas', 1),
+(6, 'Arquitectura empresarial', '', 3);
 
 -- --------------------------------------------------------
 
@@ -121,22 +122,29 @@ CREATE TABLE IF NOT EXISTS `detalleentregas` (
   KEY `personas_proyecto_id` (`personas_proyecto_id`),
   KEY `estado_id` (`estado_id`),
   KEY `parametro_veredicto_id` (`parametro_veredicto_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=85 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=92 ;
 
 --
 -- Volcado de datos para la tabla `detalleentregas`
 --
 
 INSERT INTO `detalleentregas` (`id`, `entrega_id`, `personas_proyecto_id`, `estado_id`, `fecha_estado`, `parametro_veredicto_id`, `correcciones`, `comentarios`) VALUES
-(76, 3298, 57, 1, '2014-08-01', NULL, NULL, ''),
-(77, 3299, 56, 2, '2014-08-02', NULL, NULL, ''),
-(78, 3299, 58, 1, '2014-08-01', NULL, NULL, ''),
-(79, 3300, 57, 1, '2014-08-01', NULL, NULL, ''),
-(80, 3301, 56, 1, '2014-08-01', NULL, NULL, ''),
-(81, 3301, 58, 1, '2014-08-01', NULL, NULL, ''),
-(82, 3302, 57, 1, '2014-08-03', NULL, NULL, ''),
-(83, 3303, 56, 1, '2014-08-03', NULL, NULL, ''),
-(84, 3303, 58, 1, '2014-08-03', NULL, NULL, '');
+(76, 3298, NULL, 1, '2014-08-01', NULL, NULL, ''),
+(77, 3299, NULL, 2, '2014-08-02', NULL, NULL, ''),
+(78, 3299, 58, 2, '2014-09-03', NULL, NULL, ''),
+(79, 3300, NULL, 1, '2014-08-01', NULL, NULL, ''),
+(80, 3301, NULL, 2, '2014-08-11', NULL, NULL, ''),
+(81, 3301, 58, 2, '2014-09-03', NULL, NULL, ''),
+(82, 3302, NULL, 1, '2014-08-03', NULL, NULL, ''),
+(83, 3303, NULL, 2, '2014-08-08', NULL, NULL, ''),
+(84, 3303, 58, 2, '2014-09-03', NULL, NULL, ''),
+(85, 3304, 53, 3, '2014-09-02', NULL, NULL, 'aaaasd'),
+(86, 3304, 54, 1, '2014-08-18', NULL, NULL, ''),
+(87, 3307, 53, 3, '2014-09-03', NULL, NULL, 'ssasasdasd'),
+(88, 3307, 54, 1, '2014-08-18', NULL, NULL, ''),
+(89, 3309, 53, 3, '2014-08-18', 1, NULL, ''),
+(90, 3309, 54, 1, '2014-08-18', NULL, NULL, ''),
+(91, 3310, 53, 3, '2014-09-03', NULL, NULL, 'qweqwe');
 
 -- --------------------------------------------------------
 
@@ -154,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `documentos` (
   PRIMARY KEY (`id`),
   KEY `estandar_id` (`estandar_id`),
   KEY `proyecto_id` (`proyecto_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=116 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=120 ;
 
 --
 -- Volcado de datos para la tabla `documentos`
@@ -163,7 +171,11 @@ CREATE TABLE IF NOT EXISTS `documentos` (
 INSERT INTO `documentos` (`id`, `fecha_guardado`, `enlace`, `enviado`, `estandar_id`, `proyecto_id`) VALUES
 (113, '2014-08-01 09:48:09', '', 1, 2, 108),
 (114, '2014-08-01 10:56:34', '', 1, 3, 108),
-(115, '2014-08-03 10:06:48', '', 1, 2, 108);
+(115, '2014-08-03 10:06:48', '', 1, 2, 108),
+(116, '2014-08-18 10:32:33', '', 1, 4, 109),
+(117, '2014-08-18 10:37:05', '', 1, 4, 109),
+(118, '2014-08-18 11:10:26', '', 1, 4, 109),
+(119, '2014-08-28 08:57:10', '', 1, 3, 109);
 
 -- --------------------------------------------------------
 
@@ -179,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `entregas` (
   PRIMARY KEY (`id`),
   KEY `documento_id` (`documento_id`),
   KEY `rol_id` (`rol_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3304 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3312 ;
 
 --
 -- Volcado de datos para la tabla `entregas`
@@ -191,7 +203,15 @@ INSERT INTO `entregas` (`id`, `fecha_entrega`, `rol_id`, `documento_id`) VALUES
 (3300, '2014-08-01', 2, 114),
 (3301, '2014-08-01', 1, 114),
 (3302, '2014-08-03', 2, 115),
-(3303, '2014-08-03', 1, 115);
+(3303, '2014-08-03', 1, 115),
+(3304, '2014-08-18', 1, 116),
+(3305, '2014-08-18', 2, 116),
+(3306, '2014-08-18', 2, 117),
+(3307, '2014-08-18', 1, 117),
+(3308, '2014-08-18', 2, 118),
+(3309, '2014-08-18', 1, 118),
+(3310, '2014-08-28', 1, 119),
+(3311, '2014-08-28', 2, 119);
 
 -- --------------------------------------------------------
 
@@ -230,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `estandares` (
   PRIMARY KEY (`id`),
   KEY `tiposestandar_id` (`tiposestandar_id`),
   KEY `programa_id` (`programa_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `estandares`
@@ -238,7 +258,8 @@ CREATE TABLE IF NOT EXISTS `estandares` (
 
 INSERT INTO `estandares` (`id`, `nombre`, `inicio vigencia`, `fin vigencia`, `programa_id`, `tiposestandar_id`) VALUES
 (2, 'Trabajo de grado', '2014-03-04', '2014-03-19', 1, 2),
-(3, 'Trabajo de grado', '2014-07-17', '2014-07-25', 1, 1);
+(3, 'Trabajo de grado', '2014-07-17', '2014-07-25', 1, 1),
+(4, 'Trabajo de grado', '0000-00-00', '0000-00-00', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -256,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `evaluaciones` (
   KEY `parametro_concepto_id` (`parametro_concepto_id`),
   KEY `detalles_entrega_id` (`detalles_entrega_id`),
   KEY `items_documento_id` (`items_documento_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1383 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1413 ;
 
 --
 -- Volcado de datos para la tabla `evaluaciones`
@@ -382,7 +403,37 @@ INSERT INTO `evaluaciones` (`id`, `items_documento_id`, `detalles_entrega_id`, `
 (1379, 1669, 84, 3, ''),
 (1380, 1670, 84, 3, ''),
 (1381, 1671, 84, 3, ''),
-(1382, 1672, 84, 3, '');
+(1382, 1672, 84, 3, ''),
+(1383, 1674, 85, 3, ''),
+(1384, 1675, 85, 3, ''),
+(1385, 1676, 85, 3, ''),
+(1386, 1677, 85, 3, ''),
+(1387, 1678, 85, 3, ''),
+(1388, 1674, 86, 3, ''),
+(1389, 1675, 86, 3, ''),
+(1390, 1676, 86, 3, ''),
+(1391, 1677, 86, 3, ''),
+(1392, 1678, 86, 3, ''),
+(1393, 1680, 87, 3, ''),
+(1394, 1681, 87, 3, ''),
+(1395, 1682, 87, 3, ''),
+(1396, 1683, 87, 3, ''),
+(1397, 1684, 87, 3, ''),
+(1398, 1680, 88, 3, ''),
+(1399, 1681, 88, 3, ''),
+(1400, 1682, 88, 3, ''),
+(1401, 1683, 88, 3, ''),
+(1402, 1684, 88, 3, ''),
+(1403, 1686, 89, 3, 'asd'),
+(1404, 1687, 89, 3, 'asd'),
+(1405, 1688, 89, 3, 'asdadsa'),
+(1406, 1689, 89, 3, 'asd'),
+(1407, 1690, 89, 3, 'asdasdas'),
+(1408, 1686, 90, 3, ''),
+(1409, 1687, 90, 3, ''),
+(1410, 1688, 90, 3, ''),
+(1411, 1689, 90, 3, ''),
+(1412, 1690, 90, 3, '');
 
 -- --------------------------------------------------------
 
@@ -422,7 +473,7 @@ CREATE TABLE IF NOT EXISTS `items` (
   `programa_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `programa_id` (`programa_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=74 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=79 ;
 
 --
 -- Volcado de datos para la tabla `items`
@@ -458,7 +509,13 @@ INSERT INTO `items` (`id`, `nombre`, `extencion_caracteres`, `extencion_lineas`,
 (69, 'cc', 0, 0, 1),
 (70, 'dd', 0, 0, 1),
 (71, 'eee', 0, 0, 1),
-(72, 'ff', 0, 0, 1);
+(72, 'ff', 0, 0, 1),
+(73, '1', 0, 0, 1),
+(74, '2', 0, 0, 1),
+(75, '3', 0, 0, 1),
+(76, '4', 0, 0, 1),
+(77, '5', 0, 0, 1),
+(78, '6', 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -474,7 +531,7 @@ CREATE TABLE IF NOT EXISTS `items_contenidos` (
   `orden` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `items_documento_id` (`items_documento_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8627 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8735 ;
 
 --
 -- Volcado de datos para la tabla `items_contenidos`
@@ -688,7 +745,115 @@ INSERT INTO `items_contenidos` (`id`, `texto`, `tipo`, `items_documento_id`, `or
 (8623, '115/14.png', '6', 1672, 3),
 (8624, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '4', 1672, 4),
 (8625, 'Continuando con el contenido que se plantea', '2', 1672, 5),
-(8626, 'Otra línea de texto.', '2', 1672, 6);
+(8626, 'Otra línea de texto.', '2', 1672, 6),
+(8627, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1673, 1),
+(8628, 'Figura 3 Modelo en V.', '3', 1673, 2),
+(8629, '116/1.png', '6', 1673, 3),
+(8630, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1673, 4),
+(8631, 'Continuando con el contenido que se plantea', '2', 1673, 5),
+(8632, 'Otra línea de texto.', '2', 1673, 6),
+(8633, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1674, 1),
+(8634, 'Figura 3 Modelo en V.', '3', 1674, 2),
+(8635, '116/2.png', '6', 1674, 3),
+(8636, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1674, 4),
+(8637, 'Continuando con el contenido que se plantea', '2', 1674, 5),
+(8638, 'Otra línea de texto.', '2', 1674, 6),
+(8639, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1675, 1),
+(8640, 'Figura 3 Modelo en V.', '3', 1675, 2),
+(8641, '116/3.png', '6', 1675, 3),
+(8642, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1675, 4),
+(8643, 'Continuando con el contenido que se plantea', '2', 1675, 5),
+(8644, 'Otra línea de texto.', '2', 1675, 6),
+(8645, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1676, 1),
+(8646, 'Figura 3 Modelo en V.', '3', 1676, 2),
+(8647, '116/4.png', '6', 1676, 3),
+(8648, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1676, 4),
+(8649, 'Continuando con el contenido que se plantea', '2', 1676, 5),
+(8650, 'Otra línea de texto.', '2', 1676, 6),
+(8651, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1677, 1),
+(8652, 'Figura 3 Modelo en V.', '3', 1677, 2),
+(8653, '116/5.png', '6', 1677, 3),
+(8654, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1677, 4),
+(8655, 'Continuando con el contenido que se plantea', '2', 1677, 5),
+(8656, 'Otra línea de texto.', '2', 1677, 6),
+(8657, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1678, 1),
+(8658, 'Figura 3 Modelo en V.', '3', 1678, 2),
+(8659, '116/6.png', '6', 1678, 3),
+(8660, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1678, 4),
+(8661, 'Continuando con el contenido que se plantea', '2', 1678, 5),
+(8662, 'Otra línea de texto.', '2', 1678, 6),
+(8663, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1679, 1),
+(8664, 'Figura 3 Modelo en V.', '3', 1679, 2),
+(8665, '117/1.png', '6', 1679, 3),
+(8666, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1679, 4),
+(8667, 'Continuando con el contenido que se plantea', '2', 1679, 5),
+(8668, 'Otra línea de texto.', '2', 1679, 6),
+(8669, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1680, 1),
+(8670, 'Figura 3 Modelo en V.', '3', 1680, 2),
+(8671, '117/2.png', '6', 1680, 3),
+(8672, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1680, 4),
+(8673, 'Continuando con el contenido que se plantea', '2', 1680, 5),
+(8674, 'Otra línea de texto.', '2', 1680, 6),
+(8675, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1681, 1),
+(8676, 'Figura 3 Modelo en V.', '3', 1681, 2),
+(8677, '117/3.png', '6', 1681, 3),
+(8678, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1681, 4),
+(8679, 'Continuando con el contenido que se plantea', '2', 1681, 5),
+(8680, 'Otra línea de texto.', '2', 1681, 6),
+(8681, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1682, 1),
+(8682, 'Figura 3 Modelo en V.', '3', 1682, 2),
+(8683, '117/4.png', '6', 1682, 3),
+(8684, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1682, 4),
+(8685, 'Continuando con el contenido que se plantea', '2', 1682, 5),
+(8686, 'Otra línea de texto.', '2', 1682, 6),
+(8687, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1683, 1),
+(8688, 'Figura 3 Modelo en V.', '3', 1683, 2),
+(8689, '117/5.png', '6', 1683, 3),
+(8690, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1683, 4),
+(8691, 'Continuando con el contenido que se plantea', '2', 1683, 5),
+(8692, 'Otra línea de texto.', '2', 1683, 6),
+(8693, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1684, 1),
+(8694, 'Figura 3 Modelo en V.', '3', 1684, 2),
+(8695, '117/6.png', '6', 1684, 3),
+(8696, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1684, 4),
+(8697, 'Continuando con el contenido que se plantea', '2', 1684, 5),
+(8698, 'Otra línea de texto.', '2', 1684, 6),
+(8699, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1685, 1),
+(8700, 'Figura 3 Modelo en V.', '3', 1685, 2),
+(8701, '118/1.png', '6', 1685, 3),
+(8702, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1685, 4),
+(8703, 'Continuando con el contenido que se plantea', '2', 1685, 5),
+(8704, 'Otra línea de texto.', '2', 1685, 6),
+(8705, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1686, 1),
+(8706, 'Figura 3 Modelo en V.', '3', 1686, 2),
+(8707, '118/2.png', '6', 1686, 3),
+(8708, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1686, 4),
+(8709, 'Continuando con el contenido que se plantea', '2', 1686, 5),
+(8710, 'Otra línea de texto.', '2', 1686, 6),
+(8711, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1687, 1),
+(8712, 'Figura 3 Modelo en V.', '3', 1687, 2),
+(8713, '118/3.png', '6', 1687, 3),
+(8714, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1687, 4),
+(8715, 'Continuando con el contenido que se plantea', '2', 1687, 5),
+(8716, 'Otra línea de texto.', '2', 1687, 6),
+(8717, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1688, 1),
+(8718, 'Figura 3 Modelo en V.', '3', 1688, 2),
+(8719, '118/4.png', '6', 1688, 3),
+(8720, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1688, 4),
+(8721, 'Continuando con el contenido que se plantea', '2', 1688, 5),
+(8722, 'Otra línea de texto.', '2', 1688, 6),
+(8723, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1689, 1),
+(8724, 'Figura 3 Modelo en V.', '3', 1689, 2),
+(8725, '118/5.png', '6', 1689, 3),
+(8726, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1689, 4),
+(8727, 'Continuando con el contenido que se plantea', '2', 1689, 5),
+(8728, 'Otra línea de texto.', '2', 1689, 6),
+(8729, 'Esto depende del proyecto que se está desarrollando por parte de los autores. ', '2', 1690, 1),
+(8730, 'Figura 3 Modelo en V.', '3', 1690, 2),
+(8731, '118/6.png', '6', 1690, 3),
+(8732, 'Fuente: PRESSMAN, Roger. Ingeniería de software: Un enfoque práctico pág 31.', '2', 1690, 4),
+(8733, 'Continuando con el contenido que se plantea', '2', 1690, 5),
+(8734, 'Otra línea de texto.', '2', 1690, 6);
 
 -- --------------------------------------------------------
 
@@ -704,7 +869,7 @@ CREATE TABLE IF NOT EXISTS `items_documento` (
   PRIMARY KEY (`id`),
   KEY `documento_id` (`documento_id`),
   KEY `items_estandar_id` (`items_estandar_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1673 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1691 ;
 
 --
 -- Volcado de datos para la tabla `items_documento`
@@ -753,7 +918,25 @@ INSERT INTO `items_documento` (`id`, `caracteres`, `documento_id`, `items_estand
 (1669, 243, 115, 50),
 (1670, 0, 115, 51),
 (1671, 243, 115, 52),
-(1672, 243, 115, 55);
+(1672, 243, 115, 55),
+(1673, 243, 116, 71),
+(1674, 243, 116, 72),
+(1675, 243, 116, 73),
+(1676, 243, 116, 74),
+(1677, 243, 116, 75),
+(1678, 243, 116, 76),
+(1679, 243, 117, 71),
+(1680, 243, 117, 72),
+(1681, 243, 117, 73),
+(1682, 243, 117, 74),
+(1683, 243, 117, 75),
+(1684, 243, 117, 76),
+(1685, 243, 118, 71),
+(1686, 243, 118, 72),
+(1687, 243, 118, 73),
+(1688, 243, 118, 74),
+(1689, 243, 118, 75),
+(1690, 243, 118, 76);
 
 -- --------------------------------------------------------
 
@@ -772,7 +955,7 @@ CREATE TABLE IF NOT EXISTS `items_estandares` (
   KEY `estandar_id` (`estandar_id`),
   KEY `item_id` (`item_id`),
   KEY `items_estandar_id` (`items_estandar_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=72 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=77 ;
 
 --
 -- Volcado de datos para la tabla `items_estandares`
@@ -806,7 +989,13 @@ INSERT INTO `items_estandares` (`id`, `items_estandar_id`, `nivel`, `orden`, `it
 (67, 58, 2, 1, 69, 3),
 (68, 59, 2, 1, 70, 3),
 (69, 60, 2, 1, 71, 3),
-(70, 61, 2, 1, 72, 3);
+(70, 61, 2, 1, 72, 3),
+(71, 0, 0, 0, 73, 4),
+(72, 0, 0, 0, 74, 4),
+(73, 0, 0, 0, 75, 4),
+(74, 0, 0, 0, 76, 4),
+(75, 0, 0, 0, 77, 4),
+(76, 0, 0, 0, 78, 4);
 
 -- --------------------------------------------------------
 
@@ -821,7 +1010,7 @@ CREATE TABLE IF NOT EXISTS `lineas` (
   `area_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `area_id` (`area_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Volcado de datos para la tabla `lineas`
@@ -834,7 +1023,8 @@ INSERT INTO `lineas` (`id`, `nombre`, `descripcion`, `area_id`) VALUES
 (5, 'Seguridad informática', 'La seguridad en la informática abarca los conceptos de seguridad física y seguridad lógica. La seguridad física se refiere a la protección del hardware y de los soportes de datos, así como a la de los edificios e instalaciones que los albergan. Contempla las situaciones de incendios, sabotajes, robos, catástrofes naturales, etc. ', 3),
 (6, 'Auditoría informática y de sistemas', 'La auditoria está encaminada a un objetivo específico que es el de evaluar la eficiencia y eficacia con que se está operando, por medio del señalamiento de cursos alternativos de acción, para que se tomen decisiones que permitan corregir los errores, en caso de que existan, o bien mejorar la forma de actuación.', 3),
 (7, 'Análisis numérico', 'El análisis numérico se puede definir como la disciplina ocupada de describir, analizar y crear algoritmos numéricos que permitan resolver problemas matemáticos, en los que estén involucradas cantidades numéricas, con una precisión determinada.', 4),
-(8, 'Aplicativos para la gestión de la información', NULL, 3);
+(8, 'Aplicativos para la gestión de la información', NULL, 3),
+(9, 'Arquitectura interna', '', 6);
 
 -- --------------------------------------------------------
 
@@ -859,16 +1049,16 @@ CREATE TABLE IF NOT EXISTS `menus` (
 INSERT INTO `menus` (`id`, `texto`, `vinculo`, `icono`, `estado`, `menu_id`) VALUES
 (1, 'Index', '/', '', 0, 0),
 (2, 'Usuarios', '/personas', 'icon-group', 0, 1),
-(5, 'Items', '/items', '', 0, 1),
+(5, 'Items', '/items', 'glyphicon-sort-by-alphabet-alt glyphicon', 0, 1),
 (8, 'Estandares', '/estandares', 'icon-file-settings', 0, 1),
 (11, 'Institución', '/administracion', 'icon-library', 0, 1),
-(14, 'Programas', '/programas', '', 0, 1),
+(14, 'Programas', '/programas', 'glyphicon-bookmark glyphicon', 0, 1),
 (17, 'Proyectos', '/proyectos', 'icon-suitcase', 0, 1),
-(20, 'Controles', '/controles', '', 0, 1),
+(20, 'Controles', '/controles', 'glyphicon-calendar glyphicon', 0, 1),
 (23, 'Reportes', '/reportes', 'icon-stats', 0, 1),
 (26, 'Notificaciones', '/notificaciones/index', 'icon-earth', 0, 1),
-(27, 'Documentos', '/documentos', '', 0, 1),
-(30, 'Entregas', '/entregas', '', 0, 1),
+(27, 'Documentos', '/documentos', 'glyphicon-book glyphicon', 0, 1),
+(30, 'Entregas', '/detalleentregas', 'glyphicon-open glyphicon', 0, 1),
 (33, 'Conogramas', '/controles/cronogramas', 'icon-calendar', 0, 1),
 (34, 'Proyectos Asesorados', '/proyectos/asesor', 'icon-batman', 0, 1),
 (35, 'Proyectos A Evaluar', '/proyectos/jurado', 'icon-auction', 0, 1);
@@ -888,7 +1078,7 @@ CREATE TABLE IF NOT EXISTS `menus_niveles` (
   PRIMARY KEY (`id`),
   KEY `menu_id` (`menu_id`),
   KEY `nivel_id` (`nivel_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=55 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=100 ;
 
 --
 -- Volcado de datos para la tabla `menus_niveles`
@@ -903,7 +1093,43 @@ INSERT INTO `menus_niveles` (`id`, `menu_id`, `nivel_id`, `orden`, `estado`) VAL
 (51, 26, 1, 6, 0),
 (52, 33, 1, 7, 0),
 (53, 34, 1, 8, 0),
-(54, 35, 1, 9, 0);
+(54, 35, 1, 9, 0),
+(55, 2, 2, 0, 0),
+(56, 8, 2, 0, 0),
+(57, 11, 2, 0, 0),
+(58, 14, 2, 0, 0),
+(59, 17, 2, 0, 0),
+(60, 20, 2, 0, 0),
+(61, 23, 2, 0, 0),
+(62, 26, 2, 0, 0),
+(63, 27, 2, 0, 0),
+(64, 30, 2, 0, 0),
+(65, 33, 2, 0, 0),
+(66, 34, 2, 0, 0),
+(67, 35, 2, 0, 0),
+(68, 2, 3, 0, 0),
+(69, 5, 3, 0, 0),
+(70, 8, 3, 0, 0),
+(72, 14, 3, 0, 0),
+(73, 17, 3, 0, 0),
+(74, 20, 3, 0, 0),
+(75, 23, 3, 0, 0),
+(76, 26, 3, 0, 0),
+(77, 27, 3, 0, 0),
+(78, 30, 3, 0, 0),
+(79, 33, 3, 0, 0),
+(80, 34, 3, 0, 0),
+(81, 35, 3, 0, 0),
+(82, 8, 4, 5, 0),
+(85, 23, 4, 4, 0),
+(86, 26, 4, 3, 0),
+(89, 33, 4, 6, 0),
+(90, 34, 4, 1, 0),
+(91, 35, 4, 2, 0),
+(93, 17, 5, 1, 1),
+(95, 26, 5, 3, 1),
+(98, 33, 5, 2, 1),
+(99, 30, 4, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -932,6 +1158,55 @@ INSERT INTO `niveles` (`id`, `nombre`, `descripcion`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `notificaciones`
+--
+
+CREATE TABLE IF NOT EXISTS `notificaciones` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` date NOT NULL,
+  `parametro_estado_id` int(11) NOT NULL,
+  `parametro_tipo_notificacion` int(11) NOT NULL,
+  `url_action` varchar(200) NOT NULL,
+  `url_controlador` varchar(200) NOT NULL,
+  `url_valor` varchar(200) NOT NULL,
+  `persona_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `parametro_estado_id` (`parametro_estado_id`),
+  KEY `parametro_tipo_notificacion` (`parametro_tipo_notificacion`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Volcado de datos para la tabla `notificaciones`
+--
+
+INSERT INTO `notificaciones` (`id`, `fecha`, `parametro_estado_id`, `parametro_tipo_notificacion`, `url_action`, `url_controlador`, `url_valor`, `persona_id`) VALUES
+(1, '0000-00-00', 4, 7, 'documentos', 'proyectos', '115', 1),
+(2, '2014-08-29', 5, 7, 'documentos', 'proyectos', '111', 1),
+(3, '2014-08-29', 5, 7, 'documentos', 'proyectos', '108', 1),
+(4, '2014-08-29', 5, 7, 'documentos', 'proyectos', '107', 1),
+(5, '2014-08-29', 5, 7, 'documentos', 'proyectos', '114', 1),
+(6, '2014-08-30', 4, 8, 'documentos', 'proyectos', '108', 1),
+(7, '2014-09-02', 4, 8, 'documentos', 'proyectos', '108', 161);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `orden_documentos`
+--
+
+CREATE TABLE IF NOT EXISTS `orden_documentos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `orden` int(11) NOT NULL,
+  `tiposestandar_id` int(11) NOT NULL,
+  `programa_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tiposestandar_id` (`tiposestandar_id`),
+  KEY `programa_id` (`programa_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `parametros`
 --
 
@@ -942,7 +1217,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
   `tiposparametro_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `tiposparametro_id` (`tiposparametro_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
 
 --
 -- Volcado de datos para la tabla `parametros`
@@ -951,7 +1226,15 @@ CREATE TABLE IF NOT EXISTS `parametros` (
 INSERT INTO `parametros` (`id`, `nombre`, `valor`, `tiposparametro_id`) VALUES
 (1, 'Aprobado', '2EFE2E', 1),
 (2, 'Aprobado con correcciones', 'FE9A2E', 1),
-(3, 'No aprobado', '882222', 1);
+(3, 'No aprobado', '882222', 1),
+(4, 'Visto', NULL, 2),
+(5, 'Sin ver', NULL, 2),
+(6, 'Nueva entrega', NULL, 3),
+(7, 'Designación como jurado', NULL, 3),
+(8, 'Designación como asesor', NULL, 3),
+(9, 'Fecha limite de entrega', NULL, 3),
+(10, 'Designado como Investigador', NULL, 3),
+(11, 'Respuesta de jurados', NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -973,7 +1256,7 @@ CREATE TABLE IF NOT EXISTS `personas` (
   KEY `tiposusuario_id` (`tiposusuario_id`),
   KEY `programa_Id` (`programa_id`),
   KEY `facultad_id` (`facultad_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=165 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=167 ;
 
 --
 -- Volcado de datos para la tabla `personas`
@@ -983,11 +1266,11 @@ INSERT INTO `personas` (`id`, `avatar`, `identificacion`, `nombre`, `apellido`, 
 (1, '1.jpg', '24', 'Gerson', 'Eraso Torres', 'geraso@hotmail.com', NULL, 1, 1),
 (2, '1.jpg', '1085288762', 'Manuel', 'Calvache', 'mcalvache@hotmail.com', 1, 1, 2),
 (3, '1.jpg', '1085288768', 'Luis Carlos', 'Revelo Tobar', 'lrevelo@hotmail.com', 1, 1, 3),
-(4, '', '2312', 'Arturo', 'Eraso Torres', 'aeraso@hotmail.com', 1, 1, 4),
 (5, '', '12213', 'Servio', 'Pantoja', 'spantoja@hotmail.com', 1, 1, 5),
-(161, '1.jpg', '222', 'francisco', 'rojas', '22@hotmail.com', 1, 1, 5),
+(161, '1.jpg', '222', 'francisco', 'rojas', '22@hotmail.com', 1, 1, 4),
 (162, '1.jpg', '12312', 'Mauricio', 'Cassanova', 'aaa@hotmail.com', 1, 1, 4),
-(164, '1.jpg', '1212', 'Mayrita', 'Meneses', 'MMENESES@hotmail.com', 1, 1, 5);
+(164, '1.jpg', '1212', 'Mayrita', 'Meneses', 'MMENESES@hotmail.com', 1, 1, 5),
+(166, '1.jpg', '123', 'asd', 'asd', 'asd@hotmail.com', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -1004,7 +1287,7 @@ CREATE TABLE IF NOT EXISTS `personas_proyectos` (
   KEY `proyecto_id` (`proyecto_id`),
   KEY `persona_id` (`persona_id`),
   KEY `rol_id` (`rol_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=59 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=78 ;
 
 --
 -- Volcado de datos para la tabla `personas_proyectos`
@@ -1013,16 +1296,19 @@ CREATE TABLE IF NOT EXISTS `personas_proyectos` (
 INSERT INTO `personas_proyectos` (`id`, `proyecto_id`, `persona_id`, `rol_id`) VALUES
 (33, 107, 164, 3),
 (35, 107, 2, 1),
-(36, 107, 1, 1),
 (49, 108, 164, 3),
 (51, 109, 5, 3),
 (52, 109, 161, 3),
 (53, 109, 3, 1),
 (54, 109, 162, 1),
-(55, 109, 4, 2),
-(56, 108, 1, 1),
-(57, 108, 4, 2),
-(58, 108, 3, 1);
+(58, 108, 3, 1),
+(59, 112, 161, 2),
+(71, 115, 1, 1),
+(72, 111, 1, 1),
+(74, 107, 1, 2),
+(75, 114, 1, 2),
+(76, 108, 1, 2),
+(77, 108, 161, 2);
 
 -- --------------------------------------------------------
 
@@ -1073,21 +1359,28 @@ CREATE TABLE IF NOT EXISTS `proyectos` (
   `programa` int(11) DEFAULT NULL,
   `area_id` int(11) DEFAULT NULL,
   `linea_id` int(11) DEFAULT NULL,
+  `estado_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `area_id` (`area_id`),
   KEY `linea_id` (`linea_id`),
   KEY `codigo` (`codigo`),
-  KEY `programa` (`programa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=110 ;
+  KEY `programa` (`programa`),
+  KEY `estado_id` (`estado_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=116 ;
 
 --
 -- Volcado de datos para la tabla `proyectos`
 --
 
-INSERT INTO `proyectos` (`id`, `codigo`, `titulo`, `programa`, `area_id`, `linea_id`) VALUES
-(107, '1', 'Proyecto CSS3 orientado a objetos', 1, 3, 6),
-(108, '1', 'Sistema de información para el cafe SISPRO', 1, 1, 1),
-(109, 'ST001', 'SISTRAG: Sistema de información para el control de trabajos de grado.', 1, 1, 1);
+INSERT INTO `proyectos` (`id`, `codigo`, `titulo`, `programa`, `area_id`, `linea_id`, `estado_id`) VALUES
+(107, '1', 'Proyecto CSS3 orientado a objetos', 1, 3, 6, 1),
+(108, '1', 'Sistema de información para el cafe SISPRO', 1, 1, 1, 2),
+(109, 'ST001', 'SISTRAG: Sistema de información para el control de trabajos de grado.', 1, 1, 1, 3),
+(111, '123123123', 'Proyecto de arquitectura', 3, 6, 9, NULL),
+(112, '', '', 1, 1, 1, NULL),
+(113, 's', '', 1, 1, 1, NULL),
+(114, 's', 'as', 1, 1, 1, NULL),
+(115, 'ASD', 'ASD', 6, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1119,17 +1412,19 @@ INSERT INTO `roles` (`id`, `nombre`) VALUES
 CREATE TABLE IF NOT EXISTS `tiposestandares` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` char(40) CHARACTER SET latin1 NOT NULL,
-  PRIMARY KEY (`id`)
+  `programa_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `programa_id` (`programa_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `tiposestandares`
 --
 
-INSERT INTO `tiposestandares` (`id`, `nombre`) VALUES
-(1, 'Propuesta'),
-(2, 'Proyecto'),
-(3, 'Informe Final');
+INSERT INTO `tiposestandares` (`id`, `nombre`, `programa_id`) VALUES
+(1, 'Propuesta', 1),
+(2, 'Proyecto', 1),
+(3, 'Informe Final', 1);
 
 -- --------------------------------------------------------
 
@@ -1141,14 +1436,16 @@ CREATE TABLE IF NOT EXISTS `tiposparametros` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `tiposparametros`
 --
 
 INSERT INTO `tiposparametros` (`id`, `nombre`) VALUES
-(1, 'Conceptos evaluativos');
+(1, 'Conceptos evaluativos'),
+(2, 'Estado notificación'),
+(3, 'Tipo de notificación');
 
 -- --------------------------------------------------------
 
@@ -1189,7 +1486,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   KEY `persona_id` (`persona_id`),
   KEY `nivel_id` (`nivel_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=165 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=167 ;
 
 --
 -- Volcado de datos para la tabla `users`
@@ -1199,11 +1496,11 @@ INSERT INTO `users` (`id`, `username`, `password`, `persona_id`, `nivel_id`) VAL
 (1, 'administrador', '4df2135580d23c4003d9275d67328babd46a1c50', 1, 1),
 (2, 'decano', '4df2135580d23c4003d9275d67328babd46a1c50', 2, 2),
 (3, 'director', '4df2135580d23c4003d9275d67328babd46a1c50', 3, 3),
-(4, 'docente', '4df2135580d23c4003d9275d67328babd46a1c50', 4, 4),
 (5, 'estudiante', '4df2135580d23c4003d9275d67328babd46a1c50', 5, 5),
-(161, '123', '4df2135580d23c4003d9275d67328babd46a1c50', 161, 1),
+(161, 'docente', '4df2135580d23c4003d9275d67328babd46a1c50', 161, 4),
 (162, 'aaa', 'aaa', 162, 1),
-(164, 'MMeneses', 'MMeneses', 164, 5);
+(164, 'MMeneses', 'MMeneses', 164, 5),
+(166, 'lol', '123', 166, 1);
 
 -- --------------------------------------------------------
 
@@ -1310,6 +1607,13 @@ ALTER TABLE `menus_niveles`
   ADD CONSTRAINT `menus_niveles_ibfk_2` FOREIGN KEY (`nivel_id`) REFERENCES `niveles` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `notificaciones`
+--
+ALTER TABLE `notificaciones`
+  ADD CONSTRAINT `notificaciones_ibfk_1` FOREIGN KEY (`parametro_estado_id`) REFERENCES `parametros` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `notificaciones_ibfk_2` FOREIGN KEY (`parametro_tipo_notificacion`) REFERENCES `parametros` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `parametros`
 --
 ALTER TABLE `parametros`
@@ -1343,7 +1647,14 @@ ALTER TABLE `programas`
 ALTER TABLE `proyectos`
   ADD CONSTRAINT `proyectos_ibfk_1` FOREIGN KEY (`area_id`) REFERENCES `areas` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `proyectos_ibfk_2` FOREIGN KEY (`linea_id`) REFERENCES `lineas` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `proyectos_ibfk_3` FOREIGN KEY (`programa`) REFERENCES `programas` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `proyectos_ibfk_3` FOREIGN KEY (`programa`) REFERENCES `programas` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `proyectos_ibfk_4` FOREIGN KEY (`estado_id`) REFERENCES `tiposestandares` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `tiposestandares`
+--
+ALTER TABLE `tiposestandares`
+  ADD CONSTRAINT `tiposestandares_ibfk_1` FOREIGN KEY (`programa_id`) REFERENCES `programas` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `users`
