@@ -118,9 +118,8 @@ $user=NUll;
 <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 </div>
 <script>
-
-	$('#navicon-suitcase').css( "background", "#7a0400" );
-	$('#marcicon-suitcase').css( "color", "#7a0400" );
+	$('#navicon-stats').css( "background", "#7a0400" );
+	$('#marcicon-stats').css( "color", "#7a0400" );
 	$(document).ready(function () {
 		$(".verReporte").click(function(){
 			$('#myModal').modal('show');

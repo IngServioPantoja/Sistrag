@@ -4,22 +4,26 @@ $user=NUll;
 <section class="panel_frame">
 	<div class="panel_menu">
 		<ul>
-			
-			<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') {?>
 			<li>
-				<?php
-				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
-				?>
-				<?php 
-				echo $this->Html->link(__('Listar programas'), array('action' => 'index')); 
-				?></li><li class="panel_menu_actual">
-				<?php
-				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
-				?>
-				<?php 
-				echo $this->Html->link(__('Agregar Programa'), array('action' => 'add')); }
-				?>
-			</li>
+			<?php
+			echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+			?>
+			<?php 
+			echo $this->Html->link(__('Listar programas'), array('action' => 'index')); 
+			?></li>
+			<?php
+			if($current_user['nivel_id'] == '1'|| $current_user['nivel_id'] == '2') 
+			{
+			?>
+			<li class="panel_menu_actual">
+			<?php
+			echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+			?>
+
+			<?php 
+			echo $this->Html->link(__('Agregar Programa'), array('action' => 'add')); 
+			}
+			?>
 		</ul>
 	</nav>
 	<section class="panel_internal">
@@ -29,7 +33,7 @@ $user=NUll;
 					<div class="crud_fila_principal">
 						<?php echo $this->Form->create('Busqueda'); ?>
 						<span>
-							Agregar facultad
+							Agregar programa
 						</span>
 					</div>
 					<?php echo $this->Form->create('Programa'); ?>
@@ -78,7 +82,7 @@ $user=NUll;
 								</div>
 							</article>
 						</div>
-					<?php echo $this->Form->end(__('Submit')); ?>
+					<?php echo $this->Form->end(__('Guardar')); ?>
 				</td>
 			</tr>
 		</table>

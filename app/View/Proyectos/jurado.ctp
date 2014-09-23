@@ -8,7 +8,7 @@ if(!$this->request->is('ajax'))
 		<ul>
 			
 			<?php
-			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
+			if($current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2' || $current_user['nivel_id'] == '3' || $current_user['nivel_id'] == '4') 
 			{
 			?>
 			<li class="panel_menu_actual">
@@ -16,13 +16,8 @@ if(!$this->request->is('ajax'))
 				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
-				echo $this->Html->link(__('Proyectos'), array('action' => 'index')); 
-				?></li><li>
-				<?php
-				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
-				?>
-				<?php 
-				echo $this->Html->link(__('Registrar Proyecto'), array('action' => 'add')); 
+				echo $this->Html->link(__('Proyectos'), array('action' => 'jurado')); 
+				
 			}
 				?>
 			</li>
@@ -190,7 +185,8 @@ if(!$this->request->is('ajax'))
 }
 ?>
 <script>
-	$('#navicon-suitcase').css( "color", "#7a0400" );
+$('#navicon-auction').css( "background", "#7a0400" );
+$('#marcicon-auction').css( "color", "#7a0400" );
 $(document).ready(function() {
     $('#table').dataTable( {
         "dom": '<"top"fl>rt<"bottom"pi>',

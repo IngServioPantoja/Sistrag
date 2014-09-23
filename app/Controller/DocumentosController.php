@@ -327,82 +327,93 @@ class DocumentosController extends AppController {
 		MostrarDatosXML();
 		global $descomposiciones;
 		$this->set('descomposiciones',$descomposiciones);
-		foreach ($descomposiciones as $descomposicion) 
-	    {
-	        $this->ItemsDocumento->create();
-	        $itemDocumento=array();
-	        $itemDocumento['ItemsDocumento']['documento_id']=$id;
-	        $itemDocumento['ItemsDocumento']['items_estandar_id']=$descomposicion['id'];
-	        $itemDocumento['ItemsDocumento']['caracteres']=$descomposicion['caracteres'];
-			if ($this->ItemsDocumento->save($itemDocumento)) 
-			{
-				$orden=1;
-		        foreach ($descomposicion['contenido'] as $item) 
-		        {	
-		        	$this->ItemsContenido->create();
-		        	$itemContenido=array();
-		        	if($item['tipo']==2)
-		        	{	
-		        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
-		        		$itemContenido['ItemsContenido']['tipo']=2;
-		        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
-		        		$itemContenido['ItemsContenido']['orden']=$orden;
-		        		$this->ItemsContenido->save($itemContenido);
-		        		//echo "--texto--";
-		        	
-		        	}
-		        	else if($item['tipo']==3)
-		        	{	
-		        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
-		        		$itemContenido['ItemsContenido']['tipo']=3;
-		        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
-		        		$itemContenido['ItemsContenido']['orden']=$orden;
-		        		$this->ItemsContenido->save($itemContenido);
-		        		//echo "--cabeza figura--";
-		        	}
-		        	else if($item['tipo']==4)
-		        	{	
-		        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
-		        		$itemContenido['ItemsContenido']['tipo']=4;
-		        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
-		        		$itemContenido['ItemsContenido']['orden']=$orden;
-		        		$this->ItemsContenido->save($itemContenido);
-		        		//echo "--fuente--";
-		        	}
-		        	else if($item['tipo']==5)
-		        	{	
-		        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
-		        		$itemContenido['ItemsContenido']['tipo']=5;
-		        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
-		        		$itemContenido['ItemsContenido']['orden']=$orden;
-		        		$this->ItemsContenido->save($itemContenido);
-		        		//echo "--pie de pagina--";
-		        	}
-		        	else if($item['tipo']==6)
-		        	{	
-		        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
-		        		$itemContenido['ItemsContenido']['tipo']=6;
-		        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
-		        		$itemContenido['ItemsContenido']['orden']=$orden;
-		        		$this->ItemsContenido->save($itemContenido);
-		        		//echo "--Imagen--";
-		        	}
-		        	else if($item['tipo']==7)
-		        	{	
-		        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
-		        		$itemContenido['ItemsContenido']['tipo']=7;
-		        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
-		        		$itemContenido['ItemsContenido']['orden']=$orden;
-		        		$this->ItemsContenido->save($itemContenido);
-		        		//echo "--Tabla--";
-		        	}
-		        	++$orden;
-		        }
-			}else
-			{
-				$this->Session->setFlash(__('Error al guardar contenidos en la base de datos'));
-			}
-	    }
+		if(!isset($descomposiciones))
+		{
+			$this->Session->setFlash(__('Por favor ingrese un estandar valido'));
+			$this->redirect(array('action' => 'subir_documento/'.$documento['Documento']['proyecto_id']));
+		}
+			
+			foreach ($descomposiciones as $descomposicion) 
+		    {
+		        $this->ItemsDocumento->create();
+		        $itemDocumento=array();
+		        $itemDocumento['ItemsDocumento']['documento_id']=$id;
+		        $itemDocumento['ItemsDocumento']['items_estandar_id']=$descomposicion['id'];
+		        $itemDocumento['ItemsDocumento']['caracteres']=$descomposicion['caracteres'];
+				if ($this->ItemsDocumento->save($itemDocumento)) 
+				{
+					$orden=1;
+			        foreach ($descomposicion['contenido'] as $item) 
+			        {	
+			        	$this->ItemsContenido->create();
+			        	$itemContenido=array();
+			        	if($item['tipo']==2)
+			        	{	
+			        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
+			        		$itemContenido['ItemsContenido']['tipo']=2;
+			        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
+			        		$itemContenido['ItemsContenido']['orden']=$orden;
+			        		$this->ItemsContenido->save($itemContenido);
+			        		//echo "--texto--";
+			        	
+			        	}
+			        	else if($item['tipo']==3)
+			        	{	
+			        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
+			        		$itemContenido['ItemsContenido']['tipo']=3;
+			        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
+			        		$itemContenido['ItemsContenido']['orden']=$orden;
+			        		$this->ItemsContenido->save($itemContenido);
+			        		//echo "--cabeza figura--";
+			        	}
+			        	else if($item['tipo']==4)
+			        	{	
+			        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
+			        		$itemContenido['ItemsContenido']['tipo']=4;
+			        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
+			        		$itemContenido['ItemsContenido']['orden']=$orden;
+			        		$this->ItemsContenido->save($itemContenido);
+			        		//echo "--fuente--";
+			        	}
+			        	else if($item['tipo']==5)
+			        	{	
+			        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
+			        		$itemContenido['ItemsContenido']['tipo']=5;
+			        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
+			        		$itemContenido['ItemsContenido']['orden']=$orden;
+			        		$this->ItemsContenido->save($itemContenido);
+			        		//echo "--pie de pagina--";
+			        	}
+			        	else if($item['tipo']==6)
+			        	{	
+			        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
+			        		$itemContenido['ItemsContenido']['tipo']=6;
+			        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
+			        		$itemContenido['ItemsContenido']['orden']=$orden;
+			        		$this->ItemsContenido->save($itemContenido);
+			        		//echo "--Imagen--";
+			        	}
+			        	else if($item['tipo']==7)
+			        	{	
+			        		$itemContenido['ItemsContenido']['texto']=$item['elementos'];
+			        		$itemContenido['ItemsContenido']['tipo']=7;
+			        		$itemContenido['ItemsContenido']['items_documento_id']=$this->ItemsDocumento->id;
+			        		$itemContenido['ItemsContenido']['orden']=$orden;
+			        		$this->ItemsContenido->save($itemContenido);
+			        		//echo "--Tabla--";
+			        	}
+			        	++$orden;
+			        }
+				}else
+				{
+					$this->Session->setFlash(__('Error al guardar contenidos en la base de datos'));
+				}
+		    }
+
+
+
+			
+			
 
 	    $this->redirect(array('action' => 'mostrar_documento',$documento_id));
 	}
@@ -844,7 +855,8 @@ class DocumentosController extends AppController {
 	{	
 		if (!$this->Detalleentrega->exists($id)) 
 		{
-			throw new NotFoundException(__('No se ha ingresado una entrega valida'));
+
+			$this->redirect($this->referer());
 		}
 		if ($this->request->is('post')) 
 		{
@@ -857,6 +869,8 @@ class DocumentosController extends AppController {
 			$detalle_entrega=$this->Detalleentrega->find('first', $options);
 			$this->set('entrega',$detalle_entrega);
 			$id=$detalle_entrega['Entrega']['documento_id'];
+
+			$this->set('detalleentrega',$detalle_entrega);
 		}
 		
 		$this->Documento->recursive = 0;
@@ -1146,6 +1160,7 @@ class DocumentosController extends AppController {
 					$maquetarMostrar[$contador]['comentario']=$evaluacion['Evaluacion']['comentarios'];
 					$maquetarMostrar[$contador]['id_comentario']=$evaluacion['Evaluacion']['id'];
 					$maquetarMostrar[$contador]['concepto']=$evaluacion['Parametro']['nombre'];
+					$maquetarMostrar[$contador]['id_concepto']=$evaluacion['Parametro']['id'];
 					$maquetarMostrar[$contador]['color']=$evaluacion['Parametro']['valor'];
 					#Ahora tenemos que presentar el boton de aprobaod no aprobado o aprobado con corecciones
 				}
@@ -1763,12 +1778,12 @@ class DocumentosController extends AppController {
 	{	
 		if (!$this->Detalleentrega->exists($id)) 
 		{
-			throw new NotFoundException(__('No se ha ingresado una entrega valida'));
+			$this->redirect($this->referer());			
 		}
 		if ($this->request->is('post')) 
 		{
-			$id=$this->request->data['Proyecto']['documento']; 
-			$this->redirect(array('action' => 'mostrar_documento',$id));
+			$id=$this->request->data['DetalleEntrega']['documento']; 
+			$this->redirect(array('action' => 'evaluacion_dual',$id));
 		}
 		if(isset($id))
 		{
@@ -1964,11 +1979,447 @@ class DocumentosController extends AppController {
 
 		$roles=$this->Rol->find('list', $opciones);
 		$this->set('descomposiciones',$maquetarMostrar);
+		$this->set('detalleEntrega',$detalle_entrega);
 		$this->set('tiposestandares',$tiposestandares);
 		$this->set('documentos',$documentos);
 		$this->set('anclasItems',$anclasItems);
 		$this->set('roles',$roles);
 	}
+
+	public function evaluacion_dual()
+	{	
+		if ($this->request->is('post')) 
+		{
+			$this->request->data['Documento']['id_primero'];
+			$this->request->data['Documento']['id_segundo'];
+
+			$options = array('conditions' => array('Detalleentrega.' . $this->Documento->primaryKey => $this->request->data['Documento']['id_primero']));
+			$detalle_entrega=$this->Detalleentrega->find('first', $options);
+			$id=$detalle_entrega['Entrega']['documento_id'];
+			$this->set('persona1',$this->Persona->find('first', array('conditions'=>array('Persona.id'=>$detalle_entrega['PersonasProyecto']['persona_id']))));
+			$primerDocumento=$detalle_entrega['Detalleentrega']['id'];
+			$this->set('idPrimerDocumento',$primerDocumento);
+
+			$options = array('conditions' => array('Detalleentrega.id'=> $primerDocumento));
+			$detalle_entrega=$this->Detalleentrega->find('first', $options);
+
+			$this->set('detalleentrega',$detalle_entrega);
+
+
+			$optiones = array('conditions' => array('Detalleentrega.' . $this->Documento->primaryKey => $this->request->data['Documento']['id_segundo']));
+			$detalle_entrega2=$this->Detalleentrega->find('first', $optiones);
+			$segundo=$detalle_entrega2['Entrega']['documento_id'];
+			$this->set('persona2',$this->Persona->find('first', array('conditions'=>array('Persona.id'=>$detalle_entrega2['PersonasProyecto']['persona_id']))));
+			$segundoDocumento=$detalle_entrega2['Detalleentrega']['id'];
+			$this->set('idSegundoDocumento',$segundoDocumento);
+
+		}else
+		{
+			$options = array('conditions' => array('Detalleentrega.' . $this->Documento->primaryKey => $id));
+			$detalle_entrega=$this->Detalleentrega->find('first', $options);
+			$id=$detalle_entrega['Entrega']['documento_id'];
+			$segundo=$id;
+			$this->set('idPrimerDocumento',$id);
+			$this->set('idSegundoDocumento',$id);
+			$this->set('persona2',$this->Persona->find('first', array('conditions'=>array('Persona.id'=>$detalle_entrega['PersonasProyecto']['persona_id']))));
+			$this->set('persona1',$this->Persona->find('first', array('conditions'=>array('Persona.id'=>$detalle_entrega['PersonasProyecto']['persona_id']))));
+			$segundoDocumento=$detalle_entrega['Detalleentrega']['id'];
+		}
+
+		$this->Documento->recursive = 0;
+		$options = array('conditions' => array('Documento.' . $this->Documento->primaryKey => $id));
+		$documento=$this->Documento->find('first', $options);
+		
+		$this->TiposEstandar->recursive = -1;
+		$opciones = array('conditions' => array('TiposEstandar.' . $this->TiposEstandar->primaryKey => $documento['Estandar']['tiposestandar_id']));
+		$tipoEstandar=$this->TiposEstandar->find('first', $opciones);
+		$documento['TiposEstandar']=$tipoEstandar['TiposEstandar'];
+
+		$proyecto = $documento;
+		$this->PersonasProyecto->recursive = -1;
+		$opciones = array(
+		    	'joins' => array(
+			        array(
+			            'table' => 'personas',
+			            'alias' => 'Persona',
+			            'type' => 'INNER',
+			            'conditions' => 
+			            array(
+			                'Persona.id = PersonasProyecto.persona_id'
+		            	)
+		        	)
+	    		),
+		    	'fields' => array('Persona.id','Persona.nombre','Persona.apellido','PersonasProyecto.rol_id'),
+		    	'conditions' => 
+		            array(
+		                'PersonasProyecto.proyecto_id' => $proyecto['Proyecto']['id'],
+		           	),
+	           	'order' => array('PersonasProyecto.rol_id asc'),		
+
+	   	);
+	   	//2
+	   	$integrantes=$this->PersonasProyecto->find('all', $opciones);
+	   	$proyecto['Integrantes']=$integrantes;
+		$this->set('proyecto',$proyecto);
+		$id_documento=$proyecto['Documento']['id'];
+		$this->requestAction('documentos/maquetar_documento/'.$id_documento);
+		global $maquetarMostrar;
+		$anclasItems=array();
+		foreach ($maquetarMostrar as $itemAnclar) 
+		{
+			if($itemAnclar['nivel']!=1)
+			{
+				$key=$itemAnclar['item_documento_id'];
+				$anclasItems[$key]=$itemAnclar['titulo'];	
+			}
+		}
+		//3
+		$this->Documento->recursive = -1;
+		$opciones = array(
+	    	'joins' => array(
+		        array(
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Proyecto.id = Documento.proyecto_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'estandares',
+		            'alias' => 'Estandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Estandar.id = Documento.estandar_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'tiposestandares',
+		            'alias' => 'TiposEstandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'TiposEstandar.id = Estandar.tiposestandar_id'
+	            	)
+	        	)
+    		),
+	    	'fields' => array('TiposEstandar.id','TiposEstandar.nombre'),
+	    	'conditions' => 
+	            array(
+	                'Documento.proyecto_id' => $proyecto['Proyecto']['id'],
+	           	),
+           	'order' => array('TiposEstandar.nombre asc'),
+           	'group' => array('TiposEstandar.id'),		
+	   	);
+		$tiposestandares=$this->Documento->find('list', $opciones);
+		$opciones = array(
+	    	'joins' => array(
+	        	array(
+		            'table' => 'personas_proyectos',
+		            'alias' => 'PersonaProyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Persona.id = PersonaProyecto.persona_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'detalleentregas',
+		            'alias' => 'DetalleEntrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'PersonaProyecto.id = DetalleEntrega.personas_proyecto_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'entregas',
+		            'alias' => 'Entrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Entrega.id = DetalleEntrega.entrega_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'documentos',
+		            'alias' => 'Documento',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Documento.id = Entrega.documento_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'estandares',
+		            'alias' => 'Estandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Estandar.id = Documento.estandar_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Proyecto.id = Documento.proyecto_id'
+	            	)
+	        	)
+    		),
+	    	'fields' => array('DetalleEntrega.id','Documento.fecha_guardado','Persona.id'),
+	    	'conditions' => 
+	            array(
+	                'Proyecto.id' => $proyecto['Proyecto']['id'],
+	                'Estandar.tiposestandar_id' => $proyecto['TiposEstandar']['id']
+	           	),
+           	'order' => array('Documento.fecha_guardado desc'),
+           	'recursive'=>0
+	   	);
+
+		$entregasDocumento=$this->Persona->find('all', $opciones);
+
+
+
+		//Personas que recibieorn los documentos
+		$opciones = array(
+	    	'joins' => array(
+	        	array(
+		            'table' => 'personas_proyectos',
+		            'alias' => 'PersonaProyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Persona.id = PersonaProyecto.persona_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'detalleentregas',
+		            'alias' => 'DetalleEntrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'PersonaProyecto.id = DetalleEntrega.personas_proyecto_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'entregas',
+		            'alias' => 'Entrega',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Entrega.id = DetalleEntrega.entrega_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'documentos',
+		            'alias' => 'Documento',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Documento.id = Entrega.documento_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'estandares',
+		            'alias' => 'Estandar',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Estandar.id = Documento.estandar_id'
+	            	)
+	        	),
+	        	array(
+		            'table' => 'proyectos',
+		            'alias' => 'Proyecto',
+		            'type' => 'INNER',
+		            'conditions' => 
+		            array(
+		                'Proyecto.id = Documento.proyecto_id'
+	            	)
+	        	)
+    		),
+	    	'fields' => array('DISTINCT Persona.id','Persona.nombre','Persona.apellido'),
+	    	'conditions' => 
+	            array(
+	                'Proyecto.id' => $proyecto['Proyecto']['id'],
+	                'Estandar.tiposestandar_id' => $proyecto['TiposEstandar']['id']
+	           	),
+           	'order' => array('Documento.fecha_guardado desc'),
+           	'recursive'=>0
+	   	);
+
+		$personas=$this->Persona->find('all', $opciones);
+
+		$listaEntregas=array();
+		foreach ($personas as $persona) 
+		{
+			
+			foreach ($entregasDocumento as $entregaDocumento) {
+				
+			if($persona['Persona']['id']==$entregaDocumento['Persona']['id'])
+			{
+				$listaEntregas[$persona['Persona']['nombre']." ".$persona['Persona']['apellido']][$entregaDocumento['DetalleEntrega']['id']]=$entregaDocumento['Documento']['fecha_guardado'];
+
+			}	
+
+			}
+
+		}
+		//Previamente organizamo stodos lso elementos para que dijeran aquien se hiso la entrega
+		$this->set('documentos',$listaEntregas);
+
+		//4
+	/* Contenido de las evaluaciones */
+		$opciones = array(
+	    	'conditions' => 
+	            array(
+	                'Evaluacion.detalles_entrega_id' => $detalle_entrega['Detalleentrega']['id'],
+	           	),
+           	'order' => array('Evaluacion.id desc'),
+           	'recursive'=>'0'
+	   	);
+		$evaluaciones=$this->Evaluacion->find('all', $opciones);
+		//print_r($evaluaciones);
+		/* Ahora Se procede a Asignar a cada item los comentarios respectivos */		
+		$opciones = array(
+	    	'conditions' => 
+	            array(
+	                'Rol.id !=' => 3
+	           	),
+           	'order' => array('Rol.nombre desc'),
+	   	);
+	   	$contador=1;
+		foreach ($maquetarMostrar as $Item) {
+			//print_r($Item);
+			$maquetarMostrar[$contador]['comentario']="Sin comentarios";
+			$maquetarMostrar[$contador]['id_comentario']=0;
+			$maquetarMostrar[$contador]['concepto']="No Aprobado";
+			$maquetarMostrar[$contador]['color']="882222";
+			foreach ($evaluaciones as $evaluacion) 
+			{
+				# Validar si ese comentario pertenece a un detemrinado item
+				if($Item['item_documento_id']==$evaluacion['Evaluacion']['items_documento_id'])
+				{
+					//echo $evaluacion['Evaluacion']['comentarios'];
+					$maquetarMostrar[$contador]['comentario']=$evaluacion['Evaluacion']['comentarios'];
+					$maquetarMostrar[$contador]['id_comentario']=$evaluacion['Evaluacion']['id'];
+					$maquetarMostrar[$contador]['concepto']=$evaluacion['Parametro']['nombre'];
+					$maquetarMostrar[$contador]['id_concepto']=$evaluacion['Parametro']['id'];
+					$maquetarMostrar[$contador]['color']=$evaluacion['Parametro']['valor'];
+					#Ahora tenemos que presentar el boton de aprobaod no aprobado o aprobado con corecciones
+				}
+			}
+			++$contador;
+		}
+
+
+		$roles=$this->Rol->find('list', $opciones);
+		$this->set('descomposiciones',$maquetarMostrar);
+		$this->set('tiposestandares',$tiposestandares);
+		$this->set('anclasItems',$anclasItems);
+		$this->set('roles',$roles);
+
+		//Crearemos la segunda lista de items
+		//La entrega 70 con el documento 108;
+		$this->Documento->recursive = 0;
+		$options = array('conditions' => array('Documento.' . $this->Documento->primaryKey => $segundo));
+		$documento=$this->Documento->find('first', $options);
+		
+		$this->TiposEstandar->recursive = -1;
+		$opciones = array('conditions' => array('TiposEstandar.' . $this->TiposEstandar->primaryKey => $documento['Estandar']['tiposestandar_id']));
+		$tipoEstandar=$this->TiposEstandar->find('first', $opciones);
+		$documento['TiposEstandar']=$tipoEstandar['TiposEstandar'];
+		$proyecto = $documento;
+		$this->PersonasProyecto->recursive = -1;
+		$opciones = array(
+		    	'joins' => array(
+			        array(
+			            'table' => 'personas',
+			            'alias' => 'Persona',
+			            'type' => 'INNER',
+			            'conditions' => 
+			            array(
+			                'Persona.id = PersonasProyecto.persona_id'
+		            	)
+		        	)
+	    		),
+		    	'fields' => array('Persona.id','Persona.nombre','Persona.apellido','PersonasProyecto.rol_id'),
+		    	'conditions' => 
+		            array(
+		                'PersonasProyecto.proyecto_id' => $proyecto['Proyecto']['id'],
+		           	),
+	           	'order' => array('PersonasProyecto.rol_id asc'),		
+
+	   	);
+	   	//3
+		$integrantes=$this->PersonasProyecto->find('all', $opciones);
+	   	$proyecto['Integrantes']=$integrantes;
+		$id_documento=$proyecto['Documento']['id'];
+		global $maquetarMostrar;
+		$maquetarMostrar="";
+		$this->requestAction('documentos/maquetar_documento/'.$id_documento);
+		global $maquetarMostrar;
+		$anclasItems=array();
+		foreach ($maquetarMostrar as $itemAnclar) 
+		{
+			if($itemAnclar['nivel']!=1)
+			{
+				$key=$itemAnclar['item_documento_id'];
+				$anclasItems[$key]=$itemAnclar['titulo'];	
+			}
+		}
+		//3
+		$this->Documento->recursive = -1;
+		//4
+		$opciones = array(
+	    	'conditions' => 
+	            array(
+	                'Evaluacion.detalles_entrega_id' => $segundoDocumento,
+	           	),
+           	'order' => array('Evaluacion.id desc'),
+           	'recursive'=>'0'
+	   	);
+		$evaluaciones=$this->Evaluacion->find('all', $opciones);
+		//print_r($evaluaciones);
+		/* Ahora Se procede a Asignar a cada item los comentarios respectivos */		
+		$opciones = array(
+	    	'conditions' => 
+	            array(
+	                'Rol.id !=' => 3
+	           	),
+           	'order' => array('Rol.nombre desc'),
+	   	);
+	   	$contador=1;
+		foreach ($maquetarMostrar as $Item) {
+			//print_r($Item);
+			$maquetarMostrar[$contador]['comentario']="Sin comentarios";
+			$maquetarMostrar[$contador]['id_comentario']=0;
+			$maquetarMostrar[$contador]['concepto']="No Aprobado";
+			$maquetarMostrar[$contador]['color']="882222";
+			foreach ($evaluaciones as $evaluacion) 
+			{
+				# Validar si ese comentario pertenece a un detemrinado item
+				if($Item['item_documento_id']==$evaluacion['Evaluacion']['items_documento_id'])
+				{
+					//echo $evaluacion['Evaluacion']['comentarios'];
+					$maquetarMostrar[$contador]['comentario']=$evaluacion['Evaluacion']['comentarios'];
+					$maquetarMostrar[$contador]['id_comentario']=$evaluacion['Evaluacion']['id'];
+					$maquetarMostrar[$contador]['concepto']=$evaluacion['Parametro']['nombre'];
+					$maquetarMostrar[$contador]['id_concepto']=$evaluacion['Parametro']['id'];
+					$maquetarMostrar[$contador]['color']=$evaluacion['Parametro']['valor'];
+					#Ahora tenemos que presentar el boton de aprobaod no aprobado o aprobado con corecciones
+				}
+			}
+			++$contador;
+		}
+		$this->set('descomposiciones2',$maquetarMostrar);
+	}
+
 
 	public function actualizar_comentario()
 	{

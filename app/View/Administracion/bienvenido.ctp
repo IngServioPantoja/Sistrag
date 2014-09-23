@@ -46,21 +46,31 @@ $user=NUll;
             </br>
             </br>
           </div>
-          <div class="item">
-            <img data-src="holder.js/900x500/auto/#666:#666" alt="900x500" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MDAiIGhlaWdodD0iNTAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzY2NiIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjQ1MCIgeT0iMjUwIiBzdHlsZT0iZmlsbDojNjY2O2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjU2cHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+OTAweDUwMDwvdGV4dD48L3N2Zz4=">
-            <div class="carousel-caption">
-              <h3>Second slide label</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
+          <div class="item" style="position:relative;">
+            <h1 class="text-center" style="background-color:rgba(255,255,255,0.9);border-radius:20px;padding:20px; border:3px solid #006;">
+              <strong>Modulo de administración de usuarios: </strong>
+              <small>
+                Liste, filtre, registre, consulte, modifique y elimine usuarios del sistemas
+              </small>
+            </h1>
+            <?php
+              echo $this->Html->image('recursos/personas.png', array('title' => 'Home','height' => '70%', 'width' => '70%','class'=>'img-responsive img-thumbnail pulse','style'=>'display:block;margin:0 auto;'))
+            ?>
           </div>
-          <div class="item">
-            <img data-src="holder.js/900x500/auto/#555:#5555" alt="900x500" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MDAiIGhlaWdodD0iNTAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzU1NSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjQ1MCIgeT0iMjUwIiBzdHlsZT0iZmlsbDojNTU1NTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZTo1NnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjkwMHg1MDA8L3RleHQ+PC9zdmc+">
-            <div class="carousel-caption">
-              <h3>Third slide label</h3>
-              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-            </div>
+          <div class="item" style="position:relative;">
+            </br></br></br>
+            <?php
+              echo $this->Html->image('recursos/personas.png', array('title' => 'Home','height' => '70%', 'width' => '70%','class'=>'img-responsive img-thumbnail pulse','style'=>'display:block;margin:0 auto;'))
+            ?>
+            </br>
+            <h1 class="text-center" style="position:absolute;top:20px;left:10%;right:10%; background-color:rgba(255,255,255,0.9);border-radius:20px;padding:20px; border:3px solid #006;">
+              <strong>Modulo de administración de estandares</strong>
+              </br></br>
+              <small>
+                Liste, filtre, registre, consulte, modifique y elimine usuarios del sistemas
+              </small>
+            </h1>
           </div>
-        </div>
         <a class="left carousel-control" href="#carousel-example-captions" role="button" data-slide="prev">
           <span class="glyphicon glyphicon-chevron-left"></span>
         </a>
@@ -71,7 +81,7 @@ $user=NUll;
     </div>
   <script>
 $('.carousel').carousel({
-  interval: 2000  
+  interval: 8000  
 });
   </script>
 	</section>

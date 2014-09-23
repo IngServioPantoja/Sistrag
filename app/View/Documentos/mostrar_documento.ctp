@@ -33,7 +33,7 @@
 					</div>
 					<span class="principal_titulo"> 
 					<?php 
-					echo $proyecto['tiposestandaresndar']['nombre'];
+					echo $proyecto['TiposEstandar']['nombre'];
 					?>
 					<?php 
 					echo $proyecto['Documento']['fecha_guardado'];
@@ -132,7 +132,7 @@
 				<?php
 				foreach ($descomposiciones as $descomposicion)
 				{
-					if($descomposicion['nivel']!=1)
+					if($descomposicion['contenido']!=null)
     				{
     			?>
 						<article class='marcoPrincipal' id="<?php echo "item".$descomposicion['item_documento_id']; ?>">
@@ -235,7 +235,7 @@
 					        	}
 					        	else if($item['tipo']==6)
 					        	{
-					        		echo $this->Html->image('/app/webroot/files/documentos/'.$item['elementos'], array('class'=>'img'));
+					        		echo $this->Html->image('/app/webroot/files/documentos/'.$item['elementos'], array('class'=>'img zoomeable'));
 					        	}
 					        	else if($item['tipo']==7)
 					        	{	

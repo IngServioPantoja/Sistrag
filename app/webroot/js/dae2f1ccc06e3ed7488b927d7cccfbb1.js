@@ -1,0 +1,2 @@
+$(document).ready(function () {$("#submit-709757939").bind("click", function (event) {$.ajax({async:false, data:$("#submit-709757939").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#myModal").html(data);}, type:"post", url:"\/Sistrag\/reportes\/detalleReporteEstado"});
+return false;});});

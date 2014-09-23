@@ -92,7 +92,7 @@ $user=NUll;
 	</section>
 </section>
 <script>
-	$('.glyphicon-open').css( "background", "#7a0400" );
+$('.glyphicon-open').css( "background", "#7a0400" );
 $(document).ready(function() {
     $('#table').dataTable( {
         "dom": '<"top"fl>rt<"bottom"pi>',

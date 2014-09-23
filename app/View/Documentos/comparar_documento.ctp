@@ -156,7 +156,7 @@
 							<td class="col-sm-6">
 						<?php
 								$descomposicion=$descomposiciones[$i];
-								if($descomposicion['nivel']!=1)
+								if($descomposicion['contenido']!=null)
 		        				{
 		        			?>
 									<article class='marcoPrincipal' id="<?php echo "item".$descomposicion['item_documento_id']; ?>">
@@ -171,14 +171,14 @@
 											</div>
 											<div class="row-fluid pull-right" style="overflow:hidden;">
 												<?php
-												if($descomposiciones2[$i]['contenido']==$descomposiciones[$i]['contenido'] && $descomposiciones2[$i]['nivel']!=1)
+												if($descomposiciones2[$i]['contenido']==$descomposiciones[$i]['contenido'])
 												{
 												?>
 												<button type="button" class="btn btn-success btn-xs active" title="Sin cambios">
 													<span class="glyphicon glyphicon-repeat pd-2"></span>
 												</button>
 												<?php
-												}else if($descomposiciones2[$i]['contenido']!=$descomposiciones[$i]['contenido'] && $descomposiciones2[$i]['nivel']!=1)
+												}else if($descomposiciones2[$i]['contenido']!=$descomposiciones[$i]['contenido'])
 												{
 												?>
 												<button type="button" class="btn btn-warning btn-xs active" title="Hay cambios">
@@ -342,7 +342,7 @@
 							<td class="col-sm-6">
 						<?php
 								$descomposicion=$descomposiciones2[$i];
-								if($descomposicion['nivel']!=1)
+								if($descomposicion['contenido']!=null)
 		        				{
 		        			?>
 									<article class='marcoPrincipal' id="<?php echo "item".$descomposicion['item_documento_id']; ?>">

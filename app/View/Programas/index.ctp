@@ -6,24 +6,25 @@ if(!$this->request->is('ajax'))
 <section class="panel_frame">
 	<div class="panel_menu">
 		<ul>
-			
-			<?php
-			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
-			{
-			?>
 			<li class="panel_menu_actual">
 				<?php
 				echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
 				<?php 
 				echo $this->Html->link(__('Listar programas'), array('action' => 'index')); 
-				?></li><li>
+				?></li>
+				<?php
+				if($current_user['nivel_id'] == '1'|| $current_user['nivel_id'] == '2') 
+				{
+				?>
+				<li>
 				<?php
 				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
 				?>
+
 				<?php 
 				echo $this->Html->link(__('Agregar Programa'), array('action' => 'add')); 
-			}
+				}
 				?>
 			</li>
 		</ul>
@@ -93,9 +94,19 @@ if(!$this->request->is('ajax'))
 								<article class='ficha_index'>
 									<figure>
 										<?php
-										echo $this->Html->image('recursos/escudo400.png', array('alt' => 'Login','height' => '', 'width' => '200px'));
+											$destino = WWW_ROOT."img/recursos/p".$programa['Programa']['id'].".png";
+											if (file_exists($destino))
+											{
+												$urlImagen="recursos/p".$programa['Programa']['id'].".png";
+											}
+											else
+											{
+												$urlImagen="recursos/escudo400.png";
+											}		
+											echo $this->Html->image($urlImagen, array('alt' => 'Login','height' => '200', 'width' => '200px'));
+
 										?>
-										<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'): ?>
+										<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'|| $current_user['nivel_id'] == '2'|| $current_user['nivel_id'] == '3'): ?>
 											<div class="ficha_acciones">
 										<?php echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'edit', $programa['Programa']['id']),
 										array('escape' => false)); 
@@ -175,6 +186,9 @@ if(!$this->request->is('ajax'))
 		</table>
 	</section>
 </section>
+<script>
+$('.glyphicon-bookmark').css( "background", "#7a0400" );
+</script>
 <?php
 $this->Js->get('#atributo')->event('change',
 	$this->Js->request(

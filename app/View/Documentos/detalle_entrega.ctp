@@ -140,7 +140,7 @@
 						<?php
 						foreach ($descomposiciones as $descomposicion)
 						{
-							if($descomposicion['nivel']!=1)
+							if($descomposicion['contenido']!=null)
 	        				{
 	        			?>
 								<article class='marcoPrincipal' id="<?php echo "item".$descomposicion['item_documento_id']; ?>">
@@ -153,17 +153,27 @@
 											?>
 											</span>
 										</div>
-										<div class="aprobacionRight">
-											<div class="tituloUnidad">
-												<span style="color:<?php 
-														echo $descomposicion['color'];
-													?>;">								
-													<?php 
-														echo $descomposicion['concepto'];
-													?>
-												</span>
+										<div class="row-fluid pull-right">
+												<div class="btn-group" data-toggle="buttons" style="overflow:hidden;">
+											<?php 
+											if($descomposicion['id_concepto']==1)
+											{
+											?>
+													 <label class="btn btn-success btn-xs aclarar <?php if($descomposicion['id_concepto']==1){echo 'active';}?>" idconcepto="1" onClick="actualizar_comentario(this)" idpregunta="<?php echo $descomposicion['id_comentario']; ?>">
+													    <input type="radio" name="concepto" <?php if($descomposicion['id_concepto']==1){echo "checked";}?>>Aprobado
+													  </label>
+											<?php
+											}else if($descomposicion['id_concepto']==3)
+											{
+											?>
+													<label class="btn btn-danger btn-xs aclarar <?php if($descomposicion['id_concepto']==3){echo 'active';}?>" idconcepto="3" onClick="actualizar_comentario(this)" idpregunta="<?php echo $descomposicion['id_comentario']; ?>">
+												    <input type="radio" name="concepto" <?php if($descomposicion['id_concepto']==3){echo "checked";}?>>No aprobado
+												  </label>
+											<?php
+											}
+											?>
+												</div>
 											</div>
-										</div>
 									</div>
 									<div class="marcoSecundario" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
 										<div class="headerGris">
@@ -295,6 +305,48 @@
 						}
 						?>
 					</div>
+					<div class="panel panel-default" disabled>
+								<div class="panel-heading"><h3>Veredicto final</h3></div>
+									<div class="panel-body">
+										<?php
+											echo $this->Form->create('Detalleentrega',array('id'=>'formularioDetalleentrega'));
+											echo $this->Form->input('id',array('value'=>$detalleentrega['Detalleentrega']['id']));
+										?>
+										<div class="row pd-5 pull-left form-inline">
+											<div class="btn-group" data-toggle="buttons" style="overflow:hidden; display:inline-block; vertical-align:top;" >
+												<?php
+												if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==1)
+												{
+												?>
+													<label class="btn btn-success btn-md aclarar <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==1){echo 'active';}?>">
+												    <input type="radio" name="data[Detalleentrega][parametro_veredicto_id]" <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==1){echo "checked";}?> value="1">Aprobado
+												  </label>
+												<?php
+												}else if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==2)
+												{
+												?>
+													<label class="btn btn-warning btn-md aclarar <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==2){echo 'active';}?>">
+												    <input type="radio" name="data[Detalleentrega][parametro_veredicto_id]" <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==2){echo "checked";}?> value="2">Aprobado con correcciones
+												  </label>
+												<?php
+												}else if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==3)
+												{
+												?>
+													<label class="btn btn-danger btn-md aclarar <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==3){echo 'active';}?>">
+												    <input type="radio" name="data[Detalleentrega][parametro_veredicto_id]" <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==3){echo "checked";}?> value="3">No aprobado
+												  </label>
+												<?php
+												}
+												?>
+											</div>
+										</div>
+										<div class="form-group pd-5">
+											<?php
+												echo $this->Form->textarea('comentarios', array("label" => false,'type'=>'text',"class" => "cuestionario_titulo_input form-control use-tooltip",'data-toggle' =>'tooltip','data-placement' =>'top','title' =>'Correcciones generales del documento','value'=>$detalleentrega['Detalleentrega']['comentarios'],'disabled'=>'disabled'));
+											?>
+										</div>
+									</div>
+								</div>
 					<?php
 						if($proyecto['Documento']['enviado']==0)
 						{

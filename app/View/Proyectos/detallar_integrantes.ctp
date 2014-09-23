@@ -95,7 +95,7 @@ $user=NUll;
 											<a href="../../personas/view/<?php  echo $integrante['Persona']['id'];?>">
 												<figure>
 													<?php
-													$destino = WWW_ROOT."img/img_subida/usuarios/".$integrante['Persona']['id']."".DS;
+													$destino = WWW_ROOT."img/img_subida/usuarios/".$integrante['Persona']['id']."".DS."/1_400.png";
 													if (file_exists($destino))
 													{
 														$urlImagen="img_subida/usuarios/".$integrante['Persona']['id']."/1_400.png";
@@ -195,7 +195,7 @@ $user=NUll;
 												<a href="../../personas/view/<?php  echo $integrante['Persona']['id'];?>">
 													<figure>
 														<?php
-														$destino = WWW_ROOT."img/img_subida/usuarios/".$integrante['Persona']['id']."".DS;
+														$destino = WWW_ROOT."img/img_subida/usuarios/".$integrante['Persona']['id']."".DS."/1_400.png";
 														if (file_exists($destino))
 														{
 															$urlImagen="img_subida/usuarios/".$integrante['Persona']['id']."/1_400.png";
@@ -339,7 +339,7 @@ $user=NUll;
 											<a href="../../personas/view/<?php  echo $integrante['Persona']['id'];?>">
 												<figure>
 													<?php
-													$destino = WWW_ROOT."img/img_subida/usuarios/".$integrante['Persona']['id']."".DS;
+													$destino = WWW_ROOT."img/img_subida/usuarios/".$integrante['Persona']['id']."".DS."/1_400.png";
 													if (file_exists($destino))
 													{
 														$urlImagen="img_subida/usuarios/".$integrante['Persona']['id']."/1_400.png";

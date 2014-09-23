@@ -1,0 +1,2 @@
+$(document).ready(function () {$("#submit-1060637875").bind("click", function (event) {$.ajax({async:false, data:$("#submit-1060637875").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#myModal").html(data);}, type:"post", url:"\/Sistrag\/reportes\/detalleReportePrograma"});
+return false;});});

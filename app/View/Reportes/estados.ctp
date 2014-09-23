@@ -119,7 +119,7 @@ $user=NUll;
 			"sZeroRecords": "No se han encontrado registros"
 			},
 	    } );
-		$('#navicon-suitcase').css( "background", "#7a0400" );
-		$('#marcicon-suitcase').css( "color", "#7a0400" );
+	$('#navicon-stats').css( "background", "#7a0400" );
+	$('#marcicon-stats').css( "color", "#7a0400" );
 	});
 </script>

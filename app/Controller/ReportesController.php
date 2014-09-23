@@ -300,12 +300,12 @@ var $paginate =array(
 					'Proyecto.programa'=>$programa_id),
 			'fields'=>
 				array(
-					"Tiposestandar.nombre as name",'COUNT("Proyecto.id") as data'
+					"Estado.nombre as name",'COUNT("Proyecto.id") as data'
 				),
 			'group' => array('Proyecto.estado_id'),
 			'order'=>
 				array(
-					'Tiposestandar.nombre asc'
+					'Estado.nombre asc'
 				),
 			'recursive'=>-2
 		);
@@ -315,7 +315,7 @@ var $paginate =array(
 		$reporte=array();
 		$contador=0;
 		foreach ($cantidadConteo as $estanadar) {
-			$reporte[$contador]=$estanadar['Tiposestandar'];
+			$reporte[$contador]=$estanadar['Estado'];
 			$reporte[$contador]['data'][0]=$estanadar[0]['data'];
 			++$contador;
 		}

@@ -79,7 +79,7 @@ $user=NUll;
 								</div>
 							</article>
 						</div>
-					<?php echo $this->Form->end(__('Submit')); ?>
+					<?php echo $this->Form->end(__('Guardar')); ?>
 				</td>
 			</tr>
 		</table>

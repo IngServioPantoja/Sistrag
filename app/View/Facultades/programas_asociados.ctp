@@ -102,7 +102,16 @@ if(!$this->request->is('ajax'))
 									<a href="../../programas/view/<?php  echo $programa['Programa']['id'];?>">
 									<figure>
 										<?php
-										echo $this->Html->image('recursos/escudo400.png', array('alt' => 'Login','height' => '', 'width' => '200px'));
+											$destino = WWW_ROOT."img/recursos/p".$programa['Programa']['id'].".png";
+											if (file_exists($destino))
+											{
+												$urlImagen="recursos/p".$programa['Programa']['id'].".png";
+											}
+											else
+											{
+												$urlImagen="recursos/escudo400.png";
+											}		
+											echo $this->Html->image('recursos/escudo400.png', array('alt' => 'Login','height' => '', 'width' => '200px'));
 										?>
 										<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'): ?>
 											<div class="ficha_acciones">

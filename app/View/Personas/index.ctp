@@ -42,7 +42,7 @@ if(!$this->request->is('ajax'))
 							if(isset($busqueda))
 							{
 								echo $this->Form->select(
-								'atributo', array('identificacion' => 'Identificación', 'nombre'=>'Nombre'
+								'atributo', array('nombre'=>'Nombre','identificacion' => 'Identificación'
 									),array('id'=>'atributo','autocomplete' =>'off','empty'=>false,'default'=>$busqueda[0]['atributo'])
 							);	
 							}
@@ -51,7 +51,7 @@ if(!$this->request->is('ajax'))
 							?>
 							<?php
 							echo $this->Form->select(
-								'atributo', array('identificacion' => 'Identificación', 'nombre'=>'Nombre'
+								'atributo', array('nombre'=>'Nombre','identificacion' => 'Identificación'
 									),array('id'=>'atributo','autocomplete' =>'off','empty'=>false)
 							);
 							}
@@ -91,7 +91,7 @@ if(!$this->request->is('ajax'))
 									<a href="personas/view/<?php  echo $persona['Persona']['id'];?>">
 										<figure>
 											<?php
-											$destino = WWW_ROOT."img/img_subida/usuarios/".$persona['Persona']['id']."".DS;
+											$destino = WWW_ROOT."img/img_subida/usuarios/".$persona['Persona']['id']."".DS."/1_400.png";
 											if (file_exists($destino))
 											{
 												$urlImagen="img_subida/usuarios/".$persona['Persona']['id']."/1_400.png";

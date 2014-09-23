@@ -48,9 +48,10 @@ var $usuario=array();
 	public function areas_asociadas($programa_id=null,$atributo=null,$valor=null)
 	{	
 		$this->Area->recursive = -1;
-		if (!$this->Facultad->exists($programa_id))
+		if (!$this->Programa->exists($programa_id))
 		{
-			throw new NotFoundException(__('Facultad invalida'));
+			$this->redirect(array('action' => 'index'));
+
 		}
 		$this->Programa->recursive = 0;
 		$options = array('conditions' => array('Programa.' . $this->Programa->primaryKey => $programa_id));
@@ -199,7 +200,7 @@ function lista_programas() {
 	public function delete($id = null) {
 		$this->Programa->id = $id;
 		if (!$this->Programa->exists()) {
-			throw new NotFoundException(__('Programa invalido'));
+			$this->redirect(array('action' => 'index'));
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Programa->delete()) {
@@ -214,7 +215,7 @@ function lista_programas() {
 		global $usuario;
 		$usuario=$this->Session->read("Usuario");
 		if (!$this->Programa->exists($id)) {
-			throw new NotFoundException(__('Invalid programa'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Programa->save($this->request->data)) {
@@ -243,7 +244,7 @@ function lista_programas() {
 
 	public function view($id = null) {
 		if (!$this->Programa->exists($id)) {
-			throw new NotFoundException(__('Invalid programa'));
+			$this->redirect(array('action' => 'index'));
 		}
 		$options = array('conditions' => array('Programa.' . $this->Programa->primaryKey => $id));
 		$programa=$this->Programa->find('first', $options);

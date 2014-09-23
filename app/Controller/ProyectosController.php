@@ -14,7 +14,8 @@ var $uses = array(
 	'Persona',
 	'PersonasProyecto',
 	'Programa',
-	'Rol'
+	'Rol',
+	'Tiposestandar'
 	);
 	
 	public function getSesionPersona()
@@ -33,6 +34,18 @@ var $uses = array(
 		if ($this->request->is('post')) 
 		{
 					$this->Proyecto->create();
+					$opciones = array(
+						'conditions' => array(
+							'Tiposestandar.programa_id'=> $this->request->data['Proyecto']['programa']
+						),
+						'order'=>array(
+							'Tiposestandar.orden asc'
+						)
+					);
+					$tiposestandares = $this->Tiposestandar->find('all',$opciones);
+
+
+					$this->request->data['Proyecto']['estado_id']=$tiposestandares[0]['Tiposestandar']['id'];
 					if ($this->Proyecto->save($this->request->data)) {
 						$this->Session->setFlash(__('El proyecto ha sido registrado exitosamente'));
 						$this->redirect(array('action' => 'editar_integrantes/'.$this->Proyecto->id));
@@ -64,8 +77,12 @@ var $uses = array(
 				$area=$key;
 				break;
 			}
-			$opciones = array('conditions' => array('Linea.area_id'=> $area));
-			$lineas = $this->Proyecto->Linea->find('list',$opciones);
+			if(isset($area))
+			{
+				$opciones = array('conditions' => array('Linea.area_id'=> $area));
+				$lineas = $this->Proyecto->Linea->find('list',$opciones);
+			}
+			
 
 		}else if($usuario['nivel_id']==2)
 		{
@@ -90,8 +107,11 @@ var $uses = array(
 				$area=$key;
 				break;
 			}
+			if(isset($area))
+			{
 			$opciones = array('conditions' => array('Linea.area_id'=> $area));
 			$lineas = $this->Proyecto->Linea->find('list',$opciones);
+			}	
 
 		}else if($usuario['nivel_id']==3)
 		{
@@ -116,8 +136,11 @@ var $uses = array(
 				$area=$key;
 				break;
 			}
-			$opciones = array('conditions' => array('Linea.area_id'=> $area));
-			$lineas = $this->Proyecto->Linea->find('list',$opciones);
+			if(isset($area))
+			{
+				$opciones = array('conditions' => array('Linea.area_id'=> $area));
+				$lineas = $this->Proyecto->Linea->find('list',$opciones);
+			}
 
 		}
 
@@ -287,7 +310,8 @@ var $uses = array(
 	{
 		//Aqui se muestran los documentos subidos y dependiendo su estado las entregas de los mismos
 		if (!$this->Proyecto->exists($id)) {
-			throw new NotFoundException(__('Invalid proyecto'));
+				$this->redirect(array('action' => 'index'));
+
 		}
 		$opciones = array(
 			'joins' => array(
@@ -394,7 +418,6 @@ var $uses = array(
 	public function documentosJurado($id = null) 
 	{
 		$persona=$this->requestAction('Proyectos/getSesionPersona');
-		print_r($persona);
 		//Aqui se muestran los documentos subidos y dependiendo su estado las entregas de los mismos
 		//$this->autoRender = false;
 		if (!$this->Proyecto->exists($id)) {
@@ -541,7 +564,8 @@ var $uses = array(
 	{
 		if (!$this->Proyecto->exists($id)) 
 		{
-			throw new NotFoundException(__('Invalid proyecto'));
+			$this->redirect(array('action' => 'index'));
+
 		}else
 		{
 			$options = array(
@@ -600,7 +624,7 @@ var $uses = array(
 	{
 		if (!$this->Proyecto->exists($id)) 
 		{
-			throw new NotFoundException(__('Invalid proyecto'));
+				$this->redirect(array('action' => 'index'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) 
 		{
@@ -610,7 +634,7 @@ var $uses = array(
 				$this->redirect(array('action' => 'index'));
 			} else 
 			{
-				$this->Session->setFlash(__('The proyecto could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('El proyecto se ha actualizado correctamente'));
 			}
 		} 
 		else 
@@ -642,22 +666,25 @@ var $uses = array(
 					$facultad=$key;
 					break;
 				}
-				$opciones = array('conditions' => array('Programa.facultad_id'=> $facultad));
+				$opciones = array('conditions' => array('Programa.facultad_id'=> $this->request->data['Programa']['facultad_id']));
 				$programas = $this->Programa->find('list',$opciones);
 				foreach ($programas as $key => $value) 
 				{
 					$programa=$key;
 					break;
 				}
-				$opciones = array('conditions' => array('Area.programa_id'=> $programa));
+				$opciones = array('conditions' => array('Area.programa_id'=> $this->request->data['Programa']['id']));
 				$areas = $this->Proyecto->Area->find('list',$opciones);
 				foreach ($areas as $key => $value) 
 				{
 					$area=$key;
 					break;
 				}
+				if(isset($area))
+				{
 				$opciones = array('conditions' => array('Linea.area_id'=> $area));
 				$lineas = $this->Proyecto->Linea->find('list',$opciones);
+				}
 
 			}else if($usuario['nivel_id']==2)
 			{
@@ -682,8 +709,11 @@ var $uses = array(
 					$area=$key;
 					break;
 				}
+				if(isset($area))
+				{
 				$opciones = array('conditions' => array('Linea.area_id'=> $area));
 				$lineas = $this->Proyecto->Linea->find('list',$opciones);
+				}
 
 			}else if($usuario['nivel_id']==3)
 			{
@@ -708,8 +738,11 @@ var $uses = array(
 					$area=$key;
 					break;
 				}
+				if(isset($area))
+				{
 				$opciones = array('conditions' => array('Linea.area_id'=> $area));
 				$lineas = $this->Proyecto->Linea->find('list',$opciones);
+				}
 
 			}
 
@@ -724,7 +757,7 @@ var $uses = array(
 	public function detallar_integrantes($id = null) 
 	{
 		if (!$this->Proyecto->exists($id)) {
-			throw new NotFoundException(__('Invalid proyecto'));
+				$this->redirect(array('action' => 'index'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Proyecto->save($this->request->data)) {
@@ -785,7 +818,7 @@ var $uses = array(
 	public function editar_integrantes($id = null) 
 	{
 		if (!$this->Proyecto->exists($id)) {
-			throw new NotFoundException(__('Invalid proyecto'));
+				$this->redirect(array('action' => 'index'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Proyecto->save($this->request->data)) {
@@ -845,14 +878,14 @@ var $uses = array(
 	public function delete($id = null) {
 		$this->Proyecto->id = $id;
 		if (!$this->Proyecto->exists()) {
-			throw new NotFoundException(__('Invalid proyecto'));
+				$this->redirect(array('action' => 'index'));
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Proyecto->delete()) {
-			$this->Session->setFlash(__('Proyecto deleted'));
+			$this->Session->setFlash(__('El proyecto se ha eliminado exitosamente'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('Proyecto was not deleted'));
+		$this->Session->setFlash(__('Ha ocurrido un error al eliminar el proyecto, por favor intente nuevamente'));
 		$this->redirect(array('action' => 'index'));
 	}
 
@@ -936,9 +969,17 @@ var $uses = array(
 		$proyecto=$this->request->data['Busqueda']['proyecto_id'];
 		$valor=$this->request->data['Busqueda']['valor'];
 		$atributo=$this->request->data['Busqueda']['atributo'];
-		$ocupados=$this->PersonasProyecto->find('all', array('fields'=>array('PersonasProyecto.persona_id as id'),'conditions' => array('PersonasProyecto.proyecto_id'=>1)));
-		$subqueryOptions = array('fields' => array('PersonasProyecto.persona_id as id'), 'conditions' => array('PersonasProyecto.proyecto_id'=>1));
-		$subquery ="(SELECT  `PersonasProyecto`.`persona_id` AS  `id` FROM  `software`.`personas_proyectos` AS  `PersonasProyecto` WHERE  `PersonasProyecto`.`proyecto_id` =1)";	
+		$ocupados=$this->PersonasProyecto->find('all', 
+			array('fields'=>
+				array('PersonasProyecto.persona_id as id'
+				),
+				'conditions' => array(
+					'PersonasProyecto.proyecto_id'=>$proyecto
+				)
+			)
+		);
+		$subqueryOptions = array('fields' => array('PersonasProyecto.persona_id as id'), 'conditions' => array('PersonasProyecto.proyecto_id'=>$proyecto));
+		$subquery ="(SELECT  `PersonasProyecto`.`persona_id` AS  `id` FROM  `software`.`personas_proyectos` AS  `PersonasProyecto` WHERE  `PersonasProyecto`.`proyecto_id` =".$proyecto.")";	
 			$this->Persona->recursive = -1;
 			$opciones = array(
 				'joins' => array(

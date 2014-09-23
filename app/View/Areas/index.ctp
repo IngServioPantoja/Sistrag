@@ -175,6 +175,9 @@ if(!$this->request->is('ajax'))
 		</table>
 	</section>
 </section>
+<script>
+$('.glyphicon-bookmark').css( "background", "#7a0400" );
+</script>
 <?php
 $this->Js->get('#atributo')->event('change',
 	$this->Js->request(

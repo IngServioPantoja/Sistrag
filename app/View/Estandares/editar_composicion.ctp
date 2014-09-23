@@ -6,7 +6,7 @@ $litemsestandar[0]='Documento base';
 	<div class="panel_menu">
 		<ul>
 			<?php
-			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
+			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'|| $current_user['nivel_id'] == '2'|| $current_user['nivel_id'] == '3') 
 			{
 			?>
 			<li>

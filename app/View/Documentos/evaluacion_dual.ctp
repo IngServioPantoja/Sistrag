@@ -1,0 +1,769 @@
+<?php
+//print_r($descomposiciones2);
+?>
+<?php 
+?>
+<section class="panel_frame">
+	<div class="panel_menu">
+		<ul>
+			<li>
+			<?php
+			echo $this->Html->image('iconos/listar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
+			?>
+			<?php echo $this->Html->link(__('Documentos'), array('controller'=>'proyectos','action' => 'documentos', $proyecto['Proyecto']['id'])); ?></li><li>
+			<span class="icon-cloudy" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
+			<?php echo $this->Html->link(__('Subir documento'), array('action' => 'subir_documento', $proyecto['Proyecto']['id'])); 
+			?></li><li class="panel_menu_actual">
+			<span class="icon-file-settings" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:14px;"></span>
+			<?php echo $this->Html->link(__('Documento'), array('action' => 'mostrar_documento', $proyecto['Documento']['id'])); 
+			?>
+			</li>
+		</ul>
+	</nav>
+	<section class="panel_internal">
+		<table class="crud">
+			<tr>
+				<td>
+					<div class="crud_fila_principal" id="top">
+						<div class="contenedor_integrantes">
+							<div class="back">
+								<?php
+								echo $this->Html->link($this->Html->image("iconos/back64.png", array('height' => '', 'width' => '22px','title'=>'Volver')),$referer,
+											array('escape' => false));
+								?>
+							</div>
+							<span class="principal_titulo"> 
+							<?php 
+							echo $proyecto['TiposEstandar']['nombre'];
+							?>
+							<?php 
+							echo $proyecto['Documento']['fecha_guardado'];
+							?>
+							:
+							<?php 
+							echo $proyecto['Proyecto']['titulo'];
+							?>
+							</span>
+						</div>
+						<div class="contenedor_integrantes">
+							<div class="unidad_integrantes">
+								<span class="icon-graduate icono_izquierda_pequeño">
+								</span>
+								<?php
+								foreach ($proyecto['Integrantes'] as $integrante) 
+								{
+									if($integrante['PersonasProyecto']['rol_id']==3)
+									{
+								?>
+								<span>
+								<?php
+										echo " *";
+										echo $integrante['Persona']['nombre'];
+										echo " ";
+										echo $integrante['Persona']['apellido'];
+								?>
+								</span>
+								<?php
+									}
+								}
+								?>
+							</div>
+							<div class="unidad_integrantes">
+								<span class="icon-batman icono_izquierda_pequeño">
+								</span>
+								<?php
+								foreach ($proyecto['Integrantes'] as $integrante) 
+								{
+									if($integrante['PersonasProyecto']['rol_id']==2)
+									{
+										echo " *";
+										echo $integrante['Persona']['nombre'];
+										echo " ";
+										echo $integrante['Persona']['apellido'];
+
+									}
+								}
+								?>
+							</div>
+							<div class="unidad_integrantes">
+								<span class="icon-auction icono_izquierda_pequeño">
+								</span>
+								<?php
+								foreach ($proyecto['Integrantes'] as $integrante) 
+								{
+									if($integrante['PersonasProyecto']['rol_id']==1)
+									{
+										echo " *";
+										echo $integrante['Persona']['nombre'];
+										echo " ";
+										echo $integrante['Persona']['apellido'];
+									}
+								}
+								?>
+							</div>
+						</div>	
+						<div class="pd-top-5 row contenedor_integrantes text-center">
+							<?php echo $this->Form->create('Documento'); ?>
+							<?php echo $this->Form->hidden('Proyecto',array('value'=>$proyecto['Proyecto']['id'])); ?>
+							
+							<div class="col-sm-3">
+								<?php
+								echo $this->Form->inputText(
+									'tipodocumento',array('id'=>'tipodocumento','autocomplete' =>'off','empty'=>false,'value'=>$proyecto['TiposEstandar']['nombre'],'class' => 'form-control col-sm-6','readonly'=>'readonly' )
+								);
+								?>
+							</div>
+							<div class="col-sm-6" id="div_listas_comparacion">
+								<?php
+								foreach ($documentos as $documento) {
+									if(isset($documento[$idPrimerDocumento]))
+									{
+										echo $this->Form->select(
+									'muestra', $documentos,array('id'=>'documento','autocomplete' =>'off','empty'=>false,'value'=>$idPrimerDocumento,'class' => 'form-control col-sm-6','disabled'=>'disabled')
+									);
+										echo $this->Form->hidden('id_primero',array('value'=>$idPrimerDocumento));
+									}
+									
+								}
+								?>
+								<?php
+								echo $this->Form->select(
+									'id_segundo', $documentos,array('id'=>'documento','autocomplete' =>'off','empty'=>false,'value'=>$idSegundoDocumento,'class' => 'form-control col-sm-6' )
+								);
+								?>
+							</div>
+							<div class="col-sm-3 boton-actualizar">
+								<a href="<?php  echo "evaluacion_docente/$idPrimerDocumento"; ?>" class="btn btn-default btn-lg" role="button" title="Desactivar vista dual" style="padding:8px 13px 8px 13px;"><span class="glyphicon glyphicon-eye-close"></span></a>
+								<button type="submit" class="btn btn-default btn-lg" title="Refrescar">
+								  <span class="glyphicon glyphicon-refresh"></span>
+								</button>
+
+							</div>
+
+							
+							<?php echo $this->Form->end(__('')); ?>
+							
+						</div>
+						<div class="row contenedor_integrantes">
+							<div class="col-sm-6 pd-5">
+								<?php echo $persona1['Persona']['nombre']." ".$persona1['Persona']['apellido']; ?>
+							</div>
+							<div class="col-sm-6 pd-5">
+								<?php echo $persona2['Persona']['nombre']." ".$persona1['Persona']['apellido']; ?>
+							</div>
+						</div>
+					</div>
+					<div class="crud_fila_secundaria">
+						<table class="tabla-comparacion">
+						<?php
+						$tamañoDocumento=count($descomposiciones);
+						for ($i=1; $i <= $tamañoDocumento; $i++)
+						{ 
+						?>
+							
+						<tr>	
+							<td class="col-sm-6">
+						<?php
+								$descomposicion=$descomposiciones[$i];
+								if($descomposicion['contenido']!=null)
+		        				{
+		        			?>
+									<article class='marcoPrincipal' id="<?php echo "item".$descomposicion['item_documento_id']; ?>">
+										<div class="headerVinotinto" id="<?php echo $descomposicion['item_documento_id']; ?>" style="cursor:pointer;">
+											<div class="tituloModulo">
+												<span id="<?php echo "marcador".$descomposicion['item_documento_id']; ?>" class="marcador">v</span>
+												<span>
+					       						<?php
+					       						echo $descomposicion['titulo'];
+												?>
+												</span>
+											</div>
+											<div class="row-fluid pull-right" style="overflow:hidden;">
+												<?php
+												if($descomposiciones2[$i]['contenido']==$descomposiciones[$i]['contenido'])
+												{
+												?>
+												<button type="button" class="btn btn-success btn-xs active" title="Sin cambios">
+													<span class="glyphicon glyphicon-repeat pd-2"></span>
+												</button>
+												<?php
+												}else if($descomposiciones2[$i]['contenido']!=$descomposiciones[$i]['contenido'])
+												{
+												?>
+												<button type="button" class="btn btn-warning btn-xs active" title="Hay cambios">
+													<span class="glyphicon glyphicon-refresh pd-2"></span>
+												</button>
+												<?php
+												}
+												?>
+											</div>
+											<div class="row-fluid pull-right">
+												<div class="btn-group" data-toggle="buttons" style="overflow:hidden;">
+											<?php
+											echo $this->Form->create('Evaluacion');
+										?>
+
+										<div class="row-fluid pull-right">
+											<div class="btn-group" data-toggle="buttons" style="overflow:hidden;">
+											  <label class="btn btn-success btn-xs aclarar <?php if($descomposicion['id_concepto']==1){echo 'active';}?>" idconcepto="1" onClick="actualizar_comentario(this)" idpregunta="<?php echo $descomposicion['id_comentario']; ?>">
+											    <input type="radio" name="concepto" <?php if($descomposicion['id_concepto']==1){echo "checked";}?>>Aprobado
+											  </label>
+											  <label class="btn btn-danger btn-xs aclarar <?php if($descomposicion['id_concepto']==3){echo 'active';}?>" idconcepto="3" onClick="actualizar_comentario(this)" idpregunta="<?php echo $descomposicion['id_comentario']; ?>">
+											    <input type="radio" name="concepto" <?php if($descomposicion['id_concepto']==3){echo "checked";}?>>No aprobado
+											  </label>
+											</div>
+										</div>
+
+										<?php
+											echo $this->Form->end();
+										?>
+												</div>
+											</div>
+										</div>
+										<div class="marcoSecundario" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
+											<div class="headerGris">
+												<div class="tituloSubmoduloLeft">
+													<div class="tituloUnidad">
+														<span>
+														Líneas:
+														</span>
+													</div>
+													<div 
+														<?php if($descomposicion['extencion_lineas']>=ceil($descomposicion['caracteres']/85))
+														{?>class="tituloUnidad extencionAprobado" 
+														<?php 
+														}else{?> class="tituloUnidad extencionNoAprobado" 
+														<?php 
+														} ?>
+														>
+														<span>
+														<?php echo ceil($descomposicion['caracteres']/85); ?>
+														</span>
+													</div>
+												</div>												
+												<div class="tituloSubmoduloRight">
+													<div class="tituloUnidad">
+														<span>
+														Caracteres:
+														</span>
+													</div>
+													<div <?php if($descomposicion['extencion_caracteres']>=$descomposicion['caracteres'])
+														{?>class="tituloUnidad extencionAprobado" 
+														<?php 
+														}else{?> class="tituloUnidad extencionNoAprobado" 
+														<?php 
+														} ?>
+														>
+														<span>
+														<?php echo $descomposicion['caracteres']; 
+														?>
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="contenidoItem" id="<?php echo "txt".$descomposicion['item_documento_id']; ?>">
+									<?php
+									if (isset($descomposicion['contenido'])) 
+									{
+										foreach ($descomposicion['contenido'] as $item) 
+					        			{
+					        				if($item['tipo']==2)
+								        	{	
+								    		?>
+												<p class="parrafo">
+											<?php
+												echo $item['elementos'];
+											?>
+												</p>
+								    		<?php
+								        	}
+								        	else if($item['tipo']==3)
+								        	{	
+								    		?>
+												<p class="figura">
+											<?php
+												echo $item['elementos'];
+											?>
+												</p>
+								    		<?php
+								        	}
+								        	else if($item['tipo']==4)
+								        	{	
+								    		?>
+												<p class="fuente">
+											<?php
+												echo $item['elementos'];
+											?>
+												</p>
+								    		<?php
+								        	}
+								        	else if($item['tipo']==5)
+								        	{	
+								    		?>
+												<p class="piePagina">
+											<?php
+												echo $item['elementos'];
+											?>
+												</p>
+								    		<?php
+								        	}
+								        	else if($item['tipo']==6)
+								        	{
+								        		echo $this->Html->image('/app/webroot/files/documentos/'.$item['elementos'], array('class'=>'img'));
+								        	}
+								        	else if($item['tipo']==7)
+								        	{	
+								    		?>
+												<p class="tabla">
+											<?php
+												echo $item['elementos'];
+											?>
+												</p>
+								    		<?php
+								        	}
+					        			}
+					        		?>
+											</div>
+										</div>
+										<div class="marcoDescripcion" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
+											<div class="headerGris">
+												<div class="tituloSubmoduloLeft">
+													<div class="tituloUnidad">
+														<span>
+														Observaciones:
+														</span>
+													</div>
+													<div style=";display:inline-block;margin:0px;vertical-align:top;" >
+														<div class="progress" id="<?php echo $descomposicion['id_comentario'];?>" style="display:none; width: 250px; height:16px;">
+															<div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%; padding:0px; font-size:10px;line-height:15px;">
+																Guardando
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="contenidoItem" id="<?php echo "com".$descomposicion['item_documento_id']; ?>">
+
+												<?php
+													echo $this->Form->create('Evaluacion');
+
+												?>
+												<?php
+													echo $this->Form->textarea('titulo', array("label" => false,'type'=>'text',"class" => "cuestionario_titulo_input",'id' =>'titulo','value'=>$descomposicion['comentario'],'onBlur'=>'actualizar_comentario(this)','idpregunta'=>$descomposicion['id_comentario']));
+												?>
+												<?php
+													echo $this->Form->end();
+												?>
+											</div>
+										</div>
+					        		<?php
+									}
+									?>
+									</article>
+							<?php
+								}
+						?>
+							</td>
+							<td class="col-sm-6">
+						<?php
+								$descomposicion=$descomposiciones2[$i];
+								if($descomposicion['contenido']!=null)
+		        				{
+		        			?>
+									<article class='marcoPrincipal' id="<?php echo "item".$descomposicion['item_documento_id']; ?>">
+										<div class="headerVinotinto" onClick="encoger(this)" id="<?php echo $descomposicion['item_documento_id']; ?>" style="cursor:pointer;">
+											<div class="tituloModulo">
+												<span id="<?php echo "marcador".$descomposicion['item_documento_id']; ?>" class="marcador">v</span>
+												<span>
+					       						<?php
+					       						echo $descomposicion['titulo'];
+												?>
+												</span>
+											</div>
+											<div class="row-fluid pull-right">
+												<div class="btn-group" data-toggle="buttons" style="overflow:hidden;">
+											<?php 
+											if($descomposicion['id_concepto']==1)
+											{
+											?>
+													 <label class="btn btn-success btn-xs aclarar <?php if($descomposicion['id_concepto']==1){echo 'active';}?>" idconcepto="1" onClick="actualizar_comentario(this)" idpregunta="<?php echo $descomposicion['id_comentario']; ?>">
+													    <input type="radio" name="concepto" <?php if($descomposicion['id_concepto']==1){echo "checked";}?>>Aprobado
+													  </label>
+											<?php
+											}else if($descomposicion['id_concepto']==3)
+											{
+											?>
+													<label class="btn btn-danger btn-xs aclarar <?php if($descomposicion['id_concepto']==3){echo 'active';}?>" idconcepto="3" onClick="actualizar_comentario(this)" idpregunta="<?php echo $descomposicion['id_comentario']; ?>">
+												    <input type="radio" name="concepto" <?php if($descomposicion['id_concepto']==3){echo "checked";}?>>No aprobado
+												  </label>
+											<?php
+											}
+											?>
+												</div>
+											</div>
+										</div>
+										<div class="marcoSecundario" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
+											<div class="headerGris">
+												<div class="tituloSubmoduloLeft">
+													<div class="tituloUnidad">
+														<span>
+														Líneas:
+														</span>
+													</div>
+													<div 
+														<?php if($descomposicion['extencion_lineas']>=ceil($descomposicion['caracteres']/85))
+														{?>class="tituloUnidad extencionAprobado" 
+														<?php 
+														}else{?> class="tituloUnidad extencionNoAprobado" 
+														<?php 
+														} ?>
+														>
+														<span>
+														<?php echo ceil($descomposicion['caracteres']/85); ?>
+														</span>
+													</div>
+												</div>												
+												<div class="tituloSubmoduloRight">
+													<div class="tituloUnidad">
+														<span>
+														Caracteres:
+														</span>
+													</div>
+													<div <?php if($descomposicion['extencion_caracteres']>=$descomposicion['caracteres'])
+														{?>class="tituloUnidad extencionAprobado" 
+														<?php 
+														}else{?> class="tituloUnidad extencionNoAprobado" 
+														<?php 
+														} ?>
+														>
+														<span>
+														<?php echo $descomposicion['caracteres']; 
+														?>
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="contenidoItem" id="<?php echo "txt".$descomposicion['item_documento_id']; ?>">
+									<?php
+									if (isset($descomposicion['contenido'])) 
+									{
+										foreach ($descomposicion['contenido'] as $item) 
+					        			{
+					        				if($item['tipo']==2)
+								        	{	
+								    		?>
+												<p class="parrafo">
+											<?php
+												echo $item['elementos'];
+											?>
+												</p>
+								    		<?php
+								        	}
+								        	else if($item['tipo']==3)
+								        	{	
+								    		?>
+												<p class="figura">
+											<?php
+												echo $item['elementos'];
+											?>
+												</p>
+								    		<?php
+								        	}
+								        	else if($item['tipo']==4)
+								        	{	
+								    		?>
+												<p class="fuente">
+											<?php
+												echo $item['elementos'];
+											?>
+												</p>
+								    		<?php
+								        	}
+								        	else if($item['tipo']==5)
+								        	{	
+								    		?>
+												<p class="piePagina">
+											<?php
+												echo $item['elementos'];
+											?>
+												</p>
+								    		<?php
+								        	}
+								        	else if($item['tipo']==6)
+								        	{
+								        		echo $this->Html->image('/app/webroot/files/documentos/'.$item['elementos'], array('class'=>'img'));
+								        	}
+								        	else if($item['tipo']==7)
+								        	{	
+								    		?>
+												<p class="tabla">
+											<?php
+												echo $item['elementos'];
+											?>
+												</p>
+								    		<?php
+								        	}
+					        			}
+					        		?>
+											</div>
+										</div>
+										<div class="marcoDescripcion" id="<?php echo "contenido".$descomposicion['item_documento_id']; ?>">
+											<div class="headerGris">
+												<div class="tituloSubmoduloLeft">
+													<div class="tituloUnidad">
+														<span>
+														Observaciones:
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="contenidoItem">
+												<?php
+													echo $descomposicion['comentario'];												
+												?>
+											</div>
+										</div>
+					        		<?php
+									}
+									?>
+									</article>
+							<?php
+								}
+						?>
+							</td>
+
+						</tr>
+						
+						<?php
+						}
+							//echo count($descomposiciones);
+						?>
+						</table>
+
+						<!-- cOMIENZO DEL SEGMENTO PARA REALIZAR UN VEREDICTO FINAL -->
+						<div class="panel panel-default">
+							<div class="panel-heading"><h3>Veredicto final</h3></div>
+							<div class="panel-body">
+								<?php
+									echo $this->Form->create('Detalleentrega',array('id'=>'formularioDetalleentrega'));
+									echo $this->Form->input('id',array('value'=>$detalleentrega['Detalleentrega']['id']));
+								?>
+								<div class="row pd-5 pull-left form-inline">
+									<div class="btn-group" data-toggle="buttons" style="overflow:hidden; display:inline-block; vertical-align:top;">
+									  <label class="btn btn-success btn-md aclarar <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==1){echo 'active';}?>">
+									    <input type="radio" name="data[Detalleentrega][parametro_veredicto_id]" <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==1){echo "checked";}?> value="1">Aprobado
+									  </label>
+									  <label class="btn btn-warning btn-md aclarar <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==2){echo 'active';}?>">
+									    <input type="radio" name="data[Detalleentrega][parametro_veredicto_id]" <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==2){echo "checked";}?> value="2">Aprobado con correcciones
+									  </label>
+									  <label class="btn btn-danger btn-md aclarar <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==3){echo 'active';}?>">
+									    <input type="radio" name="data[Detalleentrega][parametro_veredicto_id]" <?php if($detalleentrega['Detalleentrega']['parametro_veredicto_id']==3){echo "checked";}?> value="3">No aprobado
+									  </label>
+									</div>
+									<div style=";display:inline-block;" >
+										<div class="progress" id="barraComentarios" style="display:none; width: 250px; height:30px;">
+											<div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%; padding:8px;">
+												Guardando
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group pd-5">
+									<?php
+										echo $this->Form->textarea('comentarios', array("label" => false,'type'=>'text',"class" => "cuestionario_titulo_input form-control use-tooltip",'data-toggle' =>'tooltip','data-placement' =>'top','title' =>'Correcciones generales del documento','value'=>$detalleentrega['Detalleentrega']['comentarios']));
+									?>
+								</div>
+								<?php
+									echo $this->Form->end(); 
+								?>
+								<?php
+									echo $this->Form->create('Detalleentrega',array('action'=>'emitir_concepto','onsubmit'=>'return confirm("¿Realmente desea terminar la evaluación de este documento y emitir un concepto?");'));
+									echo $this->Form->input('id',array('value'=>$detalleentrega['Detalleentrega']['id']));
+									echo $this->Form->hidden('estado_id',array('value'=>3));
+								?>
+								<?php
+									//echo $this->Form->submit(
+									 //   'Enviar evaluación', 
+									 //   array('class' => 'submitGrisRedondoDelgado','id'=>'submitCortoRight','div'=>false,'style'=>'float:none;margin:0 auto;')
+								//	); 
+
+									echo $this->Form->submit('Emitir concepto', array(
+										'url'=>array('controller'=>'detalleentregas','action'=>'emitir_concepto'),
+									    'div' => false,
+									    'class'=>'submitGrisRedondoDelgado',
+									    'id'=>'submitCortoRight',
+									    'style'=>'float:none;margin:0 auto;'
+									));
+								?>
+
+
+							</div>
+						</div>
+					</div>
+					<?php
+						if($proyecto['Documento']['enviado']==0)
+						{
+					?>
+					<div class="contenedorAzul">
+						<?php echo $this->Form->create('Entrega',array('controller'=>'entregas','action'=>'add')); ?>
+						<?php echo $this->Form->hidden('documento_id',array('value'=>$proyecto['Documento']['id'])); ?>
+						<?php echo $this->Form->hidden('proyecto_id',array('value'=>$proyecto['Proyecto']['id'])); ?>
+						<?php
+							echo $this->Form->select(
+								'rol_id', $roles,array('id'=>'rol','autocomplete' =>'off','empty'=>false)
+							);
+						?>
+						<?php 
+						echo $this->Form->submit(
+						    'Enviar', 
+						    array('class' => 'submitGrisRedondoDelgado','id'=>'submitCortoRight','div'=>false)
+						); 
+					    ?>	
+					</div>
+					<?php
+						}
+					?>
+					<span id="bot">
+					</span>
+				</td>
+			</tr>
+		</table>
+	</section>
+</section>
+<div class="goTop">
+	<a href="#top" title="Subir">
+		<span class="icon-arrow-up" style="font-size:16px;">
+		</span>
+	</a>
+	<?php
+		echo $this->Form->select(
+			'anclasItems', $anclasItems,array('id'=>'anclasItems','autocomplete' =>'off','empty'=>false,'title'=>'Ir a')
+		);
+	?>
+	<a href="#bot" title="Bajar">
+		<span class="icon-arrow-down" style="font-size:16px;">
+		</span>
+	</a>
+</div>
+<?php
+$this->Js->get('#formularioDetalleentrega')->event('change',
+	$this->Js->request(
+	    array(
+	        'controller'=>'detalleentregas','action' => 'edit',
+	    ),
+	    array(
+	        'before'=>'$("#barraComentarios").fadeIn();',
+		    'complete' => '$("#barraComentarios").fadeOut();',
+	        'update'=>'#sss',
+	        'async' => true,
+	        'method' => 'post',
+	        'dataExpression'=>true,
+	        'data'=> $this->Js->serializeForm(array(
+	            'isForm' => false,
+	            'inline' => true
+	        ))
+	    )
+	)
+);
+?>
+<?php
+$this->Js->get('#tipodocumento')->event('change',
+	$this->Js->request(
+	    array(
+	        'controller'=>'documentos','action' => 'lista_comparaciones',
+	    ),
+	    array(
+	        'update'=>'#div_listas_comparacion',
+	        'async' => true,
+	        'method' => 'post',
+	        'dataExpression'=>true,
+	        'data'=> $this->Js->serializeForm(array(
+	            'isForm' => false,
+	            'inline' => true
+	        ))
+	    )
+	)
+);
+?>
+<script>
+	
+	function actualizar_comentario(e)
+	{	
+		var valor=$(e).val();
+		var id=$(e).attr("idpregunta");
+		var id_concepto=$(e).attr("idconcepto");
+		
+		if (id_concepto === undefined) 
+		{
+			var respuesta=$.ajax
+			(
+				{
+				  type: 'post',
+		          dataType: 'json',
+		          url: "<?php echo $this->Html->url(array('action' => 'actualizar_comentario')); ?>",
+				  data: 'id='+id+'&titulo='+valor,
+				  beforeSend: function() {
+					$("#"+id).fadeIn();
+
+				  }
+				}
+			);	
+			}else
+			{
+			var respuesta=$.ajax
+			(
+				{
+				  type: 'post',
+		          dataType: 'json',
+		          url: "<?php echo $this->Html->url(array('action' => 'actualizar_comentario')); ?>",
+				  data: 'id='+id+'&titulo='+valor+'&concepto='+id_concepto,
+				  beforeSend: function() {
+					$("#"+id).fadeIn();
+
+				  }
+				}
+			);
+		}
+		respuesta.always(function() 
+		{
+			$("#"+id).fadeOut();
+		}
+		)
+	}
+
+
+
+	function encoger(obj)
+	{
+		afectado=obj.id;
+		var vista=$('#txt'+afectado).css( "display");
+	if (vista=='none')
+		{
+			$('#txt'+afectado).slideDown(1000, function()
+				{
+					$('#marcador'+afectado).text("v");
+				}
+			);
+							
+		}
+	else
+		{
+			$('#txt'+afectado).slideUp(1000,function()
+				{
+					$('#marcador'+afectado).text("-");
+				}
+			);
+		}
+	}
+	
+	$(function() 
+	{
+		$('#navicon-suitcase').css( "background", "#7a0400" );
+		$('#marcicon-suitcase').css( "color", "#7a0400" );
+		$("#anclasItems").change(function() 
+			{
+			window.location = "#item"+this.value;
+  			}
+		);
+	});
+</script>

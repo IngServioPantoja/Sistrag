@@ -86,7 +86,7 @@ $user=NUll;
 									</label>
 									<?php
 									echo $this->Form->select(
-										'atributo', array('identificacion'=>'Identificación','nombre'=>'Nombre', 'apellido'=>'Apellido'
+										'atributo', array('nombre'=>'Nombre','identificacion'=>'Identificación', 'apellido'=>'Apellido'
 											),array('id'=>'atributo','autocomplete' =>'off','empty'=>false)
 									);
 									?>
@@ -129,7 +129,7 @@ $user=NUll;
 											<a href="../../personas/view/<?php  echo $integrante['Persona']['id'];?>">
 												<figure>
 													<?php
-													$destino = WWW_ROOT."img/img_subida/usuarios/".$integrante['Persona']['id']."".DS;
+													$destino = WWW_ROOT."img/img_subida/usuarios/".$integrante['Persona']['id']."".DS."/1_400.png";
 													if (file_exists($destino))
 													{
 														$urlImagen="img_subida/usuarios/".$integrante['Persona']['id']."/1_400.png";
@@ -229,7 +229,7 @@ $user=NUll;
 												<a href="../../personas/view/<?php  echo $integrante['Persona']['id'];?>">
 													<figure>
 														<?php
-														$destino = WWW_ROOT."img/img_subida/usuarios/".$integrante['Persona']['id']."".DS;
+														$destino = WWW_ROOT."img/img_subida/usuarios/".$integrante['Persona']['id']."".DS."/1_400.png";
 														if (file_exists($destino))
 														{
 															$urlImagen="img_subida/usuarios/".$integrante['Persona']['id']."/1_400.png";
@@ -373,7 +373,7 @@ $user=NUll;
 											<a href="../../personas/view/<?php  echo $integrante['Persona']['id'];?>">
 												<figure>
 													<?php
-													$destino = WWW_ROOT."img/img_subida/usuarios/".$integrante['Persona']['id']."".DS;
+													$destino = WWW_ROOT."img/img_subida/usuarios/".$integrante['Persona']['id']."".DS."/1_400.png";
 													if (file_exists($destino))
 													{
 														$urlImagen="img_subida/usuarios/".$integrante['Persona']['id']."/1_400.png";
@@ -515,5 +515,17 @@ $this->Js->get('#valor')->event('keyup',
 );
 ?>
 <script>
-	$('#navicon-suitcase').css( "color", "#7a0400" );
+	$('#navicon-suitcase').css( "background", "#7a0400" );
+	$('#marcicon-suitcase').css( "color", "#7a0400" );
+	$(document).ready()
+	{
+		$('#valor').bind('keypress', function(e) 
+		{
+			var code = e.keyCode || e.which;
+			 if(code == 13) { //Enter keycode
+			   e.preventDefault();
+			 }
+		});
+	};
+
 </script>

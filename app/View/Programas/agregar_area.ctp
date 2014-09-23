@@ -5,7 +5,7 @@ $user=NUll;
 	<div class="panel_menu">
 		<ul>
 			<?php   
-			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
+			if($current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2' || $current_user['nivel_id'] == '3') 
 			{
 			?>
 			<li>
@@ -78,7 +78,7 @@ $user=NUll;
 								</div>
 							</article>
 						</div>
-					<?php echo $this->Form->end(__('Submit')); ?>
+					<?php echo $this->Form->end(__('Guardar')); ?>
 				</td>
 			</tr>
 		</table>
@@ -92,4 +92,7 @@ function resizeInput() {
 $('input[type="text"]')
     .keyup(resizeInput)
     .each(resizeInput);
+</script>
+<script>
+$('.glyphicon-bookmark').css( "background", "#7a0400" );
 </script>

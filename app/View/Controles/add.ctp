@@ -5,7 +5,7 @@ $user=NUll;
 	<div class="panel_menu">
 		<ul>
 			<?php
-			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
+			if($current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2' || $current_user['nivel_id'] == '3') 
 			{
 			?>
 			<li>
@@ -92,6 +92,10 @@ $user=NUll;
 		</table>
 	</section>
 </section>
+<script>
+$('#navicon-calendar').css( "background", "#7a0400" );
+$('#marcicon-calendar').css( "color", "#7a0400" );
+</script>
 <?php
 $this->Js->get('#programa')->event('change',
 	$this->Js->request(

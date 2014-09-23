@@ -7,9 +7,7 @@ if(!$this->request->is('ajax'))
 	<div class="panel_menu">
 		<ul>
 			
-			<?php
-			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
-			{
+			<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'|| $current_user['nivel_id'] == '2'|| $current_user['nivel_id'] == '3') {
 			?>
 			<li class="panel_menu_actual">
 				<?php
@@ -24,6 +22,11 @@ if(!$this->request->is('ajax'))
 				<?php 
 				echo $this->Html->link(__('Registrar Estandar'), array('action' => 'add')); 
 			}
+			?>
+				</li><li>
+				<span class="glyphicon icon-file-settings" style="color:#ddd;text-shadow:0px 0px 4px #222; font-size:12px;"></span>
+				<?php 
+				echo $this->Html->link(__('Tipos de estandar'), array('controller'=>'tiposestandares','action' => 'add')); 
 				?>
 			</li>
 		</ul>
@@ -42,24 +45,7 @@ if(!$this->request->is('ajax'))
 						</div>
 						<?php echo $this->Form->create('Busqueda'); ?>
 						<span class="principal_titulo">
-							<?php
-							if($current_user['nivel_id']==1)
-							{
-							?>
-							Estandares de la Institución
-							<?php
-							}else if ($current_user['nivel_id']==2)
-							{
-							?>
-							Estandares de la facultad
-							<?php
-							}else if ($current_user['nivel_id']==3 || $current_user['nivel_id']==4 || $current_user['nivel_id']==5)
-							{
-							?>
-							Estandares del programa
-							<?php
-							}
-							?>
+							Estandares
 						</span>
 						<label for="valor">
 							<?php
@@ -86,15 +72,21 @@ if(!$this->request->is('ajax'))
 							}
 							?>
 						</span>
-						<span>
+						<span id="valorDiv">
 							<?php
 							if(isset($busqueda))
 							{
-								echo $this->Form->input('valor',array('label'=> false,'id'=>'valor','value'=>$busqueda[0]['valor'])); 
+								echo $this->Form->select(
+								'valor', array($lista
+									),array('id'=>'valor','autocomplete' =>'off','empty'=>false,'value'=>$busqueda[0]['valor'])
+								);
 							}
 							else
 							{
-							echo $this->Form->input('valor',array('label'=> false,'id'=>'valor','value'=>'')); 
+								echo $this->Form->select(
+									'valor', array($lista
+										),array('id'=>'valor','autocomplete' =>'off','empty'=>false)
+								);
 							}
 							?>
 						</span>
@@ -129,7 +121,7 @@ if(!$this->request->is('ajax'))
 									{
 									?>
 									<article class='ficha_index'>
-										<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'){ ?>
+										<?php   if($current_user['nivel_id'] == '1'|| $current_user['nivel_id'] == '2'|| $current_user['nivel_id'] == '3'){ ?>
 										<div class="ficha_acciones" id="acciones_estandar">
 											<?php 
 											echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'editar_estandar',$estandar['Estandar']['id']),array('escape' => false,'title'=>'Modificar Estandar'));
@@ -385,10 +377,10 @@ if(!$this->request->is('ajax'))
 $this->Js->get('#atributo')->event('change',
 	$this->Js->request(
 	    array(
-	        'action'=>'index'
+	        'action'=>'listado'
 	    ),
 	    array(
-	        'update'=>'#contenedor_datos',
+	        'update'=>'#valorDiv',
 	        'async' => true,
 	        'method' => 'post',
 	        'dataExpression'=>true,
@@ -401,15 +393,13 @@ $this->Js->get('#atributo')->event('change',
 );
 ?>
 <?php
-$this->Js->get('#valor')->event('keyup',
+$this->Js->get('#valor')->event('change',
 	$this->Js->request(
 	    array(
-	        'action'=>'index',
+	        'action'=>'index'
 	    ),
 	    array(
 	        'update'=>'#contenedor_datos',
-	        //'before' => "$('.frame_cargando').fadeIn();",
-  	        //'complete' =>"$('.frame_cargando').fadeOut();",
 	        'async' => true,
 	        'method' => 'post',
 	        'dataExpression'=>true,

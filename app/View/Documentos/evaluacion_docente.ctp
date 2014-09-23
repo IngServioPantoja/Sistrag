@@ -1,3 +1,4 @@
+
 <section class="panel_frame">
 	<div class="panel_menu">
 		<ul>
@@ -19,7 +20,6 @@
 		<table class="crud">
 			<tr>
 				<td>
-					<?php echo $this->Form->create('Documento',array('type' => 'file')); ?>
 					<div class="crud_fila_principal">
 						<div class="contenedor_integrantes">
 							<div class="back">
@@ -98,29 +98,14 @@
 								?>
 							</div>
 						</div>	
-						<div class="contenedor_integrantes">
-							<?php echo $this->Form->create('Proyecto'); ?>
-							<?php echo $this->Form->input('id',array('value'=>$proyecto['Proyecto']['id'])); ?>
-							<div class="unidad_integrantes">
-								<?php
-								echo $this->Form->select(
-									'tipodocumento', $tiposestandares,array('id'=>'tiposestandares','autocomplete' =>'off','empty'=>false,'value'=>$proyecto['TiposEstandar']['id'])
-								);
-								?>
-							</div>
-							<div class="unidad_integrantes" id="lista_documentos">
-								<?php
-								echo $this->Form->select(
-									'documento', $documentos,array('id'=>'documento','autocomplete' =>'off','empty'=>false,'value'=>$proyecto['Documento']['id'])
-								);
-								?>
-							</div>
-							<div class="unidad_integrantes" id="lista_documentos">
-								<?php echo $this->Form->submit(
-								    'Mostrar', 
-								    array('class' => 'submitGrisRedondoDelgado' )
-								); 
-							    ?>	
+						<div class="contenedor_integrantes" style="overflow:auto;text-align:center;">
+							<?php echo $this->Form->create('Documento',array('url' => array('controller'=>'documentos','action'=>'evaluacion_dual'))); ?>
+							<?php echo $this->Form->hidden('id_primero',array('value'=>$detalleEntrega['Detalleentrega']['id'])); ?>
+							<?php echo $this->Form->hidden('id_segundo',array('value'=>$detalleEntrega['Detalleentrega']['id'])); ?>
+							<div class="col-sm-1 boton-actualizar" style="margin:5px auto; float:none; padding-right:220px;">
+								<button type="submit" class="btn btn-default btn-lg" title="Compara documento">
+								  <span class="glyphicon glyphicon-refresh"> </span> COMPARAR DOCUMENTO 
+								</button>
 							</div>
 							<?php echo $this->Form->end(__('')); ?>
 						</div>
@@ -129,7 +114,7 @@
 						<?php
 						foreach ($descomposiciones as $descomposicion)
 						{
-							if($descomposicion['nivel']!=1)
+							if($descomposicion['contenido']!=null)
 	        				{
 	        			?>
 								<article class='marcoPrincipal' id="<?php echo "item".$descomposicion['item_documento_id']; ?>">

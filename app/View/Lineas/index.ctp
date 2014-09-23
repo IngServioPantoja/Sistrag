@@ -8,7 +8,7 @@ if(!$this->request->is('ajax'))
 		<ul>
 			
 			<?php
-			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
+			if($current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2' || $current_user['nivel_id'] == '3') 
 			{
 			?>
 			<li class="panel_menu_actual">
@@ -95,7 +95,7 @@ if(!$this->request->is('ajax'))
 										<?php
 										echo $this->Html->image('recursos/escudo400.png', array('alt' => 'Login','height' => '', 'width' => '200px'));
 										?>
-										<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'): ?>
+										<?php   if($current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2' || $current_user['nivel_id'] == '3'): ?>
 											<div class="ficha_acciones">
 										<?php echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'edit', $linea['Linea']['id']),
 										array('escape' => false)); 

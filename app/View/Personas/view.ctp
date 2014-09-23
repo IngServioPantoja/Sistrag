@@ -42,7 +42,7 @@ $user=NUll;
 						<article class='fichaAgregar'>
 							<figure class="consultar_img">
 								<?php
-								$destino = WWW_ROOT."img/img_subida/usuarios/".$persona['Persona']['id']."".DS;
+								$destino = WWW_ROOT."img/img_subida/usuarios/".$persona['Persona']['id']."".DS."/1_400.png";
 								if (file_exists($destino))
 								{
 									$urlImagen="img_subida/usuarios/".$persona['Persona']['id']."/1_400.png";

@@ -39,7 +39,7 @@ $user=NUll;
 					</div>
 					<div id="contenedor_datos">
 						<div class="crud_fila_secundaria">
-							<a href="facultades/view/<?php  echo $facultad['Facultad']['id'];?>">
+							<a href="#">
 								<article class='ficha_view'>
 									<figure>
 										<?php
@@ -55,7 +55,7 @@ $user=NUll;
 										<?php endif; ?>
 									</figure>
 							</a>
-							<a href="facultades/view/<?php  echo $facultad['Facultad']['id'];?>">
+							<a href="#">
 									<div class='ficha_datos'>
 										<table>
 											<tr>

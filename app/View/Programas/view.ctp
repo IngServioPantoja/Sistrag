@@ -5,7 +5,7 @@ $user=NUll;
 	<div class="panel_menu">
 		<ul>
 			<?php   
-			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
+			if($current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2' || $current_user['nivel_id'] == '3') 
 			{
 			?>
 			<li class="panel_menu_actual">
@@ -45,8 +45,18 @@ $user=NUll;
 							<article class='ficha_view'>
 								<figure>
 									<?php
-									echo $this->Html->image('recursos/escudo400.png', array('alt' => 'Login','height' => '', 'width' => '200px'));
-									?>
+											$destino = WWW_ROOT."img/recursos/p".$programa['Programa']['id'].".png";
+											if (file_exists($destino))
+											{
+												$urlImagen="recursos/p".$programa['Programa']['id'].".png";
+											}
+											else
+											{
+												$urlImagen="recursos/escudo400.png";
+											}		
+											echo $this->Html->image($urlImagen, array('alt' => 'Login','height' => '200', 'width' => '200px'));
+
+										?>
 									<?php   if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1'): ?>
 										<div class="ficha_acciones">
 									<?php echo $this->Html->link($this->Html->image("iconos/update50.png", array('height' => '', 'width' => '25px')), array('action' => 'edit', $programa['Programa']['id']),
@@ -131,3 +141,6 @@ $user=NUll;
 		</table>
 	</section>
 </section>
+<script>
+$('.glyphicon-bookmark').css( "background", "#7a0400" );
+</script>

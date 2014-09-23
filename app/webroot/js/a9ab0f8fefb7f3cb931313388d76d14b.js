@@ -1,0 +1,2 @@
+$(document).ready(function () {$("#botonAgregar").bind("click", function (event) {$.ajax({async:true, data:$("#botonAgregar").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#pickList").html(data);}, type:"post", url:"\/Sistrag\/tiposestandares\/picklist"});
+return false;});});

@@ -196,6 +196,20 @@ if(!$this->request->is('ajax'))
 									    array('escape' => FALSE)
 									);
 									?>
+									<?php
+									if($current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2' || $current_user['nivel_id'] == '3') 
+									{
+									?>
+									<?php 
+									echo $this->Form->postLink(
+										'<button type="button" class="btn btn-default btn-lg use-tooltip" data-toggle="tooltip" data-placement="top" title="Eliminar proyecto">
+											<span class="glyphicon glyphicon-remove"></span>
+										</button>'
+										, array('controller'=>'proyectos','action' => 'delete',$proyecto['Proyecto']['id']), array('escape' => false,'title'=>'Eliminar proyecto'), __('¿Esta seguro que desea borrar el proyecto '.$proyecto['Proyecto']['titulo'])); 
+									?>
+									<?php
+									}
+									?>
 								</td>
 							</tr>	
 						<?php

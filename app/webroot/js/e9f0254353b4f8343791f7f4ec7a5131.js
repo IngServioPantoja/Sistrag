@@ -1,0 +1,4 @@
+$(document).ready(function () {$("#formularioDetalleentrega").bind("change", function (event) {$.ajax({async:true, beforeSend:function (XMLHttpRequest) {$("#barraComentarios").fadeIn();}, complete:function (XMLHttpRequest, textStatus) {$("#barraComentarios").fadeOut();}, data:$("#formularioDetalleentrega").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#sss").html(data);}, type:"post", url:"\/Sistrag\/detalleentregas\/edit"});
+return false;});
+$("#tipodocumento").bind("change", function (event) {$.ajax({async:true, data:$("#tipodocumento").closest("form").serialize(), dataType:"html", success:function (data, textStatus) {$("#div_listas_comparacion").html(data);}, type:"post", url:"\/Sistrag\/documentos\/lista_comparaciones"});
+return false;});});

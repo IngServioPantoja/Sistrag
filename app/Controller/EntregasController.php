@@ -51,13 +51,41 @@ class EntregasController extends AppController {
 					$detalleentrega['Detalleentrega']['personas_proyecto_id']=$receptor['PersonasProyecto']['id'];
 					$detalleentrega['Detalleentrega']['estado_id']=1;
 					$detalleentrega['Detalleentrega']['fecha_estado']=$fecha;
+					
+
+					$this->Notificacion->create();
+					$notificacion=array();
+					$fecha = date_create();
+					$fecha = date_format($fecha, 'Y-m-d H:i:s');
+					$notificacion['Notificacion']['parametro_estado_id']=5;
+					$notificacion['Notificacion']['fecha']=$fecha;
+
+					$notificacion['Notificacion']['parametro_tipo_notificacion']=6;
+					$notificacion['Notificacion']['url_action']='evaluacion_docente';
+					$notificacion['Notificacion']['url_controlador']='documentos';
+					$notificacion['Notificacion']['persona_id']=$receptor['PersonasProyecto']['persona_id'];
+					print_r($receptor);	
+					
+					
 					if($this->Detalleentrega->save($detalleentrega))
 					{
+						echo $notificacion['Notificacion']['url_valor']=$this->Detalleentrega->id;
+						if($this->Notificacion->save($notificacion))
+						{
+
+						}
 						$this->requestAction('documentos/generar_comentarios/'.$this->Detalleentrega->id);
 					}
 
+
+
 				}
 				$this->Session->setFlash(__('El documento fue enviado exitosamente'));
+
+				//Notificación
+
+				
+
 
 				$this->redirect($this->referer());
 			} else {

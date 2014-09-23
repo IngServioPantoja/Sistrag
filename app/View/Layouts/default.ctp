@@ -1,9 +1,7 @@
 <?php 
 
 $usuario=$this->Session->read("Usuario"); ?>
-<!-- <!doctype html> -->
 
-<!-- Al parecer solof alta cuadrar meno de director , decano y el otro-->
 <html lang='es_Es'>
     <head>
         <title>
@@ -16,10 +14,26 @@ $usuario=$this->Session->read("Usuario"); ?>
             echo $this->Html->script(array('jquery','jquery.autosize'));
             echo $this->Js->writeBuffer(array('cache'=>true));
         ?>
-        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
-        <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <?php echo $this->Html->css(array ('../DataTables/media/css/jquery.dataTables')); ?>
+    <!--    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css"> -->
+        <?php echo $this->Html->script(array('../DataTables/media/js/jquery.dataTables')); ?>
+    <!--    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script> -->
+        <?php echo $this->Html->css(array ('../bootstrap/css/bootstrap.min')); ?>
+       <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">  -->
+      <!--  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
+        <?php echo $this->Html->script(array('../bootstrap/js/bootstrap.min')); ?> 
+        <?php echo $this->Html->script(array('../jquery-ui/jquery-ui')); ?> 
+      <!--  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>  -->
+        <?php echo $this->Html->css(array ('../jquery-ui/jquery-ui.theme','../jquery-ui/jquery-ui')); ?>
+
+        <?php
+            echo $this->Html->script(array('../primeui-1.0/development/primeui-1.0'));
+            echo $this->Html->css(array('../primeui-1.0/development/primeui-1.0','../primeui-1.0/themes/aristo/theme'));
+
+        ?>
+        <?php
+    echo $this->Html->script(array('../primeui-1.0/development/js/picklist/picklist'));
+?>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         
     </head>

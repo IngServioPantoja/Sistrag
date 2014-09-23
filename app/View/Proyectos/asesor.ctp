@@ -6,7 +6,7 @@ $user=NUll;
 		<ul>
 			
 			<?php
-			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
+			if($current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '2' || $current_user['nivel_id'] == '3' || $current_user['nivel_id'] == '4') 
 			{
 			?>
 			<li class="panel_menu_actual">
@@ -15,13 +15,8 @@ $user=NUll;
 				?>
 				<?php 
 				echo $this->Html->link(__('Proyectos'), array('action' => 'index')); 
-				?></li><li>
-				<?php
-				echo $this->Html->image('iconos/agregar32.png', array('alt' => 'Login','height' => '', 'width' => '16px'));
-				?>
-				<?php 
-				echo $this->Html->link(__('Registrar Proyecto'), array('action' => 'add')); 
-			}
+			
+				}
 				?>
 			</li>
 		</ul>

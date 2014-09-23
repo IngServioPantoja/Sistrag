@@ -3,6 +3,9 @@ App::uses('AppController', 'Controller');
 ini_set("gd.jpeg_ignore_warning", 1);
 class PersonasController extends AppController {
 var $helpers = array('Form', 'Html', 'Js','Paginator');
+public $paginate = array(
+        'limit'=>20
+    );
 var $uses = array('Persona','User','Facultad','Programa','Tipousuario','Nivel');
 
 	public function add() {
@@ -115,11 +118,11 @@ var $uses = array('Persona','User','Facultad','Programa','Tipousuario','Nivel');
 					$opciones = array(
 				    	'conditions' => 
 				            array(
-				                'Facultad.id'=>$this->request->data['Persona']['programa_id']
+				                'Programa.id'=>$this->request->data['Persona']['programa_id']
 				           	)
 			   		);
-					$facultad = $this->Facultad->find('first',$opciones);
-					$this->request->data['Persona']['facultad_id']=$facultad['Facultad']['id'];
+					$facultad = $this->Programa->find('first',$opciones);
+					$this->request->data['Persona']['facultad_id']=$facultad['Programa']['facultad_id'];
 				}
 				$this->Persona->create();
 				$this->User->create();
@@ -139,20 +142,18 @@ var $uses = array('Persona','User','Facultad','Programa','Tipousuario','Nivel');
 					$this->request->data['User']['password']=Security::hash($this->request->data['User']['password'], null, true);
 					if ($this->Persona->User->saveall($this->request->data)) 
 					{
+						$destino = WWW_ROOT."img/img_subida/usuarios/".$this->Persona->id."".DS;
+						mkdir($destino);
 						if(isset($this->request->data['Persona']['avatar']))
 						{	
 							if( $avatar['error'] == 0 &&  $avatar['size'] > 0)
 							{
-								$destino = WWW_ROOT."img/img_subida/usuarios/".$this->Persona->id."".DS;
-								mkdir($destino);
-								
-									
-									if(move_uploaded_file($avatar['tmp_name'],$destino."1.".$extension))
-									{	
-										redimensionarImagen($destino,64,64,$extension);
-										redimensionarImagen($destino,400,400,$extension);
-										unlink($destino."1.".$extension);
-									}
+								if(move_uploaded_file($avatar['tmp_name'],$destino."1.".$extension))
+								{	
+									redimensionarImagen($destino,64,64,$extension);
+									redimensionarImagen($destino,400,400,$extension);
+									unlink($destino."1.".$extension);
+								}
 								
 							}
 						}
@@ -341,11 +342,12 @@ var $uses = array('Persona','User','Facultad','Programa','Tipousuario','Nivel');
 				$opciones = array(
 			    	'conditions' => 
 			            array(
-			                'Facultad.id'=>$this->request->data['Persona']['programa_id']
-			           	)
+			                'Programa.id'=>$this->request->data['Persona']['programa_id']
+			           	),
+			        'recursive'=>0
 		   		);
-				$facultad = $this->Facultad->find('first',$opciones);
-				$this->request->data['Persona']['facultad_id']=$facultad['Facultad']['id'];
+				$facultad = $this->Programa->find('first',$opciones);
+				$this->request->data['Persona']['facultad_id']=$facultad['Programa']['facultad_id'];
 			}
 			$this->Persona->create();
 			$this->User->create();
@@ -365,6 +367,13 @@ var $uses = array('Persona','User','Facultad','Programa','Tipousuario','Nivel');
 						if( $avatar['error'] == 0 &&  $avatar['size'] > 0)
 						{	
 							$destino = WWW_ROOT."img/img_subida/usuarios/".$this->request->data['Persona']['id']."".DS;
+							if (file_exists($destino)) 
+							{
+
+							}else
+							{
+								mkdir($destino);
+							}
 							if(move_uploaded_file($avatar['tmp_name'],$destino."1.".$extension))
 							{	
 								redimensionarImagen($destino,64,64,$extension);

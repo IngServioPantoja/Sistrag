@@ -103,3 +103,7 @@ $user=NUll;
 		</div>
 	</section>
 </section>
+<script>
+	$('#navicon-stats').css( "background", "#7a0400" );
+	$('#marcicon-stats').css( "color", "#7a0400" );
+</script>

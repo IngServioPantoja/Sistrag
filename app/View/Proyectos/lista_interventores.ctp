@@ -21,7 +21,7 @@ if(count($Interventores)>0)
 			<a href="personas/view/<?php  echo $interventor['Persona']['id'];?>">
 				<figure>
 					<?php
-					$destino = WWW_ROOT."img/img_subida/usuarios/".$interventor['Persona']['id']."".DS;
+					$destino = WWW_ROOT."img/img_subida/usuarios/".$interventor['Persona']['id']."".DS."/1_400.png";
 					if (file_exists($destino))
 					{
 						$urlImagen="img_subida/usuarios/".$interventor['Persona']['id']."/1_400.png";

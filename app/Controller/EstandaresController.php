@@ -6,7 +6,7 @@ class EstandaresController extends AppController {
     var $helpers = array("Html", "Form");
     var $itemsMaquetar=array();
     var $nivelItem=0;
-    var $uses = array('Estandar','Item','ItemsEstandar','Programa','Facultad');
+    var $uses = array('Estandar','Item','ItemsEstandar','Programa','Facultad','Tiposestandar');
     public $components = array('Paginator');
     public $paginate = array(
         'limit'=>9,
@@ -14,6 +14,19 @@ class EstandaresController extends AppController {
             'Estandar.programa_id' => 'asc','Estandar.id' => 'asc'
         )
     );
+
+    public function listado()
+    {
+    	if($this->request->data['Busqueda']['atributo']=='tiposestandar_id')
+    	{
+    		$listas=$this->Tiposestandar->find('list');
+    	}else
+    	{
+    		$listas=$this->Programa->find('list');
+    	}
+		$this->set(compact('listas'));
+		$this->render('/Estandares/listas');
+    }
 
 	public function add() 
 	{
@@ -263,9 +276,51 @@ class EstandaresController extends AppController {
 	public function index() 
 	{
 		$this->Estandar->recursive = 0;
-		$this->Paginator->settings = $this->paginate;
-		$estandares=$this->Paginator->paginate('Estandar');
-		$this->set('estandares', $estandares);
+		if(isset($this->request->data['Busqueda']))
+		{ 
+			if($this->request->data['Busqueda']['atributo']!=NULL and $this->request->data['Busqueda']['valor']!=NULL)
+			{
+				$opciones=array('Estandar.'.$this->request->data['Busqueda']['atributo'] => $this->request->data['Busqueda']['valor']);
+				$estandares = $this->paginate('Estandar',$opciones);
+				if (empty($estandares)) 
+				{
+					$this->set('encontrado',0);
+				}
+			}
+			else
+			{
+    			$estandares = $this->paginate('Estandares');		
+    		}
+    		$busqueda=array();
+    		$busqueda[0]['atributo']=$this->request->data['Busqueda']['atributo'];
+    		$busqueda[0]['valor']=$this->request->data['Busqueda']['valor'];
+    		$this->set('busqueda',$busqueda);
+		}
+		else
+		{	
+			if(isset($atributo) and isset($valor))
+			{
+				$opciones=array('Persona.'.$atributo.' LIKE' => '%'.$valor.'%');
+	    		$estandares = $this->paginate('Estandar',$opciones);
+	    		$busqueda[0]['atributo']=$atributo;
+    			$busqueda[0]['valor']=$valor;	
+    			$this->set('busqueda',$busqueda);	
+    		}
+    		else
+    		{
+	    		$estandares = $this->paginate('Estandar');			
+    		}
+    	}
+   		$this->set('estandares',$estandares);
+		if($this->request->is('ajax'))    	
+		{
+
+			$this->render('/estandares/index');
+		}
+		$programas=$this->Programa->find('list');
+
+		$tiposestandares=$this->Tiposestandar->find('list');
+  		$this->set("lista", $tiposestandares);
 	}
 
 	public function view($id = null) {
@@ -417,10 +472,10 @@ class EstandaresController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Estandar->delete()) {
-			$this->Session->setFlash(__('Estandar deleted'));
+			$this->Session->setFlash(__('Estandar eliminado exitosamente'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('Estandar was not deleted'));
+		$this->Session->setFlash(__('Ha ocurrido un error al eliminar el estandar, por favor intete nuevamente'));
 		$this->redirect(array('action' => 'index'));
 	}
 
@@ -434,7 +489,6 @@ class EstandaresController extends AppController {
 			throw new NotFoundException(__('Invalid item'));
 		}else
 		{
-			echo "biene";
 		}
 		if ($this->Item->delete()) 
 		{
@@ -924,7 +978,16 @@ hS2M4ODXGwAAAABJRU5ErkJggg==</pkg:binaryData></pkg:part><pkg:part pkg:name="/wor
 		$nivelItem=0;
 		$this->requestAction('Estandares/obtenerItems/0/'.$id.'');
 		unset($itemsMaquetar[0]);
-		ECHO $directorio = WWW_ROOT.'files\estandares\\'.$id.'\\';
+		echo $directorio = WWW_ROOT.'files\estandares\\'.$id.'\\';
+
+		
+		if(file_exists($directorio))
+		{
+
+		}else
+		{
+			mkdir($directorio);
+		}
 	    $nombreArchivo=$directorio."Estandar.xml";
 	    if(file_exists($nombreArchivo)) 
 		{ 
@@ -949,7 +1012,7 @@ hS2M4ODXGwAAAABJRU5ErkJggg==</pkg:binaryData></pkg:part><pkg:part pkg:name="/wor
         	{
 				fputs($archivodescargable,$itemNivel1Inicio);
 				fputs($archivodescargable,$itemMaquetar['titulo']);
-				fputs($archivodescargable,$itemNivel1Fin);	
+				fputs($archivodescargable,$itemNivel2Fin);	
 
         	}
         	else if($itemMaquetar['nivel']==2)
