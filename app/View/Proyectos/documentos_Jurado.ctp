@@ -48,9 +48,6 @@ $roles;
 								echo $proyecto['Proyecto']['titulo']
 							?>			
 						</span>
-						<span class="proxima_entrega">
-							Proxima entrega: Abril 24 2014			
-						</span>
 					</div>
 					<div class="crud_fila_secundaria">
 						

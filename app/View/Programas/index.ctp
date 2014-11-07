@@ -90,7 +90,7 @@ if(!$this->request->is('ajax'))
 	}
 ?>
 							<?php foreach ($programas as $programa): ?>
-							<a href="programas/view/<?php  echo $programa['Programa']['id'];?>">
+							<a href="<?php echo '../../../Sistrag/programas/view/'.$programa['Programa']['id'];?>">
 								<article class='ficha_index'>
 									<figure>
 										<?php
@@ -116,7 +116,7 @@ if(!$this->request->is('ajax'))
 										<?php endif; ?>
 									</figure>
 							</a>
-							<a href="programas/view/<?php  echo $programa['Programa']['id'];?>">
+							<a href="<?php echo '../../../Sistrag/programas/view/'.$programa['Programa']['id'];?>">
 									<div class='ficha_datos'>
 										<table>
 											<tr>

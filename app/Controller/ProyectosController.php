@@ -57,13 +57,13 @@ var $uses = array(
 		if($usuario['nivel_id']==1)
 		{
 			//Administrados institucional
-			$facultades = $this->Facultad->find('list');
+			$facultades = $this->Facultad->find('list',array('order'=>array('Facultad.id desc')));
 			foreach ($facultades as $key => $value) 
 			{
 				$facultad=$key;
 				break;
 			}
-			$opciones = array('conditions' => array('Programa.facultad_id'=> $facultad));
+			$opciones = array('conditions' => array('Programa.facultad_id'=> $facultad),'order'=>array('Programa.id desc'));
 			$programas = $this->Programa->find('list',$opciones);
 			foreach ($programas as $key => $value) 
 			{
@@ -89,11 +89,11 @@ var $uses = array(
 
 			//Adminsitrador facultad
 			$id_facultad=$usuario['Persona']['facultad_id'];
-			$opciones = array('conditions' => array('Facultad.id'=> $id_facultad));
+			$opciones = array('conditions' => array('Facultad.id'=> $id_facultad),'order'=>array('Facultad.id desc'));
 			//Consultaremos listas
 			$facultades = $this->Facultad->find('list',$opciones);
 
-			$opciones = array('conditions' => array('Programa.facultad_id'=> $id_facultad));
+			$opciones = array('conditions' => array('Programa.facultad_id'=> $id_facultad),'order'=>array('Programa.id desc'));
 			$programas = $this->Programa->find('list',$opciones);
 			foreach ($programas as $key => $value) 
 			{
@@ -118,11 +118,11 @@ var $uses = array(
 			//Adminsitrador programa
 			$id_facultad=$usuario['Persona']['facultad_id'];
 			$id_programa=$usuario['Persona']['programa_id'];
-			$opciones = array('conditions' => array('Facultad.id'=> $id_facultad));
+			$opciones = array('conditions' => array('Facultad.id'=> $id_facultad),array('order'=>array('Facultad.id desc')));
 			//Consultaremos listas
 			$facultades = $this->Facultad->find('list',$opciones);
 
-			$opciones = array('conditions' => array('Programa.id'=> $id_programa));
+			$opciones = array('conditions' => array('Programa.id'=> $id_programa),'order'=>array('Programa.id desc'));
 			$programas = $this->Programa->find('list',$opciones);
 			foreach ($programas as $key => $value) 
 			{
@@ -309,6 +309,9 @@ var $uses = array(
 	public function documentos($id = null) 
 	{
 		//Aqui se muestran los documentos subidos y dependiendo su estado las entregas de los mismos
+		$usuario=$this->Session->read("Usuario");
+		
+		$this->set('usuario',$usuario);
 		if (!$this->Proyecto->exists($id)) {
 				$this->redirect(array('action' => 'index'));
 
@@ -412,6 +415,7 @@ var $uses = array(
 	   	);
 		$roles=$this->Rol->find('list', $opciones);
 		$this->set('roles', $roles);
+
 	}
 
 

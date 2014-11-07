@@ -89,7 +89,7 @@ if(!$this->request->is('ajax'))
 	}
 ?>
 							<?php foreach ($areas as $area): ?>
-							<a href="areas/view/<?php  echo $area['Area']['id'];?>">
+							<a href="<?php echo '../../../Sistrag/areas/view/'.$area['Area']['id'];?>">
 								<article class='ficha_index'>
 									<figure>
 										<?php
@@ -105,7 +105,7 @@ if(!$this->request->is('ajax'))
 										<?php endif; ?>
 									</figure>
 							</a>
-							<a href="areas/view/<?php  echo $area['Area']['id'];?>">
+							<a href="<?php echo '../../../Sistrag/areas/view/'.$area['Area']['id'];?>">
 									<div class='ficha_datos'>
 										<table>
 											<tr>

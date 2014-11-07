@@ -115,6 +115,17 @@ var $usuario=array();
 
 	public function index($atributo=null,$valor=null) 
 	{
+		$usuario=$this->Session->read("Usuario");
+		if($usuario['Nivel']['id']==1)
+		{
+
+		}else if($usuario['Nivel']['id']==2)
+		{
+			$this->redirect(array('controller'=>'facultades','action' => 'programas_asociados/'.$usuario['Persona']['facultad_id']));
+		}else if($usuario['Nivel']['id']==3)
+		{
+			$this->redirect(array('controller'=>'programas','action' => 'areas_asociadas/'.$usuario['Persona']['programa_id']));
+		}
 		$this->Programa->recursive = 0;
 		if(isset($this->request->data['Busqueda']))
 		{ 

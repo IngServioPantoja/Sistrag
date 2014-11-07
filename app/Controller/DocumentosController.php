@@ -642,7 +642,7 @@ class DocumentosController extends AppController {
 		//$maquetarMostrar[]="";//cuidado con esta línea
 		global $maquetarMostrar;
 		$maquetarMostrar=$items;
-		unset($maquetarMostrar[0]);
+		//unset($maquetarMostrar[0]); esto tambien lo quite 04/11/2014
 		$opcionesItemsDocumento=array(
 		    'conditions' => array('ItemsDocumento.documento_id'=> $proyecto['Documento']['id']),
 		    'order' => array('ItemsDocumento.id asc'),
@@ -668,7 +668,8 @@ class DocumentosController extends AppController {
 		    'recursive' => -1
 		);
 		$itemsContenido=$this->ItemsContenido->find('all', $opcionesItemsContenido);
-		$actual=1;
+		//Esta´línea tenia el valor por defecto 1 04/11/2014
+		$actual=0;
 		foreach ($maquetarMostrar as $item) 
 		{
 			
@@ -749,7 +750,7 @@ class DocumentosController extends AppController {
 		$anclasItems=array();
 		foreach ($maquetarMostrar as $itemAnclar) 
 		{
-			if($itemAnclar['nivel']!=1)
+			if($itemAnclar['nivel']!=0)
 			{
 				$key=$itemAnclar['item_documento_id'];
 				$anclasItems[$key]=$itemAnclar['titulo'];	
@@ -1144,7 +1145,7 @@ class DocumentosController extends AppController {
 	           	),
            	'order' => array('Rol.nombre desc'),
 	   	);
-	   	$contador=1;
+	   	$contador=0; //este contador iba en 1
 		foreach ($maquetarMostrar as $Item) {
 			//print_r($Item);
 			$maquetarMostrar[$contador]['comentario']="Sin comentarios";
@@ -1444,17 +1445,20 @@ class DocumentosController extends AppController {
 		$listaEntregas=array();
 		foreach ($personas as $persona) 
 		{
-			
 			foreach ($entregasDocumento as $entregaDocumento) {
-				
-			if($persona['Persona']['id']==$entregaDocumento['Persona']['id'])
-			{
-				$listaEntregas[$persona['Persona']['nombre']." ".$persona['Persona']['apellido']][$entregaDocumento['DetalleEntrega']['id']]=$entregaDocumento['Documento']['fecha_guardado'];
-
-			}	
-
+				if($persona['Persona']['id']==$entregaDocumento['Persona']['id'])
+				{
+					$listaEntregas[$persona['Persona']['nombre']." ".$persona['Persona']['apellido']][$entregaDocumento['DetalleEntrega']['id']]=$entregaDocumento['Documento']['fecha_guardado'];
+				}	
 			}
 
+		}
+		foreach ($listaEntregas as $key => $value) {
+			$version=count($value);
+			foreach ($value as $keyVal => $valValue) {
+				$listaEntregas[$key][$keyVal]="V".$version." ".$valValue;
+				--$version;
+			}
 		}
 		//Previamente organizamo stodos lso elementos para que dijeran aquien se hiso la entrega
 		$this->set('documentos',$listaEntregas);
@@ -1847,7 +1851,8 @@ class DocumentosController extends AppController {
 		$anclasItems=array();
 		foreach ($maquetarMostrar as $itemAnclar) 
 		{
-			if($itemAnclar['nivel']!=1)
+			//Eso estaba en 1
+			if($itemAnclar['nivel']!=0)
 			{
 				$key=$itemAnclar['item_documento_id'];
 				$anclasItems[$key]=$itemAnclar['titulo'];	
@@ -1951,7 +1956,8 @@ class DocumentosController extends AppController {
 	           	),
            	'order' => array('Rol.nombre desc'),
 	   	);
-	   	$contador=1;
+	   	//Contador = 1
+	   	$contador=0;
 		foreach ($maquetarMostrar as $Item) {
 			//print_r($Item);
 			$maquetarMostrar[$contador]['comentario']="Sin comentarios";

@@ -43,7 +43,7 @@ $usuario=$this->Session->read("Usuario"); ?>
             { ?> class="headerLogin" <?php } ?>>
                 <figure>
                     <?php
-                        echo $this->Html->link($this->Html->image('iconos/logo64.png', array('title' => 'Home','height' => '', 'width' => '32px')), array('controller'=>'notificaciones','action' => 'index'),
+                        echo $this->Html->link($this->Html->image('iconos/logo64.png', array('title' => 'Home','height' => '', 'width' => '32px')), array('controller'=>'administracion','action' => 'bienvenido'),
                                 array('escape' => false));
                     ?>
                     <figcaption>
@@ -114,11 +114,6 @@ $usuario=$this->Session->read("Usuario"); ?>
                             </div>
                             <?php
                                 echo $this->Html->link('Inicio',array('controller'=>'users','action'=>'login'));                         
-                            ?>
-                        </li>
-                        <li>
-                            <?php
-                                echo $this->Html->link('Desarrolladores',array('controller'=>'users','action'=>'autores'));                         
                             ?>
                         </li>
                     </ul>

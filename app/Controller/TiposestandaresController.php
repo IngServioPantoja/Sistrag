@@ -40,7 +40,17 @@ var $uses = array('Tiposestandar','User','Facultad','Programa','Tipousuario','Ni
  */
 	public function pickList() {
 		$this->Tiposestandar->create();
-			$this->request->data['Tiposestandar']['orden']=10;
+			
+			$opcionesTipoEstandar=array(
+			'conditions'=>array(
+					'Tiposestandar.programa_id'=>$this->request->data['Tiposestandar']['programa_id']
+				),
+			'order'=>array('Tiposestandar.orden desc'),
+			'recursive'=>-1
+			);
+			$lstTiposEstandar=$this->Tiposestandar->find('all',$opcionesTipoEstandar);
+			$estadoMaximoProyecto=$lstTiposEstandar[0]['Tiposestandar']['orden'];
+			$this->request->data['Tiposestandar']['orden']=$estadoMaximoProyecto+1;
 			if ($this->Tiposestandar->save($this->request->data)) {
 			} else {
 				$this->Session->setFlash(__('Ha ocurrido un error al agregar el estandar'));
@@ -54,10 +64,7 @@ var $uses = array('Tiposestandar','User','Facultad','Programa','Tipousuario','Ni
 				)
 			);
 			$tiposestandares = $this->Tiposestandar->find('all',$opciones);
-
-			//print_r($tiposestandares);
 			$this->set('tiposestandares',$tiposestandares);
-
 			$this->set('programa_padre',$this->request->data['Tiposestandar']['programa_id']);
 	}
 	public function componentesPrograma() {

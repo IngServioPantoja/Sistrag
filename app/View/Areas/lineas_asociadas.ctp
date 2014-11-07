@@ -99,7 +99,7 @@ if(!$this->request->is('ajax'))
 ?>
 							<?php foreach ($lineas as $linea): ?>
 								<article class='ficha_index'>
-									<a href="../../lineas/view/<?php  echo $linea['Linea']['id'];?>">
+								<a href="<?php echo '../../../Sistrag/lineas/view/'.$linea['Linea']['id'];?>">
 									<figure>
 										<?php
 										echo $this->Html->image('recursos/escudo400.png', array('alt' => 'Login','height' => '', 'width' => '200px'));
@@ -114,7 +114,7 @@ if(!$this->request->is('ajax'))
 										<?php endif; ?>
 									</figure>
 									</a>
-									<a href="../../lineas/view/<?php  echo $linea['Linea']['id'];?>">
+									<a href="<?php echo '../../../Sistrag/lineas/view/'.$linea['Linea']['id'];?>">
 									<div class='ficha_datos'>
 										<table>
 											<tr>

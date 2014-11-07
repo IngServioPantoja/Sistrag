@@ -8,7 +8,7 @@ if(!$this->request->is('ajax'))
 		<ul>
 			
 			<?php
-			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1') 
+			if($current_user['id'] == $user['User']['id']|| $current_user['nivel_id'] == '1' || $current_user['nivel_id'] == '6') 
 			{
 			?>
 			<li class="panel_menu_actual">
@@ -103,7 +103,7 @@ if(!$this->request->is('ajax'))
 	}
 ?>
 							<?php foreach ($facultades as $facultad): ?>
-							<a href="facultades/view/<?php  echo $facultad['Facultad']['id'];?>">
+							<a href="<?php echo '../../../Sistrag/facultades/view/'.$facultad['Facultad']['id'];?>">
 								<article class='ficha_index'>
 									<figure>
 										<?php
@@ -119,7 +119,7 @@ if(!$this->request->is('ajax'))
 										<?php endif; ?>
 									</figure>
 							</a>
-							<a href="facultades/view/<?php  echo $facultad['Facultad']['id'];?>">
+							<a href="<?php echo '../../../Sistrag/facultades/view/'.$facultad['Facultad']['id'];?>">
 									<div class='ficha_datos'>
 										<table>
 											<tr>

@@ -99,7 +99,7 @@ if(!$this->request->is('ajax'))
 ?>
 							<?php foreach ($areas as $area): ?>
 								<article class='ficha_index'>
-									<a href="../../areas/view/<?php  echo $area['Area']['id'];?>">
+								<a href="<?php echo '../../../Sistrag/areas/view/'.$area['Area']['id'];?>">
 									<figure>
 										<?php
 										echo $this->Html->image('recursos/escudo400.png', array('alt' => 'Login','height' => '', 'width' => '200px'));

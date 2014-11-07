@@ -19,8 +19,6 @@ $user=NUll;
       <div id="carousel-example-captions" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           <li style="border:solid 1px #000;" data-target="#carousel-example-captions" data-slide-to="0" class=""></li>
-          <li style="border:solid 1px #aaa;" data-target="#carousel-example-captions" data-slide-to="1" class="active"></li>
-          <li style="border:solid 1px #aaa;" data-target="#carousel-example-captions" data-slide-to="2" class=""></li>
         </ol>
         <div class="carousel-inner">
           <div class="item active">
@@ -46,37 +44,6 @@ $user=NUll;
             </br>
             </br>
           </div>
-          <div class="item" style="position:relative;">
-            <h1 class="text-center" style="background-color:rgba(255,255,255,0.9);border-radius:20px;padding:20px; border:3px solid #006;">
-              <strong>Modulo de administración de usuarios: </strong>
-              <small>
-                Liste, filtre, registre, consulte, modifique y elimine usuarios del sistemas
-              </small>
-            </h1>
-            <?php
-              echo $this->Html->image('recursos/personas.png', array('title' => 'Home','height' => '70%', 'width' => '70%','class'=>'img-responsive img-thumbnail pulse','style'=>'display:block;margin:0 auto;'))
-            ?>
-          </div>
-          <div class="item" style="position:relative;">
-            </br></br></br>
-            <?php
-              echo $this->Html->image('recursos/personas.png', array('title' => 'Home','height' => '70%', 'width' => '70%','class'=>'img-responsive img-thumbnail pulse','style'=>'display:block;margin:0 auto;'))
-            ?>
-            </br>
-            <h1 class="text-center" style="position:absolute;top:20px;left:10%;right:10%; background-color:rgba(255,255,255,0.9);border-radius:20px;padding:20px; border:3px solid #006;">
-              <strong>Modulo de administración de estandares</strong>
-              </br></br>
-              <small>
-                Liste, filtre, registre, consulte, modifique y elimine usuarios del sistemas
-              </small>
-            </h1>
-          </div>
-        <a class="left carousel-control" href="#carousel-example-captions" role="button" data-slide="prev">
-          <span class="glyphicon glyphicon-chevron-left"></span>
-        </a>
-        <a class="right carousel-control" href="#carousel-example-captions" role="button" data-slide="next">
-          <span class="glyphicon glyphicon-chevron-right"></span>
-        </a>
       </div>
     </div>
   <script>

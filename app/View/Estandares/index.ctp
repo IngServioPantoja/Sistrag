@@ -133,7 +133,7 @@ if(!$this->request->is('ajax'))
 										<?php 
 										} 
 										?>
-										<a href="estandares/view/<?php echo $estandar['Estandar']['id'];?>">
+										<a href="<?php echo '../../../Sistrag/estandares/view/'.$estandar['Estandar']['id'];?>">
 											<span class="estandar">
 												<?php
 												echo $estandar['Tiposestandar']['nombre'];
@@ -265,7 +265,7 @@ if(!$this->request->is('ajax'))
 										<?php 
 										} 
 										?>
-										<a href="estandares/view/<?php echo $estandar['Estandar']['id'];?>">
+										<a href="<?php echo '../../../Sistrag/estandares/view/'.$estandar['Estandar']['id'];?>">
 											<span class="estandar">
 												<?php
 												echo $estandar['Tiposestandar']['nombre'];

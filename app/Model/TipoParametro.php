@@ -8,11 +8,7 @@ App::uses('AppModel', 'Model');
  */
 class TipoParametro extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
+	public $useTable = 'tiposestandares';
 	public $displayField = 'nombre';
 
 	

@@ -140,7 +140,7 @@
 								<?php echo $persona1['Persona']['nombre']." ".$persona1['Persona']['apellido']; ?>
 							</div>
 							<div class="col-sm-6 pd-5">
-								<?php echo $persona2['Persona']['nombre']." ".$persona1['Persona']['apellido']; ?>
+								<?php echo $persona2['Persona']['nombre']." ".$persona2['Persona']['apellido']; ?>
 							</div>
 						</div>
 					</div>
@@ -155,12 +155,17 @@
 						<tr>	
 							<td class="col-sm-6">
 						<?php
-								$descomposicion=$descomposiciones[$i];
-								if($descomposicion['contenido']!=null)
+								if(isset($descomposiciones[$i]))
+								{
+									$descomposicion=$descomposiciones[$i];
+								}
+									
+								if(isset($descomposicion['contenido']) and $descomposicion['contenido']!=null)
 		        				{
 		        			?>
 									<article class='marcoPrincipal' id="<?php echo "item".$descomposicion['item_documento_id']; ?>">
-										<div class="headerVinotinto" onClick="encoger(this)" id="<?php echo $descomposicion['item_documento_id']; ?>" style="cursor:pointer;">
+										<div class="headerVinotinto" onClick="encoger(this)" id="<?php echo $descomposicion['item_documento_id']; ?>" style="cursor:pointer; text-shadow: 0px 0px 5px #555;<?php if($descomposiciones2[$i]['contenido']==$descomposiciones[$i]['contenido'])
+												{ ?> background:green!important; <?php }else { ?> background:orange!important; <?php } ?>">
 											<div class="tituloModulo">
 												<span id="<?php echo "marcador".$descomposicion['item_documento_id']; ?>" class="marcador">v</span>
 												<span>
@@ -168,25 +173,6 @@
 					       						echo $descomposicion['titulo'];
 												?>
 												</span>
-											</div>
-											<div class="row-fluid pull-right" style="overflow:hidden;">
-												<?php
-												if($descomposiciones2[$i]['contenido']==$descomposiciones[$i]['contenido'])
-												{
-												?>
-												<button type="button" class="btn btn-success btn-xs active" title="Sin cambios">
-													<span class="glyphicon glyphicon-repeat pd-2"></span>
-												</button>
-												<?php
-												}else if($descomposiciones2[$i]['contenido']!=$descomposiciones[$i]['contenido'])
-												{
-												?>
-												<button type="button" class="btn btn-warning btn-xs active" title="Hay cambios">
-													<span class="glyphicon glyphicon-refresh pd-2"></span>
-												</button>
-												<?php
-												}
-												?>
 											</div>
 											<div class="row-fluid pull-right">
 												<div class="btn-group" data-toggle="buttons" style="overflow:hidden;">
@@ -341,8 +327,12 @@
 							</td>
 							<td class="col-sm-6">
 						<?php
-								$descomposicion=$descomposiciones2[$i];
-								if($descomposicion['contenido']!=null)
+								if(isset($descomposiciones2[$i]))
+								{
+									$descomposicion=$descomposiciones2[$i];
+								}
+									
+								if(isset($descomposicion['contenido']) and $descomposicion['contenido']!=null)
 		        				{
 		        			?>
 									<article class='marcoPrincipal' id="<?php echo "item".$descomposicion['item_documento_id']; ?>">

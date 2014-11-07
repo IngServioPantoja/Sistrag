@@ -79,6 +79,8 @@ $roles;
 					<div class="crud_fila_secundaria">
 						
 						<?php
+
+							$ultimaEntrega = reset($documentos);	
 						foreach ($documentos as $documento) 
 						{
 							$rolescopia=$roles;
@@ -170,7 +172,6 @@ $roles;
 
 															<?php
 															//ya tengo la parte qeu evalua y si mira el documento me dice cuando , ahroa solo falta decir completar documento y que le aparesca en notificaciones jejeje y brevacia la vuelta!!!	
-																	 
 																	if($detalleEntrega['estado_id']==1)
 																	{
 																	?>
@@ -194,11 +195,12 @@ $roles;
 																	?>
 																	class="doc_index_aprobado">
 																	<strong>
-																	Sin correciones
+																	Visto 
 																	</strong>
 																	<?php
 																	}
 																?>
+
 															</th>
 														</tr>
 														<tr>
@@ -216,7 +218,7 @@ $roles;
 																	}else if($detalleEntrega['parametro_veredicto_id']==2)
 																	{
 																?>
-																	class="doc_index_noaprobado">
+																	class="doc_index_noaprobado" style="background:orange;">
 																		<strong>
 																		Aprobado con correciones
 																		</strong>
@@ -267,26 +269,30 @@ $roles;
 							}
 						?>
 						<?php
-						if(count($rolescopia)>0)
+
+						if((count($rolescopia)>0 && $usuario['Nivel']['id']==5)  || (count($rolescopia)>0 && $usuario['Nivel']['id']==1) || (count($rolescopia)>0 && $usuario['Nivel']['id']==2 || (count($rolescopia)>0 && $usuario['Nivel']['id']==3))) 
 						{
-						?>
-						<div class="contenedorVinotinto">
-						<?php echo $this->Form->create('Entrega',array('controller'=>'entregas','action'=>'add','onSubmit'=>'return confirm("¿Realmente deseas enviar este documento?");'));?>
-							<?php echo $this->Form->hidden('documento_id',array('value'=>$documento['Documento']['id'])); ?>
-							<?php echo $this->Form->hidden('proyecto_id',array('value'=>$documento['Documento']['proyecto_id'])); ?>
+							if($ultimaEntrega==$documento)
+							{
+							?>
+								<div class="contenedorVinotinto">
+								<?php echo $this->Form->create('Entrega',array('controller'=>'entregas','action'=>'add','onSubmit'=>'return confirm("¿Realmente deseas enviar este documento?");'));?>
+									<?php echo $this->Form->hidden('documento_id',array('value'=>$documento['Documento']['id'])); ?>
+									<?php echo $this->Form->hidden('proyecto_id',array('value'=>$documento['Documento']['proyecto_id'])); ?>
+									<?php
+										echo $this->Form->select(
+											'rol_id', $rolescopia,array('id'=>'rol','autocomplete' =>'off','empty'=>false,'class'=>'inputCorto left')
+										);
+								?>
+								<?php 
+									echo $this->Form->submit(
+									    'Enviar documento', 
+									    array('class' => 'submitGrisRedondoDelgado','id'=>'submitCortoRight','div'=>false)
+									); 
+							    ?>
+								</div>	
 							<?php
-								echo $this->Form->select(
-									'rol_id', $rolescopia,array('id'=>'rol','autocomplete' =>'off','empty'=>false,'class'=>'inputCorto left')
-								);
-						?>
-						<?php 
-							echo $this->Form->submit(
-							    'Enviar documento', 
-							    array('class' => 'submitGrisRedondoDelgado','id'=>'submitCortoRight','div'=>false)
-							); 
-					    ?>
-						</div>	
-						<?php
+							}
 						}
 						?>
 						</div>

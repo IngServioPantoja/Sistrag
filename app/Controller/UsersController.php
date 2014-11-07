@@ -97,7 +97,8 @@ class UsersController extends AppController {
 	}
 
 public function login() {
-    if ($this->request->is('post')) {
+
+   if ($this->request->is('post')) {
         if ($this->Auth->login()) {
             $this->Session->setFlash(__('Bienvenido'));
 		   if ($this->Auth->user('nivel_id') == '1') {
@@ -109,17 +110,7 @@ public function login() {
 				$this->redirect("/menus/mnuMain/");
 
 			}
-			else if ($this->Auth->user('nivel_id') == '3'){
-
-				$this->redirect("/menus/mnuMain/");
-
-			}
-			else if ($this->Auth->user('nivel_id') == '4'){
-
-				$this->redirect("/menus/mnuMain/");
-
-			}
-			else if ($this->Auth->user('nivel_id') == '5'){
+			else {
 
 				$this->redirect("/menus/mnuMain/");
 

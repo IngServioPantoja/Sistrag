@@ -88,7 +88,7 @@ if(!$this->request->is('ajax'))
 ?>
 							<?php foreach ($personas as $persona): ?>
 								<article class='ficha_index'>
-									<a href="personas/view/<?php  echo $persona['Persona']['id'];?>">
+									<a href="<?php echo '../../../Sistrag/personas/view/'.$persona['Persona']['id'];?>">
 										<figure>
 											<?php
 											$destino = WWW_ROOT."img/img_subida/usuarios/".$persona['Persona']['id']."".DS."/1_400.png";
@@ -112,7 +112,7 @@ if(!$this->request->is('ajax'))
 											<?php endif; ?>
 										</figure>
 									</a>
-									<a href="personas/view/<?php  echo $persona['Persona']['id'];?>">
+									<a href="<?php echo '../../../Sistrag/personas/view/'.$persona['Persona']['id'];?>">
 										<div class='ficha_datos'>
 											<table>
 												<tr>

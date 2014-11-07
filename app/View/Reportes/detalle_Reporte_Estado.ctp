@@ -16,7 +16,6 @@ $this->layout = false;
     </div>
   </div>
 </div>
-<?php echo $reporte; ?>
 <script>
 var nombrePrograma="<?php echo $programa['Programa']['nombre']; ?>";
 $(function () {

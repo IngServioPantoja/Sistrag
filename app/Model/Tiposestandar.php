@@ -6,11 +6,9 @@ App::uses('AppModel', 'Model');
  * @property Estandar $Estandar
  */
 class Tiposestandar extends AppModel {
-/**
- * Display field
- *
- * @var string
- */
+
+    public $useTable = 'tiposestandares';
+    
 	public $displayField = 'nombre';
 /**
  * Validation rules

@@ -9,7 +9,7 @@ App::uses('AppController', 'Controller');
 class DetalleentregasController extends AppController {
 
 var $helpers = array('Paginator');
-var $uses = array('Detalleentrega','Entrega','Facultad','Programa','Persona','TipoUsuario','Tiposestandar','PersonasProyecto','Area','Linea','Proyecto');
+var $uses = array('Detalleentrega','Entrega','Facultad','Programa','Persona','TipoUsuario','Tiposestandar','PersonasProyecto','Area','Linea','Proyecto','PersonaProyecto','Documento');
 
 	public function index() {
 
@@ -125,6 +125,96 @@ var $uses = array('Detalleentrega','Entrega','Facultad','Programa','Persona','Ti
 		$this->autoRender = false;
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Detalleentrega->save($this->request->data)) {
+				$opcionesDetalleEntrega=array(
+					'conditions'=>array(
+							'Detalleentrega.id'=>$this->request->data['Detalleentrega']['id']
+						),
+					'recursive'=>0
+				);
+				$detallesEntrega=$this->Detalleentrega->find('all',$opcionesDetalleEntrega);
+				print_r($detallesEntrega);
+				echo "</BR></BR>";
+				$opcionesDocumentoTipoEstandar=array(
+					'joins' => array(
+			        	array(
+				            'table' => 'estandares',
+				            'alias' => 'Estandar',
+				            'type' => 'INNER',
+				            'conditions' => 
+				            array(
+				                'Tiposestandar.id = Estandar.tiposestandar_id'
+			            	)
+			            ),
+			            array(
+				            'table' => 'documentos',
+				            'alias' => 'Documento',
+				            'type' => 'INNER',
+				            'conditions' => 
+					            array(
+					                'Estandar.id = Documento.estandar_id'
+				            	)
+				           )
+			  	    ),
+					'fields'=>array(
+						'Tiposestandar.*'
+					),
+					'conditions'=>array(
+							'Documento.id'=>$detallesEntrega[0]['Entrega']['documento_id']
+						),
+					'recursive'=>-1
+				);
+				$documentoTipoEstandar=$this->Tiposestandar->find('first',$opcionesDocumentoTipoEstandar);
+
+				print_r($documentoTipoEstandar);
+				$opcionesDetalleEntregas=array(
+					'conditions'=>array(
+							'Detalleentrega.entrega_id'=>$detallesEntrega[0]['Detalleentrega']['entrega_id']
+						),
+					'recursive'=>-1
+				);
+				$lstDetalleEntregas=$this->Detalleentrega->find('all',$opcionesDetalleEntregas);
+				$banderaAprobado=true;
+				foreach ($lstDetalleEntregas as $detalleEntregaItem) {
+					if($detalleEntregaItem['Detalleentrega']['parametro_veredicto_id']!=1){
+						$banderaAprobado=false;
+					}
+				}
+				if($banderaAprobado)
+				{
+					$opcionesProyecto=array(
+					'conditions'=>array(
+							'PersonasProyecto.id'=>$detallesEntrega[0]['Detalleentrega']['personas_proyecto_id']
+						),
+					'recursive'=>-1
+					);
+					$personaProyecto=$this->PersonasProyecto->find('first',$opcionesProyecto);
+					$opcionesProyecto=array(
+					'conditions'=>array(
+							'Proyecto.id'=>$personaProyecto['PersonasProyecto']['proyecto_id']
+						),
+					'recursive'=>-1
+					);
+					$proyectoActualizar=$this->Proyecto->find('first',$opcionesProyecto);
+					$opcionesTipoEstandar=array(
+					'conditions'=>array(
+							'Tiposestandar.programa_id'=>$proyectoActualizar['Proyecto']['programa']
+						),
+					'order'=>array('Tiposestandar.orden desc'),
+					'recursive'=>-1
+					);
+					$lstTiposEstandar=$this->Tiposestandar->find('all',$opcionesTipoEstandar);
+					$estadoMaximoProyecto=$lstTiposEstandar[0]['Tiposestandar']['id'];
+					if($documentoTipoEstandar['Tiposestandar']['id']+1<=$estadoMaximoProyecto)
+					{
+						$proyectoActualizar['Proyecto']['estado_id']=$documentoTipoEstandar['Tiposestandar']['id']+1;
+						if($this->Proyecto->save($proyectoActualizar))
+						{
+							echo "El proyecto ha subido un estado";
+						}
+					}
+				}
+
+
 			$opciones = array(
 				'joins' => array(
 		        	array(

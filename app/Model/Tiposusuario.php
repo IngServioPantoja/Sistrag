@@ -6,11 +6,7 @@ App::uses('AppModel', 'Model');
  * @property Persona $Persona
  */
 class Tiposusuario extends AppModel {
-/**
- * Display field
- *
- * @var string
- */
+	public $useTable = 'tiposusuarios';
 	public $displayField = 'nombre';
 /**
  * Validation rules

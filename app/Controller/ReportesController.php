@@ -151,8 +151,6 @@ var $paginate =array(
 		$persona_id=$id_persona;
 		$persona=$this->Persona->find('first', $options);	
 		$this->set('persona',$persona);
-		
-		//$this->response->type('json');
 	    $roles = json_encode(
 	    	array(
 	    		"Jurado",
@@ -160,7 +158,6 @@ var $paginate =array(
 	    	)
 	    );
 		$this->set('roles',$roles);
-		//Obteniendo proyectos como Jurado
         $opcionesJurado = 
 		array(
 			'conditions'=>array('PersonasProyecto.persona_id'=>$persona_id,'PersonasProyecto.rol_id'=>1)
@@ -310,8 +307,6 @@ var $paginate =array(
 			'recursive'=>-2
 		);
 		$cantidadConteo=$this->Proyecto->find('all', $opcionesConteo);
-		print_r($cantidadConteo);
-		echo "---";
 		$reporte=array();
 		$contador=0;
 		foreach ($cantidadConteo as $estanadar) {
